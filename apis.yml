@@ -1,0 +1,59 @@
+aid: punchh
+name: Punchh
+description: >-
+  Punchh, now part of PAR Technology and offered under the PAR Engagement
+  brand, is an enterprise loyalty, offers, and customer engagement platform for
+  restaurants. It unifies guest data from online ordering, mobile apps, POS,
+  and kiosks into a single view so brands can run personalized loyalty and
+  marketing programs. PAR exposes well-documented Punchh APIs through its
+  developer portal covering platform functions, mobile, online ordering, POS
+  and kiosk integration, and a webhooks manager, with sample collections
+  published to Postman. Most integration surfaces require partner certification.
+  Over 275 restaurant brands rely on Punchh to grow customer lifetime value.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Restaurant
+  - Loyalty
+  - Marketing
+  - Guest Engagement
+  - Online Ordering
+  - Mobile
+  - Webhooks
+url: https://raw.githubusercontent.com/api-evangelist/punchh/refs/heads/main/apis.yml
+created: '2026-06-02'
+modified: '2026-06-02'
+specificationVersion: '0.19'
+apis:
+  - aid: punchh:rest-api
+    name: PAR Punchh Loyalty APIs
+    description: >-
+      The PAR Punchh APIs let brands build guest experiences across loyalty,
+      offers, and engagement. Documented surfaces include Platform Functions for
+      core programmatic access, Mobile, Online Ordering, POS and Kiosk
+      integration, and a Webhooks Manager for real-time event notifications.
+      Integrated applications make roughly a billion API calls to Punchh each
+      week. Most products require partner certification before access.
+    humanURL: https://developers.partech.com/
+    tags:
+      - Loyalty
+      - Online Ordering
+      - Mobile
+      - Webhooks
+    properties:
+      - type: Documentation
+        url: https://developers.partech.com/
+      - type: GettingStarted
+        url: https://developers.partech.com/docs/dev-portal-online-ordering/apis/online-ordering-and-sso-api
+common:
+  - type: Website
+    url: https://punchh.com/
+  - type: Documentation
+    url: https://developers.partech.com/
+  - type: Blog
+    url: https://punchh.com/blog/
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/partechnology
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
