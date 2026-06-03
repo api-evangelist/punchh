@@ -1,0 +1,29 @@
+{
+  "checkin": {
+    "checkin_id": "500123",
+    "created_at": "2025-03-15T14:30:00Z",
+    "current_membership_level": "example",
+    "location_id": "500123",
+    "pending_refresh": "example",
+    "points_earned": "example",
+    "store_number": "STORE-001",
+    "survey_url": "https://portal.example.com/path/abc123",
+    "first_checkin": "example",
+    "expiring_on": "example"
+  },
+  "redemptions": [
+    {
+      "redemption_id": "500123",
+      "redemption_status": "active",
+      "created_at": "2025-03-15T14:30:00Z",
+      "updated_at": "2025-03-15T14:30:00Z",
+      "redeemable_id": "500123",
+      "redeemable_name": "Free Appetizer",
+      "redeemed_value": "example",
+      "redemption_image_url": "https://portal.example.com/path/abc123",
+      "redemption_message": "Reward successfully applied to the order.",
+      "redemption_tracking_code": "CODE-AB12CD",
+      "expiring_at": "example"
+    }
+  ]
+}

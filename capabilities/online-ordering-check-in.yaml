@@ -1,0 +1,78 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: PAR Punchh Online Ordering and SSO API — Check-In
+  description: 'PAR Punchh Online Ordering and SSO API — Check-In. 1 operations. Lead operation: Create Loyalty Check-In. Self-contained Naftiko capability covering one PAR Punchh business surface.'
+  tags:
+  - PAR Punchh
+  - Loyalty
+  - Check-In
+  created: '2026-06-03'
+  modified: '2026-06-03'
+binds:
+- namespace: env
+  keys:
+    PUNCHH_BEARER_TOKEN: PUNCHH_BEARER_TOKEN
+capability:
+  consumes:
+  - type: http
+    namespace: online-ordering-check-in
+    baseUri: https://{server_name}.punchh.com
+    description: PAR Punchh Online Ordering and SSO API — Check-In business capability. Self-contained, no shared references.
+    authentication:
+      type: bearer
+      token: '{{env.PUNCHH_BEARER_TOKEN}}'
+    resources:
+    - name: api-auth-checkins-online-order
+      path: /api/auth/checkins/online_order
+      operations:
+      - name: createOnlineOrderCheckin
+        method: POST
+        description: Create Loyalty Check-In
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+          description: Request payload.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: online-ordering-check-in-rest
+    port: 8080
+    description: REST adapter for PAR Punchh Online Ordering and SSO API — Check-In. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/auth/checkins/online-order
+      name: api-auth-checkins-online-order
+      description: REST surface for Create Loyalty Check-In.
+      operations:
+      - method: POST
+        name: createOnlineOrderCheckin
+        description: Create Loyalty Check-In
+        call: online-ordering-check-in.createOnlineOrderCheckin
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: online-ordering-check-in-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for PAR Punchh Online Ordering and SSO API — Check-In. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: create-loyalty-check
+      description: Create Loyalty Check-In
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: online-ordering-check-in.createOnlineOrderCheckin
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

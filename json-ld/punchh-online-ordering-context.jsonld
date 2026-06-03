@@ -1,0 +1,123 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "pch": "https://developers.partech.com/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "OnlineOrderCheckinRequest": "pch:OnlineOrderCheckinRequest",
+    "client": {
+      "@id": "pch:client",
+      "@type": "xsd:string"
+    },
+    "externalUid": {
+      "@id": "pch:external_uid",
+      "@type": "xsd:string"
+    },
+    "payable": {
+      "@id": "pch:payable",
+      "@type": "xsd:decimal"
+    },
+    "receiptAmount": {
+      "@id": "pch:receipt_amount",
+      "@type": "xsd:decimal"
+    },
+    "receiptDatetime": {
+      "@id": "pch:receipt_datetime",
+      "@type": "xsd:string"
+    },
+    "storeNumber": {
+      "@id": "pch:store_number",
+      "@type": "xsd:string"
+    },
+    "subtotalAmount": {
+      "@id": "pch:subtotal_amount",
+      "@type": "xsd:decimal"
+    },
+    "transactionNo": {
+      "@id": "pch:transaction_no",
+      "@type": "xsd:string"
+    },
+    "authenticationToken": {
+      "@id": "pch:authentication_token",
+      "@type": "xsd:string"
+    },
+    "ccLast4": {
+      "@id": "pch:cc_last4",
+      "@type": "xsd:string"
+    },
+    "channel": {
+      "@id": "pch:channel",
+      "@type": "xsd:string"
+    },
+    "employeeId": {
+      "@id": "pch:employee_id",
+      "@type": "xsd:string"
+    },
+    "OnlineOrderCheckinResponse": "pch:OnlineOrderCheckinResponse",
+    "firstName": {
+      "@id": "pch:first_name",
+      "@type": "xsd:string"
+    },
+    "lastName": {
+      "@id": "pch:last_name",
+      "@type": "xsd:string"
+    },
+    "totalCheckins": {
+      "@id": "pch:total_checkins",
+      "@type": "xsd:integer"
+    },
+    "pointsBalance": {
+      "@id": "pch:points_balance",
+      "@type": "xsd:decimal"
+    },
+    "checkin": {
+      "@id": "pch:checkin",
+      "@type": "@id"
+    },
+    "checkinId": {
+      "@id": "pch:checkin_id",
+      "@type": "xsd:integer"
+    },
+    "pointsEarned": {
+      "@id": "pch:points_earned",
+      "@type": "xsd:decimal"
+    },
+    "OnlineOrderRedemptionRequest": "pch:OnlineOrderRedemptionRequest",
+    "discountType": {
+      "@id": "pch:discount_type",
+      "@type": "xsd:string"
+    },
+    "OnlineOrderRedemptionResponse": "pch:OnlineOrderRedemptionResponse",
+    "status": {
+      "@id": "pch:status",
+      "@type": "xsd:string"
+    },
+    "redemptionAmount": {
+      "@id": "pch:redemption_amount",
+      "@type": "xsd:decimal"
+    },
+    "category": {
+      "@id": "pch:category",
+      "@type": "xsd:string"
+    },
+    "qualifiedMenuItems": {
+      "@id": "pch:qualified_menu_items",
+      "@container": "@set",
+      "@type": "@id"
+    },
+    "discountDistributionItems": {
+      "@id": "pch:discount_distribution_items",
+      "@container": "@set",
+      "@type": "@id"
+    },
+    "redemptionId": {
+      "@id": "pch:redemption_id",
+      "@type": "xsd:integer"
+    },
+    "redemptionCode": {
+      "@id": "pch:redemption_code",
+      "@type": "xsd:string"
+    }
+  }
+}

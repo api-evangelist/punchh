@@ -1,0 +1,603 @@
+openapi: 3.0.3
+info:
+  title: PAR Punchh Mobile API
+  version: '1.0'
+  description: >-
+    The PAR Punchh Mobile API powers business-branded mobile apps and
+    websites, exposing guest-facing loyalty functions such as user
+    registration and sign-in, profile management, check-ins/transactions,
+    and offer management. Access requires partner certification and
+    business-issued OAuth client credentials. All calls are signed with an
+    HMAC-SHA256 `x-pch-digest` header. Base URLs (sandbox and production) are
+    provided by a Punchh representative.
+  x-generated-from: documentation
+  x-last-validated: '2026-06-03'
+  contact:
+    name: PAR Developer Portal
+    url: https://developers.partech.com/
+servers:
+- url: https://{server_name}.punchh.com
+  description: Punchh environment host (provided by your Punchh representative)
+  variables:
+    server_name:
+      default: SERVER_NAME_GOES_HERE
+      description: Environment-specific host name
+tags:
+- name: Users
+  description: Guest registration, authentication, and profile management.
+- name: Check-Ins
+  description: Loyalty check-in transaction details.
+- name: Offers
+  description: Guest offer management.
+paths:
+  /api2/mobile/users:
+    post:
+      operationId: createMobileUser
+      summary: Create User
+      description: >-
+        Registers a new guest account. Requires the business OAuth client ID
+        and basic profile fields.
+      tags:
+      - Users
+      security:
+      - PunchhDigest: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+            examples:
+              CreatemobileuserRequestExample:
+                summary: Default createMobileUser request
+                x-microcks-default: true
+                value:
+                  client: business_client_key
+                  email: jsmith@example.com
+                  password: example
+                  first_name: Jane Smith
+      responses:
+        '200':
+          description: User created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSession'
+              examples:
+                Createmobileuser200Example:
+                  summary: Default createMobileUser 200 response
+                  x-microcks-default: true
+                  value:
+                    access_token:
+                      token: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4
+                      refresh_token: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4
+                      seconds_to_expire: example
+                      scopes:
+                      - example
+                    user: {}
+        '400':
+          description: Bad Request.
+        '422':
+          description: Unprocessable Entity.
+      x-source-url: https://developers.partech.com/docs/dev-portal-mobile/5f1a47e9bd79f-make-your-first-mobile-api-call
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: updateMobileUserProfile
+      summary: Update User Profile
+      description: >-
+        Updates the authenticated guest's profile. Birthday may be updated
+        only once due to fraud protections.
+      tags:
+      - Users
+      security:
+      - PunchhBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserProfileRequest'
+            examples:
+              UpdatemobileuserprofileRequestExample:
+                summary: Default updateMobileUserProfile request
+                x-microcks-default: true
+                value:
+                  client: business_client_key
+                  user:
+                    first_name: Jane Smith
+                    last_name: Jane Smith
+                    email: jsmith@example.com
+                    phone: '+15551234567'
+                    password: example
+                    password_confirmation: example
+                    current_password: example
+                    birthday: example
+                    anniversary: example
+                    gender: female
+                    address: 123 Market St
+                    city: San Francisco
+                    state: CA
+                    zip_code: CODE-AB12CD
+                    avatar_remote_url: https://portal.example.com/path/abc123
+                    favourite_location_ids:
+                    - 123
+                    apn_token: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4
+                    gcm_token: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4
+                    age_verified_status: active
+      responses:
+        '200':
+          description: Updated user object with new access token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSession'
+              examples:
+                Updatemobileuserprofile200Example:
+                  summary: Default updateMobileUserProfile 200 response
+                  x-microcks-default: true
+                  value:
+                    access_token:
+                      token: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4
+                      refresh_token: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4
+                      seconds_to_expire: example
+                      scopes:
+                      - example
+                    user: {}
+        '401':
+          description: Unauthorized.
+        '422':
+          description: Unprocessable Entity.
+      x-source-url: https://developers.partech.com/docs/dev-portal-mobile/c9b928e35a6f3-update-user-profile
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api2/mobile/users/login:
+    post:
+      operationId: loginMobileUser
+      summary: Sign In
+      description: >-
+        Authenticates a guest with email and password and returns an access
+        token, refresh token, and the user profile.
+      tags:
+      - Users
+      security:
+      - PunchhDigest: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+            examples:
+              LoginmobileuserRequestExample:
+                summary: Default loginMobileUser request
+                x-microcks-default: true
+                value:
+                  client: business_client_key
+                  user:
+                    email: jsmith@example.com
+                    password: example
+      responses:
+        '200':
+          description: Authenticated session.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSession'
+              examples:
+                Loginmobileuser200Example:
+                  summary: Default loginMobileUser 200 response
+                  x-microcks-default: true
+                  value:
+                    access_token:
+                      token: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4
+                      refresh_token: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4
+                      seconds_to_expire: example
+                      scopes:
+                      - example
+                    user: {}
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.
+        '412':
+          description: Precondition Failed.
+        '422':
+          description: Unprocessable Entity.
+      x-source-url: https://developers.partech.com/docs/dev-portal-mobile/apis/mobile-api/tag/users/post/api2/mobile/users/login
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api2/mobile/checkins/transactions:
+    get:
+      operationId: getCheckinTransactionDetails
+      summary: Transaction Details
+      description: >-
+        Returns details for a check-in transaction, including points earned,
+        membership level, and associated redemptions. The transaction ID is
+        delivered in the push notification payload key "t".
+      tags:
+      - Check-Ins
+      security:
+      - PunchhBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionDetailsRequest'
+            examples:
+              GetcheckintransactiondetailsRequestExample:
+                summary: Default getCheckinTransactionDetails request
+                x-microcks-default: true
+                value:
+                  client: business_client_key
+                  transaction_id: '500123'
+      responses:
+        '200':
+          description: Check-in transaction details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionDetails'
+              examples:
+                Getcheckintransactiondetails200Example:
+                  summary: Default getCheckinTransactionDetails 200 response
+                  x-microcks-default: true
+                  value:
+                    checkin:
+                      checkin_id: '500123'
+                      created_at: '2025-03-15T14:30:00Z'
+                      current_membership_level: example
+                      location_id: '500123'
+                      pending_refresh: example
+                      points_earned: example
+                      store_number: STORE-001
+                      survey_url: https://portal.example.com/path/abc123
+                      first_checkin: example
+                      expiring_on: example
+                    redemptions:
+                    - redemption_id: '500123'
+                      redemption_status: active
+                      created_at: '2025-03-15T14:30:00Z'
+                      updated_at: '2025-03-15T14:30:00Z'
+                      redeemable_id: '500123'
+                      redeemable_name: Free Appetizer
+                      redeemed_value: example
+                      redemption_image_url: https://portal.example.com/path/abc123
+                      redemption_message: Reward successfully applied to the order.
+                      redemption_tracking_code: CODE-AB12CD
+                      expiring_at: example
+        '401':
+          description: Unauthorized.
+      x-source-url: https://developers.partech.com/docs/dev-portal-mobile/2d7bc9f034998-transaction-details
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api2/mobile/offers/mark_read:
+    put:
+      operationId: markOffersAsRead
+      summary: Mark Offers As Read
+      description: >-
+        Marks rewards or user notifications as read. Either `rewards` or
+        `user_notifications` must be provided.
+      tags:
+      - Offers
+      security:
+      - PunchhBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MarkOffersReadRequest'
+            examples:
+              MarkoffersasreadRequestExample:
+                summary: Default markOffersAsRead request
+                x-microcks-default: true
+                value:
+                  client: business_client_key
+                  event_type: read_through_app
+                  rewards: example
+                  user_notifications: example
+      responses:
+        '200':
+          description: Success.
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.
+        '422':
+          description: Unprocessable Entity.
+      x-source-url: https://developers.partech.com/docs/dev-portal-mobile/f315da73eb9a7-mark-offers-as-read
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  securitySchemes:
+    PunchhBearer:
+      type: http
+      scheme: bearer
+      description: >-
+        Bearer access token obtained via Sign In. Calls must also include an
+        `x-pch-digest` HMAC-SHA256 signature header and a `punchh-app-device-id`
+        header.
+    PunchhDigest:
+      type: apiKey
+      in: header
+      name: x-pch-digest
+      description: >-
+        HMAC-SHA256 request signature. Unauthenticated mobile calls also pass
+        the business OAuth `client` id in the request body.
+  schemas:
+    CreateUserRequest:
+      title: CreateUserRequest
+      type: object
+      x-schema-source: documentation
+      required:
+      - client
+      - email
+      - password
+      properties:
+        client:
+          type: string
+          description: OAuth client ID provided by the business.
+          example: business_client_key
+        email:
+          type: string
+          format: email
+          example: jsmith@example.com
+        password:
+          type: string
+          example: example
+        first_name:
+          type: string
+          example: Jane Smith
+    LoginRequest:
+      title: LoginRequest
+      type: object
+      x-schema-source: documentation
+      required:
+      - client
+      - user
+      properties:
+        client:
+          type: string
+          description: OAuth client ID provided by the business.
+          example: business_client_key
+        user:
+          type: object
+          required:
+          - email
+          - password
+          properties:
+            email:
+              type: string
+              format: email
+              example: jsmith@example.com
+            password:
+              type: string
+              example: example
+    UpdateUserProfileRequest:
+      title: UpdateUserProfileRequest
+      type: object
+      x-schema-source: documentation
+      required:
+      - client
+      properties:
+        client:
+          type: string
+          description: OAuth client ID provided by the business.
+          example: business_client_key
+        user:
+          type: object
+          properties:
+            first_name:
+              type: string
+              example: Jane Smith
+            last_name:
+              type: string
+              example: Jane Smith
+            email:
+              type: string
+              format: email
+              example: jsmith@example.com
+            phone:
+              type: string
+              example: '+15551234567'
+            password:
+              type: string
+              example: example
+            password_confirmation:
+              type: string
+              example: example
+            current_password:
+              type: string
+              example: example
+            birthday:
+              type: string
+              example: example
+            anniversary:
+              type: string
+              example: example
+            gender:
+              type: string
+              example: female
+            address:
+              type: string
+              example: 123 Market St
+            city:
+              type: string
+              example: San Francisco
+            state:
+              type: string
+              example: CA
+            zip_code:
+              type: string
+              example: CODE-AB12CD
+            avatar_remote_url:
+              type: string
+              example: https://portal.example.com/path/abc123
+            favourite_location_ids:
+              type: array
+              items:
+                type: integer
+            apn_token:
+              type: string
+              example: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4
+            gcm_token:
+              type: string
+              example: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4
+            age_verified_status:
+              type: string
+              example: active
+    AccessToken:
+      title: AccessToken
+      type: object
+      x-schema-source: documentation
+      properties:
+        token:
+          type: string
+          example: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4
+        refresh_token:
+          type: string
+          example: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4
+        seconds_to_expire:
+          type: integer
+          example: example
+        scopes:
+          type: array
+          items:
+            type: string
+    UserSession:
+      title: UserSession
+      type: object
+      x-schema-source: documentation
+      properties:
+        access_token:
+          $ref: '#/components/schemas/AccessToken'
+        user:
+          type: object
+          description: Guest profile with loyalty information and generated codes.
+    TransactionDetailsRequest:
+      title: TransactionDetailsRequest
+      type: object
+      x-schema-source: documentation
+      required:
+      - client
+      - transaction_id
+      properties:
+        client:
+          type: string
+          description: OAuth client ID provided by the business.
+          example: business_client_key
+        transaction_id:
+          type: string
+          description: Receipt transaction ID from push notification payload key "t".
+          example: '500123'
+    TransactionDetails:
+      title: TransactionDetails
+      type: object
+      x-schema-source: documentation
+      properties:
+        checkin:
+          type: object
+          properties:
+            checkin_id:
+              type: integer
+              example: '500123'
+            created_at:
+              type: string
+              format: date-time
+              example: '2025-03-15T14:30:00Z'
+            current_membership_level:
+              type: string
+              example: example
+            location_id:
+              type: integer
+              example: '500123'
+            pending_refresh:
+              type: boolean
+              example: example
+            points_earned:
+              type: number
+              example: example
+            store_number:
+              type: string
+              example: STORE-001
+            survey_url:
+              type: string
+              example: https://portal.example.com/path/abc123
+            first_checkin:
+              type: boolean
+              example: example
+            expiring_on:
+              type: string
+              example: example
+        redemptions:
+          type: array
+          items:
+            type: object
+            properties:
+              redemption_id:
+                type: integer
+                example: '500123'
+              redemption_status:
+                type: string
+                example: active
+              created_at:
+                type: string
+                format: date-time
+                example: '2025-03-15T14:30:00Z'
+              updated_at:
+                type: string
+                format: date-time
+                example: '2025-03-15T14:30:00Z'
+              redeemable_id:
+                type: integer
+                example: '500123'
+              redeemable_name:
+                type: string
+                example: Free Appetizer
+              redeemed_value:
+                type: number
+                example: example
+              redemption_image_url:
+                type: string
+                example: https://portal.example.com/path/abc123
+              redemption_message:
+                type: string
+                example: Reward successfully applied to the order.
+              redemption_tracking_code:
+                type: string
+                example: CODE-AB12CD
+              expiring_at:
+                type: string
+                example: example
+    MarkOffersReadRequest:
+      title: MarkOffersReadRequest
+      type: object
+      x-schema-source: documentation
+      required:
+      - client
+      properties:
+        client:
+          type: string
+          description: OAuth client ID provided by the business.
+          example: business_client_key
+        event_type:
+          type: string
+          enum:
+          - read_through_app
+          - app_open_via_push
+          example: read_through_app
+        rewards:
+          type: string
+          description: Comma-separated IDs of rewards.
+          example: example
+        user_notifications:
+          type: string
+          description: Comma-separated IDs of user notifications.
+          example: example

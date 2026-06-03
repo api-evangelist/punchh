@@ -1,0 +1,63 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: PAR Punchh
+providerId: punchh
+created: '2026-06-03'
+modified: '2026-06-03'
+reconciled: false
+tags:
+  - Loyalty
+  - Restaurant
+  - Guest Engagement
+  - Enterprise
+description: >-
+  PAR Punchh (PAR Engagement) does not publish a public, self-service pricing
+  page. Pricing is custom and negotiated with PAR sales as an enterprise
+  contract scoped to brand size, locations, and the loyalty/marketing modules
+  licensed. API access is gated behind partner certification rather than a
+  metered API price. Third-party software directories report custom pricing
+  with small deployments in the hundreds of dollars per month and large
+  enterprise deployments in the tens of thousands per month; PAR does not
+  confirm these figures publicly. Set reconciled to true only after verifying
+  against a PAR quote or an official pricing page.
+sources:
+  - https://punchh.com/
+  - https://punchh.com/solutions/loyalty/
+  - https://developers.partech.com/
+plans:
+  - id: punchh-enterprise
+    name: PAR Engagement (Enterprise)
+    type: enterprise
+    description: >-
+      Custom enterprise loyalty, offers, and guest-engagement contract covering
+      the Punchh platform and its integration APIs. Negotiated with PAR sales.
+    entries:
+      - label: Platform license
+        name: platform_license
+        type: subscription
+        metric: month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: '1'
+        price: 'contact sales'
+        userMultiplied: false
+      - label: API access
+        name: api_access
+        type: flat
+        metric: varies
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: '1'
+        price: 'included with platform license; partner certification required'
+        userMultiplied: false
+    elements:
+      - name: Loyalty programs
+      - name: Offers and campaigns
+      - name: Mobile API
+      - name: Online Ordering and SSO API
+      - name: POS and Kiosk API
+      - name: Platform Functions API
+      - name: Webhooks Manager

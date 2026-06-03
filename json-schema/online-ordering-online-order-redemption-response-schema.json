@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OnlineOrderRedemptionResponse",
+  "description": "OnlineOrderRedemptionResponse schema from PAR Punchh Online Ordering and SSO API",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/punchh/refs/heads/main/json-schema/online-ordering-online-order-redemption-response-schema.json",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string",
+      "description": "Redemption confirmation message.",
+      "example": "active"
+    },
+    "redemption_amount": {
+      "type": "number",
+      "description": "Discount value applied.",
+      "example": "example"
+    },
+    "category": {
+      "type": "string",
+      "description": "Redemption type.",
+      "example": "reward"
+    },
+    "qualified_menu_items": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "discount_distribution_items": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "redemption_id": {
+      "type": "integer",
+      "example": "500123"
+    },
+    "redemption_code": {
+      "type": "string",
+      "example": "CODE-AB12CD"
+    }
+  }
+}

@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: PAR Punchh POS and Kiosk API — Check-Ins
+  description: 'PAR Punchh POS and Kiosk API — Check-Ins. 1 operations. Lead operation: Create Check-In. Self-contained Naftiko capability covering one PAR Punchh business surface.'
+  tags:
+  - PAR Punchh
+  - Loyalty
+  - Check-Ins
+  created: '2026-06-03'
+  modified: '2026-06-03'
+binds:
+- namespace: env
+  keys:
+    PUNCHH_API_KEY: PUNCHH_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: pos-check-ins
+    baseUri: https://{server_name}.punchh.com
+    description: PAR Punchh POS and Kiosk API — Check-Ins business capability. Self-contained, no shared references.
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.PUNCHH_API_KEY}}'
+      placement: header
+    resources:
+    - name: api-pos-checkins
+      path: /api/pos/checkins
+      operations:
+      - name: createPosCheckin
+        method: POST
+        description: Create Check-In
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+          description: Request payload.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: pos-check-ins-rest
+    port: 8080
+    description: REST adapter for PAR Punchh POS and Kiosk API — Check-Ins. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/pos/checkins
+      name: api-pos-checkins
+      description: REST surface for Create Check-In.
+      operations:
+      - method: POST
+        name: createPosCheckin
+        description: Create Check-In
+        call: pos-check-ins.createPosCheckin
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: pos-check-ins-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for PAR Punchh POS and Kiosk API — Check-Ins. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: create-check
+      description: Create Check-In
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: pos-check-ins.createPosCheckin
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

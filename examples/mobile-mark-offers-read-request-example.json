@@ -1,0 +1,6 @@
+{
+  "client": "business_client_key",
+  "event_type": "read_through_app",
+  "rewards": "example",
+  "user_notifications": "example"
+}

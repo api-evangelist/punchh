@@ -1,0 +1,391 @@
+openapi: 3.0.3
+info:
+  title: PAR Punchh POS and Kiosk API
+  version: '1.0'
+  description: >-
+    The PAR Punchh POS and Kiosk API integrates point-of-sale and kiosk
+    systems with the Punchh loyalty platform: looking up guests and balances,
+    creating users and check-ins, retrieving location/program configuration,
+    and processing redemptions. Access requires partner certification.
+    Requests authenticate with a location/business token pair and a
+    structured `User-Agent`. Base URLs are provided by a Punchh representative.
+  x-generated-from: documentation
+  x-last-validated: '2026-06-03'
+  contact:
+    name: PAR Developer Portal
+    url: https://developers.partech.com/
+servers:
+- url: https://{server_name}.punchh.com
+  description: Punchh environment host (provided by your Punchh representative)
+  variables:
+    server_name:
+      default: SERVER_NAME_GOES_HERE
+      description: Environment-specific host name
+tags:
+- name: Users
+  description: Guest lookup and creation at the point of sale.
+- name: Check-Ins
+  description: POS loyalty check-ins.
+- name: Configuration
+  description: Location and program configuration/metadata.
+- name: Redemptions
+  description: Possible, create, and void redemptions at the POS.
+- name: Receipts
+  description: Receipt detail storage.
+paths:
+  /api/pos/users/search:
+    get:
+      operationId: searchPosUser
+      summary: User Look-Up and Fetch Balance
+      description: >-
+        Looks up a guest and returns account details and loyalty balances.
+        Provide exactly one identifier (phone number, email, QR code, single
+        scan code, redemption code, card number, or Apple NFC token).
+      tags:
+      - Users
+      security:
+      - PunchhPosToken: []
+      parameters:
+      - name: phone_number
+        in: query
+        required: false
+        description: Guest phone number.
+        schema:
+          type: string
+      - name: email
+        in: query
+        required: false
+        description: Guest email address.
+        schema:
+          type: string
+          format: email
+      - name: user_as_qrcode
+        in: query
+        required: false
+        description: Guest QR code value.
+        schema:
+          type: string
+      - name: single_scan_code
+        in: query
+        required: false
+        description: Single scan code value.
+        schema:
+          type: string
+      - name: redemption_code
+        in: query
+        required: false
+        description: Redemption code value.
+        schema:
+          type: string
+      - name: card_number
+        in: query
+        required: false
+        description: Loyalty/gift card number.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Guest account details and loyalty balances.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PosUser'
+              examples:
+                Searchposuser200Example:
+                  summary: Default searchPosUser 200 response
+                  x-microcks-default: true
+                  value:
+                    phone_number: '+15551234567'
+                    email: jsmith@example.com
+                    first_name: Jane Smith
+                    last_name: Jane Smith
+                    card_number: example
+                    balances: {}
+        '401':
+          description: Unauthorized.
+        '404':
+          description: User not found.
+      x-source-url: https://developers.partech.com/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/pos/users:
+    post:
+      operationId: createPosUser
+      summary: Create New User
+      description: Creates a new guest account from the point of sale.
+      tags:
+      - Users
+      security:
+      - PunchhPosToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PosUser'
+            examples:
+              CreateposuserRequestExample:
+                summary: Default createPosUser request
+                x-microcks-default: true
+                value:
+                  phone_number: '+15551234567'
+                  email: jsmith@example.com
+                  first_name: Jane Smith
+                  last_name: Jane Smith
+                  card_number: example
+                  balances: {}
+      responses:
+        '200':
+          description: User created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PosUser'
+              examples:
+                Createposuser200Example:
+                  summary: Default createPosUser 200 response
+                  x-microcks-default: true
+                  value:
+                    phone_number: '+15551234567'
+                    email: jsmith@example.com
+                    first_name: Jane Smith
+                    last_name: Jane Smith
+                    card_number: example
+                    balances: {}
+        '401':
+          description: Unauthorized.
+        '422':
+          description: Unprocessable Entity.
+      x-source-url: https://developers.partech.com/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/pos/checkins:
+    post:
+      operationId: createPosCheckin
+      summary: Create Check-In
+      description: Creates a loyalty check-in at the point of sale.
+      tags:
+      - Check-Ins
+      security:
+      - PunchhPosToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PosCheckinRequest'
+            examples:
+              CreateposcheckinRequestExample:
+                summary: Default createPosCheckin request
+                x-microcks-default: true
+                value:
+                  store_number: STORE-001
+                  transaction_no: TXN-784512
+                  receipt_amount: example
+                  subtotal_amount: example
+      responses:
+        '200':
+          description: Check-in created.
+        '401':
+          description: Unauthorized.
+        '422':
+          description: Unprocessable Entity.
+      x-source-url: https://developers.partech.com/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/pos/locations/configuration:
+    get:
+      operationId: getPosLocationConfiguration
+      summary: Location Configuration
+      description: Returns the loyalty configuration for the authenticated location.
+      tags:
+      - Configuration
+      security:
+      - PunchhPosToken: []
+      responses:
+        '200':
+          description: Location configuration.
+        '401':
+          description: Unauthorized.
+      x-source-url: https://developers.partech.com/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/pos/meta:
+    get:
+      operationId: getPosProgramMeta
+      summary: Program Meta
+      description: Returns loyalty program metadata for the business.
+      tags:
+      - Configuration
+      security:
+      - PunchhPosToken: []
+      responses:
+        '200':
+          description: Program metadata.
+        '401':
+          description: Unauthorized.
+      x-source-url: https://developers.partech.com/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/pos/redemptions/possible:
+    post:
+      operationId: getPosPossibleRedemptions
+      summary: Possible Redemptions
+      description: >-
+        Returns the redemptions available to a guest for the supplied receipt.
+      tags:
+      - Redemptions
+      security:
+      - PunchhPosToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            examples:
+              GetpospossibleredemptionsRequestExample:
+                summary: Default getPosPossibleRedemptions request
+                x-microcks-default: true
+                value: {}
+      responses:
+        '200':
+          description: Possible redemptions.
+        '401':
+          description: Unauthorized.
+      x-source-url: https://developers.partech.com/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/pos/redemptions:
+    post:
+      operationId: createPosRedemption
+      summary: Create Redemption
+      description: Applies a redemption against a POS receipt.
+      tags:
+      - Redemptions
+      security:
+      - PunchhPosToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            examples:
+              CreateposredemptionRequestExample:
+                summary: Default createPosRedemption request
+                x-microcks-default: true
+                value: {}
+      responses:
+        '200':
+          description: Redemption created.
+        '401':
+          description: Unauthorized.
+      x-source-url: https://developers.partech.com/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: voidPosRedemption
+      summary: Void Redemption
+      description: Voids a previously created redemption.
+      tags:
+      - Redemptions
+      security:
+      - PunchhPosToken: []
+      responses:
+        '200':
+          description: Redemption voided.
+        '401':
+          description: Unauthorized.
+      x-source-url: https://developers.partech.com/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /receipt_details:
+    post:
+      operationId: storeReceiptDetails
+      summary: Store Receipt Details
+      description: Stores itemized receipt details for a transaction.
+      tags:
+      - Receipts
+      security:
+      - PunchhPosToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            examples:
+              StorereceiptdetailsRequestExample:
+                summary: Default storeReceiptDetails request
+                x-microcks-default: true
+                value: {}
+      responses:
+        '200':
+          description: Receipt details stored.
+        '401':
+          description: Unauthorized.
+      x-source-url: https://developers.partech.com/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  securitySchemes:
+    PunchhPosToken:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: >-
+        Token pair credential of the form
+        `Token token=LOCATION_KEY, btoken=BUSINESS_KEY`. Requests must also send
+        a structured `User-Agent` of the form `IntegratorName/IntegrationType/VersionNumber`.
+  schemas:
+    PosUser:
+      title: PosUser
+      type: object
+      x-schema-source: documentation
+      properties:
+        phone_number:
+          type: string
+          example: '+15551234567'
+        email:
+          type: string
+          format: email
+          example: jsmith@example.com
+        first_name:
+          type: string
+          example: Jane Smith
+        last_name:
+          type: string
+          example: Jane Smith
+        card_number:
+          type: string
+          example: example
+        balances:
+          type: object
+          description: Loyalty point and reward balances.
+    PosCheckinRequest:
+      title: PosCheckinRequest
+      type: object
+      x-schema-source: documentation
+      properties:
+        store_number:
+          type: string
+          example: STORE-001
+        transaction_no:
+          type: string
+          example: TXN-784512
+        receipt_amount:
+          type: number
+          example: example
+        subtotal_amount:
+          type: number
+          example: example

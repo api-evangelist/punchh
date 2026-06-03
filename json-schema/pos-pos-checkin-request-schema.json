@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PosCheckinRequest",
+  "description": "PosCheckinRequest schema from PAR Punchh POS and Kiosk API",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/punchh/refs/heads/main/json-schema/pos-pos-checkin-request-schema.json",
+  "type": "object",
+  "properties": {
+    "store_number": {
+      "type": "string",
+      "example": "STORE-001"
+    },
+    "transaction_no": {
+      "type": "string",
+      "example": "TXN-784512"
+    },
+    "receipt_amount": {
+      "type": "number",
+      "example": "example"
+    },
+    "subtotal_amount": {
+      "type": "number",
+      "example": "example"
+    }
+  }
+}

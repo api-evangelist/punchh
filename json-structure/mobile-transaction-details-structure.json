@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/punchh/refs/heads/main/json-structure/mobile-transaction-details-structure.json",
+  "name": "TransactionDetails",
+  "description": "TransactionDetails schema from PAR Punchh Mobile API",
+  "type": "object",
+  "properties": {
+    "checkin": {
+      "type": "object",
+      "properties": {
+        "checkin_id": {
+          "type": "int32",
+          "example": "500123"
+        },
+        "created_at": {
+          "type": "datetime",
+          "example": "2025-03-15T14:30:00Z"
+        },
+        "current_membership_level": {
+          "type": "string",
+          "example": "example"
+        },
+        "location_id": {
+          "type": "int32",
+          "example": "500123"
+        },
+        "pending_refresh": {
+          "type": "boolean",
+          "example": "example"
+        },
+        "points_earned": {
+          "type": "double",
+          "example": "example"
+        },
+        "store_number": {
+          "type": "string",
+          "example": "STORE-001"
+        },
+        "survey_url": {
+          "type": "string",
+          "example": "https://portal.example.com/path/abc123"
+        },
+        "first_checkin": {
+          "type": "boolean",
+          "example": "example"
+        },
+        "expiring_on": {
+          "type": "string",
+          "example": "example"
+        }
+      }
+    },
+    "redemptions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "redemption_id": {
+            "type": "int32",
+            "example": "500123"
+          },
+          "redemption_status": {
+            "type": "string",
+            "example": "active"
+          },
+          "created_at": {
+            "type": "datetime",
+            "example": "2025-03-15T14:30:00Z"
+          },
+          "updated_at": {
+            "type": "datetime",
+            "example": "2025-03-15T14:30:00Z"
+          },
+          "redeemable_id": {
+            "type": "int32",
+            "example": "500123"
+          },
+          "redeemable_name": {
+            "type": "string",
+            "example": "Free Appetizer"
+          },
+          "redeemed_value": {
+            "type": "double",
+            "example": "example"
+          },
+          "redemption_image_url": {
+            "type": "string",
+            "example": "https://portal.example.com/path/abc123"
+          },
+          "redemption_message": {
+            "type": "string",
+            "example": "Reward successfully applied to the order."
+          },
+          "redemption_tracking_code": {
+            "type": "string",
+            "example": "CODE-AB12CD"
+          },
+          "expiring_at": {
+            "type": "string",
+            "example": "example"
+          }
+        }
+      }
+    }
+  }
+}

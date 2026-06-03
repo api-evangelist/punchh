@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OnlineOrderRedemptionRequest",
+  "description": "OnlineOrderRedemptionRequest schema from PAR Punchh Online Ordering and SSO API",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/punchh/refs/heads/main/json-schema/online-ordering-online-order-redemption-request-schema.json",
+  "type": "object",
+  "properties": {
+    "client": {
+      "type": "string",
+      "description": "Business client key.",
+      "example": "business_client_key"
+    },
+    "discount_type": {
+      "type": "string",
+      "enum": [
+        "reward",
+        "card_completion",
+        "redeemable",
+        "discount_amount",
+        "redemption_code",
+        "subscription"
+      ],
+      "example": "reward"
+    },
+    "receipt_amount": {
+      "type": "number",
+      "description": "Order total before taxes.",
+      "example": "example"
+    },
+    "receipt_datetime": {
+      "type": "string",
+      "description": "ISO 8601 timestamp (YYYY-MM-DDThh:mm:ssZ).",
+      "example": "2025-03-15T14:30:00Z"
+    },
+    "store_number": {
+      "type": "string",
+      "description": "Redemption location.",
+      "example": "STORE-001"
+    },
+    "subtotal_amount": {
+      "type": "number",
+      "description": "Pre-tax order amount.",
+      "example": "example"
+    },
+    "transaction_no": {
+      "type": "string",
+      "description": "Receipt/transaction identifier.",
+      "example": "TXN-784512"
+    }
+  },
+  "required": [
+    "client",
+    "discount_type",
+    "receipt_amount",
+    "receipt_datetime",
+    "store_number",
+    "subtotal_amount",
+    "transaction_no"
+  ]
+}

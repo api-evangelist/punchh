@@ -1,0 +1,13 @@
+{
+  "status": "active",
+  "redemption_amount": "example",
+  "category": "reward",
+  "qualified_menu_items": [
+    {}
+  ],
+  "discount_distribution_items": [
+    {}
+  ],
+  "redemption_id": "500123",
+  "redemption_code": "CODE-AB12CD"
+}

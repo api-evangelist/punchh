@@ -1,0 +1,26 @@
+{
+  "client": "business_client_key",
+  "user": {
+    "first_name": "Jane Smith",
+    "last_name": "Jane Smith",
+    "email": "jsmith@example.com",
+    "phone": "+15551234567",
+    "password": "example",
+    "password_confirmation": "example",
+    "current_password": "example",
+    "birthday": "example",
+    "anniversary": "example",
+    "gender": "female",
+    "address": "123 Market St",
+    "city": "San Francisco",
+    "state": "CA",
+    "zip_code": "CODE-AB12CD",
+    "avatar_remote_url": "https://portal.example.com/path/abc123",
+    "favourite_location_ids": [
+      123
+    ],
+    "apn_token": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4",
+    "gcm_token": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4",
+    "age_verified_status": "active"
+  }
+}

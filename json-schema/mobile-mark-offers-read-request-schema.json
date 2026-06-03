@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MarkOffersReadRequest",
+  "description": "MarkOffersReadRequest schema from PAR Punchh Mobile API",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/punchh/refs/heads/main/json-schema/mobile-mark-offers-read-request-schema.json",
+  "type": "object",
+  "properties": {
+    "client": {
+      "type": "string",
+      "description": "OAuth client ID provided by the business.",
+      "example": "business_client_key"
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "read_through_app",
+        "app_open_via_push"
+      ],
+      "example": "read_through_app"
+    },
+    "rewards": {
+      "type": "string",
+      "description": "Comma-separated IDs of rewards.",
+      "example": "example"
+    },
+    "user_notifications": {
+      "type": "string",
+      "description": "Comma-separated IDs of user notifications.",
+      "example": "example"
+    }
+  },
+  "required": [
+    "client"
+  ]
+}

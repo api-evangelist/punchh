@@ -1,0 +1,78 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: PAR Punchh Mobile API — Check-Ins
+  description: 'PAR Punchh Mobile API — Check-Ins. 1 operations. Lead operation: Transaction Details. Self-contained Naftiko capability covering one PAR Punchh business surface.'
+  tags:
+  - PAR Punchh
+  - Loyalty
+  - Check-Ins
+  created: '2026-06-03'
+  modified: '2026-06-03'
+binds:
+- namespace: env
+  keys:
+    PUNCHH_BEARER_TOKEN: PUNCHH_BEARER_TOKEN
+capability:
+  consumes:
+  - type: http
+    namespace: mobile-check-ins
+    baseUri: https://{server_name}.punchh.com
+    description: PAR Punchh Mobile API — Check-Ins business capability. Self-contained, no shared references.
+    authentication:
+      type: bearer
+      token: '{{env.PUNCHH_BEARER_TOKEN}}'
+    resources:
+    - name: api2-mobile-checkins-transactions
+      path: /api2/mobile/checkins/transactions
+      operations:
+      - name: getCheckinTransactionDetails
+        method: GET
+        description: Transaction Details
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+          description: Request payload.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: mobile-check-ins-rest
+    port: 8080
+    description: REST adapter for PAR Punchh Mobile API — Check-Ins. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/mobile/checkins/transactions
+      name: api2-mobile-checkins-transactions
+      description: REST surface for Transaction Details.
+      operations:
+      - method: GET
+        name: getCheckinTransactionDetails
+        description: Transaction Details
+        call: mobile-check-ins.getCheckinTransactionDetails
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: mobile-check-ins-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for PAR Punchh Mobile API — Check-Ins. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: transaction-details
+      description: Transaction Details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: mobile-check-ins.getCheckinTransactionDetails
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

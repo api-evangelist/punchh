@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/punchh/refs/heads/main/json-structure/mobile-login-request-structure.json",
+  "name": "LoginRequest",
+  "description": "LoginRequest schema from PAR Punchh Mobile API",
+  "type": "object",
+  "properties": {
+    "client": {
+      "type": "string",
+      "description": "OAuth client ID provided by the business.",
+      "example": "business_client_key"
+    },
+    "user": {
+      "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "jsmith@example.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "example"
+        }
+      }
+    }
+  },
+  "required": [
+    "client",
+    "user"
+  ]
+}

@@ -1,0 +1,67 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: PAR Punchh
+providerId: punchh
+created: '2026-06-03'
+modified: '2026-06-03'
+reconciled: false
+tags:
+  - Rate Limiting
+  - Loyalty
+  - Restaurant
+description: >-
+  PAR Punchh does not publish public per-second or per-minute rate-limit
+  numbers; the developer portal at developers.partech.com is partner-gated and
+  exact throttling thresholds are shared with certified partners against
+  sandbox and production environments. PAR states that integrated applications
+  make roughly a billion API calls to Punchh each week in aggregate, indicating
+  high-volume server-to-server usage, but this is a platform-wide figure, not a
+  per-key limit. Limits below are descriptive placeholders pending confirmation
+  from a certified-partner integration guide. Set reconciled to true only after
+  verifying against PAR partner documentation.
+sources:
+  - https://developers.partech.com/
+  - https://developers.partech.com/docs/dev-portal-mobile/5f1a47e9bd79f-make-your-first-mobile-api-call
+  - https://developers.partech.com/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call
+responseCodes:
+  throttled: 429
+limits:
+  - name: Mobile API requests
+    scope: account/client
+    metric: varies
+    limit: 'partner-specific; not publicly documented'
+    notes: >-
+      Scoped to the business OAuth client. Exact thresholds provided during
+      partner certification.
+  - name: Online Ordering and SSO API requests
+    scope: account/client
+    metric: varies
+    limit: 'partner-specific; not publicly documented'
+  - name: POS and Kiosk API requests
+    scope: location/business token
+    metric: varies
+    limit: 'partner-specific; not publicly documented'
+    notes: Scoped to the location token / business token pair.
+  - name: Platform Functions API requests
+    scope: account
+    metric: varies
+    limit: 'partner-specific; not publicly documented'
+policies:
+  - name: Authentication signing
+    description: >-
+      All mobile and online-ordering calls must carry an HMAC-SHA256
+      x-pch-digest signature in addition to the bearer/client credential;
+      unsigned or mis-signed calls are rejected before rate accounting.
+  - name: Environment separation
+    description: >-
+      Sandbox and production base URLs are issued separately by a PAR
+      representative; load testing should target the sandbox environment.
+  - name: Idempotency
+    description: >-
+      Online-ordering check-ins and redemptions accept an external_uid /
+      transaction identifier so retries do not double-count loyalty activity.
+  - name: Raise limits via partnership
+    description: >-
+      Higher throughput is negotiated through the PAR partner program rather
+      than self-service.

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LoginRequest",
+  "description": "LoginRequest schema from PAR Punchh Mobile API",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/punchh/refs/heads/main/json-schema/mobile-login-request-schema.json",
+  "type": "object",
+  "properties": {
+    "client": {
+      "type": "string",
+      "description": "OAuth client ID provided by the business.",
+      "example": "business_client_key"
+    },
+    "user": {
+      "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "example": "jsmith@example.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "example"
+        }
+      }
+    }
+  },
+  "required": [
+    "client",
+    "user"
+  ]
+}

@@ -1,0 +1,78 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: PAR Punchh Mobile API — Offers
+  description: 'PAR Punchh Mobile API — Offers. 1 operations. Lead operation: Mark Offers As Read. Self-contained Naftiko capability covering one PAR Punchh business surface.'
+  tags:
+  - PAR Punchh
+  - Loyalty
+  - Offers
+  created: '2026-06-03'
+  modified: '2026-06-03'
+binds:
+- namespace: env
+  keys:
+    PUNCHH_BEARER_TOKEN: PUNCHH_BEARER_TOKEN
+capability:
+  consumes:
+  - type: http
+    namespace: mobile-offers
+    baseUri: https://{server_name}.punchh.com
+    description: PAR Punchh Mobile API — Offers business capability. Self-contained, no shared references.
+    authentication:
+      type: bearer
+      token: '{{env.PUNCHH_BEARER_TOKEN}}'
+    resources:
+    - name: api2-mobile-offers-mark-read
+      path: /api2/mobile/offers/mark_read
+      operations:
+      - name: markOffersAsRead
+        method: PUT
+        description: Mark Offers As Read
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+          description: Request payload.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: mobile-offers-rest
+    port: 8080
+    description: REST adapter for PAR Punchh Mobile API — Offers. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/mobile/offers/mark-read
+      name: api2-mobile-offers-mark-read
+      description: REST surface for Mark Offers As Read.
+      operations:
+      - method: PUT
+        name: markOffersAsRead
+        description: Mark Offers As Read
+        call: mobile-offers.markOffersAsRead
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: mobile-offers-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for PAR Punchh Mobile API — Offers. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: mark-offers-read
+      description: Mark Offers As Read
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: mobile-offers.markOffersAsRead
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

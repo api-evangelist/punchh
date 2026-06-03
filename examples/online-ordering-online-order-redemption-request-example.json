@@ -1,0 +1,9 @@
+{
+  "client": "business_client_key",
+  "discount_type": "reward",
+  "receipt_amount": "example",
+  "receipt_datetime": "2025-03-15T14:30:00Z",
+  "store_number": "STORE-001",
+  "subtotal_amount": "example",
+  "transaction_no": "TXN-784512"
+}

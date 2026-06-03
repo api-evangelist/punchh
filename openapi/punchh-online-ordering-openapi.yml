@@ -1,0 +1,329 @@
+openapi: 3.0.3
+info:
+  title: PAR Punchh Online Ordering and SSO API
+  version: '1.0'
+  description: >-
+    The PAR Punchh Online Ordering and SSO API lets online ordering platforms
+    authenticate guests (SSO), create loyalty check-ins for online orders, and
+    apply redemptions against receipts. Access requires partner certification.
+    Calls are signed with an HMAC-SHA256 `x-pch-digest` header and use a
+    Bearer access token. Base URLs are provided by a Punchh representative.
+  x-generated-from: documentation
+  x-last-validated: '2026-06-03'
+  contact:
+    name: PAR Developer Portal
+    url: https://developers.partech.com/
+servers:
+- url: https://{server_name}.punchh.com
+  description: Punchh environment host (provided by your Punchh representative)
+  variables:
+    server_name:
+      default: SERVER_NAME_GOES_HERE
+      description: Environment-specific host name
+tags:
+- name: Check-In
+  description: Loyalty check-ins for online orders.
+- name: Redemptions
+  description: Apply rewards and discounts against online order receipts.
+paths:
+  /api/auth/checkins/online_order:
+    post:
+      operationId: createOnlineOrderCheckin
+      summary: Create Loyalty Check-In
+      description: >-
+        Creates a loyalty check-in for an online order, accruing points based
+        on the receipt amount. Use `external_uid` to guarantee idempotency.
+      tags:
+      - Check-In
+      security:
+      - PunchhBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OnlineOrderCheckinRequest'
+            examples:
+              CreateonlineordercheckinRequestExample:
+                summary: Default createOnlineOrderCheckin request
+                x-microcks-default: true
+                value:
+                  client: business_client_key
+                  external_uid: '500123'
+                  payable: example
+                  receipt_amount: example
+                  receipt_datetime: '2025-03-15T14:30:00Z'
+                  store_number: STORE-001
+                  subtotal_amount: example
+                  transaction_no: TXN-784512
+                  authentication_token: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4
+                  cc_last4: example
+                  channel: pos
+                  employee_id: '500123'
+      responses:
+        '200':
+          description: Check-in created with loyalty totals.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnlineOrderCheckinResponse'
+              examples:
+                Createonlineordercheckin200Example:
+                  summary: Default createOnlineOrderCheckin 200 response
+                  x-microcks-default: true
+                  value:
+                    first_name: Jane Smith
+                    last_name: Jane Smith
+                    total_checkins: example
+                    points_balance: example
+                    checkin:
+                      checkin_id: '500123'
+                      points_earned: example
+        '401':
+          description: Unauthorized.
+        '422':
+          description: Unprocessable Entity.
+      x-source-url: https://developers.partech.com/docs/dev-portal-online-ordering/f1943957e38b4-create-loyalty-check-in
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/auth/redemptions/online_order:
+    post:
+      operationId: createOnlineOrderRedemption
+      summary: Create Online Redemption
+      description: >-
+        Redeems a card, reward, redeemable, or discount against an online
+        order receipt. Receipt details are revalidated during processing.
+      tags:
+      - Redemptions
+      security:
+      - PunchhBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OnlineOrderRedemptionRequest'
+            examples:
+              CreateonlineorderredemptionRequestExample:
+                summary: Default createOnlineOrderRedemption request
+                x-microcks-default: true
+                value:
+                  client: business_client_key
+                  discount_type: reward
+                  receipt_amount: example
+                  receipt_datetime: '2025-03-15T14:30:00Z'
+                  store_number: STORE-001
+                  subtotal_amount: example
+                  transaction_no: TXN-784512
+      responses:
+        '200':
+          description: Redemption applied.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnlineOrderRedemptionResponse'
+              examples:
+                Createonlineorderredemption200Example:
+                  summary: Default createOnlineOrderRedemption 200 response
+                  x-microcks-default: true
+                  value:
+                    status: active
+                    redemption_amount: example
+                    category: reward
+                    qualified_menu_items:
+                    - {}
+                    discount_distribution_items:
+                    - {}
+                    redemption_id: '500123'
+                    redemption_code: CODE-AB12CD
+        '401':
+          description: Unauthorized.
+        '422':
+          description: Unprocessable Entity.
+      x-source-url: https://developers.partech.com/docs/dev-portal-online-ordering/60069336e34d4-create-online-redemption-redemptions-1-0
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  securitySchemes:
+    PunchhBearer:
+      type: http
+      scheme: bearer
+      description: >-
+        Bearer access token. Calls must also include an `x-pch-digest`
+        HMAC-SHA256 signature header.
+  schemas:
+    OnlineOrderCheckinRequest:
+      title: OnlineOrderCheckinRequest
+      type: object
+      x-schema-source: documentation
+      required:
+      - client
+      - external_uid
+      - payable
+      - receipt_amount
+      - receipt_datetime
+      - store_number
+      - subtotal_amount
+      - transaction_no
+      properties:
+        client:
+          type: string
+          description: Business client key.
+          example: business_client_key
+        external_uid:
+          type: string
+          description: Unique transaction identifier to prevent duplicates.
+          example: '500123'
+        payable:
+          type: number
+          description: Final amount after discounts, taxes, and fees.
+          example: example
+        receipt_amount:
+          type: number
+          description: Order subtotal used for loyalty calculations.
+          example: example
+        receipt_datetime:
+          type: string
+          description: ISO 8601 timestamp (YYYY-MM-DDThh:mm:ssZ).
+          example: '2025-03-15T14:30:00Z'
+        store_number:
+          type: string
+          description: Location identifier.
+          example: STORE-001
+        subtotal_amount:
+          type: number
+          description: Same as receipt_amount.
+          example: example
+        transaction_no:
+          type: string
+          description: Receipt/transaction number.
+          example: TXN-784512
+        authentication_token:
+          type: string
+          description: User auth token.
+          example: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4
+        cc_last4:
+          type: string
+          description: Last 4 card digits.
+          example: example
+        channel:
+          type: string
+          enum:
+          - pos
+          - web
+          - online_order
+          - mobile
+          - dashboard
+          - chatbot
+          - kiosk
+          example: pos
+        employee_id:
+          type: string
+          description: Employee or system ID.
+          example: '500123'
+    OnlineOrderCheckinResponse:
+      title: OnlineOrderCheckinResponse
+      type: object
+      x-schema-source: documentation
+      properties:
+        first_name:
+          type: string
+          example: Jane Smith
+        last_name:
+          type: string
+          example: Jane Smith
+        total_checkins:
+          type: integer
+          example: example
+        points_balance:
+          type: number
+          example: example
+        checkin:
+          type: object
+          properties:
+            checkin_id:
+              type: integer
+              example: '500123'
+            points_earned:
+              type: number
+              example: example
+    OnlineOrderRedemptionRequest:
+      title: OnlineOrderRedemptionRequest
+      type: object
+      x-schema-source: documentation
+      required:
+      - client
+      - discount_type
+      - receipt_amount
+      - receipt_datetime
+      - store_number
+      - subtotal_amount
+      - transaction_no
+      properties:
+        client:
+          type: string
+          description: Business client key.
+          example: business_client_key
+        discount_type:
+          type: string
+          enum:
+          - reward
+          - card_completion
+          - redeemable
+          - discount_amount
+          - redemption_code
+          - subscription
+          example: reward
+        receipt_amount:
+          type: number
+          description: Order total before taxes.
+          example: example
+        receipt_datetime:
+          type: string
+          description: ISO 8601 timestamp (YYYY-MM-DDThh:mm:ssZ).
+          example: '2025-03-15T14:30:00Z'
+        store_number:
+          type: string
+          description: Redemption location.
+          example: STORE-001
+        subtotal_amount:
+          type: number
+          description: Pre-tax order amount.
+          example: example
+        transaction_no:
+          type: string
+          description: Receipt/transaction identifier.
+          example: TXN-784512
+    OnlineOrderRedemptionResponse:
+      title: OnlineOrderRedemptionResponse
+      type: object
+      x-schema-source: documentation
+      properties:
+        status:
+          type: string
+          description: Redemption confirmation message.
+          example: active
+        redemption_amount:
+          type: number
+          description: Discount value applied.
+          example: example
+        category:
+          type: string
+          description: Redemption type.
+          example: reward
+        qualified_menu_items:
+          type: array
+          items:
+            type: object
+        discount_distribution_items:
+          type: array
+          items:
+            type: object
+        redemption_id:
+          type: integer
+          example: '500123'
+        redemption_code:
+          type: string
+          example: CODE-AB12CD

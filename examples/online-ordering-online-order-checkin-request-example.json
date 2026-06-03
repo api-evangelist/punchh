@@ -1,0 +1,14 @@
+{
+  "client": "business_client_key",
+  "external_uid": "500123",
+  "payable": "example",
+  "receipt_amount": "example",
+  "receipt_datetime": "2025-03-15T14:30:00Z",
+  "store_number": "STORE-001",
+  "subtotal_amount": "example",
+  "transaction_no": "TXN-784512",
+  "authentication_token": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4",
+  "cc_last4": "example",
+  "channel": "pos",
+  "employee_id": "500123"
+}

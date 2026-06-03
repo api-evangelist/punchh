@@ -1,0 +1,78 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: PAR Punchh Online Ordering and SSO API — Redemptions
+  description: 'PAR Punchh Online Ordering and SSO API — Redemptions. 1 operations. Lead operation: Create Online Redemption. Self-contained Naftiko capability covering one PAR Punchh business surface.'
+  tags:
+  - PAR Punchh
+  - Loyalty
+  - Redemptions
+  created: '2026-06-03'
+  modified: '2026-06-03'
+binds:
+- namespace: env
+  keys:
+    PUNCHH_BEARER_TOKEN: PUNCHH_BEARER_TOKEN
+capability:
+  consumes:
+  - type: http
+    namespace: online-ordering-redemptions
+    baseUri: https://{server_name}.punchh.com
+    description: PAR Punchh Online Ordering and SSO API — Redemptions business capability. Self-contained, no shared references.
+    authentication:
+      type: bearer
+      token: '{{env.PUNCHH_BEARER_TOKEN}}'
+    resources:
+    - name: api-auth-redemptions-online-order
+      path: /api/auth/redemptions/online_order
+      operations:
+      - name: createOnlineOrderRedemption
+        method: POST
+        description: Create Online Redemption
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+          description: Request payload.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: online-ordering-redemptions-rest
+    port: 8080
+    description: REST adapter for PAR Punchh Online Ordering and SSO API — Redemptions. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/auth/redemptions/online-order
+      name: api-auth-redemptions-online-order
+      description: REST surface for Create Online Redemption.
+      operations:
+      - method: POST
+        name: createOnlineOrderRedemption
+        description: Create Online Redemption
+        call: online-ordering-redemptions.createOnlineOrderRedemption
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: online-ordering-redemptions-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for PAR Punchh Online Ordering and SSO API — Redemptions. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: create-online-redemption
+      description: Create Online Redemption
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: online-ordering-redemptions.createOnlineOrderRedemption
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

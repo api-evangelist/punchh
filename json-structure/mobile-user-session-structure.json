@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/punchh/refs/heads/main/json-structure/mobile-user-session-structure.json",
+  "name": "UserSession",
+  "description": "UserSession schema from PAR Punchh Mobile API",
+  "type": "object",
+  "properties": {
+    "access_token": {
+      "title": "AccessToken",
+      "type": "object",
+      "x-schema-source": "documentation",
+      "properties": {
+        "token": {
+          "type": "string",
+          "example": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4"
+        },
+        "refresh_token": {
+          "type": "string",
+          "example": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4"
+        },
+        "seconds_to_expire": {
+          "type": "int32",
+          "example": "example"
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "user": {
+      "type": "object",
+      "description": "Guest profile with loyalty information and generated codes."
+    }
+  }
+}

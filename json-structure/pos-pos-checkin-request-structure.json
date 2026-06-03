@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/punchh/refs/heads/main/json-structure/pos-pos-checkin-request-structure.json",
+  "name": "PosCheckinRequest",
+  "description": "PosCheckinRequest schema from PAR Punchh POS and Kiosk API",
+  "type": "object",
+  "properties": {
+    "store_number": {
+      "type": "string",
+      "example": "STORE-001"
+    },
+    "transaction_no": {
+      "type": "string",
+      "example": "TXN-784512"
+    },
+    "receipt_amount": {
+      "type": "double",
+      "example": "example"
+    },
+    "subtotal_amount": {
+      "type": "double",
+      "example": "example"
+    }
+  }
+}

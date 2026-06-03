@@ -1,0 +1,157 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: PAR Punchh POS and Kiosk API — Users
+  description: 'PAR Punchh POS and Kiosk API — Users. 2 operations. Lead operation: User Look-Up and Fetch Balance. Self-contained Naftiko capability covering one PAR Punchh business surface.'
+  tags:
+  - PAR Punchh
+  - Loyalty
+  - Users
+  created: '2026-06-03'
+  modified: '2026-06-03'
+binds:
+- namespace: env
+  keys:
+    PUNCHH_API_KEY: PUNCHH_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: pos-users
+    baseUri: https://{server_name}.punchh.com
+    description: PAR Punchh POS and Kiosk API — Users business capability. Self-contained, no shared references.
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.PUNCHH_API_KEY}}'
+      placement: header
+    resources:
+    - name: api-pos-users-search
+      path: /api/pos/users/search
+      operations:
+      - name: searchPosUser
+        method: GET
+        description: User Look-Up and Fetch Balance
+        inputParameters:
+        - name: phone_number
+          in: query
+          type: string
+          required: false
+          description: Guest phone number.
+        - name: email
+          in: query
+          type: string
+          required: false
+          description: Guest email address.
+        - name: user_as_qrcode
+          in: query
+          type: string
+          required: false
+          description: Guest QR code value.
+        - name: single_scan_code
+          in: query
+          type: string
+          required: false
+          description: Single scan code value.
+        - name: redemption_code
+          in: query
+          type: string
+          required: false
+          description: Redemption code value.
+        - name: card_number
+          in: query
+          type: string
+          required: false
+          description: Loyalty/gift card number.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-pos-users
+      path: /api/pos/users
+      operations:
+      - name: createPosUser
+        method: POST
+        description: Create New User
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+          description: Request payload.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: pos-users-rest
+    port: 8080
+    description: REST adapter for PAR Punchh POS and Kiosk API — Users. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/pos/users/search
+      name: api-pos-users-search
+      description: REST surface for User Look-Up and Fetch Balance.
+      operations:
+      - method: GET
+        name: searchPosUser
+        description: User Look-Up and Fetch Balance
+        call: pos-users.searchPosUser
+        with:
+          phone_number: rest.phone_number
+          email: rest.email
+          user_as_qrcode: rest.user_as_qrcode
+          single_scan_code: rest.single_scan_code
+          redemption_code: rest.redemption_code
+          card_number: rest.card_number
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/pos/users
+      name: api-pos-users
+      description: REST surface for Create New User.
+      operations:
+      - method: POST
+        name: createPosUser
+        description: Create New User
+        call: pos-users.createPosUser
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: pos-users-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for PAR Punchh POS and Kiosk API — Users. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: user-look-up-fetch-balance
+      description: User Look-Up and Fetch Balance
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: pos-users.searchPosUser
+      with:
+        phone_number: tools.phone_number
+        email: tools.email
+        user_as_qrcode: tools.user_as_qrcode
+        single_scan_code: tools.single_scan_code
+        redemption_code: tools.redemption_code
+        card_number: tools.card_number
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-user
+      description: Create New User
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: pos-users.createPosUser
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

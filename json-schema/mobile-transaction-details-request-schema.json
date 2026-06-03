@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TransactionDetailsRequest",
+  "description": "TransactionDetailsRequest schema from PAR Punchh Mobile API",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/punchh/refs/heads/main/json-schema/mobile-transaction-details-request-schema.json",
+  "type": "object",
+  "properties": {
+    "client": {
+      "type": "string",
+      "description": "OAuth client ID provided by the business.",
+      "example": "business_client_key"
+    },
+    "transaction_id": {
+      "type": "string",
+      "description": "Receipt transaction ID from push notification payload key \"t\".",
+      "example": "500123"
+    }
+  },
+  "required": [
+    "client",
+    "transaction_id"
+  ]
+}

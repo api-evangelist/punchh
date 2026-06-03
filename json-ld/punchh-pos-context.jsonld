@@ -1,0 +1,50 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "pch": "https://developers.partech.com/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "PosUser": "pch:PosUser",
+    "phoneNumber": {
+      "@id": "pch:phone_number",
+      "@type": "xsd:string"
+    },
+    "email": {
+      "@id": "schema:email"
+    },
+    "firstName": {
+      "@id": "pch:first_name",
+      "@type": "xsd:string"
+    },
+    "lastName": {
+      "@id": "pch:last_name",
+      "@type": "xsd:string"
+    },
+    "cardNumber": {
+      "@id": "pch:card_number",
+      "@type": "xsd:string"
+    },
+    "balances": {
+      "@id": "pch:balances",
+      "@type": "@id"
+    },
+    "PosCheckinRequest": "pch:PosCheckinRequest",
+    "storeNumber": {
+      "@id": "pch:store_number",
+      "@type": "xsd:string"
+    },
+    "transactionNo": {
+      "@id": "pch:transaction_no",
+      "@type": "xsd:string"
+    },
+    "receiptAmount": {
+      "@id": "pch:receipt_amount",
+      "@type": "xsd:decimal"
+    },
+    "subtotalAmount": {
+      "@id": "pch:subtotal_amount",
+      "@type": "xsd:decimal"
+    }
+  }
+}

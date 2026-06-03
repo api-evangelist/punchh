@@ -1,0 +1,265 @@
+vocabulary: "1.0.0"
+
+info:
+  provider: "PAR Punchh"
+  description: >-
+    Unified operational and capability vocabulary for the PAR Punchh
+    (PAR Engagement) loyalty and guest-engagement platform, spanning the
+    Mobile, Online Ordering & SSO, POS/Kiosk, and Platform Functions APIs
+    documented at developers.partech.com.
+  created: "2026-06-03"
+  modified: "2026-06-03"
+
+# OPERATIONAL DIMENSION (from OpenAPI)
+operational:
+  apis:
+    - name: PAR Punchh Mobile API
+      namespace: mobile
+      version: "1.0"
+      baseUrl: https://{server_name}.punchh.com
+      status: active
+    - name: PAR Punchh Online Ordering and SSO API
+      namespace: online-ordering
+      version: "1.0"
+      baseUrl: https://{server_name}.punchh.com
+      status: active
+    - name: PAR Punchh POS and Kiosk API
+      namespace: pos
+      version: "1.0"
+      baseUrl: https://{server_name}.punchh.com
+      status: active
+    - name: PAR Punchh Platform Functions API
+      namespace: platform-functions
+      version: "1.0"
+      baseUrl: https://{server_name}.punchh.com
+      status: active
+  resources:
+    - name: users
+      apis: [mobile, pos]
+      actions: [create, update, login, search]
+    - name: check-ins
+      apis: [mobile, online-ordering, pos]
+      actions: [create, get]
+    - name: redemptions
+      apis: [online-ordering, pos]
+      actions: [create, void, possible]
+    - name: offers
+      apis: [mobile, platform-functions]
+      actions: [list, mark-read]
+    - name: locations
+      apis: [pos]
+      actions: [get]
+    - name: receipts
+      apis: [pos]
+      actions: [store]
+  actions:
+    - name: create
+      methods: [POST]
+      pattern: write
+    - name: update
+      methods: [PUT]
+      pattern: write
+    - name: get
+      methods: [GET]
+      pattern: read
+    - name: search
+      methods: [GET]
+      pattern: query
+    - name: list
+      methods: [GET]
+      pattern: query
+    - name: void
+      methods: [DELETE]
+      pattern: destructive
+    - name: login
+      methods: [POST]
+      pattern: write
+  schemas:
+    users:
+      - CreateUserRequest
+      - LoginRequest
+      - UpdateUserProfileRequest
+      - UserSession
+      - AccessToken
+      - PosUser
+    checkins:
+      - TransactionDetailsRequest
+      - TransactionDetails
+      - OnlineOrderCheckinRequest
+      - OnlineOrderCheckinResponse
+      - PosCheckinRequest
+    redemptions:
+      - OnlineOrderRedemptionRequest
+      - OnlineOrderRedemptionResponse
+    offers:
+      - MarkOffersReadRequest
+      - Redeemable
+  parameters:
+    identifiers:
+      - client
+      - store_number
+      - transaction_no
+      - external_uid
+      - transaction_id
+      - redemption_code
+      - card_number
+    pagination:
+      - page
+      - per_page
+    filters:
+      - query
+      - phone_number
+      - email
+  enums:
+    channels: [pos, web, online_order, mobile, dashboard, chatbot, kiosk]
+    discountTypes: [reward, card_completion, redeemable, discount_amount, redemption_code, subscription]
+    offerEvents: [read_through_app, app_open_via_push]
+  authentication:
+    schemes:
+      - name: PunchhBearer
+        type: bearer
+        apis: [mobile, online-ordering, platform-functions]
+        notes: Bearer access token plus HMAC-SHA256 x-pch-digest signature.
+      - name: PunchhDigest
+        type: apiKey-header
+        header: x-pch-digest
+        apis: [mobile]
+      - name: PunchhPosToken
+        type: apiKey-header
+        header: Authorization
+        apis: [pos]
+        notes: "Token token=LOCATION_KEY, btoken=BUSINESS_KEY"
+
+# CAPABILITY DIMENSION (from Naftiko)
+capability:
+  workflows:
+    - name: Mobile Users
+      file: capabilities/mobile-users.yaml
+      apis: [mobile]
+      toolCount: 3
+      personas: [App Developer]
+      domains: [Guest Identity]
+    - name: Mobile Check-Ins
+      file: capabilities/mobile-check-ins.yaml
+      apis: [mobile]
+      toolCount: 1
+      personas: [App Developer]
+      domains: [Loyalty]
+    - name: Mobile Offers
+      file: capabilities/mobile-offers.yaml
+      apis: [mobile]
+      toolCount: 1
+      personas: [App Developer]
+      domains: [Offers]
+    - name: Online Ordering Check-In
+      file: capabilities/online-ordering-check-in.yaml
+      apis: [online-ordering]
+      toolCount: 1
+      personas: [Ordering Platform Integrator]
+      domains: [Loyalty]
+    - name: Online Ordering Redemptions
+      file: capabilities/online-ordering-redemptions.yaml
+      apis: [online-ordering]
+      toolCount: 1
+      personas: [Ordering Platform Integrator]
+      domains: [Redemptions]
+    - name: Platform Functions Offers
+      file: capabilities/platform-functions-offers.yaml
+      apis: [platform-functions]
+      toolCount: 1
+      personas: [Back-Office Integrator]
+      domains: [Offers]
+    - name: POS Users
+      file: capabilities/pos-users.yaml
+      apis: [pos]
+      toolCount: 2
+      personas: [POS Integrator]
+      domains: [Guest Identity]
+    - name: POS Check-Ins
+      file: capabilities/pos-check-ins.yaml
+      apis: [pos]
+      toolCount: 1
+      personas: [POS Integrator]
+      domains: [Loyalty]
+    - name: POS Configuration
+      file: capabilities/pos-configuration.yaml
+      apis: [pos]
+      toolCount: 2
+      personas: [POS Integrator]
+      domains: [Configuration]
+    - name: POS Redemptions
+      file: capabilities/pos-redemptions.yaml
+      apis: [pos]
+      toolCount: 3
+      personas: [POS Integrator]
+      domains: [Redemptions]
+    - name: POS Receipts
+      file: capabilities/pos-receipts.yaml
+      apis: [pos]
+      toolCount: 1
+      personas: [POS Integrator]
+      domains: [Transactions]
+  personas:
+    - id: app-developer
+      name: App Developer
+      description: Builds the brand-branded guest mobile app and web experience.
+      workflows: [Mobile Users, Mobile Check-Ins, Mobile Offers]
+    - id: ordering-integrator
+      name: Ordering Platform Integrator
+      description: Connects an online/digital ordering platform to Punchh loyalty.
+      workflows: [Online Ordering Check-In, Online Ordering Redemptions]
+    - id: pos-integrator
+      name: POS Integrator
+      description: Integrates a point-of-sale or kiosk system with Punchh loyalty.
+      workflows: [POS Users, POS Check-Ins, POS Configuration, POS Redemptions, POS Receipts]
+    - id: back-office-integrator
+      name: Back-Office Integrator
+      description: Uses Platform Functions to surface offers in external systems.
+      workflows: [Platform Functions Offers]
+  domains:
+    - name: Guest Identity
+      resources: [users]
+    - name: Loyalty
+      resources: [check-ins]
+    - name: Redemptions
+      resources: [redemptions]
+    - name: Offers
+      resources: [offers]
+    - name: Configuration
+      resources: [locations]
+    - name: Transactions
+      resources: [receipts]
+  namespaces:
+    - consumed: mobile-users
+      rest: mobile-users-rest
+      mcp: mobile-users-mcp
+    - consumed: online-ordering-redemptions
+      rest: online-ordering-redemptions-rest
+      mcp: online-ordering-redemptions-mcp
+    - consumed: pos-redemptions
+      rest: pos-redemptions-rest
+      mcp: pos-redemptions-mcp
+  binds:
+    - env: PUNCHH_BEARER_TOKEN
+      workflows: [Mobile Users, Mobile Check-Ins, Mobile Offers, Online Ordering Check-In, Online Ordering Redemptions, Platform Functions Offers]
+    - env: PUNCHH_API_KEY
+      workflows: [POS Users, POS Check-Ins, POS Configuration, POS Redemptions, POS Receipts]
+
+# CROSS-REFERENCE
+crossReference:
+  - resource: users
+    operations: [createMobileUser, updateMobileUserProfile, loginMobileUser, searchPosUser, createPosUser]
+    workflows: [Mobile Users, POS Users]
+    personas: [App Developer, POS Integrator]
+  - resource: check-ins
+    operations: [getCheckinTransactionDetails, createOnlineOrderCheckin, createPosCheckin]
+    workflows: [Mobile Check-Ins, Online Ordering Check-In, POS Check-Ins]
+    personas: [App Developer, Ordering Platform Integrator, POS Integrator]
+  - resource: redemptions
+    operations: [createOnlineOrderRedemption, getPosPossibleRedemptions, createPosRedemption, voidPosRedemption]
+    workflows: [Online Ordering Redemptions, POS Redemptions]
+    personas: [Ordering Platform Integrator, POS Integrator]
+  - resource: offers
+    operations: [markOffersAsRead, getRedeemableList]
+    workflows: [Mobile Offers, Platform Functions Offers]
+    personas: [App Developer, Back-Office Integrator]

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Redeemable",
+  "description": "Redeemable schema from PAR Punchh Platform Functions API",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/punchh/refs/heads/main/json-schema/platform-functions-redeemable-schema.json",
+  "type": "object",
+  "properties": {
+    "redeemable_id": {
+      "type": "integer",
+      "example": "500123"
+    },
+    "redeemable_uuid": {
+      "type": "string",
+      "example": "6f9619ff-8b86-d011-b42d-00cf4fc964ff"
+    },
+    "name": {
+      "type": "string",
+      "example": "Free Appetizer"
+    },
+    "description": {
+      "type": "string",
+      "example": "Reward successfully applied to the order."
+    },
+    "redeemable_image_url": {
+      "type": "string",
+      "example": "https://portal.example.com/path/abc123"
+    }
+  }
+}

@@ -1,59 +1,334 @@
+---
 aid: punchh
 name: Punchh
 description: >-
-  Punchh, now part of PAR Technology and offered under the PAR Engagement
-  brand, is an enterprise loyalty, offers, and customer engagement platform for
-  restaurants. It unifies guest data from online ordering, mobile apps, POS,
-  and kiosks into a single view so brands can run personalized loyalty and
-  marketing programs. PAR exposes well-documented Punchh APIs through its
-  developer portal covering platform functions, mobile, online ordering, POS
-  and kiosk integration, and a webhooks manager, with sample collections
-  published to Postman. Most integration surfaces require partner certification.
-  Over 275 restaurant brands rely on Punchh to grow customer lifetime value.
+  Punchh, now part of PAR Technology and offered under the PAR Engagement brand, is
+  an enterprise loyalty, offers, and customer engagement platform for restaurants.
+  It unifies guest data from online ordering, mobile apps, POS, and kiosks into a
+  single view so brands can run personalized loyalty and marketing programs. PAR exposes
+  well-documented Punchh APIs through its developer portal covering platform functions,
+  mobile, online ordering, POS and kiosk integration, and a webhooks manager, with
+  sample collections published to Postman. Most integration surfaces require partner
+  certification. Over 275 restaurant brands rely on Punchh to grow customer lifetime
+  value.
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - Restaurant
-  - Loyalty
-  - Marketing
-  - Guest Engagement
-  - Online Ordering
-  - Mobile
-  - Webhooks
-url: https://raw.githubusercontent.com/api-evangelist/punchh/refs/heads/main/apis.yml
+- Restaurant
+- Loyalty
+- Marketing
+- Guest Engagement
+- Online Ordering
+- Mobile
+- Point Of Sale
+- Webhooks
+url: 
+  https://raw.githubusercontent.com/api-evangelist/punchh/refs/heads/main/apis.yml
 created: '2026-06-02'
-modified: '2026-06-02'
+modified: '2026-06-03'
 specificationVersion: '0.19'
 apis:
-  - aid: punchh:rest-api
-    name: PAR Punchh Loyalty APIs
-    description: >-
-      The PAR Punchh APIs let brands build guest experiences across loyalty,
-      offers, and engagement. Documented surfaces include Platform Functions for
-      core programmatic access, Mobile, Online Ordering, POS and Kiosk
-      integration, and a Webhooks Manager for real-time event notifications.
-      Integrated applications make roughly a billion API calls to Punchh each
-      week. Most products require partner certification before access.
-    humanURL: https://developers.partech.com/
-    tags:
-      - Loyalty
-      - Online Ordering
-      - Mobile
-      - Webhooks
-    properties:
-      - type: Documentation
-        url: https://developers.partech.com/
-      - type: GettingStarted
-        url: https://developers.partech.com/docs/dev-portal-online-ordering/apis/online-ordering-and-sso-api
-common:
-  - type: Website
-    url: https://punchh.com/
+- aid: punchh:mobile
+  name: PAR Punchh Mobile API
+  description: >-
+    Guest-facing loyalty functions for business-branded mobile apps and websites:
+    registration and sign-in, profile management, check-in transaction details, and
+    offer management. Calls are HMAC-SHA256 signed and require partner certification.
+  humanURL: 
+    https://developers.partech.com/docs/dev-portal-mobile/bf6eddb435209-mobile-api
+  baseURL: https://{server_name}.punchh.com
+  tags:
+  - Mobile
+  - Loyalty
+  - Users
+  - Offers
+  properties:
   - type: Documentation
     url: https://developers.partech.com/
-  - type: Blog
-    url: https://punchh.com/blog/
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/partechnology
+  - type: OpenAPI
+    url: openapi/punchh-mobile-openapi.yml
+  - type: JSONSchema
+    url: json-schema/mobile-access-token-schema.json
+  - type: JSONSchema
+    url: json-schema/mobile-create-user-request-schema.json
+  - type: JSONSchema
+    url: json-schema/mobile-login-request-schema.json
+  - type: JSONSchema
+    url: json-schema/mobile-mark-offers-read-request-schema.json
+  - type: JSONSchema
+    url: json-schema/mobile-transaction-details-request-schema.json
+  - type: JSONSchema
+    url: json-schema/mobile-transaction-details-schema.json
+  - type: JSONSchema
+    url: json-schema/mobile-update-user-profile-request-schema.json
+  - type: JSONSchema
+    url: json-schema/mobile-user-session-schema.json
+  - type: JSONStructure
+    url: json-structure/mobile-access-token-structure.json
+  - type: JSONStructure
+    url: json-structure/mobile-create-user-request-structure.json
+  - type: JSONStructure
+    url: json-structure/mobile-login-request-structure.json
+  - type: JSONStructure
+    url: json-structure/mobile-mark-offers-read-request-structure.json
+  - type: JSONStructure
+    url: json-structure/mobile-transaction-details-request-structure.json
+  - type: JSONStructure
+    url: json-structure/mobile-transaction-details-structure.json
+  - type: JSONStructure
+    url: json-structure/mobile-update-user-profile-request-structure.json
+  - type: JSONStructure
+    url: json-structure/mobile-user-session-structure.json
+  - type: JSON-LD
+    url: json-ld/punchh-mobile-context.jsonld
+  - type: Example
+    url: examples/mobile-access-token-example.json
+  - type: Example
+    url: examples/mobile-create-user-request-example.json
+  - type: Example
+    url: examples/mobile-login-request-example.json
+  - type: Example
+    url: examples/mobile-mark-offers-read-request-example.json
+  - type: Example
+    url: examples/mobile-transaction-details-example.json
+  - type: Example
+    url: examples/mobile-transaction-details-request-example.json
+  - type: Example
+    url: examples/mobile-update-user-profile-request-example.json
+  - type: Example
+    url: examples/mobile-user-session-example.json
+  - type: NaftikoCapability
+    url: capabilities/mobile-check-ins.yaml
+  - type: NaftikoCapability
+    url: capabilities/mobile-offers.yaml
+  - type: NaftikoCapability
+    url: capabilities/mobile-users.yaml
+- aid: punchh:online-ordering
+  name: PAR Punchh Online Ordering and SSO API
+  description: >-
+    SSO authentication, loyalty check-ins, and redemptions for online ordering platforms.
+    Lets guests earn and redeem rewards against online order receipts. Requires partner
+    certification.
+  humanURL: 
+    https://developers.partech.com/docs/dev-portal-online-ordering/apis/online-ordering-and-sso-api
+  baseURL: https://{server_name}.punchh.com
+  tags:
+  - Online Ordering
+  - Loyalty
+  - Redemptions
+  - Single Sign On
+  properties:
+  - type: GettingStarted
+    url: 
+      https://developers.partech.com/docs/dev-portal-online-ordering/apis/online-ordering-and-sso-api
+  - type: Documentation
+    url: https://developers.partech.com/
+  - type: OpenAPI
+    url: openapi/punchh-online-ordering-openapi.yml
+  - type: JSONSchema
+    url: json-schema/online-ordering-online-order-checkin-request-schema.json
+  - type: JSONSchema
+    url: json-schema/online-ordering-online-order-checkin-response-schema.json
+  - type: JSONSchema
+    url: json-schema/online-ordering-online-order-redemption-request-schema.json
+  - type: JSONSchema
+    url: 
+      json-schema/online-ordering-online-order-redemption-response-schema.json
+  - type: JSONStructure
+    url: 
+      json-structure/online-ordering-online-order-checkin-request-structure.json
+  - type: JSONStructure
+    url: 
+      json-structure/online-ordering-online-order-checkin-response-structure.json
+  - type: JSONStructure
+    url: 
+      json-structure/online-ordering-online-order-redemption-request-structure.json
+  - type: JSONStructure
+    url: 
+      json-structure/online-ordering-online-order-redemption-response-structure.json
+  - type: JSON-LD
+    url: json-ld/punchh-online-ordering-context.jsonld
+  - type: Example
+    url: examples/online-ordering-online-order-checkin-request-example.json
+  - type: Example
+    url: examples/online-ordering-online-order-checkin-response-example.json
+  - type: Example
+    url: examples/online-ordering-online-order-redemption-request-example.json
+  - type: Example
+    url: examples/online-ordering-online-order-redemption-response-example.json
+  - type: NaftikoCapability
+    url: capabilities/online-ordering-check-in.yaml
+  - type: NaftikoCapability
+    url: capabilities/online-ordering-redemptions.yaml
+- aid: punchh:pos
+  name: PAR Punchh POS and Kiosk API
+  description: >-
+    Point-of-sale and kiosk integration: guest lookup and balance, user and check-in
+    creation, location/program configuration, and redemption processing. Authenticated
+    with a location/business token pair. Requires partner certification.
+  humanURL: 
+    https://developers.partech.com/docs/dev-portal-pos/1921e8b711e43-getting-started-with-pos-api-integrations
+  baseURL: https://{server_name}.punchh.com
+  tags:
+  - Point Of Sale
+  - Kiosk
+  - Loyalty
+  - Redemptions
+  properties:
+  - type: Documentation
+    url: https://developers.partech.com/
+  - type: OpenAPI
+    url: openapi/punchh-pos-openapi.yml
+  - type: JSONSchema
+    url: json-schema/pos-pos-checkin-request-schema.json
+  - type: JSONSchema
+    url: json-schema/pos-pos-user-schema.json
+  - type: JSONStructure
+    url: json-structure/pos-pos-checkin-request-structure.json
+  - type: JSONStructure
+    url: json-structure/pos-pos-user-structure.json
+  - type: JSON-LD
+    url: json-ld/punchh-pos-context.jsonld
+  - type: Example
+    url: examples/pos-pos-checkin-request-example.json
+  - type: Example
+    url: examples/pos-pos-user-example.json
+  - type: NaftikoCapability
+    url: capabilities/pos-check-ins.yaml
+  - type: NaftikoCapability
+    url: capabilities/pos-configuration.yaml
+  - type: NaftikoCapability
+    url: capabilities/pos-receipts.yaml
+  - type: NaftikoCapability
+    url: capabilities/pos-redemptions.yaml
+  - type: NaftikoCapability
+    url: capabilities/pos-users.yaml
+- aid: punchh:platform-functions
+  name: PAR Punchh Platform Functions API
+  description: >-
+    Core programmatic and headless access to the loyalty platform. The Headless Offers
+    API lists offers (redeemables) defined on Punchh for browsing and selection in
+    external platforms. Requires partner certification.
+  humanURL: https://developers.partech.com/docs/dev-portal-platform-functions
+  baseURL: https://{server_name}.punchh.com
+  tags:
+  - Platform Functions
+  - Offers
+  - Headless
+  properties:
+  - type: Documentation
+    url: https://developers.partech.com/
+  - type: OpenAPI
+    url: openapi/punchh-platform-functions-openapi.yml
+  - type: JSONSchema
+    url: json-schema/platform-functions-redeemable-schema.json
+  - type: JSONStructure
+    url: json-structure/platform-functions-redeemable-structure.json
+  - type: JSON-LD
+    url: json-ld/punchh-platform-functions-context.jsonld
+  - type: Example
+    url: examples/platform-functions-redeemable-example.json
+  - type: NaftikoCapability
+    url: capabilities/platform-functions-offers.yaml
+common:
+- type: Website
+  url: https://punchh.com/
+- type: Documentation
+  url: https://developers.partech.com/
+- type: Portal
+  url: https://developers.partech.com/
+- type: GettingStarted
+  url: https://developers.partech.com/docs/dev-portal-developer-resources
+- type: Postman
+  url: https://punchh.com/blog/2024/07/12/par-punchh-apis-now-available-on-postman-workspace/
+- type: GitHubOrganization
+  url: https://github.com/punchh
+- type: Blog
+  url: https://punchh.com/blog/
+- type: LinkedIn
+  url: https://www.linkedin.com/company/partechnology
+- type: SpectralRules
+  url: rules/punchh-spectral-rules.yml
+- type: Vocabulary
+  url: vocabulary/punchh-vocabulary.yaml
+- type: Plans
+  url: plans/punchh-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/punchh-rate-limits.yml
+- type: FinOps
+  url: finops/punchh-finops.yml
+- type: Webhooks
+  url: 
+    https://developers.partech.com/docs/dev-portal-webhooks-manager/8c18e3660f73f-event-guest
+- type: Features
+  data:
+  - name: Loyalty Programs
+    description: >-
+      Configurable points, rewards, tiers, and membership levels across channels.
+  - name: Offers and Campaigns
+    description: >-
+      Targeted offers, coupons, and personalized marketing campaigns driven by unified
+      guest data.
+  - name: Omnichannel Check-Ins
+    description: >-
+      Earn loyalty across mobile, online ordering, POS, and kiosk channels.
+  - name: Redemptions
+    description: >-
+      Apply rewards, redeemables, and discounts against receipts with possible/create/void
+      flows.
+  - name: Webhooks Manager
+    description: >-
+      Real-time event notifications for coupons, points, rewards, and guest lifecycle
+      events.
+  - name: Headless Offers
+    description: >-
+      Surface Punchh-defined offers natively in external platforms via Platform Functions.
+- type: UseCases
+  data:
+  - name: Branded Mobile Loyalty App
+    description: >-
+      Power a restaurant brand's mobile app with sign-in, profile, check-ins, and
+      offers.
+  - name: Online Ordering Rewards
+    description: >-
+      Let guests earn and redeem loyalty on a digital ordering platform via SSO and
+      check-in APIs.
+  - name: POS Loyalty at the Counter
+    description: >-
+      Look up guests, accrue points, and redeem rewards at the point of sale or kiosk.
+  - name: External Offer Distribution
+    description: >-
+      Pull Punchh redeemables into a CDP, messaging platform, or partner channel.
+- type: Integrations
+  data:
+  - name: Point of Sale Systems
+    description: >-
+      Integrations with restaurant POS platforms for in-store loyalty.
+  - name: Online Ordering Platforms
+    description: >-
+      Digital and online ordering platforms connect via the Online Ordering and SSO
+      API.
+  - name: Customer Data Platforms
+    description: >-
+      Unify guest data with CDPs and CRMs.
+  - name: Salesforce Marketing Cloud
+    description: >-
+      Punchh Loyalty connector for Salesforce Marketing Cloud on AppExchange.
+  - name: Messaging and Payment Gateways
+    description: >-
+      Connects to messaging platforms, surveys, and payment gateways across dozens
+      of categories.
+- type: Solutions
+  data:
+  - name: Loyalty
+    description: >-
+      Enterprise loyalty program management for restaurant brands.
+  - name: Offers
+    description: >-
+      Personalized offers and promotions engine.
+  - name: Guest Engagement
+    description: >-
+      Unified marketing and engagement across the guest lifecycle.
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com

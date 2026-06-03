@@ -1,0 +1,92 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: PAR Punchh Platform Functions API — Offers
+  description: 'PAR Punchh Platform Functions API — Offers. 1 operations. Lead operation: Get Redeemable List. Self-contained Naftiko capability covering one PAR Punchh business surface.'
+  tags:
+  - PAR Punchh
+  - Loyalty
+  - Offers
+  created: '2026-06-03'
+  modified: '2026-06-03'
+binds:
+- namespace: env
+  keys:
+    PUNCHH_BEARER_TOKEN: PUNCHH_BEARER_TOKEN
+capability:
+  consumes:
+  - type: http
+    namespace: platform-functions-offers
+    baseUri: https://{server_name}.punchh.com
+    description: PAR Punchh Platform Functions API — Offers business capability. Self-contained, no shared references.
+    authentication:
+      type: bearer
+      token: '{{env.PUNCHH_BEARER_TOKEN}}'
+    resources:
+    - name: api2-dashboard-redeemables
+      path: /api2/dashboard/redeemables
+      operations:
+      - name: getRedeemableList
+        method: GET
+        description: Get Redeemable List
+        inputParameters:
+        - name: query
+          in: query
+          type: string
+          required: false
+          description: Search term for redeemable name or description.
+        - name: page
+          in: query
+          type: integer
+          required: false
+          description: Page number.
+        - name: per_page
+          in: query
+          type: integer
+          required: false
+          description: Records per page.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: platform-functions-offers-rest
+    port: 8080
+    description: REST adapter for PAR Punchh Platform Functions API — Offers. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/dashboard/redeemables
+      name: api2-dashboard-redeemables
+      description: REST surface for Get Redeemable List.
+      operations:
+      - method: GET
+        name: getRedeemableList
+        description: Get Redeemable List
+        call: platform-functions-offers.getRedeemableList
+        with:
+          query: rest.query
+          page: rest.page
+          per_page: rest.per_page
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: platform-functions-offers-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for PAR Punchh Platform Functions API — Offers. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: get-redeemable-list
+      description: Get Redeemable List
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-functions-offers.getRedeemableList
+      with:
+        query: tools.query
+        page: tools.page
+        per_page: tools.per_page
+      outputParameters:
+      - type: object
+        mapping: $.

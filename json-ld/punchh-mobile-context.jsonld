@@ -1,0 +1,225 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "pch": "https://developers.partech.com/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "CreateUserRequest": "pch:CreateUserRequest",
+    "client": {
+      "@id": "pch:client",
+      "@type": "xsd:string"
+    },
+    "email": {
+      "@id": "schema:email"
+    },
+    "password": {
+      "@id": "pch:password",
+      "@type": "xsd:string"
+    },
+    "firstName": {
+      "@id": "pch:first_name",
+      "@type": "xsd:string"
+    },
+    "LoginRequest": "pch:LoginRequest",
+    "user": {
+      "@id": "pch:user",
+      "@type": "@id"
+    },
+    "UpdateUserProfileRequest": "pch:UpdateUserProfileRequest",
+    "lastName": {
+      "@id": "pch:last_name",
+      "@type": "xsd:string"
+    },
+    "phone": {
+      "@id": "pch:phone",
+      "@type": "xsd:string"
+    },
+    "passwordConfirmation": {
+      "@id": "pch:password_confirmation",
+      "@type": "xsd:string"
+    },
+    "currentPassword": {
+      "@id": "pch:current_password",
+      "@type": "xsd:string"
+    },
+    "birthday": {
+      "@id": "pch:birthday",
+      "@type": "xsd:string"
+    },
+    "anniversary": {
+      "@id": "pch:anniversary",
+      "@type": "xsd:string"
+    },
+    "gender": {
+      "@id": "pch:gender",
+      "@type": "xsd:string"
+    },
+    "address": {
+      "@id": "pch:address",
+      "@type": "xsd:string"
+    },
+    "city": {
+      "@id": "pch:city",
+      "@type": "xsd:string"
+    },
+    "state": {
+      "@id": "pch:state",
+      "@type": "xsd:string"
+    },
+    "zipCode": {
+      "@id": "pch:zip_code",
+      "@type": "xsd:string"
+    },
+    "avatarRemoteUrl": {
+      "@id": "pch:avatar_remote_url",
+      "@type": "xsd:string"
+    },
+    "favouriteLocationIds": {
+      "@id": "pch:favourite_location_ids",
+      "@container": "@set",
+      "@type": "xsd:integer"
+    },
+    "apnToken": {
+      "@id": "pch:apn_token",
+      "@type": "xsd:string"
+    },
+    "gcmToken": {
+      "@id": "pch:gcm_token",
+      "@type": "xsd:string"
+    },
+    "ageVerifiedStatus": {
+      "@id": "pch:age_verified_status",
+      "@type": "xsd:string"
+    },
+    "AccessToken": "pch:AccessToken",
+    "token": {
+      "@id": "pch:token",
+      "@type": "xsd:string"
+    },
+    "refreshToken": {
+      "@id": "pch:refresh_token",
+      "@type": "xsd:string"
+    },
+    "secondsToExpire": {
+      "@id": "pch:seconds_to_expire",
+      "@type": "xsd:integer"
+    },
+    "scopes": {
+      "@id": "pch:scopes",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "UserSession": "pch:UserSession",
+    "accessToken": {
+      "@id": "pch:access_token",
+      "@type": "@id"
+    },
+    "TransactionDetailsRequest": "pch:TransactionDetailsRequest",
+    "transactionId": {
+      "@id": "pch:transaction_id",
+      "@type": "xsd:string"
+    },
+    "TransactionDetails": "pch:TransactionDetails",
+    "checkin": {
+      "@id": "pch:checkin",
+      "@type": "@id"
+    },
+    "checkinId": {
+      "@id": "pch:checkin_id",
+      "@type": "xsd:integer"
+    },
+    "createdAt": {
+      "@id": "schema:dateCreated"
+    },
+    "currentMembershipLevel": {
+      "@id": "pch:current_membership_level",
+      "@type": "xsd:string"
+    },
+    "locationId": {
+      "@id": "pch:location_id",
+      "@type": "xsd:integer"
+    },
+    "pendingRefresh": {
+      "@id": "pch:pending_refresh",
+      "@type": "xsd:boolean"
+    },
+    "pointsEarned": {
+      "@id": "pch:points_earned",
+      "@type": "xsd:decimal"
+    },
+    "storeNumber": {
+      "@id": "pch:store_number",
+      "@type": "xsd:string"
+    },
+    "surveyUrl": {
+      "@id": "pch:survey_url",
+      "@type": "xsd:string"
+    },
+    "firstCheckin": {
+      "@id": "pch:first_checkin",
+      "@type": "xsd:boolean"
+    },
+    "expiringOn": {
+      "@id": "pch:expiring_on",
+      "@type": "xsd:string"
+    },
+    "redemptions": {
+      "@id": "pch:redemptions",
+      "@container": "@set",
+      "@type": "@id"
+    },
+    "redemptionId": {
+      "@id": "pch:redemption_id",
+      "@type": "xsd:integer"
+    },
+    "redemptionStatus": {
+      "@id": "pch:redemption_status",
+      "@type": "xsd:string"
+    },
+    "updatedAt": {
+      "@id": "schema:dateModified"
+    },
+    "redeemableId": {
+      "@id": "pch:redeemable_id",
+      "@type": "xsd:integer"
+    },
+    "redeemableName": {
+      "@id": "pch:redeemable_name",
+      "@type": "xsd:string"
+    },
+    "redeemedValue": {
+      "@id": "pch:redeemed_value",
+      "@type": "xsd:decimal"
+    },
+    "redemptionImageUrl": {
+      "@id": "pch:redemption_image_url",
+      "@type": "xsd:string"
+    },
+    "redemptionMessage": {
+      "@id": "pch:redemption_message",
+      "@type": "xsd:string"
+    },
+    "redemptionTrackingCode": {
+      "@id": "pch:redemption_tracking_code",
+      "@type": "xsd:string"
+    },
+    "expiringAt": {
+      "@id": "pch:expiring_at",
+      "@type": "xsd:string"
+    },
+    "MarkOffersReadRequest": "pch:MarkOffersReadRequest",
+    "eventType": {
+      "@id": "pch:event_type",
+      "@type": "xsd:string"
+    },
+    "rewards": {
+      "@id": "pch:rewards",
+      "@type": "xsd:string"
+    },
+    "userNotifications": {
+      "@id": "pch:user_notifications",
+      "@type": "xsd:string"
+    }
+  }
+}

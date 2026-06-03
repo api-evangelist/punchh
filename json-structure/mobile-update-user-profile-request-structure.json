@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/punchh/refs/heads/main/json-structure/mobile-update-user-profile-request-structure.json",
+  "name": "UpdateUserProfileRequest",
+  "description": "UpdateUserProfileRequest schema from PAR Punchh Mobile API",
+  "type": "object",
+  "properties": {
+    "client": {
+      "type": "string",
+      "description": "OAuth client ID provided by the business.",
+      "example": "business_client_key"
+    },
+    "user": {
+      "type": "object",
+      "properties": {
+        "first_name": {
+          "type": "string",
+          "example": "Jane Smith"
+        },
+        "last_name": {
+          "type": "string",
+          "example": "Jane Smith"
+        },
+        "email": {
+          "type": "string",
+          "example": "jsmith@example.com"
+        },
+        "phone": {
+          "type": "string",
+          "example": "+15551234567"
+        },
+        "password": {
+          "type": "string",
+          "example": "example"
+        },
+        "password_confirmation": {
+          "type": "string",
+          "example": "example"
+        },
+        "current_password": {
+          "type": "string",
+          "example": "example"
+        },
+        "birthday": {
+          "type": "string",
+          "example": "example"
+        },
+        "anniversary": {
+          "type": "string",
+          "example": "example"
+        },
+        "gender": {
+          "type": "string",
+          "example": "female"
+        },
+        "address": {
+          "type": "string",
+          "example": "123 Market St"
+        },
+        "city": {
+          "type": "string",
+          "example": "San Francisco"
+        },
+        "state": {
+          "type": "string",
+          "example": "CA"
+        },
+        "zip_code": {
+          "type": "string",
+          "example": "CODE-AB12CD"
+        },
+        "avatar_remote_url": {
+          "type": "string",
+          "example": "https://portal.example.com/path/abc123"
+        },
+        "favourite_location_ids": {
+          "type": "array",
+          "items": {
+            "type": "int32"
+          }
+        },
+        "apn_token": {
+          "type": "string",
+          "example": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4"
+        },
+        "gcm_token": {
+          "type": "string",
+          "example": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4"
+        },
+        "age_verified_status": {
+          "type": "string",
+          "example": "active"
+        }
+      }
+    }
+  },
+  "required": [
+    "client"
+  ]
+}

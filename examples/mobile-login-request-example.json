@@ -1,0 +1,7 @@
+{
+  "client": "business_client_key",
+  "user": {
+    "email": "jsmith@example.com",
+    "password": "example"
+  }
+}

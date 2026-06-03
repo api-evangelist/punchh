@@ -1,0 +1,10 @@
+{
+  "first_name": "Jane Smith",
+  "last_name": "Jane Smith",
+  "total_checkins": "example",
+  "points_balance": "example",
+  "checkin": {
+    "checkin_id": "500123",
+    "points_earned": "example"
+  }
+}
