@@ -1,0 +1,261 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "PAR Punchh POS and Kiosk API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "User Look-Up and Fetch Balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{server_name}.punchh.com/api/pos/users/search",
+            "params": [
+              {
+                "name": "phone_number",
+                "value": "",
+                "type": "query",
+                "description": "Guest phone number."
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Guest email address."
+              },
+              {
+                "name": "user_as_qrcode",
+                "value": "",
+                "type": "query",
+                "description": "Guest QR code value."
+              },
+              {
+                "name": "single_scan_code",
+                "value": "",
+                "type": "query",
+                "description": "Single scan code value."
+              },
+              {
+                "name": "redemption_code",
+                "value": "",
+                "type": "query",
+                "description": "Redemption code value."
+              },
+              {
+                "name": "card_number",
+                "value": "",
+                "type": "query",
+                "description": "Loyalty/gift card number."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Looks up a guest and returns account details and loyalty balances. Provide exactly one identifier (phone number, email, QR code, single scan code, redemption code, card number, or Apple NFC token)."
+        },
+        {
+          "info": {
+            "name": "Create New User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{server_name}.punchh.com/api/pos/users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new guest account from the point of sale."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Check-Ins",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Check-In",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{server_name}.punchh.com/api/pos/checkins",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a loyalty check-in at the point of sale."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Configuration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Location Configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{server_name}.punchh.com/api/pos/locations/configuration",
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the loyalty configuration for the authenticated location."
+        },
+        {
+          "info": {
+            "name": "Program Meta",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{server_name}.punchh.com/api/pos/meta",
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns loyalty program metadata for the business."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Redemptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Possible Redemptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{server_name}.punchh.com/api/pos/redemptions/possible",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the redemptions available to a guest for the supplied receipt."
+        },
+        {
+          "info": {
+            "name": "Create Redemption",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{server_name}.punchh.com/api/pos/redemptions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Applies a redemption against a POS receipt."
+        },
+        {
+          "info": {
+            "name": "Void Redemption",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{server_name}.punchh.com/api/pos/redemptions",
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Voids a previously created redemption."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Receipts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Store Receipt Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{server_name}.punchh.com/receipt_details",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Stores itemized receipt details for a transaction."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,64 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "PAR Punchh Online Ordering and SSO API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Check-In",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Loyalty Check-In",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{server_name}.punchh.com/api/auth/checkins/online_order",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a loyalty check-in for an online order, accruing points based on the receipt amount. Use `external_uid` to guarantee idempotency."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Redemptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Online Redemption",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{server_name}.punchh.com/api/auth/redemptions/online_order",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Redeems a card, reward, redeemable, or discount against an online order receipt. Receipt details are revalidated during processing."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

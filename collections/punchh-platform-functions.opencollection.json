@@ -1,0 +1,53 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "PAR Punchh Platform Functions API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Offers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Redeemable List",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{server_name}.punchh.com/api2/dashboard/redeemables",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Search term for redeemable name or description."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Records per page."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the list of offers (redeemables) available and defined on Punchh, enabling browsing and selection of offers natively in an external platform. Supports search and pagination."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

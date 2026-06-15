@@ -1,0 +1,1884 @@
+{
+  "item": [
+    {
+      "id": "30372752-b13e-4ede-b7bf-c1eec2c65e6f",
+      "name": "Users",
+      "description": {
+        "content": "Guest lookup and creation at the point of sale.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "eec9df63-1f4b-4908-bdd9-c1a830b7ff11",
+          "name": "User Look-Up and Fetch Balance",
+          "request": {
+            "name": "User Look-Up and Fetch Balance",
+            "description": {
+              "content": "Looks up a guest and returns account details and loyalty balances. Provide exactly one identifier (phone number, email, QR code, single scan code, redemption code, card number, or Apple NFC token).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "users",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "phone_number",
+                  "value": "<string>",
+                  "description": "Guest phone number."
+                },
+                {
+                  "disabled": false,
+                  "key": "email",
+                  "value": "<email>",
+                  "description": "Guest email address."
+                },
+                {
+                  "disabled": false,
+                  "key": "user_as_qrcode",
+                  "value": "<string>",
+                  "description": "Guest QR code value."
+                },
+                {
+                  "disabled": false,
+                  "key": "single_scan_code",
+                  "value": "<string>",
+                  "description": "Single scan code value."
+                },
+                {
+                  "disabled": false,
+                  "key": "redemption_code",
+                  "value": "<string>",
+                  "description": "Redemption code value."
+                },
+                {
+                  "disabled": false,
+                  "key": "card_number",
+                  "value": "<string>",
+                  "description": "Loyalty/gift card number."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Environment-specific host name",
+                  "type": "any",
+                  "value": "{{server_name}}",
+                  "key": "server_name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9aeb7d14-e965-4c50-8495-b9408ea4e9e9",
+              "name": "Guest account details and loyalty balances.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "users",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "phone_number",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<email>"
+                    },
+                    {
+                      "key": "user_as_qrcode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "single_scan_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "redemption_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "card_number",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"phone_number\": \"+15551234567\",\n  \"email\": \"jsmith@example.com\",\n  \"first_name\": \"Jane Smith\",\n  \"last_name\": \"Jane Smith\",\n  \"card_number\": \"example\",\n  \"balances\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "261b9057-b62b-4a22-83fb-e8bd0e1d169f",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "users",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "phone_number",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<email>"
+                    },
+                    {
+                      "key": "user_as_qrcode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "single_scan_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "redemption_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "card_number",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4efbcb2a-d5c1-4f89-baf1-c622a447f2e6",
+              "name": "User not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "users",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "phone_number",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<email>"
+                    },
+                    {
+                      "key": "user_as_qrcode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "single_scan_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "redemption_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "card_number",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bd0e3a91-10f2-4052-82a9-ea9180632712",
+          "name": "Create New User",
+          "request": {
+            "name": "Create New User",
+            "description": {
+              "content": "Creates a new guest account from the point of sale.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Environment-specific host name",
+                  "type": "any",
+                  "value": "{{server_name}}",
+                  "key": "server_name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone_number\": \"<string>\",\n  \"email\": \"<email>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"card_number\": \"<string>\",\n  \"balances\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "52f069d3-7d76-4b75-93a4-febda2b27c08",
+              "name": "User created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone_number\": \"+15551234567\",\n  \"email\": \"jsmith@example.com\",\n  \"first_name\": \"Jane Smith\",\n  \"last_name\": \"Jane Smith\",\n  \"card_number\": \"example\",\n  \"balances\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"phone_number\": \"+15551234567\",\n  \"email\": \"jsmith@example.com\",\n  \"first_name\": \"Jane Smith\",\n  \"last_name\": \"Jane Smith\",\n  \"card_number\": \"example\",\n  \"balances\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a2ec057-1b2c-4095-a045-b0f6ae46619b",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone_number\": \"+15551234567\",\n  \"email\": \"jsmith@example.com\",\n  \"first_name\": \"Jane Smith\",\n  \"last_name\": \"Jane Smith\",\n  \"card_number\": \"example\",\n  \"balances\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "aaff1845-b46b-4475-9852-b70d3f28ed7c",
+              "name": "Unprocessable Entity.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone_number\": \"+15551234567\",\n  \"email\": \"jsmith@example.com\",\n  \"first_name\": \"Jane Smith\",\n  \"last_name\": \"Jane Smith\",\n  \"card_number\": \"example\",\n  \"balances\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "9084779b-5550-4db0-b567-c58d0e20f180",
+      "name": "Check-Ins",
+      "description": {
+        "content": "POS loyalty check-ins.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "104a08d4-706e-4fff-94bc-780af31eb646",
+          "name": "Create Check-In",
+          "request": {
+            "name": "Create Check-In",
+            "description": {
+              "content": "Creates a loyalty check-in at the point of sale.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "checkins"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Environment-specific host name",
+                  "type": "any",
+                  "value": "{{server_name}}",
+                  "key": "server_name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"store_number\": \"<string>\",\n  \"transaction_no\": \"<string>\",\n  \"receipt_amount\": \"<number>\",\n  \"subtotal_amount\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bcbfbffa-3cca-4f77-81b4-5fd84b4789d8",
+              "name": "Check-in created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "checkins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"store_number\": \"STORE-001\",\n  \"transaction_no\": \"TXN-784512\",\n  \"receipt_amount\": \"example\",\n  \"subtotal_amount\": \"example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7d03f89d-5971-40d7-93ae-efcd52ab09f2",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "checkins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"store_number\": \"STORE-001\",\n  \"transaction_no\": \"TXN-784512\",\n  \"receipt_amount\": \"example\",\n  \"subtotal_amount\": \"example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4dcb1a81-a9ba-47e1-a782-8a4cb999dfe5",
+              "name": "Unprocessable Entity.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "checkins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"store_number\": \"STORE-001\",\n  \"transaction_no\": \"TXN-784512\",\n  \"receipt_amount\": \"example\",\n  \"subtotal_amount\": \"example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "9554a204-a855-4e88-a2c8-1c491878345e",
+      "name": "Configuration",
+      "description": {
+        "content": "Location and program configuration/metadata.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3bbd03fc-4e1d-447a-a24b-dab492d074b1",
+          "name": "Location Configuration",
+          "request": {
+            "name": "Location Configuration",
+            "description": {
+              "content": "Returns the loyalty configuration for the authenticated location.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "locations",
+                "configuration"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Environment-specific host name",
+                  "type": "any",
+                  "value": "{{server_name}}",
+                  "key": "server_name"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b90b5124-5f45-470b-aa5b-56141a4ae659",
+              "name": "Location configuration.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "locations",
+                    "configuration"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b64555e5-0c2b-4e47-a725-78ed25f86efc",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "locations",
+                    "configuration"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4fd5c401-a370-4c7d-b3ea-35a1c9d7c452",
+          "name": "Program Meta",
+          "request": {
+            "name": "Program Meta",
+            "description": {
+              "content": "Returns loyalty program metadata for the business.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "meta"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Environment-specific host name",
+                  "type": "any",
+                  "value": "{{server_name}}",
+                  "key": "server_name"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7792104c-3640-40b1-837a-61f058f60dc8",
+              "name": "Program metadata.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "meta"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "74a3a309-7079-4e03-bba0-c0d3f9287c09",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "meta"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "7d81cc5d-b13a-4fbd-9431-cb5948e581ff",
+      "name": "Redemptions",
+      "description": {
+        "content": "Possible, create, and void redemptions at the POS.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "841752e9-c74b-4cd0-91f0-8926a4409077",
+          "name": "Possible Redemptions",
+          "request": {
+            "name": "Possible Redemptions",
+            "description": {
+              "content": "Returns the redemptions available to a guest for the supplied receipt.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "redemptions",
+                "possible"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Environment-specific host name",
+                  "type": "any",
+                  "value": "{{server_name}}",
+                  "key": "server_name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6bbb63d5-16bb-4ada-b92a-9e75a2bddefe",
+              "name": "Possible redemptions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "redemptions",
+                    "possible"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "04e60ab9-b233-43da-b1dc-eb215c62de59",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "redemptions",
+                    "possible"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "882e5d8a-fa77-4253-bae1-ee6ebabedfaa",
+          "name": "Create Redemption",
+          "request": {
+            "name": "Create Redemption",
+            "description": {
+              "content": "Applies a redemption against a POS receipt.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "redemptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Environment-specific host name",
+                  "type": "any",
+                  "value": "{{server_name}}",
+                  "key": "server_name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3c49baf3-5360-4d69-a2cc-7286c24f22f2",
+              "name": "Redemption created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "redemptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1aa90432-f683-4b50-984b-67a2c6e5d504",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "redemptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5ab1de89-4305-4e51-8c0a-09b992ed5f33",
+          "name": "Void Redemption",
+          "request": {
+            "name": "Void Redemption",
+            "description": {
+              "content": "Voids a previously created redemption.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "redemptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Environment-specific host name",
+                  "type": "any",
+                  "value": "{{server_name}}",
+                  "key": "server_name"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4fda87bc-6e0b-4eb9-b14a-3a8959625263",
+              "name": "Redemption voided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "redemptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e6f8fff6-8065-405f-90a2-932f54f44988",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "redemptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "8646876a-9f0c-4852-b37b-3c829eb8c7e1",
+      "name": "Receipts",
+      "description": {
+        "content": "Receipt detail storage.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "693e7ab0-19e1-4094-b55c-d545124269d7",
+          "name": "Store Receipt Details",
+          "request": {
+            "name": "Store Receipt Details",
+            "description": {
+              "content": "Stores itemized receipt details for a transaction.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "receipt_details"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Environment-specific host name",
+                  "type": "any",
+                  "value": "{{server_name}}",
+                  "key": "server_name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3337e207-9106-4b62-8146-72989d81617d",
+              "name": "Receipt details stored.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "receipt_details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c14de3b8-b90c-47e6-b75c-b58f6fd458e5",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "receipt_details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Environment-specific host name",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "SERVER_NAME_GOES_HERE",
+      "key": "server_name"
+    },
+    {
+      "type": "string",
+      "value": "https://{{server_name}}.punchh.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "d771e08a-2317-43dc-b5e3-a4d36c29f588",
+    "name": "PAR Punchh POS and Kiosk API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The PAR Punchh POS and Kiosk API integrates point-of-sale and kiosk systems with the Punchh loyalty platform: looking up guests and balances, creating users and check-ins, retrieving location/program configuration, and processing redemptions. Access requires partner certification. Requests authenticate with a location/business token pair and a structured `User-Agent`. Base URLs are provided by a Punchh representative.\n\nContact Support:\n Name: PAR Developer Portal",
+      "type": "text/plain"
+    }
+  }
+}

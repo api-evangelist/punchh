@@ -1,0 +1,133 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "PAR Punchh Mobile API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{server_name}.punchh.com/api2/mobile/users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-pch-digest",
+              "value": "{{x-pch-digest}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Registers a new guest account. Requires the business OAuth client ID and basic profile fields."
+        },
+        {
+          "info": {
+            "name": "Update User Profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{server_name}.punchh.com/api2/mobile/users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates the authenticated guest's profile. Birthday may be updated only once due to fraud protections."
+        },
+        {
+          "info": {
+            "name": "Sign In",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{server_name}.punchh.com/api2/mobile/users/login",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-pch-digest",
+              "value": "{{x-pch-digest}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Authenticates a guest with email and password and returns an access token, refresh token, and the user profile."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Check-Ins",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Transaction Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{server_name}.punchh.com/api2/mobile/checkins/transactions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns details for a check-in transaction, including points earned, membership level, and associated redemptions. The transaction ID is delivered in the push notification payload key \"t\"."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Offers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Mark Offers As Read",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{server_name}.punchh.com/api2/mobile/offers/mark_read",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Marks rewards or user notifications as read. Either `rewards` or `user_notifications` must be provided."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

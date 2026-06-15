@@ -1,0 +1,1382 @@
+{
+  "item": [
+    {
+      "id": "abafe74d-655e-4d33-a415-4942e1e3d222",
+      "name": "Users",
+      "description": {
+        "content": "Guest registration, authentication, and profile management.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4dbfb043-21de-435f-a86d-f667a5f0a78c",
+          "name": "Create User",
+          "request": {
+            "name": "Create User",
+            "description": {
+              "content": "Registers a new guest account. Requires the business OAuth client ID and basic profile fields.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Environment-specific host name",
+                  "type": "any",
+                  "value": "{{server_name}}",
+                  "key": "server_name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-pch-digest"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"<string>\",\n  \"email\": \"<email>\",\n  \"password\": \"<string>\",\n  \"first_name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c9813418-b12d-4732-8616-a0add67c5862",
+              "name": "User created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api2",
+                    "mobile",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-pch-digest",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"business_client_key\",\n  \"email\": \"jsmith@example.com\",\n  \"password\": \"example\",\n  \"first_name\": \"Jane Smith\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_token\": {\n    \"token\": \"a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4\",\n    \"refresh_token\": \"a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4\",\n    \"seconds_to_expire\": \"example\",\n    \"scopes\": [\n      \"example\"\n    ]\n  },\n  \"user\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "515206a1-1740-4adf-8c18-7881b0d89fdf",
+              "name": "Bad Request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api2",
+                    "mobile",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-pch-digest",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"business_client_key\",\n  \"email\": \"jsmith@example.com\",\n  \"password\": \"example\",\n  \"first_name\": \"Jane Smith\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "460c24d9-ada5-40b1-a5a3-0170bd5b9eac",
+              "name": "Unprocessable Entity.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api2",
+                    "mobile",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-pch-digest",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"business_client_key\",\n  \"email\": \"jsmith@example.com\",\n  \"password\": \"example\",\n  \"first_name\": \"Jane Smith\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cca1cf9c-6f53-484a-afc0-b4c08f6065d2",
+          "name": "Update User Profile",
+          "request": {
+            "name": "Update User Profile",
+            "description": {
+              "content": "Updates the authenticated guest's profile. Birthday may be updated only once due to fraud protections.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Environment-specific host name",
+                  "type": "any",
+                  "value": "{{server_name}}",
+                  "key": "server_name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"<string>\",\n  \"user\": {\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"email\": \"<email>\",\n    \"phone\": \"<string>\",\n    \"password\": \"<string>\",\n    \"password_confirmation\": \"<string>\",\n    \"current_password\": \"<string>\",\n    \"birthday\": \"<string>\",\n    \"anniversary\": \"<string>\",\n    \"gender\": \"<string>\",\n    \"address\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"zip_code\": \"<string>\",\n    \"avatar_remote_url\": \"<string>\",\n    \"favourite_location_ids\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"apn_token\": \"<string>\",\n    \"gcm_token\": \"<string>\",\n    \"age_verified_status\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f59b734e-1e4a-46d9-a2e1-bd6b26c0d057",
+              "name": "Updated user object with new access token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api2",
+                    "mobile",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"business_client_key\",\n  \"user\": {\n    \"first_name\": \"Jane Smith\",\n    \"last_name\": \"Jane Smith\",\n    \"email\": \"jsmith@example.com\",\n    \"phone\": \"+15551234567\",\n    \"password\": \"example\",\n    \"password_confirmation\": \"example\",\n    \"current_password\": \"example\",\n    \"birthday\": \"example\",\n    \"anniversary\": \"example\",\n    \"gender\": \"female\",\n    \"address\": \"123 Market St\",\n    \"city\": \"San Francisco\",\n    \"state\": \"CA\",\n    \"zip_code\": \"CODE-AB12CD\",\n    \"avatar_remote_url\": \"https://portal.example.com/path/abc123\",\n    \"favourite_location_ids\": [\n      123\n    ],\n    \"apn_token\": \"a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4\",\n    \"gcm_token\": \"a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4\",\n    \"age_verified_status\": \"active\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_token\": {\n    \"token\": \"a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4\",\n    \"refresh_token\": \"a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4\",\n    \"seconds_to_expire\": \"example\",\n    \"scopes\": [\n      \"example\"\n    ]\n  },\n  \"user\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3d62d929-bba8-482d-b8fa-661c5cd38f5c",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api2",
+                    "mobile",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"business_client_key\",\n  \"user\": {\n    \"first_name\": \"Jane Smith\",\n    \"last_name\": \"Jane Smith\",\n    \"email\": \"jsmith@example.com\",\n    \"phone\": \"+15551234567\",\n    \"password\": \"example\",\n    \"password_confirmation\": \"example\",\n    \"current_password\": \"example\",\n    \"birthday\": \"example\",\n    \"anniversary\": \"example\",\n    \"gender\": \"female\",\n    \"address\": \"123 Market St\",\n    \"city\": \"San Francisco\",\n    \"state\": \"CA\",\n    \"zip_code\": \"CODE-AB12CD\",\n    \"avatar_remote_url\": \"https://portal.example.com/path/abc123\",\n    \"favourite_location_ids\": [\n      123\n    ],\n    \"apn_token\": \"a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4\",\n    \"gcm_token\": \"a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4\",\n    \"age_verified_status\": \"active\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7d6392fb-d225-46c3-bcf7-fba4baa999a1",
+              "name": "Unprocessable Entity.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api2",
+                    "mobile",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"business_client_key\",\n  \"user\": {\n    \"first_name\": \"Jane Smith\",\n    \"last_name\": \"Jane Smith\",\n    \"email\": \"jsmith@example.com\",\n    \"phone\": \"+15551234567\",\n    \"password\": \"example\",\n    \"password_confirmation\": \"example\",\n    \"current_password\": \"example\",\n    \"birthday\": \"example\",\n    \"anniversary\": \"example\",\n    \"gender\": \"female\",\n    \"address\": \"123 Market St\",\n    \"city\": \"San Francisco\",\n    \"state\": \"CA\",\n    \"zip_code\": \"CODE-AB12CD\",\n    \"avatar_remote_url\": \"https://portal.example.com/path/abc123\",\n    \"favourite_location_ids\": [\n      123\n    ],\n    \"apn_token\": \"a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4\",\n    \"gcm_token\": \"a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4\",\n    \"age_verified_status\": \"active\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "460be184-0114-4b5b-8fe8-b3488980c435",
+          "name": "Sign In",
+          "request": {
+            "name": "Sign In",
+            "description": {
+              "content": "Authenticates a guest with email and password and returns an access token, refresh token, and the user profile.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "users",
+                "login"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Environment-specific host name",
+                  "type": "any",
+                  "value": "{{server_name}}",
+                  "key": "server_name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-pch-digest"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"<string>\",\n  \"user\": {\n    \"email\": \"<email>\",\n    \"password\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "565c0020-dad6-4a0a-bdd0-e769f0541cc4",
+              "name": "Authenticated session.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api2",
+                    "mobile",
+                    "users",
+                    "login"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-pch-digest",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"business_client_key\",\n  \"user\": {\n    \"email\": \"jsmith@example.com\",\n    \"password\": \"example\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_token\": {\n    \"token\": \"a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4\",\n    \"refresh_token\": \"a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4\",\n    \"seconds_to_expire\": \"example\",\n    \"scopes\": [\n      \"example\"\n    ]\n  },\n  \"user\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "71d44178-00f8-40bd-8e1c-38b96c99b78e",
+              "name": "Bad Request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api2",
+                    "mobile",
+                    "users",
+                    "login"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-pch-digest",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"business_client_key\",\n  \"user\": {\n    \"email\": \"jsmith@example.com\",\n    \"password\": \"example\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e730085e-dfd1-4320-879f-f7a2560957e9",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api2",
+                    "mobile",
+                    "users",
+                    "login"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-pch-digest",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"business_client_key\",\n  \"user\": {\n    \"email\": \"jsmith@example.com\",\n    \"password\": \"example\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0108ab16-359a-4e8e-8e2e-d6803e94dce5",
+              "name": "Precondition Failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api2",
+                    "mobile",
+                    "users",
+                    "login"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-pch-digest",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"business_client_key\",\n  \"user\": {\n    \"email\": \"jsmith@example.com\",\n    \"password\": \"example\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Precondition Failed",
+              "code": 412,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2923fea0-a948-402a-90bd-1cab627c8031",
+              "name": "Unprocessable Entity.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api2",
+                    "mobile",
+                    "users",
+                    "login"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-pch-digest",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"business_client_key\",\n  \"user\": {\n    \"email\": \"jsmith@example.com\",\n    \"password\": \"example\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "7bacc2e2-1f8e-4e1a-b433-9fe469cac680",
+      "name": "Check-Ins",
+      "description": {
+        "content": "Loyalty check-in transaction details.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1777ff8b-7541-485f-96a3-66d514a0e60a",
+          "name": "Transaction Details",
+          "request": {
+            "name": "Transaction Details",
+            "description": {
+              "content": "Returns details for a check-in transaction, including points earned, membership level, and associated redemptions. The transaction ID is delivered in the push notification payload key \"t\".",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "checkins",
+                "transactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Environment-specific host name",
+                  "type": "any",
+                  "value": "{{server_name}}",
+                  "key": "server_name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"<string>\",\n  \"transaction_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b132d5b1-a0b9-4a93-b373-c055b46ed6fa",
+              "name": "Check-in transaction details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api2",
+                    "mobile",
+                    "checkins",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"business_client_key\",\n  \"transaction_id\": \"500123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"checkin\": {\n    \"checkin_id\": \"500123\",\n    \"created_at\": \"2025-03-15T14:30:00Z\",\n    \"current_membership_level\": \"example\",\n    \"location_id\": \"500123\",\n    \"pending_refresh\": \"example\",\n    \"points_earned\": \"example\",\n    \"store_number\": \"STORE-001\",\n    \"survey_url\": \"https://portal.example.com/path/abc123\",\n    \"first_checkin\": \"example\",\n    \"expiring_on\": \"example\"\n  },\n  \"redemptions\": [\n    {\n      \"redemption_id\": \"500123\",\n      \"redemption_status\": \"active\",\n      \"created_at\": \"2025-03-15T14:30:00Z\",\n      \"updated_at\": \"2025-03-15T14:30:00Z\",\n      \"redeemable_id\": \"500123\",\n      \"redeemable_name\": \"Free Appetizer\",\n      \"redeemed_value\": \"example\",\n      \"redemption_image_url\": \"https://portal.example.com/path/abc123\",\n      \"redemption_message\": \"Reward successfully applied to the order.\",\n      \"redemption_tracking_code\": \"CODE-AB12CD\",\n      \"expiring_at\": \"example\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dee22770-b066-40c6-b45e-2051574cfee5",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api2",
+                    "mobile",
+                    "checkins",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"business_client_key\",\n  \"transaction_id\": \"500123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "1f9ec027-46f7-4f95-a88a-6ba29eab6b5a",
+      "name": "Offers",
+      "description": {
+        "content": "Guest offer management.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0826de68-ae82-47c4-a995-c26fe6536592",
+          "name": "Mark Offers As Read",
+          "request": {
+            "name": "Mark Offers As Read",
+            "description": {
+              "content": "Marks rewards or user notifications as read. Either `rewards` or `user_notifications` must be provided.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "offers",
+                "mark_read"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Environment-specific host name",
+                  "type": "any",
+                  "value": "{{server_name}}",
+                  "key": "server_name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"<string>\",\n  \"event_type\": \"<string>\",\n  \"rewards\": \"<string>\",\n  \"user_notifications\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "91a028f4-91b0-4a02-b6fa-46b3ba8636b6",
+              "name": "Success.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api2",
+                    "mobile",
+                    "offers",
+                    "mark_read"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"business_client_key\",\n  \"event_type\": \"read_through_app\",\n  \"rewards\": \"example\",\n  \"user_notifications\": \"example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "816a5c99-77d6-4e9e-862d-27c921360137",
+              "name": "Bad Request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api2",
+                    "mobile",
+                    "offers",
+                    "mark_read"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"business_client_key\",\n  \"event_type\": \"read_through_app\",\n  \"rewards\": \"example\",\n  \"user_notifications\": \"example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "928df5b2-f156-46e0-bf76-a0f6f4238a01",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api2",
+                    "mobile",
+                    "offers",
+                    "mark_read"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"business_client_key\",\n  \"event_type\": \"read_through_app\",\n  \"rewards\": \"example\",\n  \"user_notifications\": \"example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "89c9c92d-68be-4f00-b620-8475fd7206da",
+              "name": "Unprocessable Entity.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api2",
+                    "mobile",
+                    "offers",
+                    "mark_read"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"business_client_key\",\n  \"event_type\": \"read_through_app\",\n  \"rewards\": \"example\",\n  \"user_notifications\": \"example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Environment-specific host name",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "SERVER_NAME_GOES_HERE",
+      "key": "server_name"
+    },
+    {
+      "type": "string",
+      "value": "https://{{server_name}}.punchh.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c469afcc-4523-4a55-8970-e7deb4fd08f9",
+    "name": "PAR Punchh Mobile API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The PAR Punchh Mobile API powers business-branded mobile apps and websites, exposing guest-facing loyalty functions such as user registration and sign-in, profile management, check-ins/transactions, and offer management. Access requires partner certification and business-issued OAuth client credentials. All calls are signed with an HMAC-SHA256 `x-pch-digest` header. Base URLs (sandbox and production) are provided by a Punchh representative.\n\nContact Support:\n Name: PAR Developer Portal",
+      "type": "text/plain"
+    }
+  }
+}

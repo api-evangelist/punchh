@@ -1,0 +1,238 @@
+{
+  "item": [
+    {
+      "id": "f8ed05f9-3d30-435f-99ba-72fd0656f7e0",
+      "name": "Offers",
+      "description": {
+        "content": "Headless offer (redeemable) retrieval at the business level.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "702780ba-5e9c-49ba-bbf3-37d46b911556",
+          "name": "Get Redeemable List",
+          "request": {
+            "name": "Get Redeemable List",
+            "description": {
+              "content": "Returns the list of offers (redeemables) available and defined on Punchh, enabling browsing and selection of offers natively in an external platform. Supports search and pagination.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api2",
+                "dashboard",
+                "redeemables"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "<string>",
+                  "description": "Search term for redeemable name or description."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "Page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "<integer>",
+                  "description": "Records per page."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Environment-specific host name",
+                  "type": "any",
+                  "value": "{{server_name}}",
+                  "key": "server_name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "bea09a93-5cd7-4162-ab86-74317d28f661",
+              "name": "List of redeemables.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api2",
+                    "dashboard",
+                    "redeemables"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"redeemable_id\": \"500123\",\n    \"redeemable_uuid\": \"6f9619ff-8b86-d011-b42d-00cf4fc964ff\",\n    \"name\": \"Free Appetizer\",\n    \"description\": \"Reward successfully applied to the order.\",\n    \"redeemable_image_url\": \"https://portal.example.com/path/abc123\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7730d26a-7c04-4ba5-af0e-93fb0e942f33",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api2",
+                    "dashboard",
+                    "redeemables"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Environment-specific host name",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "SERVER_NAME_GOES_HERE",
+      "key": "server_name"
+    },
+    {
+      "type": "string",
+      "value": "https://{{server_name}}.punchh.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a856fbb9-c209-4382-9f7f-1a642281f09c",
+    "name": "PAR Punchh Platform Functions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The PAR Punchh Platform Functions APIs provide core programmatic access to the loyalty platform for back-office and headless integrations. This spec documents the Headless Offers API, which lists offers (redeemables) defined on Punchh so they can be browsed and selected natively in external platforms. Access requires partner certification and a business admin credential. Base URLs are provided by a Punchh representative.\n\nContact Support:\n Name: PAR Developer Portal",
+      "type": "text/plain"
+    }
+  }
+}

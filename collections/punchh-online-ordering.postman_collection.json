@@ -1,0 +1,534 @@
+{
+  "item": [
+    {
+      "id": "1cc1d31b-0954-4d2c-9338-8e364c4955c2",
+      "name": "Check-In",
+      "description": {
+        "content": "Loyalty check-ins for online orders.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4e78471a-1075-47b6-b0b4-f74e6bb8114b",
+          "name": "Create Loyalty Check-In",
+          "request": {
+            "name": "Create Loyalty Check-In",
+            "description": {
+              "content": "Creates a loyalty check-in for an online order, accruing points based on the receipt amount. Use `external_uid` to guarantee idempotency.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "checkins",
+                "online_order"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Environment-specific host name",
+                  "type": "any",
+                  "value": "{{server_name}}",
+                  "key": "server_name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"<string>\",\n  \"external_uid\": \"<string>\",\n  \"payable\": \"<number>\",\n  \"receipt_amount\": \"<number>\",\n  \"receipt_datetime\": \"<string>\",\n  \"store_number\": \"<string>\",\n  \"subtotal_amount\": \"<number>\",\n  \"transaction_no\": \"<string>\",\n  \"authentication_token\": \"<string>\",\n  \"cc_last4\": \"<string>\",\n  \"channel\": \"<string>\",\n  \"employee_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "14395b98-abfc-4e06-880c-0593e5e3b9da",
+              "name": "Check-in created with loyalty totals.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "auth",
+                    "checkins",
+                    "online_order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"business_client_key\",\n  \"external_uid\": \"500123\",\n  \"payable\": \"example\",\n  \"receipt_amount\": \"example\",\n  \"receipt_datetime\": \"2025-03-15T14:30:00Z\",\n  \"store_number\": \"STORE-001\",\n  \"subtotal_amount\": \"example\",\n  \"transaction_no\": \"TXN-784512\",\n  \"authentication_token\": \"a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4\",\n  \"cc_last4\": \"example\",\n  \"channel\": \"pos\",\n  \"employee_id\": \"500123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"first_name\": \"Jane Smith\",\n  \"last_name\": \"Jane Smith\",\n  \"total_checkins\": \"example\",\n  \"points_balance\": \"example\",\n  \"checkin\": {\n    \"checkin_id\": \"500123\",\n    \"points_earned\": \"example\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "15fa3072-fe6e-4aa7-8c45-94436b406fb8",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "auth",
+                    "checkins",
+                    "online_order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"business_client_key\",\n  \"external_uid\": \"500123\",\n  \"payable\": \"example\",\n  \"receipt_amount\": \"example\",\n  \"receipt_datetime\": \"2025-03-15T14:30:00Z\",\n  \"store_number\": \"STORE-001\",\n  \"subtotal_amount\": \"example\",\n  \"transaction_no\": \"TXN-784512\",\n  \"authentication_token\": \"a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4\",\n  \"cc_last4\": \"example\",\n  \"channel\": \"pos\",\n  \"employee_id\": \"500123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a723fa01-6e9f-41b8-a5d1-6ac678644773",
+              "name": "Unprocessable Entity.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "auth",
+                    "checkins",
+                    "online_order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"business_client_key\",\n  \"external_uid\": \"500123\",\n  \"payable\": \"example\",\n  \"receipt_amount\": \"example\",\n  \"receipt_datetime\": \"2025-03-15T14:30:00Z\",\n  \"store_number\": \"STORE-001\",\n  \"subtotal_amount\": \"example\",\n  \"transaction_no\": \"TXN-784512\",\n  \"authentication_token\": \"a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4\",\n  \"cc_last4\": \"example\",\n  \"channel\": \"pos\",\n  \"employee_id\": \"500123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "e42efc88-d3ba-49b9-8f2d-23b41f2ec701",
+      "name": "Redemptions",
+      "description": {
+        "content": "Apply rewards and discounts against online order receipts.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "800d303a-88e7-43cd-b61a-dc7a09f79b88",
+          "name": "Create Online Redemption",
+          "request": {
+            "name": "Create Online Redemption",
+            "description": {
+              "content": "Redeems a card, reward, redeemable, or discount against an online order receipt. Receipt details are revalidated during processing.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "redemptions",
+                "online_order"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Environment-specific host name",
+                  "type": "any",
+                  "value": "{{server_name}}",
+                  "key": "server_name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"<string>\",\n  \"discount_type\": \"<string>\",\n  \"receipt_amount\": \"<number>\",\n  \"receipt_datetime\": \"<string>\",\n  \"store_number\": \"<string>\",\n  \"subtotal_amount\": \"<number>\",\n  \"transaction_no\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "79da797c-4c08-4c30-abc0-37082ee6fc08",
+              "name": "Redemption applied.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "auth",
+                    "redemptions",
+                    "online_order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"business_client_key\",\n  \"discount_type\": \"reward\",\n  \"receipt_amount\": \"example\",\n  \"receipt_datetime\": \"2025-03-15T14:30:00Z\",\n  \"store_number\": \"STORE-001\",\n  \"subtotal_amount\": \"example\",\n  \"transaction_no\": \"TXN-784512\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"active\",\n  \"redemption_amount\": \"example\",\n  \"category\": \"reward\",\n  \"qualified_menu_items\": [\n    {}\n  ],\n  \"discount_distribution_items\": [\n    {}\n  ],\n  \"redemption_id\": \"500123\",\n  \"redemption_code\": \"CODE-AB12CD\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35853d37-db4d-4b91-af42-248310df9709",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "auth",
+                    "redemptions",
+                    "online_order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"business_client_key\",\n  \"discount_type\": \"reward\",\n  \"receipt_amount\": \"example\",\n  \"receipt_datetime\": \"2025-03-15T14:30:00Z\",\n  \"store_number\": \"STORE-001\",\n  \"subtotal_amount\": \"example\",\n  \"transaction_no\": \"TXN-784512\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "62b2f729-6c4f-4ae9-9189-edee06587de5",
+              "name": "Unprocessable Entity.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "auth",
+                    "redemptions",
+                    "online_order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Environment-specific host name",
+                      "type": "any",
+                      "value": "{{server_name}}",
+                      "key": "server_name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"business_client_key\",\n  \"discount_type\": \"reward\",\n  \"receipt_amount\": \"example\",\n  \"receipt_datetime\": \"2025-03-15T14:30:00Z\",\n  \"store_number\": \"STORE-001\",\n  \"subtotal_amount\": \"example\",\n  \"transaction_no\": \"TXN-784512\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Environment-specific host name",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "SERVER_NAME_GOES_HERE",
+      "key": "server_name"
+    },
+    {
+      "type": "string",
+      "value": "https://{{server_name}}.punchh.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a59bdb67-391b-4c5b-b351-2888c531881f",
+    "name": "PAR Punchh Online Ordering and SSO API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The PAR Punchh Online Ordering and SSO API lets online ordering platforms authenticate guests (SSO), create loyalty check-ins for online orders, and apply redemptions against receipts. Access requires partner certification. Calls are signed with an HMAC-SHA256 `x-pch-digest` header and use a Bearer access token. Base URLs are provided by a Punchh representative.\n\nContact Support:\n Name: PAR Developer Portal",
+      "type": "text/plain"
+    }
+  }
+}
