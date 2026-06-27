@@ -73,23 +73,23 @@ apis:
         url: json-structure/mobile-update-user-profile-request-structure.json
       - type: JSONStructure
         url: json-structure/mobile-user-session-structure.json
-      - type: JSON-LD
+      - type: JSONLD
         url: json-ld/punchh-mobile-context.jsonld
-      - type: Example
+      - type: Examples
         url: examples/mobile-access-token-example.json
-      - type: Example
+      - type: Examples
         url: examples/mobile-create-user-request-example.json
-      - type: Example
+      - type: Examples
         url: examples/mobile-login-request-example.json
-      - type: Example
+      - type: Examples
         url: examples/mobile-mark-offers-read-request-example.json
-      - type: Example
+      - type: Examples
         url: examples/mobile-transaction-details-example.json
-      - type: Example
+      - type: Examples
         url: examples/mobile-transaction-details-request-example.json
-      - type: Example
+      - type: Examples
         url: examples/mobile-update-user-profile-request-example.json
-      - type: Example
+      - type: Examples
         url: examples/mobile-user-session-example.json
   - aid: punchh:online-ordering
     name: PAR Punchh Online Ordering and SSO API
@@ -126,15 +126,15 @@ apis:
         url: json-structure/online-ordering-online-order-redemption-request-structure.json
       - type: JSONStructure
         url: json-structure/online-ordering-online-order-redemption-response-structure.json
-      - type: JSON-LD
+      - type: JSONLD
         url: json-ld/punchh-online-ordering-context.jsonld
-      - type: Example
+      - type: Examples
         url: examples/online-ordering-online-order-checkin-request-example.json
-      - type: Example
+      - type: Examples
         url: examples/online-ordering-online-order-checkin-response-example.json
-      - type: Example
+      - type: Examples
         url: examples/online-ordering-online-order-redemption-request-example.json
-      - type: Example
+      - type: Examples
         url: examples/online-ordering-online-order-redemption-response-example.json
   - aid: punchh:pos
     name: PAR Punchh POS and Kiosk API
@@ -162,11 +162,11 @@ apis:
         url: json-structure/pos-pos-checkin-request-structure.json
       - type: JSONStructure
         url: json-structure/pos-pos-user-structure.json
-      - type: JSON-LD
+      - type: JSONLD
         url: json-ld/punchh-pos-context.jsonld
-      - type: Example
+      - type: Examples
         url: examples/pos-pos-checkin-request-example.json
-      - type: Example
+      - type: Examples
         url: examples/pos-pos-user-example.json
   - aid: punchh:platform-functions
     name: PAR Punchh Platform Functions API
@@ -188,9 +188,9 @@ apis:
         url: json-schema/platform-functions-redeemable-schema.json
       - type: JSONStructure
         url: json-structure/platform-functions-redeemable-structure.json
-      - type: JSON-LD
+      - type: JSONLD
         url: json-ld/punchh-platform-functions-context.jsonld
-      - type: Example
+      - type: Examples
         url: examples/platform-functions-redeemable-example.json
 common:
   - type: Website
