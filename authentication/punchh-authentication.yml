@@ -1,0 +1,36 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/punchh-mobile-openapi.yml, openapi/punchh-online-ordering-openapi.yml, openapi/punchh-platform-functions-openapi.yml,
+  openapi/punchh-pos-openapi.yml
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+schemes:
+- name: PunchhBearer
+  type: http
+  scheme: bearer
+  description: Bearer access token obtained via Sign In. Calls must also include an `x-pch-digest`
+    HMAC-SHA256 signature header and a `punchh-app-device-id` header.
+  sources:
+  - openapi/punchh-mobile-openapi.yml
+  - openapi/punchh-online-ordering-openapi.yml
+  - openapi/punchh-platform-functions-openapi.yml
+- name: PunchhDigest
+  type: apiKey
+  in: header
+  parameter: x-pch-digest
+  description: HMAC-SHA256 request signature. Unauthenticated mobile calls also pass the business
+    OAuth `client` id in the request body.
+  sources:
+  - openapi/punchh-mobile-openapi.yml
+- name: PunchhPosToken
+  type: apiKey
+  in: header
+  parameter: Authorization
+  description: Token pair credential of the form `Token token=LOCATION_KEY, btoken=BUSINESS_KEY`.
+    Requests must also send a structured `User-Agent` of the form `IntegratorName/IntegrationType/VersionNumber`.
+  sources:
+  - openapi/punchh-pos-openapi.yml

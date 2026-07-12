@@ -193,6 +193,12 @@ apis:
       - type: Examples
         url: examples/platform-functions-redeemable-example.json
 common:
+  - type: VulnerabilityDisclosure
+    url: security/punchh-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/punchh-domain-security.yml
+  - type: Authentication
+    url: authentication/punchh-authentication.yml
   - type: Website
     url: https://punchh.com/
   - type: Documentation
