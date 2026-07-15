@@ -193,6 +193,8 @@ apis:
       - type: Examples
         url: examples/platform-functions-redeemable-example.json
 common:
+  - type: AgenticAccess
+    url: agentic-access/punchh-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/punchh-vulnerability-disclosure.yml
   - type: DomainSecurity
