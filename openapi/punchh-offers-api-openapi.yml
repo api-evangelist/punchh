@@ -1,0 +1,168 @@
+openapi: 3.0.3
+info:
+  title: PAR Punchh Mobile Check-In Offers API
+  version: '1.0'
+  description: The PAR Punchh Mobile API powers business-branded mobile apps and websites, exposing guest-facing loyalty functions such as user registration and sign-in, profile management, check-ins/transactions, and offer management. Access requires partner certification and business-issued OAuth client credentials. All calls are signed with an HMAC-SHA256 `x-pch-digest` header. Base URLs (sandbox and production) are provided by a Punchh representative.
+  x-generated-from: documentation
+  x-last-validated: '2026-06-03'
+  contact:
+    name: PAR Developer Portal
+    url: https://developers.partech.com/
+servers:
+- url: https://{server_name}.punchh.com
+  description: Punchh environment host (provided by your Punchh representative)
+  variables:
+    server_name:
+      default: SERVER_NAME_GOES_HERE
+      description: Environment-specific host name
+tags:
+- name: Offers
+  description: Guest offer management.
+paths:
+  /api2/mobile/offers/mark_read:
+    put:
+      operationId: markOffersAsRead
+      summary: Mark Offers As Read
+      description: Marks rewards or user notifications as read. Either `rewards` or `user_notifications` must be provided.
+      tags:
+      - Offers
+      security:
+      - PunchhBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MarkOffersReadRequest'
+            examples:
+              MarkoffersasreadRequestExample:
+                summary: Default markOffersAsRead request
+                x-microcks-default: true
+                value:
+                  client: business_client_key
+                  event_type: read_through_app
+                  rewards: example
+                  user_notifications: example
+      responses:
+        '200':
+          description: Success.
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.
+        '422':
+          description: Unprocessable Entity.
+      x-source-url: https://developers.partech.com/docs/dev-portal-mobile/f315da73eb9a7-mark-offers-as-read
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api2/dashboard/redeemables:
+    get:
+      operationId: getRedeemableList
+      summary: Get Redeemable List
+      description: Returns the list of offers (redeemables) available and defined on Punchh, enabling browsing and selection of offers natively in an external platform. Supports search and pagination.
+      tags:
+      - Offers
+      security:
+      - PunchhAdminBearer: []
+      parameters:
+      - name: query
+        in: query
+        required: false
+        description: Search term for redeemable name or description.
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        description: Page number.
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        required: false
+        description: Records per page.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: List of redeemables.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Redeemable'
+              examples:
+                Getredeemablelist200Example:
+                  summary: Default getRedeemableList 200 response
+                  x-microcks-default: true
+                  value:
+                  - redeemable_id: '500123'
+                    redeemable_uuid: 6f9619ff-8b86-d011-b42d-00cf4fc964ff
+                    name: Free Appetizer
+                    description: Reward successfully applied to the order.
+                    redeemable_image_url: https://portal.example.com/path/abc123
+        '401':
+          description: Unauthorized.
+      x-source-url: https://developers.partech.com/docs/dev-portal-platform-functions/apis/headless-offers-api/get/api2/dashboard/redeemables
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    MarkOffersReadRequest:
+      title: MarkOffersReadRequest
+      type: object
+      x-schema-source: documentation
+      required:
+      - client
+      properties:
+        client:
+          type: string
+          description: OAuth client ID provided by the business.
+          example: business_client_key
+        event_type:
+          type: string
+          enum:
+          - read_through_app
+          - app_open_via_push
+          example: read_through_app
+        rewards:
+          type: string
+          description: Comma-separated IDs of rewards.
+          example: example
+        user_notifications:
+          type: string
+          description: Comma-separated IDs of user notifications.
+          example: example
+    Redeemable:
+      title: Redeemable
+      type: object
+      x-schema-source: documentation
+      properties:
+        redeemable_id:
+          type: integer
+          example: '500123'
+        redeemable_uuid:
+          type: string
+          example: 6f9619ff-8b86-d011-b42d-00cf4fc964ff
+        name:
+          type: string
+          example: Free Appetizer
+        description:
+          type: string
+          example: Reward successfully applied to the order.
+        redeemable_image_url:
+          type: string
+          example: https://portal.example.com/path/abc123
+  securitySchemes:
+    PunchhBearer:
+      type: http
+      scheme: bearer
+      description: Bearer access token obtained via Sign In. Calls must also include an `x-pch-digest` HMAC-SHA256 signature header and a `punchh-app-device-id` header.
+    PunchhDigest:
+      type: apiKey
+      in: header
+      name: x-pch-digest
+      description: HMAC-SHA256 request signature. Unauthenticated mobile calls also pass the business OAuth `client` id in the request body.

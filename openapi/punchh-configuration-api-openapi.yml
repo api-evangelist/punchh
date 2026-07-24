@@ -1,0 +1,68 @@
+openapi: 3.0.3
+info:
+  title: PAR Punchh Mobile Check-In Configuration API
+  version: '1.0'
+  description: The PAR Punchh Mobile API powers business-branded mobile apps and websites, exposing guest-facing loyalty functions such as user registration and sign-in, profile management, check-ins/transactions, and offer management. Access requires partner certification and business-issued OAuth client credentials. All calls are signed with an HMAC-SHA256 `x-pch-digest` header. Base URLs (sandbox and production) are provided by a Punchh representative.
+  x-generated-from: documentation
+  x-last-validated: '2026-06-03'
+  contact:
+    name: PAR Developer Portal
+    url: https://developers.partech.com/
+servers:
+- url: https://{server_name}.punchh.com
+  description: Punchh environment host (provided by your Punchh representative)
+  variables:
+    server_name:
+      default: SERVER_NAME_GOES_HERE
+      description: Environment-specific host name
+tags:
+- name: Configuration
+  description: Location and program configuration/metadata.
+paths:
+  /api/pos/locations/configuration:
+    get:
+      operationId: getPosLocationConfiguration
+      summary: Location Configuration
+      description: Returns the loyalty configuration for the authenticated location.
+      tags:
+      - Configuration
+      security:
+      - PunchhPosToken: []
+      responses:
+        '200':
+          description: Location configuration.
+        '401':
+          description: Unauthorized.
+      x-source-url: https://developers.partech.com/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /api/pos/meta:
+    get:
+      operationId: getPosProgramMeta
+      summary: Program Meta
+      description: Returns loyalty program metadata for the business.
+      tags:
+      - Configuration
+      security:
+      - PunchhPosToken: []
+      responses:
+        '200':
+          description: Program metadata.
+        '401':
+          description: Unauthorized.
+      x-source-url: https://developers.partech.com/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  securitySchemes:
+    PunchhBearer:
+      type: http
+      scheme: bearer
+      description: Bearer access token obtained via Sign In. Calls must also include an `x-pch-digest` HMAC-SHA256 signature header and a `punchh-app-device-id` header.
+    PunchhDigest:
+      type: apiKey
+      in: header
+      name: x-pch-digest
+      description: HMAC-SHA256 request signature. Unauthenticated mobile calls also pass the business OAuth `client` id in the request body.
