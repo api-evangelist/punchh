@@ -1,0 +1,655 @@
+{
+  "info": {
+    "_postman_id": "1f6792d1-ac01-408a-bddb-4fb7990a935d",
+    "name": "PAR Punchh Mobile Check-In Redemptions API",
+    "description": "The PAR Punchh Mobile API powers business-branded mobile apps and websites, exposing guest-facing loyalty functions such as user registration and sign-in, profile management, check-ins/transactions, and offer management. Access requires partner certification and business-issued OAuth client credentials. All calls are signed with an HMAC-SHA256 `x-pch-digest` header. Base URLs (sandbox and production) are provided by a Punchh representative.\n\nContact Support:\n Name: PAR Developer Portal",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:41:28.000Z",
+    "updatedAt": "2026-07-28T02:41:28.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-1f6792d1-ac01-408a-bddb-4fb7990a935d"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "auth",
+          "item": [
+            {
+              "name": "redemptions",
+              "item": [
+                {
+                  "name": "online_order",
+                  "item": [
+                    {
+                      "name": "Create Online Redemption",
+                      "id": "8c8fb246-44ea-4f5e-a1d2-f2d56ff529ae",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{bearerToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"client\": \"<string>\",\n  \"discount_type\": \"reward\",\n  \"receipt_amount\": \"<number>\",\n  \"receipt_datetime\": \"<string>\",\n  \"store_number\": \"<string>\",\n  \"subtotal_amount\": \"<number>\",\n  \"transaction_no\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/auth/redemptions/online_order",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "auth",
+                            "redemptions",
+                            "online_order"
+                          ]
+                        },
+                        "description": "Redeems a card, reward, redeemable, or discount against an online order receipt. Receipt details are revalidated during processing."
+                      },
+                      "response": [
+                        {
+                          "id": "7e5116c3-402a-42c9-9465-32630c97d682",
+                          "name": "Redemption applied.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"client\": \"<string>\",\n  \"discount_type\": \"reward\",\n  \"receipt_amount\": \"<number>\",\n  \"receipt_datetime\": \"<string>\",\n  \"store_number\": \"<string>\",\n  \"subtotal_amount\": \"<number>\",\n  \"transaction_no\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/auth/redemptions/online_order",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "auth",
+                                "redemptions",
+                                "online_order"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"status\": \"<string>\",\n  \"redemption_amount\": \"<number>\",\n  \"category\": \"<string>\",\n  \"redemption_id\": \"<integer>\",\n  \"redemption_code\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:41:28.000Z",
+                          "updatedAt": "2026-07-28T02:41:28.000Z",
+                          "uid": "35240-7e5116c3-402a-42c9-9465-32630c97d682"
+                        },
+                        {
+                          "id": "f8777026-055b-47bd-b801-5662dc0108bd",
+                          "name": "Unauthorized.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"client\": \"<string>\",\n  \"discount_type\": \"reward\",\n  \"receipt_amount\": \"<number>\",\n  \"receipt_datetime\": \"<string>\",\n  \"store_number\": \"<string>\",\n  \"subtotal_amount\": \"<number>\",\n  \"transaction_no\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/auth/redemptions/online_order",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "auth",
+                                "redemptions",
+                                "online_order"
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T02:41:28.000Z",
+                          "updatedAt": "2026-07-28T02:41:28.000Z",
+                          "uid": "35240-f8777026-055b-47bd-b801-5662dc0108bd"
+                        },
+                        {
+                          "id": "0166911e-16b8-4f6b-8a7a-ab43beea7cf5",
+                          "name": "Unprocessable Entity.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"client\": \"<string>\",\n  \"discount_type\": \"reward\",\n  \"receipt_amount\": \"<number>\",\n  \"receipt_datetime\": \"<string>\",\n  \"store_number\": \"<string>\",\n  \"subtotal_amount\": \"<number>\",\n  \"transaction_no\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/auth/redemptions/online_order",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "auth",
+                                "redemptions",
+                                "online_order"
+                              ]
+                            }
+                          },
+                          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                          "code": 422,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T02:41:28.000Z",
+                          "updatedAt": "2026-07-28T02:41:28.000Z",
+                          "uid": "35240-0166911e-16b8-4f6b-8a7a-ab43beea7cf5"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:41:28.000Z",
+                      "updatedAt": "2026-07-28T02:41:28.000Z",
+                      "uid": "35240-8c8fb246-44ea-4f5e-a1d2-f2d56ff529ae"
+                    }
+                  ],
+                  "id": "e2c7c890-9223-4c55-b0a6-c55c14e3ea58",
+                  "createdAt": "2026-07-28T02:41:28.000Z",
+                  "updatedAt": "2026-07-28T02:41:28.000Z",
+                  "uid": "35240-e2c7c890-9223-4c55-b0a6-c55c14e3ea58"
+                }
+              ],
+              "id": "ea2c3bc5-0045-4dd0-a060-a9b128c080e9",
+              "createdAt": "2026-07-28T02:41:28.000Z",
+              "updatedAt": "2026-07-28T02:41:28.000Z",
+              "uid": "35240-ea2c3bc5-0045-4dd0-a060-a9b128c080e9"
+            }
+          ],
+          "id": "d2558c2c-5b1b-485e-ab2f-a7adb59bf59e",
+          "createdAt": "2026-07-28T02:41:28.000Z",
+          "updatedAt": "2026-07-28T02:41:28.000Z",
+          "uid": "35240-d2558c2c-5b1b-485e-ab2f-a7adb59bf59e"
+        },
+        {
+          "name": "pos",
+          "item": [
+            {
+              "name": "redemptions",
+              "item": [
+                {
+                  "name": "possible",
+                  "item": [
+                    {
+                      "name": "Possible Redemptions",
+                      "id": "68dec90e-8ff4-41a3-9a05-ab46f4131b77",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/pos/redemptions/possible",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "pos",
+                            "redemptions",
+                            "possible"
+                          ]
+                        },
+                        "description": "Returns the redemptions available to a guest for the supplied receipt."
+                      },
+                      "response": [
+                        {
+                          "id": "28281299-a683-4422-aac2-782097fbbbe1",
+                          "name": "Possible redemptions.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/pos/redemptions/possible",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "pos",
+                                "redemptions",
+                                "possible"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T02:41:28.000Z",
+                          "updatedAt": "2026-07-28T02:41:28.000Z",
+                          "uid": "35240-28281299-a683-4422-aac2-782097fbbbe1"
+                        },
+                        {
+                          "id": "5830dae1-ad26-4442-88d5-4d13a0035207",
+                          "name": "Unauthorized.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/pos/redemptions/possible",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "pos",
+                                "redemptions",
+                                "possible"
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T02:41:28.000Z",
+                          "updatedAt": "2026-07-28T02:41:28.000Z",
+                          "uid": "35240-5830dae1-ad26-4442-88d5-4d13a0035207"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:41:28.000Z",
+                      "updatedAt": "2026-07-28T02:41:28.000Z",
+                      "uid": "35240-68dec90e-8ff4-41a3-9a05-ab46f4131b77"
+                    }
+                  ],
+                  "id": "6636e627-91fd-40b7-bc18-360f2a121c6a",
+                  "createdAt": "2026-07-28T02:41:28.000Z",
+                  "updatedAt": "2026-07-28T02:41:28.000Z",
+                  "uid": "35240-6636e627-91fd-40b7-bc18-360f2a121c6a"
+                },
+                {
+                  "name": "Create Redemption",
+                  "id": "a057509d-d2d2-48a2-aace-882da1095917",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/pos/redemptions",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "pos",
+                        "redemptions"
+                      ]
+                    },
+                    "description": "Applies a redemption against a POS receipt."
+                  },
+                  "response": [
+                    {
+                      "id": "4d87ff9f-f761-40b9-a5e2-05a6b29bec1d",
+                      "name": "Redemption created.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/pos/redemptions",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "pos",
+                            "redemptions"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:41:28.000Z",
+                      "updatedAt": "2026-07-28T02:41:28.000Z",
+                      "uid": "35240-4d87ff9f-f761-40b9-a5e2-05a6b29bec1d"
+                    },
+                    {
+                      "id": "5e87ae34-48b4-4b42-99bb-8985e9da5d50",
+                      "name": "Unauthorized.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/pos/redemptions",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "pos",
+                            "redemptions"
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:41:28.000Z",
+                      "updatedAt": "2026-07-28T02:41:28.000Z",
+                      "uid": "35240-5e87ae34-48b4-4b42-99bb-8985e9da5d50"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:41:28.000Z",
+                  "updatedAt": "2026-07-28T02:41:28.000Z",
+                  "uid": "35240-a057509d-d2d2-48a2-aace-882da1095917"
+                },
+                {
+                  "name": "Void Redemption",
+                  "id": "1940323c-b145-4d5a-ab79-0999cafb1b4d",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/pos/redemptions",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "pos",
+                        "redemptions"
+                      ]
+                    },
+                    "description": "Voids a previously created redemption."
+                  },
+                  "response": [
+                    {
+                      "id": "fa556875-5a76-40bb-83b1-1862fdadfc7b",
+                      "name": "Redemption voided.",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/pos/redemptions",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "pos",
+                            "redemptions"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:41:28.000Z",
+                      "updatedAt": "2026-07-28T02:41:28.000Z",
+                      "uid": "35240-fa556875-5a76-40bb-83b1-1862fdadfc7b"
+                    },
+                    {
+                      "id": "f5b45d3e-f444-48ce-b5b3-25ba60a8948d",
+                      "name": "Unauthorized.",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/pos/redemptions",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "pos",
+                            "redemptions"
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:41:28.000Z",
+                      "updatedAt": "2026-07-28T02:41:28.000Z",
+                      "uid": "35240-f5b45d3e-f444-48ce-b5b3-25ba60a8948d"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:41:28.000Z",
+                  "updatedAt": "2026-07-28T02:41:28.000Z",
+                  "uid": "35240-1940323c-b145-4d5a-ab79-0999cafb1b4d"
+                }
+              ],
+              "id": "b665fada-c9da-475d-8e66-f493e82a7ae7",
+              "createdAt": "2026-07-28T02:41:28.000Z",
+              "updatedAt": "2026-07-28T02:41:28.000Z",
+              "uid": "35240-b665fada-c9da-475d-8e66-f493e82a7ae7"
+            }
+          ],
+          "id": "ccdb9c02-3df8-4ee2-bacf-2df81ea8fc8f",
+          "createdAt": "2026-07-28T02:41:28.000Z",
+          "updatedAt": "2026-07-28T02:41:28.000Z",
+          "uid": "35240-ccdb9c02-3df8-4ee2-bacf-2df81ea8fc8f"
+        }
+      ],
+      "id": "d9115603-5d9d-4883-a0cf-a1ff82179a10",
+      "createdAt": "2026-07-28T02:41:28.000Z",
+      "updatedAt": "2026-07-28T02:41:28.000Z",
+      "uid": "35240-d9115603-5d9d-4883-a0cf-a1ff82179a10"
+    }
+  ],
+  "variable": [
+    {
+      "key": "server_name",
+      "value": "SERVER_NAME_GOES_HERE"
+    },
+    {
+      "key": "baseUrl",
+      "value": "https://{{server_name}}.punchh.com"
+    }
+  ]
+}

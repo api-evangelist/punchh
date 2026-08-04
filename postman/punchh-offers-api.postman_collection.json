@@ -1,0 +1,484 @@
+{
+  "info": {
+    "_postman_id": "757cbb9c-89dd-438c-85ab-5486d7537e1e",
+    "name": "PAR Punchh Mobile Check-In Offers API",
+    "description": "The PAR Punchh Mobile API powers business-branded mobile apps and websites, exposing guest-facing loyalty functions such as user registration and sign-in, profile management, check-ins/transactions, and offer management. Access requires partner certification and business-issued OAuth client credentials. All calls are signed with an HMAC-SHA256 `x-pch-digest` header. Base URLs (sandbox and production) are provided by a Punchh representative.\n\nContact Support:\n Name: PAR Developer Portal",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:41:22.000Z",
+    "updatedAt": "2026-07-28T02:41:22.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-757cbb9c-89dd-438c-85ab-5486d7537e1e"
+  },
+  "item": [
+    {
+      "name": "api2",
+      "item": [
+        {
+          "name": "mobile",
+          "item": [
+            {
+              "name": "offers",
+              "item": [
+                {
+                  "name": "mark_read",
+                  "item": [
+                    {
+                      "name": "Mark Offers As Read",
+                      "id": "d8d4720e-a706-4894-9330-78e02464f1ca",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{bearerToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"client\": \"<string>\",\n  \"event_type\": \"app_open_via_push\",\n  \"rewards\": \"<string>\",\n  \"user_notifications\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api2/mobile/offers/mark_read",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api2",
+                            "mobile",
+                            "offers",
+                            "mark_read"
+                          ]
+                        },
+                        "description": "Marks rewards or user notifications as read. Either `rewards` or `user_notifications` must be provided."
+                      },
+                      "response": [
+                        {
+                          "id": "3d485658-0478-4a06-a37a-8e5f47118706",
+                          "name": "Success.",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"client\": \"<string>\",\n  \"event_type\": \"app_open_via_push\",\n  \"rewards\": \"<string>\",\n  \"user_notifications\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api2/mobile/offers/mark_read",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api2",
+                                "mobile",
+                                "offers",
+                                "mark_read"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T02:41:22.000Z",
+                          "updatedAt": "2026-07-28T02:41:22.000Z",
+                          "uid": "35240-3d485658-0478-4a06-a37a-8e5f47118706"
+                        },
+                        {
+                          "id": "3164cae2-cb8c-409b-8274-171edefd5148",
+                          "name": "Bad Request.",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"client\": \"<string>\",\n  \"event_type\": \"app_open_via_push\",\n  \"rewards\": \"<string>\",\n  \"user_notifications\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api2/mobile/offers/mark_read",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api2",
+                                "mobile",
+                                "offers",
+                                "mark_read"
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T02:41:22.000Z",
+                          "updatedAt": "2026-07-28T02:41:22.000Z",
+                          "uid": "35240-3164cae2-cb8c-409b-8274-171edefd5148"
+                        },
+                        {
+                          "id": "c05782a5-3d78-4727-a529-1434a1dcf326",
+                          "name": "Unauthorized.",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"client\": \"<string>\",\n  \"event_type\": \"app_open_via_push\",\n  \"rewards\": \"<string>\",\n  \"user_notifications\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api2/mobile/offers/mark_read",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api2",
+                                "mobile",
+                                "offers",
+                                "mark_read"
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T02:41:22.000Z",
+                          "updatedAt": "2026-07-28T02:41:22.000Z",
+                          "uid": "35240-c05782a5-3d78-4727-a529-1434a1dcf326"
+                        },
+                        {
+                          "id": "5aa6e163-fb04-4939-ad23-cb0ba70e575c",
+                          "name": "Unprocessable Entity.",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"client\": \"<string>\",\n  \"event_type\": \"app_open_via_push\",\n  \"rewards\": \"<string>\",\n  \"user_notifications\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api2/mobile/offers/mark_read",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api2",
+                                "mobile",
+                                "offers",
+                                "mark_read"
+                              ]
+                            }
+                          },
+                          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                          "code": 422,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T02:41:22.000Z",
+                          "updatedAt": "2026-07-28T02:41:22.000Z",
+                          "uid": "35240-5aa6e163-fb04-4939-ad23-cb0ba70e575c"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:41:22.000Z",
+                      "updatedAt": "2026-07-28T02:41:22.000Z",
+                      "uid": "35240-d8d4720e-a706-4894-9330-78e02464f1ca"
+                    }
+                  ],
+                  "id": "e97de0ef-df7b-4e69-b864-c3ab175ef0b7",
+                  "createdAt": "2026-07-28T02:41:22.000Z",
+                  "updatedAt": "2026-07-28T02:41:22.000Z",
+                  "uid": "35240-e97de0ef-df7b-4e69-b864-c3ab175ef0b7"
+                }
+              ],
+              "id": "5979ee59-0143-4806-ad35-86a1f5ae805f",
+              "createdAt": "2026-07-28T02:41:22.000Z",
+              "updatedAt": "2026-07-28T02:41:22.000Z",
+              "uid": "35240-5979ee59-0143-4806-ad35-86a1f5ae805f"
+            }
+          ],
+          "id": "434b6c41-c792-4848-970a-018ffe6b600c",
+          "createdAt": "2026-07-28T02:41:22.000Z",
+          "updatedAt": "2026-07-28T02:41:22.000Z",
+          "uid": "35240-434b6c41-c792-4848-970a-018ffe6b600c"
+        },
+        {
+          "name": "dashboard",
+          "item": [
+            {
+              "name": "redeemables",
+              "item": [
+                {
+                  "name": "Get Redeemable List",
+                  "id": "b26c1ee0-a640-46a0-a6ed-fddd0762d6cd",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api2/dashboard/redeemables?query=<string>&page=<integer>&per_page=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api2",
+                        "dashboard",
+                        "redeemables"
+                      ],
+                      "query": [
+                        {
+                          "description": "Search term for redeemable name or description.",
+                          "key": "query",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Page number.",
+                          "key": "page",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "Records per page.",
+                          "key": "per_page",
+                          "value": "<integer>"
+                        }
+                      ]
+                    },
+                    "description": "Returns the list of offers (redeemables) available and defined on Punchh, enabling browsing and selection of offers natively in an external platform. Supports search and pagination."
+                  },
+                  "response": [
+                    {
+                      "id": "0b2e2fd2-02d0-4732-9057-80a66363daf7",
+                      "name": "List of redeemables.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api2/dashboard/redeemables?query=<string>&page=<integer>&per_page=<integer>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api2",
+                            "dashboard",
+                            "redeemables"
+                          ],
+                          "query": [
+                            {
+                              "description": "Search term for redeemable name or description.",
+                              "key": "query",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Page number.",
+                              "key": "page",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Records per page.",
+                              "key": "per_page",
+                              "value": "<integer>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"redeemable_id\": \"<integer>\",\n    \"redeemable_uuid\": \"<string>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"redeemable_image_url\": \"<string>\"\n  },\n  {\n    \"redeemable_id\": \"<integer>\",\n    \"redeemable_uuid\": \"<string>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"redeemable_image_url\": \"<string>\"\n  }\n]",
+                      "createdAt": "2026-07-28T02:41:22.000Z",
+                      "updatedAt": "2026-07-28T02:41:22.000Z",
+                      "uid": "35240-0b2e2fd2-02d0-4732-9057-80a66363daf7"
+                    },
+                    {
+                      "id": "4856a7b1-f059-497b-aa5d-e94dd950a8ec",
+                      "name": "Unauthorized.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                          "raw": "{{baseUrl}}/api2/dashboard/redeemables?query=<string>&page=<integer>&per_page=<integer>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api2",
+                            "dashboard",
+                            "redeemables"
+                          ],
+                          "query": [
+                            {
+                              "description": "Search term for redeemable name or description.",
+                              "key": "query",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Page number.",
+                              "key": "page",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Records per page.",
+                              "key": "per_page",
+                              "value": "<integer>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:41:22.000Z",
+                      "updatedAt": "2026-07-28T02:41:22.000Z",
+                      "uid": "35240-4856a7b1-f059-497b-aa5d-e94dd950a8ec"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:41:22.000Z",
+                  "updatedAt": "2026-07-28T02:41:22.000Z",
+                  "uid": "35240-b26c1ee0-a640-46a0-a6ed-fddd0762d6cd"
+                }
+              ],
+              "id": "9efd530c-cb45-4ab8-8a98-7885d0070067",
+              "createdAt": "2026-07-28T02:41:22.000Z",
+              "updatedAt": "2026-07-28T02:41:22.000Z",
+              "uid": "35240-9efd530c-cb45-4ab8-8a98-7885d0070067"
+            }
+          ],
+          "id": "d1c23f4f-cc8f-4e18-93cf-7a51f24e90ee",
+          "createdAt": "2026-07-28T02:41:22.000Z",
+          "updatedAt": "2026-07-28T02:41:22.000Z",
+          "uid": "35240-d1c23f4f-cc8f-4e18-93cf-7a51f24e90ee"
+        }
+      ],
+      "id": "f6854908-80ea-446d-b7a0-e84f9a51f8e8",
+      "createdAt": "2026-07-28T02:41:22.000Z",
+      "updatedAt": "2026-07-28T02:41:22.000Z",
+      "uid": "35240-f6854908-80ea-446d-b7a0-e84f9a51f8e8"
+    }
+  ],
+  "variable": [
+    {
+      "key": "server_name",
+      "value": "SERVER_NAME_GOES_HERE"
+    },
+    {
+      "key": "baseUrl",
+      "value": "https://{{server_name}}.punchh.com"
+    }
+  ]
+}

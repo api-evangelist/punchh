@@ -1,0 +1,244 @@
+{
+  "info": {
+    "_postman_id": "6fe60551-ce56-4246-85fe-3897a8175fc1",
+    "name": "PAR Punchh Mobile Check-In Configuration API",
+    "description": "The PAR Punchh Mobile API powers business-branded mobile apps and websites, exposing guest-facing loyalty functions such as user registration and sign-in, profile management, check-ins/transactions, and offer management. Access requires partner certification and business-issued OAuth client credentials. All calls are signed with an HMAC-SHA256 `x-pch-digest` header. Base URLs (sandbox and production) are provided by a Punchh representative.\n\nContact Support:\n Name: PAR Developer Portal",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:41:20.000Z",
+    "updatedAt": "2026-07-28T02:41:20.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-6fe60551-ce56-4246-85fe-3897a8175fc1"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "pos",
+          "item": [
+            {
+              "name": "locations",
+              "item": [
+                {
+                  "name": "configuration",
+                  "item": [
+                    {
+                      "name": "Location Configuration",
+                      "id": "b6c3c4c2-ec31-42e5-b149-652ccc1c7442",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/pos/locations/configuration",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "pos",
+                            "locations",
+                            "configuration"
+                          ]
+                        },
+                        "description": "Returns the loyalty configuration for the authenticated location."
+                      },
+                      "response": [
+                        {
+                          "id": "8a9df7b9-963a-43c2-8e46-83af86134488",
+                          "name": "Location configuration.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/pos/locations/configuration",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "pos",
+                                "locations",
+                                "configuration"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T02:41:20.000Z",
+                          "updatedAt": "2026-07-28T02:41:20.000Z",
+                          "uid": "35240-8a9df7b9-963a-43c2-8e46-83af86134488"
+                        },
+                        {
+                          "id": "f265dd4e-fde8-4c65-a909-cb2f7b4091e6",
+                          "name": "Unauthorized.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/pos/locations/configuration",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "pos",
+                                "locations",
+                                "configuration"
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T02:41:20.000Z",
+                          "updatedAt": "2026-07-28T02:41:20.000Z",
+                          "uid": "35240-f265dd4e-fde8-4c65-a909-cb2f7b4091e6"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:41:20.000Z",
+                      "updatedAt": "2026-07-28T02:41:20.000Z",
+                      "uid": "35240-b6c3c4c2-ec31-42e5-b149-652ccc1c7442"
+                    }
+                  ],
+                  "id": "a87f532d-7db7-4db6-9294-87a4c55eef0a",
+                  "createdAt": "2026-07-28T02:41:20.000Z",
+                  "updatedAt": "2026-07-28T02:41:20.000Z",
+                  "uid": "35240-a87f532d-7db7-4db6-9294-87a4c55eef0a"
+                }
+              ],
+              "id": "aab33d1c-1196-4ee9-ab91-446c68449eca",
+              "createdAt": "2026-07-28T02:41:20.000Z",
+              "updatedAt": "2026-07-28T02:41:20.000Z",
+              "uid": "35240-aab33d1c-1196-4ee9-ab91-446c68449eca"
+            },
+            {
+              "name": "meta",
+              "item": [
+                {
+                  "name": "Program Meta",
+                  "id": "2ad32671-ab45-4ef7-bca7-7e225b622e50",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/pos/meta",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "pos",
+                        "meta"
+                      ]
+                    },
+                    "description": "Returns loyalty program metadata for the business."
+                  },
+                  "response": [
+                    {
+                      "id": "868a0a9b-c7e2-4c00-bd19-44958f2a0422",
+                      "name": "Program metadata.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/pos/meta",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "pos",
+                            "meta"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:41:20.000Z",
+                      "updatedAt": "2026-07-28T02:41:20.000Z",
+                      "uid": "35240-868a0a9b-c7e2-4c00-bd19-44958f2a0422"
+                    },
+                    {
+                      "id": "e1602360-4358-42df-b1e1-dab1b28cbb17",
+                      "name": "Unauthorized.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/pos/meta",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "pos",
+                            "meta"
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:41:20.000Z",
+                      "updatedAt": "2026-07-28T02:41:20.000Z",
+                      "uid": "35240-e1602360-4358-42df-b1e1-dab1b28cbb17"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:41:20.000Z",
+                  "updatedAt": "2026-07-28T02:41:20.000Z",
+                  "uid": "35240-2ad32671-ab45-4ef7-bca7-7e225b622e50"
+                }
+              ],
+              "id": "b8bc19ba-ac48-4c09-b170-564d8d9e5ee2",
+              "createdAt": "2026-07-28T02:41:20.000Z",
+              "updatedAt": "2026-07-28T02:41:20.000Z",
+              "uid": "35240-b8bc19ba-ac48-4c09-b170-564d8d9e5ee2"
+            }
+          ],
+          "id": "603ed8bc-2b8e-4180-bc34-74a55f242c03",
+          "createdAt": "2026-07-28T02:41:20.000Z",
+          "updatedAt": "2026-07-28T02:41:20.000Z",
+          "uid": "35240-603ed8bc-2b8e-4180-bc34-74a55f242c03"
+        }
+      ],
+      "id": "c3bd93df-8498-4b3a-9e7f-c79c754c4288",
+      "createdAt": "2026-07-28T02:41:20.000Z",
+      "updatedAt": "2026-07-28T02:41:20.000Z",
+      "uid": "35240-c3bd93df-8498-4b3a-9e7f-c79c754c4288"
+    }
+  ],
+  "variable": [
+    {
+      "key": "server_name",
+      "value": "SERVER_NAME_GOES_HERE"
+    },
+    {
+      "key": "baseUrl",
+      "value": "https://{{server_name}}.punchh.com"
+    }
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "info": {
+    "_postman_id": "a5cd7893-779f-48e9-9a33-f95176826c19",
+    "name": "PAR Punchh Mobile Check-In Receipts API",
+    "description": "The PAR Punchh Mobile API powers business-branded mobile apps and websites, exposing guest-facing loyalty functions such as user registration and sign-in, profile management, check-ins/transactions, and offer management. Access requires partner certification and business-issued OAuth client credentials. All calls are signed with an HMAC-SHA256 `x-pch-digest` header. Base URLs (sandbox and production) are provided by a Punchh representative.\n\nContact Support:\n Name: PAR Developer Portal",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:41:27.000Z",
+    "updatedAt": "2026-07-28T02:41:27.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-a5cd7893-779f-48e9-9a33-f95176826c19"
+  },
+  "item": [
+    {
+      "name": "receipt_details",
+      "item": [
+        {
+          "name": "Store Receipt Details",
+          "id": "c8923bbf-daa5-409e-87b2-a2d1af00b81c",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/receipt_details",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "receipt_details"
+              ]
+            },
+            "description": "Stores itemized receipt details for a transaction."
+          },
+          "response": [
+            {
+              "id": "32f0bcd7-6f95-483f-b16f-7d6a5e85c1e0",
+              "name": "Receipt details stored.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/receipt_details",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "receipt_details"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-07-28T02:41:27.000Z",
+              "updatedAt": "2026-07-28T02:41:27.000Z",
+              "uid": "35240-32f0bcd7-6f95-483f-b16f-7d6a5e85c1e0"
+            },
+            {
+              "id": "61b8d306-a049-436a-a0c2-ca501b0deeb2",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/receipt_details",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "receipt_details"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-07-28T02:41:27.000Z",
+              "updatedAt": "2026-07-28T02:41:27.000Z",
+              "uid": "35240-61b8d306-a049-436a-a0c2-ca501b0deeb2"
+            }
+          ],
+          "createdAt": "2026-07-28T02:41:27.000Z",
+          "updatedAt": "2026-07-28T02:41:27.000Z",
+          "uid": "35240-c8923bbf-daa5-409e-87b2-a2d1af00b81c"
+        }
+      ],
+      "id": "aba932fc-db01-4e11-8d51-cd6054dc38a3",
+      "createdAt": "2026-07-28T02:41:27.000Z",
+      "updatedAt": "2026-07-28T02:41:27.000Z",
+      "uid": "35240-aba932fc-db01-4e11-8d51-cd6054dc38a3"
+    }
+  ],
+  "variable": [
+    {
+      "key": "server_name",
+      "value": "SERVER_NAME_GOES_HERE"
+    },
+    {
+      "key": "baseUrl",
+      "value": "https://{{server_name}}.punchh.com"
+    }
+  ]
+}

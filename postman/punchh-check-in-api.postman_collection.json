@@ -1,0 +1,277 @@
+{
+  "info": {
+    "_postman_id": "868c25dc-2c76-44c7-97db-e76ed8a13061",
+    "name": "PAR Punchh Mobile Check-In API",
+    "description": "The PAR Punchh Mobile API powers business-branded mobile apps and websites, exposing guest-facing loyalty functions such as user registration and sign-in, profile management, check-ins/transactions, and offer management. Access requires partner certification and business-issued OAuth client credentials. All calls are signed with an HMAC-SHA256 `x-pch-digest` header. Base URLs (sandbox and production) are provided by a Punchh representative.\n\nContact Support:\n Name: PAR Developer Portal",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:41:18.000Z",
+    "updatedAt": "2026-07-28T02:41:18.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-868c25dc-2c76-44c7-97db-e76ed8a13061"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "auth",
+          "item": [
+            {
+              "name": "checkins",
+              "item": [
+                {
+                  "name": "online_order",
+                  "item": [
+                    {
+                      "name": "Create Loyalty Check-In",
+                      "id": "7b7c858c-c37d-478f-9c8d-571fd8fd33ac",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{bearerToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"client\": \"<string>\",\n  \"external_uid\": \"<string>\",\n  \"payable\": \"<number>\",\n  \"receipt_amount\": \"<number>\",\n  \"receipt_datetime\": \"<string>\",\n  \"store_number\": \"<string>\",\n  \"subtotal_amount\": \"<number>\",\n  \"transaction_no\": \"<string>\",\n  \"authentication_token\": \"<string>\",\n  \"cc_last4\": \"<string>\",\n  \"channel\": \"pos\",\n  \"employee_id\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/auth/checkins/online_order",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "auth",
+                            "checkins",
+                            "online_order"
+                          ]
+                        },
+                        "description": "Creates a loyalty check-in for an online order, accruing points based on the receipt amount. Use `external_uid` to guarantee idempotency."
+                      },
+                      "response": [
+                        {
+                          "id": "17f46047-c55a-4c2e-ba89-5c245cbcdc2a",
+                          "name": "Check-in created with loyalty totals.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"client\": \"<string>\",\n  \"external_uid\": \"<string>\",\n  \"payable\": \"<number>\",\n  \"receipt_amount\": \"<number>\",\n  \"receipt_datetime\": \"<string>\",\n  \"store_number\": \"<string>\",\n  \"subtotal_amount\": \"<number>\",\n  \"transaction_no\": \"<string>\",\n  \"authentication_token\": \"<string>\",\n  \"cc_last4\": \"<string>\",\n  \"channel\": \"pos\",\n  \"employee_id\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/auth/checkins/online_order",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "auth",
+                                "checkins",
+                                "online_order"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"total_checkins\": \"<integer>\",\n  \"points_balance\": \"<number>\",\n  \"checkin\": {\n    \"checkin_id\": \"<integer>\",\n    \"points_earned\": \"<number>\"\n  }\n}",
+                          "createdAt": "2026-07-28T02:41:18.000Z",
+                          "updatedAt": "2026-07-28T02:41:18.000Z",
+                          "uid": "35240-17f46047-c55a-4c2e-ba89-5c245cbcdc2a"
+                        },
+                        {
+                          "id": "aa79bf93-e629-4add-8661-89a50c5d7caa",
+                          "name": "Unauthorized.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"client\": \"<string>\",\n  \"external_uid\": \"<string>\",\n  \"payable\": \"<number>\",\n  \"receipt_amount\": \"<number>\",\n  \"receipt_datetime\": \"<string>\",\n  \"store_number\": \"<string>\",\n  \"subtotal_amount\": \"<number>\",\n  \"transaction_no\": \"<string>\",\n  \"authentication_token\": \"<string>\",\n  \"cc_last4\": \"<string>\",\n  \"channel\": \"pos\",\n  \"employee_id\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/auth/checkins/online_order",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "auth",
+                                "checkins",
+                                "online_order"
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T02:41:18.000Z",
+                          "updatedAt": "2026-07-28T02:41:18.000Z",
+                          "uid": "35240-aa79bf93-e629-4add-8661-89a50c5d7caa"
+                        },
+                        {
+                          "id": "66de4e46-b6de-424a-a00a-4e7c1afcc6b5",
+                          "name": "Unprocessable Entity.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"client\": \"<string>\",\n  \"external_uid\": \"<string>\",\n  \"payable\": \"<number>\",\n  \"receipt_amount\": \"<number>\",\n  \"receipt_datetime\": \"<string>\",\n  \"store_number\": \"<string>\",\n  \"subtotal_amount\": \"<number>\",\n  \"transaction_no\": \"<string>\",\n  \"authentication_token\": \"<string>\",\n  \"cc_last4\": \"<string>\",\n  \"channel\": \"pos\",\n  \"employee_id\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/auth/checkins/online_order",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "auth",
+                                "checkins",
+                                "online_order"
+                              ]
+                            }
+                          },
+                          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                          "code": 422,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T02:41:18.000Z",
+                          "updatedAt": "2026-07-28T02:41:18.000Z",
+                          "uid": "35240-66de4e46-b6de-424a-a00a-4e7c1afcc6b5"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:41:18.000Z",
+                      "updatedAt": "2026-07-28T02:41:18.000Z",
+                      "uid": "35240-7b7c858c-c37d-478f-9c8d-571fd8fd33ac"
+                    }
+                  ],
+                  "id": "45e3d73f-6075-44d8-a0fe-d90af881f59a",
+                  "createdAt": "2026-07-28T02:41:18.000Z",
+                  "updatedAt": "2026-07-28T02:41:18.000Z",
+                  "uid": "35240-45e3d73f-6075-44d8-a0fe-d90af881f59a"
+                }
+              ],
+              "id": "205254c8-d637-4aa1-bafa-2f3c3ea39ef6",
+              "createdAt": "2026-07-28T02:41:18.000Z",
+              "updatedAt": "2026-07-28T02:41:18.000Z",
+              "uid": "35240-205254c8-d637-4aa1-bafa-2f3c3ea39ef6"
+            }
+          ],
+          "id": "0009c976-b953-42cb-8e51-a36bc5a9491f",
+          "createdAt": "2026-07-28T02:41:18.000Z",
+          "updatedAt": "2026-07-28T02:41:18.000Z",
+          "uid": "35240-0009c976-b953-42cb-8e51-a36bc5a9491f"
+        }
+      ],
+      "id": "11d9e67e-49ac-410c-a385-048d541436b3",
+      "createdAt": "2026-07-28T02:41:18.000Z",
+      "updatedAt": "2026-07-28T02:41:18.000Z",
+      "uid": "35240-11d9e67e-49ac-410c-a385-048d541436b3"
+    }
+  ],
+  "variable": [
+    {
+      "key": "server_name",
+      "value": "SERVER_NAME_GOES_HERE"
+    },
+    {
+      "key": "baseUrl",
+      "value": "https://{{server_name}}.punchh.com"
+    }
+  ]
+}

@@ -1,0 +1,429 @@
+{
+  "info": {
+    "_postman_id": "0200d16b-a475-4c61-99b2-9d577438681c",
+    "name": "PAR Punchh Mobile Check-In Check-Ins API",
+    "description": "The PAR Punchh Mobile API powers business-branded mobile apps and websites, exposing guest-facing loyalty functions such as user registration and sign-in, profile management, check-ins/transactions, and offer management. Access requires partner certification and business-issued OAuth client credentials. All calls are signed with an HMAC-SHA256 `x-pch-digest` header. Base URLs (sandbox and production) are provided by a Punchh representative.\n\nContact Support:\n Name: PAR Developer Portal",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:41:19.000Z",
+    "updatedAt": "2026-07-28T02:41:19.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-0200d16b-a475-4c61-99b2-9d577438681c"
+  },
+  "item": [
+    {
+      "name": "api2",
+      "item": [
+        {
+          "name": "mobile",
+          "item": [
+            {
+              "name": "checkins",
+              "item": [
+                {
+                  "name": "transactions",
+                  "item": [
+                    {
+                      "name": "Transaction Details",
+                      "id": "cadc62ba-5678-4237-b2c8-298d43b1daab",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{bearerToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"client\": \"<string>\",\n  \"transaction_id\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api2/mobile/checkins/transactions",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api2",
+                            "mobile",
+                            "checkins",
+                            "transactions"
+                          ]
+                        },
+                        "description": "Returns details for a check-in transaction, including points earned, membership level, and associated redemptions. The transaction ID is delivered in the push notification payload key \"t\"."
+                      },
+                      "response": [
+                        {
+                          "id": "2bf7e8a1-1868-4b31-b522-3102bbb861c7",
+                          "name": "Check-in transaction details.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"client\": \"<string>\",\n  \"transaction_id\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api2/mobile/checkins/transactions",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api2",
+                                "mobile",
+                                "checkins",
+                                "transactions"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"checkin\": {\n    \"checkin_id\": \"<integer>\",\n    \"created_at\": \"<dateTime>\",\n    \"current_membership_level\": \"<string>\",\n    \"location_id\": \"<integer>\",\n    \"pending_refresh\": \"<boolean>\",\n    \"points_earned\": \"<number>\",\n    \"store_number\": \"<string>\",\n    \"survey_url\": \"<string>\",\n    \"first_checkin\": \"<boolean>\",\n    \"expiring_on\": \"<string>\"\n  },\n  \"redemptions\": [\n    {\n      \"redemption_id\": \"<integer>\",\n      \"redemption_status\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"redeemable_id\": \"<integer>\",\n      \"redeemable_name\": \"<string>\",\n      \"redeemed_value\": \"<number>\",\n      \"redemption_image_url\": \"<string>\",\n      \"redemption_message\": \"<string>\",\n      \"redemption_tracking_code\": \"<string>\",\n      \"expiring_at\": \"<string>\"\n    },\n    {\n      \"redemption_id\": \"<integer>\",\n      \"redemption_status\": \"<string>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"redeemable_id\": \"<integer>\",\n      \"redeemable_name\": \"<string>\",\n      \"redeemed_value\": \"<number>\",\n      \"redemption_image_url\": \"<string>\",\n      \"redemption_message\": \"<string>\",\n      \"redemption_tracking_code\": \"<string>\",\n      \"expiring_at\": \"<string>\"\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T02:41:19.000Z",
+                          "updatedAt": "2026-07-28T02:41:19.000Z",
+                          "uid": "35240-2bf7e8a1-1868-4b31-b522-3102bbb861c7"
+                        },
+                        {
+                          "id": "6bba77c9-fb7c-442e-b011-67ef7fe5b2ee",
+                          "name": "Unauthorized.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"client\": \"<string>\",\n  \"transaction_id\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api2/mobile/checkins/transactions",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api2",
+                                "mobile",
+                                "checkins",
+                                "transactions"
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T02:41:19.000Z",
+                          "updatedAt": "2026-07-28T02:41:19.000Z",
+                          "uid": "35240-6bba77c9-fb7c-442e-b011-67ef7fe5b2ee"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:41:19.000Z",
+                      "updatedAt": "2026-07-28T02:41:19.000Z",
+                      "uid": "35240-cadc62ba-5678-4237-b2c8-298d43b1daab"
+                    }
+                  ],
+                  "id": "989ba5c8-7867-4d35-9733-0d3d3e28c282",
+                  "createdAt": "2026-07-28T02:41:19.000Z",
+                  "updatedAt": "2026-07-28T02:41:19.000Z",
+                  "uid": "35240-989ba5c8-7867-4d35-9733-0d3d3e28c282"
+                }
+              ],
+              "id": "38e417ba-389b-444e-b7f0-111eadf65162",
+              "createdAt": "2026-07-28T02:41:19.000Z",
+              "updatedAt": "2026-07-28T02:41:19.000Z",
+              "uid": "35240-38e417ba-389b-444e-b7f0-111eadf65162"
+            }
+          ],
+          "id": "a9b39024-b0d1-47ae-a8be-9149ea0c5fd4",
+          "createdAt": "2026-07-28T02:41:19.000Z",
+          "updatedAt": "2026-07-28T02:41:19.000Z",
+          "uid": "35240-a9b39024-b0d1-47ae-a8be-9149ea0c5fd4"
+        }
+      ],
+      "id": "ed3b5b58-ebfe-4b60-9f9f-3d035c9dc99d",
+      "createdAt": "2026-07-28T02:41:19.000Z",
+      "updatedAt": "2026-07-28T02:41:19.000Z",
+      "uid": "35240-ed3b5b58-ebfe-4b60-9f9f-3d035c9dc99d"
+    },
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "pos",
+          "item": [
+            {
+              "name": "checkins",
+              "item": [
+                {
+                  "name": "Create Check-In",
+                  "id": "fd404831-4f25-4284-b858-b1d4ee2850d6",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"store_number\": \"<string>\",\n  \"transaction_no\": \"<string>\",\n  \"receipt_amount\": \"<number>\",\n  \"subtotal_amount\": \"<number>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/pos/checkins",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "pos",
+                        "checkins"
+                      ]
+                    },
+                    "description": "Creates a loyalty check-in at the point of sale."
+                  },
+                  "response": [
+                    {
+                      "id": "a8e1df2c-c3bc-430d-b9ad-3695ed01d119",
+                      "name": "Check-in created.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"store_number\": \"<string>\",\n  \"transaction_no\": \"<string>\",\n  \"receipt_amount\": \"<number>\",\n  \"subtotal_amount\": \"<number>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/pos/checkins",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "pos",
+                            "checkins"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:41:19.000Z",
+                      "updatedAt": "2026-07-28T02:41:19.000Z",
+                      "uid": "35240-a8e1df2c-c3bc-430d-b9ad-3695ed01d119"
+                    },
+                    {
+                      "id": "75212b00-490a-4a43-8615-0a89c216f706",
+                      "name": "Unauthorized.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"store_number\": \"<string>\",\n  \"transaction_no\": \"<string>\",\n  \"receipt_amount\": \"<number>\",\n  \"subtotal_amount\": \"<number>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/pos/checkins",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "pos",
+                            "checkins"
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:41:19.000Z",
+                      "updatedAt": "2026-07-28T02:41:19.000Z",
+                      "uid": "35240-75212b00-490a-4a43-8615-0a89c216f706"
+                    },
+                    {
+                      "id": "b029f27a-cbd8-402d-9f86-c3c71fc0c24a",
+                      "name": "Unprocessable Entity.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"store_number\": \"<string>\",\n  \"transaction_no\": \"<string>\",\n  \"receipt_amount\": \"<number>\",\n  \"subtotal_amount\": \"<number>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/pos/checkins",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "pos",
+                            "checkins"
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:41:19.000Z",
+                      "updatedAt": "2026-07-28T02:41:19.000Z",
+                      "uid": "35240-b029f27a-cbd8-402d-9f86-c3c71fc0c24a"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:41:19.000Z",
+                  "updatedAt": "2026-07-28T02:41:19.000Z",
+                  "uid": "35240-fd404831-4f25-4284-b858-b1d4ee2850d6"
+                }
+              ],
+              "id": "3f3709d4-856f-4af9-b0e9-64f83ce727d8",
+              "createdAt": "2026-07-28T02:41:19.000Z",
+              "updatedAt": "2026-07-28T02:41:19.000Z",
+              "uid": "35240-3f3709d4-856f-4af9-b0e9-64f83ce727d8"
+            }
+          ],
+          "id": "d0395701-91a2-48c2-93c1-9d495134b17c",
+          "createdAt": "2026-07-28T02:41:19.000Z",
+          "updatedAt": "2026-07-28T02:41:19.000Z",
+          "uid": "35240-d0395701-91a2-48c2-93c1-9d495134b17c"
+        }
+      ],
+      "id": "a6948101-9204-4203-a16c-eb4504ecfc67",
+      "createdAt": "2026-07-28T02:41:19.000Z",
+      "updatedAt": "2026-07-28T02:41:19.000Z",
+      "uid": "35240-a6948101-9204-4203-a16c-eb4504ecfc67"
+    }
+  ],
+  "variable": [
+    {
+      "key": "server_name",
+      "value": "SERVER_NAME_GOES_HERE"
+    },
+    {
+      "key": "baseUrl",
+      "value": "https://{{server_name}}.punchh.com"
+    }
+  ]
+}
