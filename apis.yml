@@ -1,53 +1,83 @@
 aid: punchh
 name: Punchh
-description: >-
-  Punchh, now part of PAR Technology and offered under the PAR Engagement brand, is an enterprise loyalty, offers, and
-  customer engagement platform for restaurants. It unifies guest data from online ordering, mobile apps, POS, and kiosks
-  into a single view so brands can run personalized loyalty and marketing programs. PAR exposes well-documented Punchh
-  APIs through its developer portal covering platform functions, mobile, online ordering, POS and kiosk integration, and
-  a webhooks manager, with sample collections published to Postman. Most integration surfaces require partner
-  certification. Over 275 restaurant brands rely on Punchh to grow customer lifetime value.
+description: Punchh, now part of PAR Technology and offered under the PAR Engagement brand, is an enterprise loyalty, offers,
+  and customer engagement platform for restaurants. It unifies guest data from online ordering, mobile apps, POS, and kiosks
+  into a single view so brands can run personalized loyalty and marketing programs. PAR exposes well-documented Punchh APIs
+  through its developer portal covering platform functions, mobile, online ordering, POS and kiosk integration, and a webhooks
+  manager, with sample collections published to Postman. Most integration surfaces require partner certification. Over 275
+  restaurant brands rely on Punchh to grow customer lifetime value.
 type: Index
 accessModel:
   pricing: enterprise
-  onboarding: self-serve
+  onboarding: partner-certification
   trial: false
   try_now: false
   public: false
-  label: Enterprise · Self-serve signup
+  label: Enterprise · Partner certification required
   confidence: high
   source:
+  - https://developers.partech.com/engagement-tools/par-punchh/
   - plans
   - authentication
-  generated: '2026-07-22'
-  method: derived
+  generated: '2026-08-13'
+  method: searched
+  note: 'Every Punchh API section on the PAR developer portal is badged "Certification REQUIRED". Documentation and the
+    15 OpenAPI documents are fully public and anonymous; credentials, base URIs and sandbox access are issued by a PAR representative
+    after certification. Corrected from onboarding: self-serve, which was wrong.'
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/punchh.png
 tags:
-  - Restaurant
-  - Loyalty
-  - Marketing
-  - Guest Engagement
-  - Online Ordering
-  - Mobile
-  - Point Of Sale
-  - Webhooks
+- Gift Cards
+- Guest Engagement
+- Loyalty
+- Marketing
+- Mobile
+- Offers
+- Online Ordering
+- PAR Technology
+- Point Of Sale
+- Restaurant
+- Restaurant Technology
+- Webhooks
 url: https://raw.githubusercontent.com/api-evangelist/punchh/refs/heads/main/apis.yml
 created: '2026-06-02'
-modified: '2026-06-03'
+modified: '2026-08-13'
 specificationVersion: '0.19'
 apis:
-- aid: punchh:punchh-check-in-api
-  name: Punchh Check-In API
-  description: Loyalty check-ins for online orders.
-  humanURL: https://developers.partech.com/docs/dev-portal-mobile/bf6eddb435209-mobile-api
+- aid: punchh:punchh-mobile-api
+  name: Punchh Mobile API
+  description: Punchh provides a robust platform for offering loyalty programs to customers. When a business integrates
+    its back-end with the Punchh server, the Punchh APIs become instrumental in executing loyalty programs for enrolled
+    customers, primarily via business-branded mobile apps and websites tailored by Punchh. To establish integration with
+    the Punchh APIs, you need to understand how they are invoked and what responses are returned by the Punchh server. You
+    can call APIs using any suitable API test client, such as Postman. Thus, the response to every API call made in Postman
+    under a chosen environm Published by PAR on the mobile section of the PAR developer portal; 116 operations. Certification
+    required.
+  humanURL: https://developers.partech.com/docs/dev-portal-mobile
   baseURL: https://{server_name}.punchh.com
   tags:
-  - Check-In
+  - Badges
+  - Beacons
+  - Challenges
+  - Check-ins
+  - Collectibles
+  - Coupons
+  - Drive-Thru
+  - Feedback
+  - File Upload
+  - Game
+  - Gift Cards
+  - Invitations
   properties:
   - type: OpenAPI
-    url: openapi/punchh-check-in-api-openapi.yml
+    url: openapi/punchh-mobile-api-openapi.yml
+  - type: Overlay
+    url: overlays/punchh-mobile-api-overlay.yaml
   - type: Documentation
-    url: https://developers.partech.com/
+    url: https://developers.partech.com/docs/dev-portal-mobile
+  - type: APIReference
+    url: https://developers.partech.com/docs/dev-portal-mobile
+  - type: GettingStarted
+    url: https://developers.partech.com/docs/dev-portal-mobile/make-your-first-mobile-api-call
   - type: JSONSchema
     url: json-schema/mobile-access-token-schema.json
   - type: JSONSchema
@@ -80,8 +110,6 @@ apis:
     url: json-structure/mobile-update-user-profile-request-structure.json
   - type: JSONStructure
     url: json-structure/mobile-user-session-structure.json
-  - type: JSONLD
-    url: json-ld/punchh-mobile-context.jsonld
   - type: Examples
     url: examples/mobile-access-token-example.json
   - type: Examples
@@ -98,461 +126,146 @@ apis:
     url: examples/mobile-update-user-profile-request-example.json
   - type: Examples
     url: examples/mobile-user-session-example.json
-  - type: GettingStarted
-    url: >-
-      https://developers.partech.com/docs/dev-portal-online-ordering/apis/online-ordering-and-sso-api
-  - type: JSONSchema
-    url: json-schema/online-ordering-online-order-checkin-request-schema.json
-  - type: JSONSchema
-    url: json-schema/online-ordering-online-order-checkin-response-schema.json
-  - type: JSONSchema
-    url: json-schema/online-ordering-online-order-redemption-request-schema.json
-  - type: JSONSchema
-    url: json-schema/online-ordering-online-order-redemption-response-schema.json
-  - type: JSONStructure
-    url: json-structure/online-ordering-online-order-checkin-request-structure.json
-  - type: JSONStructure
-    url: json-structure/online-ordering-online-order-checkin-response-structure.json
-  - type: JSONStructure
-    url: json-structure/online-ordering-online-order-redemption-request-structure.json
-  - type: JSONStructure
-    url: json-structure/online-ordering-online-order-redemption-response-structure.json
   - type: JSONLD
-    url: json-ld/punchh-online-ordering-context.jsonld
-  - type: Examples
-    url: examples/online-ordering-online-order-checkin-request-example.json
-  - type: Examples
-    url: examples/online-ordering-online-order-checkin-response-example.json
-  - type: Examples
-    url: examples/online-ordering-online-order-redemption-request-example.json
-  - type: Examples
-    url: examples/online-ordering-online-order-redemption-response-example.json
-  - type: JSONSchema
-    url: json-schema/pos-pos-checkin-request-schema.json
-  - type: JSONSchema
-    url: json-schema/pos-pos-user-schema.json
-  - type: JSONStructure
-    url: json-structure/pos-pos-checkin-request-structure.json
-  - type: JSONStructure
-    url: json-structure/pos-pos-user-structure.json
-  - type: JSONLD
-    url: json-ld/punchh-pos-context.jsonld
-  - type: Examples
-    url: examples/pos-pos-checkin-request-example.json
-  - type: Examples
-    url: examples/pos-pos-user-example.json
-  - type: JSONSchema
-    url: json-schema/platform-functions-redeemable-schema.json
-  - type: JSONStructure
-    url: json-structure/platform-functions-redeemable-structure.json
-  - type: JSONLD
-    url: json-ld/punchh-platform-functions-context.jsonld
-  - type: Examples
-    url: examples/platform-functions-redeemable-example.json
-- aid: punchh:punchh-check-ins-api
-  name: Punchh Check-Ins API
-  description: Loyalty check-in transaction details.
-  humanURL: https://developers.partech.com/docs/dev-portal-mobile/bf6eddb435209-mobile-api
+    url: json-ld/punchh-mobile-context.jsonld
+  - type: PostmanCollection
+    url: collections/punchh-mobile.postman_collection.json
+  - type: OpenCollection
+    url: collections/punchh-mobile.opencollection.json
+- aid: punchh:punchh-mobile-redemptions-legacy
+  name: Punchh Redemptions 1.0 (Legacy) API - Mobile
+  description: For more information, see Online Ordering Module 5 - Redemptions. Published by PAR on the mobile section
+    of the PAR developer portal; 6 operations. Certification required.
+  humanURL: https://developers.partech.com/docs/dev-portal-mobile
   baseURL: https://{server_name}.punchh.com
   tags:
-  - Check-Ins
+  - Mobile
   properties:
   - type: OpenAPI
-    url: openapi/punchh-check-ins-api-openapi.yml
+    url: openapi/punchh-mobile-redemptions-legacy-openapi.yml
+  - type: Overlay
+    url: overlays/punchh-mobile-redemptions-legacy-overlay.yaml
   - type: Documentation
-    url: https://developers.partech.com/
-  - type: JSONSchema
-    url: json-schema/mobile-access-token-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-create-user-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-login-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-mark-offers-read-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-transaction-details-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-transaction-details-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-update-user-profile-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-user-session-schema.json
-  - type: JSONStructure
-    url: json-structure/mobile-access-token-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-create-user-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-login-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-mark-offers-read-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-transaction-details-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-transaction-details-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-update-user-profile-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-user-session-structure.json
-  - type: JSONLD
-    url: json-ld/punchh-mobile-context.jsonld
-  - type: Examples
-    url: examples/mobile-access-token-example.json
-  - type: Examples
-    url: examples/mobile-create-user-request-example.json
-  - type: Examples
-    url: examples/mobile-login-request-example.json
-  - type: Examples
-    url: examples/mobile-mark-offers-read-request-example.json
-  - type: Examples
-    url: examples/mobile-transaction-details-example.json
-  - type: Examples
-    url: examples/mobile-transaction-details-request-example.json
-  - type: Examples
-    url: examples/mobile-update-user-profile-request-example.json
-  - type: Examples
-    url: examples/mobile-user-session-example.json
+    url: https://developers.partech.com/docs/dev-portal-mobile
+  - type: APIReference
+    url: https://developers.partech.com/docs/dev-portal-mobile
   - type: GettingStarted
-    url: >-
-      https://developers.partech.com/docs/dev-portal-online-ordering/apis/online-ordering-and-sso-api
-  - type: JSONSchema
-    url: json-schema/online-ordering-online-order-checkin-request-schema.json
-  - type: JSONSchema
-    url: json-schema/online-ordering-online-order-checkin-response-schema.json
-  - type: JSONSchema
-    url: json-schema/online-ordering-online-order-redemption-request-schema.json
-  - type: JSONSchema
-    url: json-schema/online-ordering-online-order-redemption-response-schema.json
-  - type: JSONStructure
-    url: json-structure/online-ordering-online-order-checkin-request-structure.json
-  - type: JSONStructure
-    url: json-structure/online-ordering-online-order-checkin-response-structure.json
-  - type: JSONStructure
-    url: json-structure/online-ordering-online-order-redemption-request-structure.json
-  - type: JSONStructure
-    url: json-structure/online-ordering-online-order-redemption-response-structure.json
-  - type: JSONLD
-    url: json-ld/punchh-online-ordering-context.jsonld
-  - type: Examples
-    url: examples/online-ordering-online-order-checkin-request-example.json
-  - type: Examples
-    url: examples/online-ordering-online-order-checkin-response-example.json
-  - type: Examples
-    url: examples/online-ordering-online-order-redemption-request-example.json
-  - type: Examples
-    url: examples/online-ordering-online-order-redemption-response-example.json
-  - type: JSONSchema
-    url: json-schema/pos-pos-checkin-request-schema.json
-  - type: JSONSchema
-    url: json-schema/pos-pos-user-schema.json
-  - type: JSONStructure
-    url: json-structure/pos-pos-checkin-request-structure.json
-  - type: JSONStructure
-    url: json-structure/pos-pos-user-structure.json
-  - type: JSONLD
-    url: json-ld/punchh-pos-context.jsonld
-  - type: Examples
-    url: examples/pos-pos-checkin-request-example.json
-  - type: Examples
-    url: examples/pos-pos-user-example.json
-  - type: JSONSchema
-    url: json-schema/platform-functions-redeemable-schema.json
-  - type: JSONStructure
-    url: json-structure/platform-functions-redeemable-structure.json
-  - type: JSONLD
-    url: json-ld/punchh-platform-functions-context.jsonld
-  - type: Examples
-    url: examples/platform-functions-redeemable-example.json
-- aid: punchh:punchh-configuration-api
-  name: Punchh Configuration API
-  description: Location and program configuration/metadata.
-  humanURL: https://developers.partech.com/docs/dev-portal-mobile/bf6eddb435209-mobile-api
+    url: https://developers.partech.com/docs/dev-portal-mobile/make-your-first-mobile-api-call
+- aid: punchh:punchh-mobile-redemptions-v2
+  name: Punchh Redemptions 2.0 (New) API - Mobile
+  description: 'The Redemptions 2.0 protocol has been designed to replace the legacy Redemptions 1.0 endpoints. The new
+    protocol allows for the following features: - Single-scan flow support - Batching of redemptions to occur in a single
+    API call - Stacked discounting - Proportional breakdown of discounted items - Item qualifier recycling - Enhance flexibility
+    to redemption rules and processing orders The Redemptions 2.0 protocol is not backward compatible with the legacy Redemptions
+    1.0 endpoints. Configurations within the Punchh platform are required, so please contact your Punchh representative
+    for help be Published by PAR on the mobile section of the PAR developer portal; 4 operations. Certification required.'
+  humanURL: https://developers.partech.com/docs/dev-portal-mobile
   baseURL: https://{server_name}.punchh.com
   tags:
-  - Configuration
+  - Mobile
   properties:
   - type: OpenAPI
-    url: openapi/punchh-configuration-api-openapi.yml
+    url: openapi/punchh-mobile-redemptions-v2-openapi.yml
+  - type: Overlay
+    url: overlays/punchh-mobile-redemptions-v2-overlay.yaml
   - type: Documentation
-    url: https://developers.partech.com/
-  - type: JSONSchema
-    url: json-schema/mobile-access-token-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-create-user-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-login-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-mark-offers-read-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-transaction-details-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-transaction-details-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-update-user-profile-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-user-session-schema.json
-  - type: JSONStructure
-    url: json-structure/mobile-access-token-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-create-user-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-login-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-mark-offers-read-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-transaction-details-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-transaction-details-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-update-user-profile-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-user-session-structure.json
-  - type: JSONLD
-    url: json-ld/punchh-mobile-context.jsonld
-  - type: Examples
-    url: examples/mobile-access-token-example.json
-  - type: Examples
-    url: examples/mobile-create-user-request-example.json
-  - type: Examples
-    url: examples/mobile-login-request-example.json
-  - type: Examples
-    url: examples/mobile-mark-offers-read-request-example.json
-  - type: Examples
-    url: examples/mobile-transaction-details-example.json
-  - type: Examples
-    url: examples/mobile-transaction-details-request-example.json
-  - type: Examples
-    url: examples/mobile-update-user-profile-request-example.json
-  - type: Examples
-    url: examples/mobile-user-session-example.json
+    url: https://developers.partech.com/docs/dev-portal-mobile
+  - type: APIReference
+    url: https://developers.partech.com/docs/dev-portal-mobile
   - type: GettingStarted
-    url: >-
-      https://developers.partech.com/docs/dev-portal-online-ordering/apis/online-ordering-and-sso-api
-  - type: JSONSchema
-    url: json-schema/online-ordering-online-order-checkin-request-schema.json
-  - type: JSONSchema
-    url: json-schema/online-ordering-online-order-checkin-response-schema.json
-  - type: JSONSchema
-    url: json-schema/online-ordering-online-order-redemption-request-schema.json
-  - type: JSONSchema
-    url: json-schema/online-ordering-online-order-redemption-response-schema.json
-  - type: JSONStructure
-    url: json-structure/online-ordering-online-order-checkin-request-structure.json
-  - type: JSONStructure
-    url: json-structure/online-ordering-online-order-checkin-response-structure.json
-  - type: JSONStructure
-    url: json-structure/online-ordering-online-order-redemption-request-structure.json
-  - type: JSONStructure
-    url: json-structure/online-ordering-online-order-redemption-response-structure.json
-  - type: JSONLD
-    url: json-ld/punchh-online-ordering-context.jsonld
-  - type: Examples
-    url: examples/online-ordering-online-order-checkin-request-example.json
-  - type: Examples
-    url: examples/online-ordering-online-order-checkin-response-example.json
-  - type: Examples
-    url: examples/online-ordering-online-order-redemption-request-example.json
-  - type: Examples
-    url: examples/online-ordering-online-order-redemption-response-example.json
-  - type: JSONSchema
-    url: json-schema/pos-pos-checkin-request-schema.json
-  - type: JSONSchema
-    url: json-schema/pos-pos-user-schema.json
-  - type: JSONStructure
-    url: json-structure/pos-pos-checkin-request-structure.json
-  - type: JSONStructure
-    url: json-structure/pos-pos-user-structure.json
-  - type: JSONLD
-    url: json-ld/punchh-pos-context.jsonld
-  - type: Examples
-    url: examples/pos-pos-checkin-request-example.json
-  - type: Examples
-    url: examples/pos-pos-user-example.json
-  - type: JSONSchema
-    url: json-schema/platform-functions-redeemable-schema.json
-  - type: JSONStructure
-    url: json-structure/platform-functions-redeemable-structure.json
-  - type: JSONLD
-    url: json-ld/punchh-platform-functions-context.jsonld
-  - type: Examples
-    url: examples/platform-functions-redeemable-example.json
-- aid: punchh:punchh-offers-api
-  name: Punchh Offers API
-  description: Guest offer management.
-  humanURL: https://developers.partech.com/docs/dev-portal-mobile/bf6eddb435209-mobile-api
+    url: https://developers.partech.com/docs/dev-portal-mobile/make-your-first-mobile-api-call
+- aid: punchh:punchh-mobile-subscription
+  name: Punchh Subscription API - Mobile
+  description: Subscriptions is an add-on Punchh loyalty product that allows businesses to create subscription plans to
+    generate up-front revenue and offers benefits in addition to the standard benefits that unsubscribed members of the
+    loyalty program receive. The Subscription APIs are designed in a way that businesses can programatically achieve the
+    benefits of the subscription for their guest in a mobile app or website. Also, there are aspects that require calling
+    the API without any guest authentication (e.g., to control the auto-renewal of the subscription on behalf of the guest).
+    Published by PAR on the mobile section of the PAR developer portal; 5 operations. Certification required.
+  humanURL: https://developers.partech.com/docs/dev-portal-mobile
   baseURL: https://{server_name}.punchh.com
   tags:
-  - Offers
+  - Mobile
   properties:
   - type: OpenAPI
-    url: openapi/punchh-offers-api-openapi.yml
+    url: openapi/punchh-mobile-subscription-openapi.yml
+  - type: Overlay
+    url: overlays/punchh-mobile-subscription-overlay.yaml
   - type: Documentation
-    url: https://developers.partech.com/
-  - type: JSONSchema
-    url: json-schema/mobile-access-token-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-create-user-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-login-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-mark-offers-read-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-transaction-details-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-transaction-details-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-update-user-profile-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-user-session-schema.json
-  - type: JSONStructure
-    url: json-structure/mobile-access-token-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-create-user-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-login-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-mark-offers-read-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-transaction-details-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-transaction-details-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-update-user-profile-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-user-session-structure.json
-  - type: JSONLD
-    url: json-ld/punchh-mobile-context.jsonld
-  - type: Examples
-    url: examples/mobile-access-token-example.json
-  - type: Examples
-    url: examples/mobile-create-user-request-example.json
-  - type: Examples
-    url: examples/mobile-login-request-example.json
-  - type: Examples
-    url: examples/mobile-mark-offers-read-request-example.json
-  - type: Examples
-    url: examples/mobile-transaction-details-example.json
-  - type: Examples
-    url: examples/mobile-transaction-details-request-example.json
-  - type: Examples
-    url: examples/mobile-update-user-profile-request-example.json
-  - type: Examples
-    url: examples/mobile-user-session-example.json
+    url: https://developers.partech.com/docs/dev-portal-mobile
+  - type: APIReference
+    url: https://developers.partech.com/docs/dev-portal-mobile
   - type: GettingStarted
-    url: >-
-      https://developers.partech.com/docs/dev-portal-online-ordering/apis/online-ordering-and-sso-api
-  - type: JSONSchema
-    url: json-schema/online-ordering-online-order-checkin-request-schema.json
-  - type: JSONSchema
-    url: json-schema/online-ordering-online-order-checkin-response-schema.json
-  - type: JSONSchema
-    url: json-schema/online-ordering-online-order-redemption-request-schema.json
-  - type: JSONSchema
-    url: json-schema/online-ordering-online-order-redemption-response-schema.json
-  - type: JSONStructure
-    url: json-structure/online-ordering-online-order-checkin-request-structure.json
-  - type: JSONStructure
-    url: json-structure/online-ordering-online-order-checkin-response-structure.json
-  - type: JSONStructure
-    url: json-structure/online-ordering-online-order-redemption-request-structure.json
-  - type: JSONStructure
-    url: json-structure/online-ordering-online-order-redemption-response-structure.json
-  - type: JSONLD
-    url: json-ld/punchh-online-ordering-context.jsonld
-  - type: Examples
-    url: examples/online-ordering-online-order-checkin-request-example.json
-  - type: Examples
-    url: examples/online-ordering-online-order-checkin-response-example.json
-  - type: Examples
-    url: examples/online-ordering-online-order-redemption-request-example.json
-  - type: Examples
-    url: examples/online-ordering-online-order-redemption-response-example.json
-  - type: JSONSchema
-    url: json-schema/pos-pos-checkin-request-schema.json
-  - type: JSONSchema
-    url: json-schema/pos-pos-user-schema.json
-  - type: JSONStructure
-    url: json-structure/pos-pos-checkin-request-structure.json
-  - type: JSONStructure
-    url: json-structure/pos-pos-user-structure.json
-  - type: JSONLD
-    url: json-ld/punchh-pos-context.jsonld
-  - type: Examples
-    url: examples/pos-pos-checkin-request-example.json
-  - type: Examples
-    url: examples/pos-pos-user-example.json
-  - type: JSONSchema
-    url: json-schema/platform-functions-redeemable-schema.json
-  - type: JSONStructure
-    url: json-structure/platform-functions-redeemable-structure.json
-  - type: JSONLD
-    url: json-ld/punchh-platform-functions-context.jsonld
-  - type: Examples
-    url: examples/platform-functions-redeemable-example.json
-- aid: punchh:punchh-receipts-api
-  name: Punchh Receipts API
-  description: Receipt detail storage.
-  humanURL: https://developers.partech.com/docs/dev-portal-mobile/bf6eddb435209-mobile-api
+    url: https://developers.partech.com/docs/dev-portal-mobile/make-your-first-mobile-api-call
+- aid: punchh:punchh-online-ordering-redemptions-legacy
+  name: Punchh Redemptions 1.0 (Legacy) API - Online Ordering
+  description: 'For more information, see Online Ordering Module 5: Redemptions. Published by PAR on the online ordering
+    section of the PAR developer portal; 4 operations. Certification required.'
+  humanURL: https://developers.partech.com/docs/dev-portal-online-ordering
   baseURL: https://{server_name}.punchh.com
   tags:
-  - Receipts
+  - Online Ordering
   properties:
   - type: OpenAPI
-    url: openapi/punchh-receipts-api-openapi.yml
+    url: openapi/punchh-online-ordering-redemptions-legacy-openapi.yml
+  - type: Overlay
+    url: overlays/punchh-online-ordering-redemptions-legacy-overlay.yaml
   - type: Documentation
-    url: https://developers.partech.com/
-  - type: JSONSchema
-    url: json-schema/mobile-access-token-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-create-user-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-login-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-mark-offers-read-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-transaction-details-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-transaction-details-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-update-user-profile-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-user-session-schema.json
-  - type: JSONStructure
-    url: json-structure/mobile-access-token-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-create-user-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-login-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-mark-offers-read-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-transaction-details-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-transaction-details-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-update-user-profile-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-user-session-structure.json
-  - type: JSONLD
-    url: json-ld/punchh-mobile-context.jsonld
-  - type: Examples
-    url: examples/mobile-access-token-example.json
-  - type: Examples
-    url: examples/mobile-create-user-request-example.json
-  - type: Examples
-    url: examples/mobile-login-request-example.json
-  - type: Examples
-    url: examples/mobile-mark-offers-read-request-example.json
-  - type: Examples
-    url: examples/mobile-transaction-details-example.json
-  - type: Examples
-    url: examples/mobile-transaction-details-request-example.json
-  - type: Examples
-    url: examples/mobile-update-user-profile-request-example.json
-  - type: Examples
-    url: examples/mobile-user-session-example.json
+    url: https://developers.partech.com/docs/dev-portal-online-ordering
+  - type: APIReference
+    url: https://developers.partech.com/docs/dev-portal-online-ordering
   - type: GettingStarted
-    url: >-
-      https://developers.partech.com/docs/dev-portal-online-ordering/apis/online-ordering-and-sso-api
+    url: https://developers.partech.com/docs/dev-portal-online-ordering/make-your-first-sso-api-call
+- aid: punchh:punchh-online-ordering-redemptions-v2
+  name: Punchh Redemptions 2.0 (New) API - Online Ordering
+  description: 'The Redemptions 2.0 protocol has been designed to replace the legacy Redemptions 1.0 endpoints. The new
+    protocol allows for the following features: - Single-scan flow support - Batching of redemptions to occur in a single
+    API call - Stacked discounting - Proportional breakdown of discounted items - Item qualifier recycling - Enhance flexibility
+    to redemption rules and processing orders The Redemptions 2.0 protocol is not backward compatible with the legacy Redemptions
+    1.0 endpoints. Configurations within the Punchh platform are required, so please contact your Punchh representative
+    for help be Published by PAR on the online ordering section of the PAR developer portal; 7 operations. Certification
+    required.'
+  humanURL: https://developers.partech.com/docs/dev-portal-online-ordering
+  baseURL: https://{server_name}.punchh.com
+  tags:
+  - Online Ordering
+  properties:
+  - type: OpenAPI
+    url: openapi/punchh-online-ordering-redemptions-v2-openapi.yml
+  - type: Overlay
+    url: overlays/punchh-online-ordering-redemptions-v2-overlay.yaml
+  - type: Documentation
+    url: https://developers.partech.com/docs/dev-portal-online-ordering
+  - type: APIReference
+    url: https://developers.partech.com/docs/dev-portal-online-ordering
+  - type: GettingStarted
+    url: https://developers.partech.com/docs/dev-portal-online-ordering/make-your-first-sso-api-call
+- aid: punchh:punchh-online-ordering-sso-api
+  name: Punchh Online Ordering and SSO API
+  description: The Punchh SSO API endpoints provide user-management functions such as login, registration, forgot password,
+    and connect with Facebook for users on the Punchh loyalty platform. You can also fetch user-specific information such
+    as rewards or point balances. The Punchh Online Ordering API endpoints enable users to earn and redeem rewards for online
+    orders. Published by PAR on the online ordering section of the PAR developer portal; 32 operations. Certification required.
+  humanURL: https://developers.partech.com/docs/dev-portal-online-ordering
+  baseURL: https://{server_name}.punchh.com
+  tags:
+  - Check User Balance
+  - Check-in
+  - Deals
+  - Rewards
+  - User Management
+  - User Sign-up and SSO
+  properties:
+  - type: OpenAPI
+    url: openapi/punchh-online-ordering-sso-api-openapi.yml
+  - type: Overlay
+    url: overlays/punchh-online-ordering-sso-api-overlay.yaml
+  - type: Documentation
+    url: https://developers.partech.com/docs/dev-portal-online-ordering
+  - type: APIReference
+    url: https://developers.partech.com/docs/dev-portal-online-ordering
+  - type: GettingStarted
+    url: https://developers.partech.com/docs/dev-portal-online-ordering/make-your-first-sso-api-call
   - type: JSONSchema
     url: json-schema/online-ordering-online-order-checkin-request-schema.json
   - type: JSONSchema
@@ -569,8 +282,6 @@ apis:
     url: json-structure/online-ordering-online-order-redemption-request-structure.json
   - type: JSONStructure
     url: json-structure/online-ordering-online-order-redemption-response-structure.json
-  - type: JSONLD
-    url: json-ld/punchh-online-ordering-context.jsonld
   - type: Examples
     url: examples/online-ordering-online-order-checkin-request-example.json
   - type: Examples
@@ -579,232 +290,162 @@ apis:
     url: examples/online-ordering-online-order-redemption-request-example.json
   - type: Examples
     url: examples/online-ordering-online-order-redemption-response-example.json
-  - type: JSONSchema
-    url: json-schema/pos-pos-checkin-request-schema.json
-  - type: JSONSchema
-    url: json-schema/pos-pos-user-schema.json
-  - type: JSONStructure
-    url: json-structure/pos-pos-checkin-request-structure.json
-  - type: JSONStructure
-    url: json-structure/pos-pos-user-structure.json
   - type: JSONLD
-    url: json-ld/punchh-pos-context.jsonld
-  - type: Examples
-    url: examples/pos-pos-checkin-request-example.json
-  - type: Examples
-    url: examples/pos-pos-user-example.json
-  - type: JSONSchema
-    url: json-schema/platform-functions-redeemable-schema.json
-  - type: JSONStructure
-    url: json-structure/platform-functions-redeemable-structure.json
-  - type: JSONLD
-    url: json-ld/punchh-platform-functions-context.jsonld
-  - type: Examples
-    url: examples/platform-functions-redeemable-example.json
-- aid: punchh:punchh-redemptions-api
-  name: Punchh Redemptions API
-  description: Apply rewards and discounts against online order receipts.
-  humanURL: https://developers.partech.com/docs/dev-portal-mobile/bf6eddb435209-mobile-api
+    url: json-ld/punchh-online-ordering-context.jsonld
+  - type: PostmanCollection
+    url: collections/punchh-online-ordering.postman_collection.json
+  - type: OpenCollection
+    url: collections/punchh-online-ordering.opencollection.json
+- aid: punchh:punchh-online-ordering-subscription
+  name: Punchh Subscription API - Online Ordering
+  description: Subscriptions is an add-on Punchh loyalty product that allows businesses to create subscription plans to
+    generate up-front revenue and offers benefits in addition to the standard benefits that unsubscribed members of the
+    loyalty program receive. The Subscription APIs are designed in a way that businesses can programatically achieve the
+    benefits of the subscription for their guest in a mobile app or website. Also, there are aspects that require calling
+    the API without any guest authentication (e.g., to control the auto-renewal of the subscription on behalf of the guest).
+    Published by PAR on the online ordering section of the PAR developer portal; 5 operations. Certification required.
+  humanURL: https://developers.partech.com/docs/dev-portal-online-ordering
   baseURL: https://{server_name}.punchh.com
   tags:
+  - Online Ordering
+  properties:
+  - type: OpenAPI
+    url: openapi/punchh-online-ordering-subscription-openapi.yml
+  - type: Overlay
+    url: overlays/punchh-online-ordering-subscription-overlay.yaml
+  - type: Documentation
+    url: https://developers.partech.com/docs/dev-portal-online-ordering
+  - type: APIReference
+    url: https://developers.partech.com/docs/dev-portal-online-ordering
+  - type: GettingStarted
+    url: https://developers.partech.com/docs/dev-portal-online-ordering/make-your-first-sso-api-call
+- aid: punchh:punchh-platform-functions-api
+  name: Punchh Platform Functions API
+  description: This API documentation is intended to provide comprehensive information for admin users of the Punchh platform.
+    Many of the settings and available actions depend on an appropriate level of access to Platform Functions APIs. Published
+    by PAR on the platform functions section of the PAR developer portal; 63 operations. Certification required.
+  humanURL: https://developers.partech.com/docs/dev-portal-platform-functions
+  baseURL: https://{server_name}.punchh.com
+  tags:
+  - Business Admin Users
+  - Business Migration Users
+  - Check-in
+  - Custom Segments
+  - Feedback
+  - Franchisee
+  - Locations
+  - Meta
   - Redemptions
-  properties:
-  - type: OpenAPI
-    url: openapi/punchh-redemptions-api-openapi.yml
-  - type: Documentation
-    url: https://developers.partech.com/
-  - type: JSONSchema
-    url: json-schema/mobile-access-token-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-create-user-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-login-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-mark-offers-read-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-transaction-details-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-transaction-details-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-update-user-profile-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-user-session-schema.json
-  - type: JSONStructure
-    url: json-structure/mobile-access-token-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-create-user-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-login-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-mark-offers-read-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-transaction-details-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-transaction-details-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-update-user-profile-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-user-session-structure.json
-  - type: JSONLD
-    url: json-ld/punchh-mobile-context.jsonld
-  - type: Examples
-    url: examples/mobile-access-token-example.json
-  - type: Examples
-    url: examples/mobile-create-user-request-example.json
-  - type: Examples
-    url: examples/mobile-login-request-example.json
-  - type: Examples
-    url: examples/mobile-mark-offers-read-request-example.json
-  - type: Examples
-    url: examples/mobile-transaction-details-example.json
-  - type: Examples
-    url: examples/mobile-transaction-details-request-example.json
-  - type: Examples
-    url: examples/mobile-update-user-profile-request-example.json
-  - type: Examples
-    url: examples/mobile-user-session-example.json
-  - type: GettingStarted
-    url: >-
-      https://developers.partech.com/docs/dev-portal-online-ordering/apis/online-ordering-and-sso-api
-  - type: JSONSchema
-    url: json-schema/online-ordering-online-order-checkin-request-schema.json
-  - type: JSONSchema
-    url: json-schema/online-ordering-online-order-checkin-response-schema.json
-  - type: JSONSchema
-    url: json-schema/online-ordering-online-order-redemption-request-schema.json
-  - type: JSONSchema
-    url: json-schema/online-ordering-online-order-redemption-response-schema.json
-  - type: JSONStructure
-    url: json-structure/online-ordering-online-order-checkin-request-structure.json
-  - type: JSONStructure
-    url: json-structure/online-ordering-online-order-checkin-response-structure.json
-  - type: JSONStructure
-    url: json-structure/online-ordering-online-order-redemption-request-structure.json
-  - type: JSONStructure
-    url: json-structure/online-ordering-online-order-redemption-response-structure.json
-  - type: JSONLD
-    url: json-ld/punchh-online-ordering-context.jsonld
-  - type: Examples
-    url: examples/online-ordering-online-order-checkin-request-example.json
-  - type: Examples
-    url: examples/online-ordering-online-order-checkin-response-example.json
-  - type: Examples
-    url: examples/online-ordering-online-order-redemption-request-example.json
-  - type: Examples
-    url: examples/online-ordering-online-order-redemption-response-example.json
-  - type: JSONSchema
-    url: json-schema/pos-pos-checkin-request-schema.json
-  - type: JSONSchema
-    url: json-schema/pos-pos-user-schema.json
-  - type: JSONStructure
-    url: json-structure/pos-pos-checkin-request-structure.json
-  - type: JSONStructure
-    url: json-structure/pos-pos-user-structure.json
-  - type: JSONLD
-    url: json-ld/punchh-pos-context.jsonld
-  - type: Examples
-    url: examples/pos-pos-checkin-request-example.json
-  - type: Examples
-    url: examples/pos-pos-user-example.json
-  - type: JSONSchema
-    url: json-schema/platform-functions-redeemable-schema.json
-  - type: JSONStructure
-    url: json-structure/platform-functions-redeemable-structure.json
-  - type: JSONLD
-    url: json-ld/punchh-platform-functions-context.jsonld
-  - type: Examples
-    url: examples/platform-functions-redeemable-example.json
-- aid: punchh:punchh-users-api
-  name: Punchh Users API
-  description: Guest registration, authentication, and profile management.
-  humanURL: https://developers.partech.com/docs/dev-portal-mobile/bf6eddb435209-mobile-api
-  baseURL: https://{server_name}.punchh.com
-  tags:
+  - Social Cause Campaigns
+  - Swag
   - Users
   properties:
   - type: OpenAPI
-    url: openapi/punchh-users-api-openapi.yml
+    url: openapi/punchh-platform-functions-api-openapi.yml
+  - type: Overlay
+    url: overlays/punchh-platform-functions-api-overlay.yaml
   - type: Documentation
-    url: https://developers.partech.com/
-  - type: JSONSchema
-    url: json-schema/mobile-access-token-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-create-user-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-login-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-mark-offers-read-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-transaction-details-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-transaction-details-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-update-user-profile-request-schema.json
-  - type: JSONSchema
-    url: json-schema/mobile-user-session-schema.json
-  - type: JSONStructure
-    url: json-structure/mobile-access-token-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-create-user-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-login-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-mark-offers-read-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-transaction-details-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-transaction-details-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-update-user-profile-request-structure.json
-  - type: JSONStructure
-    url: json-structure/mobile-user-session-structure.json
-  - type: JSONLD
-    url: json-ld/punchh-mobile-context.jsonld
-  - type: Examples
-    url: examples/mobile-access-token-example.json
-  - type: Examples
-    url: examples/mobile-create-user-request-example.json
-  - type: Examples
-    url: examples/mobile-login-request-example.json
-  - type: Examples
-    url: examples/mobile-mark-offers-read-request-example.json
-  - type: Examples
-    url: examples/mobile-transaction-details-example.json
-  - type: Examples
-    url: examples/mobile-transaction-details-request-example.json
-  - type: Examples
-    url: examples/mobile-update-user-profile-request-example.json
-  - type: Examples
-    url: examples/mobile-user-session-example.json
+    url: https://developers.partech.com/docs/dev-portal-platform-functions
+  - type: APIReference
+    url: https://developers.partech.com/docs/dev-portal-platform-functions
   - type: GettingStarted
-    url: >-
-      https://developers.partech.com/docs/dev-portal-online-ordering/apis/online-ordering-and-sso-api
+    url: https://developers.partech.com/docs/dev-portal-platform-functions/make-your-first-platform-function-api-call
   - type: JSONSchema
-    url: json-schema/online-ordering-online-order-checkin-request-schema.json
-  - type: JSONSchema
-    url: json-schema/online-ordering-online-order-checkin-response-schema.json
-  - type: JSONSchema
-    url: json-schema/online-ordering-online-order-redemption-request-schema.json
-  - type: JSONSchema
-    url: json-schema/online-ordering-online-order-redemption-response-schema.json
+    url: json-schema/platform-functions-redeemable-schema.json
   - type: JSONStructure
-    url: json-structure/online-ordering-online-order-checkin-request-structure.json
-  - type: JSONStructure
-    url: json-structure/online-ordering-online-order-checkin-response-structure.json
-  - type: JSONStructure
-    url: json-structure/online-ordering-online-order-redemption-request-structure.json
-  - type: JSONStructure
-    url: json-structure/online-ordering-online-order-redemption-response-structure.json
+    url: json-structure/platform-functions-redeemable-structure.json
+  - type: Examples
+    url: examples/platform-functions-redeemable-example.json
   - type: JSONLD
-    url: json-ld/punchh-online-ordering-context.jsonld
-  - type: Examples
-    url: examples/online-ordering-online-order-checkin-request-example.json
-  - type: Examples
-    url: examples/online-ordering-online-order-checkin-response-example.json
-  - type: Examples
-    url: examples/online-ordering-online-order-redemption-request-example.json
-  - type: Examples
-    url: examples/online-ordering-online-order-redemption-response-example.json
+    url: json-ld/punchh-platform-functions-context.jsonld
+  - type: PostmanCollection
+    url: collections/punchh-platform-functions.postman_collection.json
+  - type: OpenCollection
+    url: collections/punchh-platform-functions.opencollection.json
+- aid: punchh:punchh-platform-functions-headless-offers
+  name: Punchh Headless Offers API - Platform Functions
+  description: Distribute Punchh offers through an external system of choice by configuring and scheduling the mass offer
+    campaign functionality through API calls. For more information, see Headless Offers Management - Distribution Published
+    by PAR on the platform functions section of the PAR developer portal; 5 operations. Certification required.
+  humanURL: https://developers.partech.com/docs/dev-portal-platform-functions
+  baseURL: https://{server_name}.punchh.com
+  tags:
+  - Platform Functions
+  properties:
+  - type: OpenAPI
+    url: openapi/punchh-platform-functions-headless-offers-openapi.yml
+  - type: Overlay
+    url: overlays/punchh-platform-functions-headless-offers-overlay.yaml
+  - type: Documentation
+    url: https://developers.partech.com/docs/dev-portal-platform-functions
+  - type: APIReference
+    url: https://developers.partech.com/docs/dev-portal-platform-functions
+  - type: GettingStarted
+    url: https://developers.partech.com/docs/dev-portal-platform-functions/make-your-first-platform-function-api-call
+- aid: punchh:punchh-platform-functions-offers-ingestion
+  name: Punchh Offers Ingestion API - Platform Functions
+  description: Create and update in bulk and list Line Item Selectors (LIS), Qualification Criteria (QC), and Reedemables
+    through Offers Ingestion API calls. For more information, see Offers Ingestion Management Published by PAR on the platform
+    functions section of the PAR developer portal; 10 operations. Certification required.
+  humanURL: https://developers.partech.com/docs/dev-portal-platform-functions
+  baseURL: https://{server_name}.punchh.com
+  tags:
+  - Platform Functions
+  properties:
+  - type: OpenAPI
+    url: openapi/punchh-platform-functions-offers-ingestion-openapi.yml
+  - type: Overlay
+    url: overlays/punchh-platform-functions-offers-ingestion-overlay.yaml
+  - type: Documentation
+    url: https://developers.partech.com/docs/dev-portal-platform-functions
+  - type: APIReference
+    url: https://developers.partech.com/docs/dev-portal-platform-functions
+  - type: GettingStarted
+    url: https://developers.partech.com/docs/dev-portal-platform-functions/make-your-first-platform-function-api-call
+- aid: punchh:punchh-platform-functions-subscription
+  name: Punchh Subscription API - Platform Functions
+  description: Subscriptions is an add-on Punchh loyalty product that allows businesses to create subscription plans to
+    generate up-front revenue and offers benefits in addition to the standard benefits that unsubscribed members of the
+    loyalty program receive. The Subscription APIs are designed in a way that businesses can programatically achieve the
+    benefits of the subscription for their guest in a mobile app or website. Also, there are aspects that require calling
+    the API without any guest authentication (e.g., to control the auto-renewal of the subscription on behalf of the guest).
+    Published by PAR on the platform functions section of the PAR developer portal; 3 operations. Certification required.
+  humanURL: https://developers.partech.com/docs/dev-portal-platform-functions
+  baseURL: https://{server_name}.punchh.com
+  tags:
+  - Platform Functions
+  properties:
+  - type: OpenAPI
+    url: openapi/punchh-platform-functions-subscription-openapi.yml
+  - type: Overlay
+    url: overlays/punchh-platform-functions-subscription-overlay.yaml
+  - type: Documentation
+    url: https://developers.partech.com/docs/dev-portal-platform-functions
+  - type: APIReference
+    url: https://developers.partech.com/docs/dev-portal-platform-functions
+  - type: GettingStarted
+    url: https://developers.partech.com/docs/dev-portal-platform-functions/make-your-first-platform-function-api-call
+- aid: punchh:punchh-pos-api
+  name: Punchh POS API
+  description: Punchh provides robust APIs for integrating POS (Point-of-Sale) terminals with its back end. The integration
+    helps businesses to offer their customers loyalty programs directly from their POS systems. Published by PAR on the
+    pos section of the PAR developer portal; 13 operations. Certification required.
+  humanURL: https://developers.partech.com/docs/dev-portal-pos
+  baseURL: https://{server_name}.punchh.com
+  tags:
+  - Payments
+  - Point Of Sale
+  properties:
+  - type: OpenAPI
+    url: openapi/punchh-pos-api-openapi.yml
+  - type: Overlay
+    url: overlays/punchh-pos-api-overlay.yaml
+  - type: Documentation
+    url: https://developers.partech.com/docs/dev-portal-pos
+  - type: APIReference
+    url: https://developers.partech.com/docs/dev-portal-pos
+  - type: GettingStarted
+    url: https://developers.partech.com/docs/dev-portal-pos/make-your-first-pos-api-call
   - type: JSONSchema
     url: json-schema/pos-pos-checkin-request-schema.json
   - type: JSONSchema
@@ -813,103 +454,144 @@ apis:
     url: json-structure/pos-pos-checkin-request-structure.json
   - type: JSONStructure
     url: json-structure/pos-pos-user-structure.json
-  - type: JSONLD
-    url: json-ld/punchh-pos-context.jsonld
   - type: Examples
     url: examples/pos-pos-checkin-request-example.json
   - type: Examples
     url: examples/pos-pos-user-example.json
-  - type: JSONSchema
-    url: json-schema/platform-functions-redeemable-schema.json
-  - type: JSONStructure
-    url: json-structure/platform-functions-redeemable-structure.json
   - type: JSONLD
-    url: json-ld/punchh-platform-functions-context.jsonld
-  - type: Examples
-    url: examples/platform-functions-redeemable-example.json
-common:
-  - type: PostmanWorkspace
-    url: https://www.postman.com/kinlaneapi/punchh/overview
-  - type: AgenticAccess
-    url: agentic-access/punchh-agentic-access.yml
-  - type: VulnerabilityDisclosure
-    url: security/punchh-vulnerability-disclosure.yml
-  - type: DomainSecurity
-    url: security/punchh-domain-security.yml
-  - type: Authentication
-    url: authentication/punchh-authentication.yml
-  - type: Website
-    url: https://punchh.com/
+    url: json-ld/punchh-pos-context.jsonld
+  - type: PostmanCollection
+    url: collections/punchh-pos.postman_collection.json
+  - type: OpenCollection
+    url: collections/punchh-pos.opencollection.json
+- aid: punchh:punchh-pos-redemptions-legacy
+  name: Punchh Redemptions 1.0 (Legacy) API - POS
+  description: For more information, see POS Module 6 - Redemptions. Published by PAR on the pos section of the PAR developer
+    portal; 6 operations. Certification required.
+  humanURL: https://developers.partech.com/docs/dev-portal-pos
+  baseURL: https://{server_name}.punchh.com
+  tags:
+  - Pos
+  properties:
+  - type: OpenAPI
+    url: openapi/punchh-pos-redemptions-legacy-openapi.yml
+  - type: Overlay
+    url: overlays/punchh-pos-redemptions-legacy-overlay.yaml
   - type: Documentation
-    url: https://developers.partech.com/
-  - type: Portal
-    url: https://developers.partech.com/
+    url: https://developers.partech.com/docs/dev-portal-pos
+  - type: APIReference
+    url: https://developers.partech.com/docs/dev-portal-pos
   - type: GettingStarted
-    url: https://developers.partech.com/docs/dev-portal-developer-resources
-  - type: Postman
-    url: https://punchh.com/blog/2024/07/12/par-punchh-apis-now-available-on-postman-workspace/
-  - type: GitHubOrganization
-    url: https://github.com/punchh
-  - type: Blog
-    url: https://punchh.com/blog/
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/partechnology
-  - type: SpectralRules
-    url: rules/punchh-spectral-rules.yml
-  - type: Vocabulary
-    url: vocabulary/punchh-vocabulary.yaml
-  - type: Plans
-    url: plans/punchh-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/punchh-rate-limits.yml
-  - type: FinOps
-    url: finops/punchh-finops.yml
-  - type: Webhooks
-    url: https://developers.partech.com/docs/dev-portal-webhooks-manager/8c18e3660f73f-event-guest
-  - type: Features
-    data:
-      - name: Loyalty Programs
-        description: Configurable points, rewards, tiers, and membership levels across channels.
-      - name: Offers and Campaigns
-        description: Targeted offers, coupons, and personalized marketing campaigns driven by unified guest data.
-      - name: Omnichannel Check-Ins
-        description: Earn loyalty across mobile, online ordering, POS, and kiosk channels.
-      - name: Redemptions
-        description: Apply rewards, redeemables, and discounts against receipts with possible/create/void flows.
-      - name: Webhooks Manager
-        description: Real-time event notifications for coupons, points, rewards, and guest lifecycle events.
-      - name: Headless Offers
-        description: Surface Punchh-defined offers natively in external platforms via Platform Functions.
-  - type: UseCases
-    data:
-      - name: Branded Mobile Loyalty App
-        description: Power a restaurant brand's mobile app with sign-in, profile, check-ins, and offers.
-      - name: Online Ordering Rewards
-        description: Let guests earn and redeem loyalty on a digital ordering platform via SSO and check-in APIs.
-      - name: POS Loyalty at the Counter
-        description: Look up guests, accrue points, and redeem rewards at the point of sale or kiosk.
-      - name: External Offer Distribution
-        description: Pull Punchh redeemables into a CDP, messaging platform, or partner channel.
-  - type: Integrations
-    data:
-      - name: Point of Sale Systems
-        description: Integrations with restaurant POS platforms for in-store loyalty.
-      - name: Online Ordering Platforms
-        description: Digital and online ordering platforms connect via the Online Ordering and SSO API.
-      - name: Customer Data Platforms
-        description: Unify guest data with CDPs and CRMs.
-      - name: Salesforce Marketing Cloud
-        description: Punchh Loyalty connector for Salesforce Marketing Cloud on AppExchange.
-      - name: Messaging and Payment Gateways
-        description: Connects to messaging platforms, surveys, and payment gateways across dozens of categories.
-  - type: Solutions
-    data:
-      - name: Loyalty
-        description: Enterprise loyalty program management for restaurant brands.
-      - name: Offers
-        description: Personalized offers and promotions engine.
-      - name: Guest Engagement
-        description: Unified marketing and engagement across the guest lifecycle.
+    url: https://developers.partech.com/docs/dev-portal-pos/make-your-first-pos-api-call
+- aid: punchh:punchh-pos-redemptions-v2
+  name: Punchh Redemptions 2.0 (New) API - POS
+  description: 'The Redemptions 2.0 protocol has been designed to replace the legacy Redemptions 1.0 endpoints. The new
+    protocol allows for the following features: - Single-scan flow support - Batching of redemptions to occur in a single
+    API call - Stacked discounting - Proportional breakdown of discounted items - Item qualifier recycling - Enhance flexibility
+    to redemption rules and processing orders The Redemptions 2.0 protocol is not backward compatible with the legacy Redemptions
+    1.0 endpoints. Configurations within the Punchh platform are required, so please contact your Punchh representative
+    for help be Published by PAR on the pos section of the PAR developer portal; 9 operations. Certification required.'
+  humanURL: https://developers.partech.com/docs/dev-portal-pos
+  baseURL: https://{server_name}.punchh.com
+  tags:
+  - Pos
+  properties:
+  - type: OpenAPI
+    url: openapi/punchh-pos-redemptions-v2-openapi.yml
+  - type: Overlay
+    url: overlays/punchh-pos-redemptions-v2-overlay.yaml
+  - type: Documentation
+    url: https://developers.partech.com/docs/dev-portal-pos
+  - type: APIReference
+    url: https://developers.partech.com/docs/dev-portal-pos
+  - type: GettingStarted
+    url: https://developers.partech.com/docs/dev-portal-pos/make-your-first-pos-api-call
+common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/punchh/overview
+- type: AgenticAccess
+  url: agentic-access/punchh-agentic-access.yml
+- type: VulnerabilityDisclosure
+  url: security/punchh-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/punchh-domain-security.yml
+- type: Authentication
+  url: authentication/punchh-authentication.yml
+- type: Website
+  url: https://punchh.com/
+- type: Documentation
+  url: https://developers.partech.com/
+- type: Portal
+  url: https://developers.partech.com/
+- type: GettingStarted
+  url: https://developers.partech.com/docs/dev-portal-developer-resources
+- type: GitHubOrganization
+  url: https://github.com/punchh
+- type: Blog
+  url: https://punchh.com/blog/
+- type: LinkedIn
+  url: https://www.linkedin.com/company/partechnology
+- type: SpectralRules
+  url: rules/punchh-spectral-rules.yml
+- type: Vocabulary
+  url: vocabulary/punchh-vocabulary.yaml
+- type: Plans
+  url: plans/punchh-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/punchh-rate-limits.yml
+- type: FinOps
+  url: finops/punchh-finops.yml
+- type: Webhooks
+  url: https://developers.partech.com/docs/dev-portal-webhooks-manager/8c18e3660f73f-event-guest
+- type: Conventions
+  url: conventions/punchh-conventions.yml
+- type: Idempotency
+  url: conventions/punchh-conventions.yml
+- type: ErrorCatalog
+  url: errors/punchh-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/punchh-lifecycle.yml
+- type: StatusPage
+  url: https://status.punchh.com
+- type: Deprecation
+  url: lifecycle/punchh-lifecycle.yml
+- type: Conformance
+  url: conformance/punchh-conformance.yml
+- type: DataModel
+  url: data-model/punchh-data-model.yml
+- type: Webhooks
+  url: asyncapi/punchh-webhooks.yml
+- type: Sandbox
+  url: sandbox/punchh-sandbox.yml
+- type: ChangeLog
+  url: changelog/punchh-changelog.yml
+- type: Packages
+  url: packages/punchh-packages.yml
+- type: LLMsTxt
+  url: llms/punchh-llms.txt
+- type: MCPServer
+  url: mcp/punchh-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Security
+  url: security/punchh-vulnerability-disclosure.yml
+- type: PrivacyPolicy
+  url: https://partech.com/privacy-policy/
+- type: TermsOfService
+  url: https://partech.com/terms-of-use/
+- type: Support
+  url: https://punchh.com/contact/
+- type: APIReference
+  url: https://developers.partech.com/docs/dev-portal-developer-resources
+- type: SecurityPolicy
+  url: https://punchh.com/security/
+- type: Postman
+  url: https://www.postman.com/par-tech/workspace/par-tech-apis-official
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 50
+  pass: local-v1
