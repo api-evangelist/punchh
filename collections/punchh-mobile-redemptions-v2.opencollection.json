@@ -1,0 +1,186 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Redemptions 2.0 (New) API - Mobile",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Add Selection to Discount Basket (Redemptions 2.0)",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/mobile/discounts/select",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "punchh-app-device-id",
+            "value": ""
+          },
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "User-Agent",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          },
+          {
+            "name": "Accept-Language",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "- A single discount basket will be active at a time. If there is no active discount basket, the system will create a new active discount basket along with selected discounts passed in the request parameters.\n- The Punchh system will not have any validation based on points adjustments as discounts are added.\n- When a guest adds multiple discounts, and one is invalid for some reason, the entire request will fail with an error message. The guest will then be required to remove the invalid discount "
+    },
+    {
+      "info": {
+        "name": "Remove Item From Discount Basket (Redemptions 2.0)",
+        "type": "http"
+      },
+      "http": {
+        "method": "DELETE",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/mobile/discounts/unselect",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "punchh-app-device-id",
+            "value": ""
+          },
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "User-Agent",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          },
+          {
+            "name": "Accept-Language",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Delete one or more discounts from a discount basket."
+    },
+    {
+      "info": {
+        "name": "Get Active Discount Basket (Redemptions 2.0)",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/mobile/discounts/active",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "User-Agent",
+            "value": ""
+          },
+          {
+            "name": "punchh-app-device-id",
+            "value": ""
+          },
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          },
+          {
+            "name": "Accept-Language",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "- Get a list of discount details that have been selected by a guest. Only one active basket can exist in the system for a particular guest.\n- If a discount expires after being added to the discount basket, it is removed from the discount basket. When you make a call to the API, it validates the discounts added to the discount basket. If one or more discounts are found to be honored, expired, perished, or archived, the API returns an error message indicating that these discounts cannot be honored"
+    },
+    {
+      "info": {
+        "name": "Get Access Code (Redemptions 2.0)",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/mobile/single_scan_tokens",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "User-Agent",
+            "value": ""
+          },
+          {
+            "name": "punchh-app-device-id",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "This API returns the single-scan code containing a UUID string in the API response. The loyalty user can use the single-scan code to pay, earn, and redeem a reward/offer with a single scan at the POS store. The value of the `single_scan_code` parameter returned in the API response can then be passed as the `otp` (one-time passcode) with the `lookup_field` parameter in the request of the [Find User](/docs/dev-portal-pos/ce2bc2798ed8f-find-user-redemptions-2-0) POS API. The OTP is a short-lived to"
+    }
+  ],
+  "bundled": true
+}

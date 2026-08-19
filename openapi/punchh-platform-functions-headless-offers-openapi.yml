@@ -1,0 +1,738 @@
+info:
+  title: Headless Offers API - Platform Functions
+  version: '1.0'
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+  description: 'Distribute Punchh offers through an external system of choice by configuring and scheduling
+    the mass offer campaign functionality through API calls.
+
+
+    For more information, see [Headless Offers Management - Distribution](/docs/dev-portal-platform-functions/4fabd3e0da881-headless-offers-management-distribution)'
+paths:
+  /api2/dashboard/segments:
+    get:
+      summary: Get Segment List
+      operationId: get-api2-segment-list
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    subscription_id: 1234
+                    start_time: '2021-05-18 11:34:46'
+                    end_time: '2021-05-28 11:34:46'
+                properties:
+                  segment_id:
+                    type: integer
+                    description: Unique ID of the segment
+                  name:
+                    type: string
+                    description: Name of the segment
+                  description:
+                    type: string
+                    description: Description of the segment
+                  segment_type:
+                    type: string
+                    description: 'Type of the segment '
+                  user_type:
+                    type: string
+                    description: Type of the user
+                  membership_level:
+                    type: string
+                    description: Membership level of the user
+              examples:
+                example:
+                  value:
+                  - segment_id: 1306904
+                    name: test 1
+                    description: ''
+                    segment_type: GuestProfileSegmentDefinition
+                    user_type: loyalty_user
+                    membership_level: null
+        '400':
+          description: 'Required parameter missing or the value is empty : segment_id'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '422':
+          description: Invalid segment id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      parameters:
+      - $ref: '#/components/parameters/content-type'
+      - $ref: '#/components/parameters/accept-header'
+      - $ref: '#/components/parameters/authorization-header'
+      description: "Pulls a list of segments available and/or defined on Punchh, allowing for browsing/selecting\
+        \ of Punchh segments natively in an external platform. Segment search is on a business level,\
+        \ and the request can:\n* Set search limits and order by desc search\n* Search based on name or\
+        \ segment type filter\n* Filter based on name or description\n\n\n\nFor more information, see\
+        \ [Headless Offers Management - Distribution](/docs/dev-portal-platform-functions/4fabd3e0da881-headless-offers-management-distribution)\n\
+        \n#### Adding Users to a Segment\n\nYou can add a user to the segment using either email or user_id.\
+        \ See [Add User to a Custom Segment](/docs/dev-portal-platform-functions/apis/platform-functions-api/tag/custom-segments/post/api2/dashboard/custom_segments/members).\
+        \ \n\nYou can also add users in bulk to a custom segment by uploading a CSV file that contains\
+        \ a list of users and their details. See [Bulk Add Users to a Custom Segment](/docs/dev-portal-platform-functions/apis/platform-functions-api/tag/custom-segments/post/api2/dashboard/custom_segments/members/bulk_add).\
+        \ \n\nSee [Custom Segment APIs](https://developers.partech.com/docs/dev-portal-platform-functions/additional-topics/gettingstartedwithcustomsegment)\
+        \ quickstart topic for the complete list of APIs for managing custom segments and users.\n\nThe\
+        \ users you add must exist in Punchh. If a user does not exist, then the [Add User to a Custom\
+        \ Segment](/docs/dev-portal-platform-functions/apis/platform-functions-api/tag/custom-segments/post/api2/dashboard/custom_segments/members)\
+        \ API returns an error. When using the [Bulk Add Users to a Custom Segment](/docs/dev-portal-platform-functions/apis/platform-functions-api/tag/custom-segments/post/api2/dashboard/custom_segments/members/bulk_add)\
+        \ API, the users who do not exist in Punchh are skipped. You can use the [Get User Information\
+        \ API](/docs/dev-portal-platform-functions/apis/platform-functions-api/tag/users/get/api2/dashboard/users/info)\
+        \ to check whether a user exists in Punchh."
+      x-stoplight:
+        id: 898fd4cc84237
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  description: Define the search string on the segment name
+                page:
+                  type: integer
+                  description: Number of pages
+                per_page:
+                  type: integer
+                  description: Number of records per page
+            examples:
+              Request:
+                value:
+                  user_id: 1234
+                  start_time: '2021-05-18 11:34:46'
+                  plan_id: 12
+                  end_time: '2021-05-28 11:34:46'
+                  purchase_price: 20
+                  auto_renewal: false
+                  migration: false
+                  lifetime_debits: 30
+                  lifetime_savings: 50
+                  initial_debits: 10
+                  initial_savings: 20
+                  source_subscription_id: 'null'
+  /api2/dashboard/redeemables:
+    parameters: []
+    get:
+      summary: Get Redeemable List
+      operationId: get-api2-redeemable-list
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    subscription_id: 40
+                    start_time: '2021-04-20T21:09:38Z'
+                    end_time: '2021-04-20T21:09:38Z'
+                properties:
+                  redeemable_id:
+                    type: integer
+                    description: ID of the redeemable
+                  redeemable_uuid:
+                    type: string
+                    description: UUID of the redeemable
+                  name:
+                    type: string
+                    description: Name of the redeemable
+                  description:
+                    type: string
+                    description: Description of the redeemable
+                  redeemable_image_url:
+                    type: string
+                    description: Image URL for the redeemable
+              examples:
+                example:
+                  value:
+                  - redeemable_id: 20473
+                    redeemable_uuid: test
+                    name: future
+                    description: free
+                    redeemable_image_url: IMAGE_URL_GOES_HERE
+                  - redeemable_id: 20408
+                    redeemable_uuid: test
+                    name: New - Free Coffee For 2 !!!
+                    description: ''
+                    redeemable_image_url: IMAGE_URL_GOES_HERE
+        '400':
+          description: 'Required parameter missing or the value is empty : redeemable_uuid'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    x-stoplight:
+                      id: tk1mlz6ykdjbi
+              examples:
+                Feature disabled:
+                  value:
+                    errors:
+                      disabled _feature: Your current loyalty program configuration does not support this
+                        feature. Please connect with your Customer Success representative for resolution
+                        of this issue
+      description: 'Pulls a list of offers available and defined on Punchh, allowing for browsing/selecting
+        of Punchh offers natively in an external platform. Redeemable search is on a business level, and
+        the request can:
+
+        * Set search limits and order by desc search
+
+        * Search based on name or segment type filter
+
+        * Filter based on name or description
+
+        For more information, see [Headless Offers Management - Distribution](/docs/dev-portal-platform-functions/4fabd3e0da881-headless-offers-management-distribution)
+
+
+        To call this API, the option to distribute offers from an external system must be enabled for
+        the business on the Punchh platform. Contact your Punchh representative to update this Punchh
+        platform configuration. <!-- Cockpit > Dashboard > Miscellaneous Config --> '
+      parameters:
+      - $ref: '#/components/parameters/content-type'
+      - $ref: '#/components/parameters/accept-header'
+      - $ref: '#/components/parameters/authorization-header'
+      x-stoplight:
+        id: b3e6608469a3e
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              x-examples:
+                example-1:
+                  subscription_id: '35'
+                  start_time: '2021-04-20T21:09:38Z'
+                  end_time: '2021-05-20T21:09:38Z'
+                  purchase_price: '23.09'
+              properties:
+                query:
+                  type: string
+                  description: Define the search string on the redeemable name and description column
+                page:
+                  type: integer
+                  description: Number of pages
+                per_page:
+                  type: integer
+                  description: Number of records per page
+            examples:
+              example:
+                value:
+                  query: free
+                  page: '1'
+                  per_page: 20
+  /api2/dashboard/campaigns:
+    post:
+      summary: Commit Redeemable Distribution
+      operationId: post-api2-redeemable-distribution
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  redeemable_id:
+                    type: integer
+                    description: ID of the redeemable
+                  redeemable_image_url:
+                    type: string
+                    description: Image URL for the redeemable
+                  redeemable_properties:
+                    type: string
+                    description: Specifies the redeemable attribute
+                  campaign_id:
+                    type: integer
+                    description: ID of the campaign
+                  external_source_id:
+                    type: string
+                    description: ID of third-party campaign
+                  start_time:
+                    type: string
+                    description: Start time of the campaign
+                    format: date-time
+                  time_zone:
+                    type: string
+                    description: Time zone of the campaign
+                examples:
+                - redeemable_id: 20416
+                  redeemable_image_url: IMAGE_URL_GOES_HERE
+                  redeemable_properties: attribute
+                  campaign_id: 99511494
+                  external_source_id: '2'
+                  start_time: 2021-09-14 06:44 PM
+                  timezone: Etc/UTC
+              examples:
+                example:
+                  value:
+                    redeemable_id: 20416
+                    redeemable_image_url: IMAGE_URL_GOES_HERE
+                    redeemable_properties: attribute
+                    campaign_id: 99511494
+                    external_source_id: '2'
+                    start_time: 2021-09-14 06:44 PM
+                    timezone: Etc/UTC
+        '400':
+          description: "Required parameter missing or the value is empty: redeemable_uuid\n \nRequired\
+            \ parameter missing or the value is empty: segment_id \n\nRequired parameter missing or the\
+            \ value is empty: category \n\nRequired parameter missing or the value is empty: campaign_type\
+            \ \n\nRequired parameter missing or the value is empty: start_time \n\nRequired parameter\
+            \ missing or the value is empty: campaign_id "
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '404':
+          description: Coupon campaign not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '422':
+          description: "Coupon campaigns feature is not enabled in business\n\nCampaign start time should\
+            \ be at least 15 ahead from now\n\nInvalid Start Time format\n\nStart time should be less\
+            \ than or equal to redeemable effective expiry time \n\nInvalid redeemable uuid \n\nInvalid\
+            \ category \n\nInvalid segment id \n\nRedeemable is scheduled \n\nRedeemable is deactivated "
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      description: "Triggers configuration and scheduling of a mass offer campaign on Punchh. This is\
+        \ used by an external platform to request Punchh to deliver offers to a target segment of guests\
+        \ using the Punchh mass offer campaign functionality. When using this endpoint to request scheduling\
+        \ of a mass offer campaign on Punchh, the mass offer campaign created will not have any marketing\
+        \ communication configured (email, push notification, SMS, etc.), and the mass offer campaign\
+        \ will only distribute a Punchh redeemable to the guests in the targeted segment. \n\nFor more\
+        \ information, see [Headless Offers Management - Distribution](/docs/dev-portal-platform-functions/4fabd3e0da881-headless-offers-management-distribution)"
+      parameters:
+      - $ref: '#/components/parameters/content-type'
+      - $ref: '#/components/parameters/accept-header'
+      - $ref: '#/components/parameters/authorization-header'
+      x-stoplight:
+        id: 95afe32043e6b
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                example-1:
+                  subscription_id: '126'
+                  cancellation_reason: Do not like your service
+                  cancellation_type: hard_cancelled
+              properties:
+                redeemable_uuid:
+                  type: string
+                  description: Redeemable UUID
+                segment_id:
+                  type: integer
+                  description: Segment ID of the group of users for mass gifting
+                category:
+                  type: string
+                  description: 'Gift type. For example: gift_redeemable, gift_fixed_point (currently only
+                    gift_redeemable is supported)'
+                campaign_type:
+                  type: string
+                  description: 'Campaign type. For example: mass gifting campaign, coupon campaign (currently
+                    only mass gifting campaign is supported)'
+                name:
+                  type: string
+                  description: Campaign name
+                start_time:
+                  type: string
+                  description: Start time of the campaign
+                external_campaign_id:
+                  type: string
+                  description: ID of third-party campaign
+              required:
+              - redeemable_uuid
+              - segment_id
+              - category
+              - campaign_type
+              - name
+              - start_time
+            examples:
+              example:
+                value:
+                  redeemable_uuid: test
+                  segment_id: 1307202
+                  category: gift_redeemable
+                  campaign_type: mass_gifting
+                  name: API 11
+                  start_time: '2021-09-14T18:44:38Z'
+                  external_campaign_id: '2'
+  /api2/dashboard/users/support_gifting:
+    post:
+      summary: Asynchronous Support Gifting
+      operationId: post-api2-dashboard-users-support_gifting
+      responses:
+        '202':
+          description: OK - Request was accepted and processed successfully.
+        '401':
+          description: Unauthorized - Missing or invalid Bearer token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    x-stoplight:
+                      id: bgezkfgnei74b
+              examples:
+                Unauthorized access:
+                  value:
+                    error: You need to sign in or sign up before continuing.
+        '422':
+          description: "Unprocessable Entity \n- Both `gift_count` and `redeemable_id` are missing: Please\
+            \ specify any one entity for gifting.\n- Both `gift_count` and `redeemable_id` are present:\
+            \ Please specify single entity for gifting."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    x-stoplight:
+                      id: w64b6t74jarxu
+                    properties:
+                      base:
+                        type: array
+                        x-stoplight:
+                          id: e3p2uib3rii4o
+                        items:
+                          x-stoplight:
+                            id: 22nsv9lihmnxy
+                          type: string
+              examples:
+                Feature flag disabled:
+                  value:
+                    errors:
+                      base:
+                      - Your current loyalty program configuration does not support this feature. Please
+                        connect with your customer success representative for resolution of the issue.
+                Both `gift_count` and `redeemable_id` are missing:
+                  value:
+                    errors:
+                      base:
+                      - Please specify any one entity for gifting
+                Both `gift_count` and `redeemable_id` are present:
+                  value:
+                    errors:
+                      base:
+                      - Please specify single entity for gifting.
+      description: 'Allows an admin to gift a single entity (points, visits, currency or rewards) to a
+        specific user. This API can handle higher volumes of support gifting requests, as it processes
+        them in the background rather than immediately.
+
+
+        For bulk gifting use cases (points or rewards), we recommend using this API, which supports up
+        to 4,000 requests per minute (RPM) and is optimized for high-volume gifting scenarios.'
+      parameters:
+      - $ref: '#/components/parameters/content-type'
+      - $ref: '#/components/parameters/accept-header'
+      - $ref: '#/components/parameters/authorization-header'
+      x-stoplight:
+        id: 083fc4af21d64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  description: Unique ID of the user who will receive the gift or message. This is a unique
+                    ID assigned to the user by Punchh.
+                subject:
+                  type: string
+                  description: Subject of the message that you want to send to the user. If no value is
+                    provided, the default system value will be used.
+                message:
+                  type: string
+                  description: Message that will be sent to the user
+                gift_reason:
+                  type: string
+                  description: Reason these points or rewards are being gifted to the user. If no value
+                    is provided, the default system value of "Support Activity" will be provided.
+                gift_count:
+                  type: integer
+                  description: 'In a points-based business, gift_count represents the number of points
+                    to be gifted to guests. In a visit-based business, it is the number of visits to be
+                    gifted. Gifting is optional. You can include either `gift_count` (for points or visits)
+                    or `redeemable_id` (for rewards) in the request. At least one of these parameters
+                    must be provided.
+
+                    * If both gift_count and redeemable_id are blank, the system returns: "Please specify
+                    any one entity for gifting".
+
+                    * If both gift_count and redeemable_id are present, the system returns: "Please specify
+                    a single entity for gifting".
+
+                    '
+                reward_amount:
+                  type: integer
+                  x-stoplight:
+                    id: msxx9oioxlpyl
+                  description: Currency amount that will be gifted to the user.
+                redeemable_id:
+                  type: integer
+                  description: Unique ID of the redeemable that you want to gift to the user. To send
+                    a gift, include either `gift_count` (for points) or `redeemable_id` (for rewards)
+                    in the request. At least one of these parameters must be provided.
+                end_date:
+                  type: string
+                  format: date
+                  description: 'Expiration date for the gifted redeemable.
+
+                    If provided, the redeemable will expire on the earlier of this date or the default
+                    configuration’s expiration date. The actual expiration will be whichever is earlier:
+                    the date you provide, or the system’s default expiration for that reward.'
+                  examples:
+                  - YYYY-MM-DD
+                location_id:
+                  type: integer
+                  description: Unique ID of the location associated with the gift. This is for reference
+                    purposes. If no location ID is provided, the ID of the headquarters location will
+                    be used.
+                reset_guest_last_activity:
+                  type: boolean
+                  x-stoplight:
+                    id: ukavl0wchvhnx
+                  description: Resets the guest's last activity timestamp to the current time
+              required:
+              - user_id
+            examples:
+              Example:
+                value:
+                  user_id: 111111111
+                  subject: Gifts from us.
+                  message: Thank you for contacting us. Here are 50 extra points to make your day.
+                  gift_reason: Admin Generosity
+                  gift_count: 50
+                  location_id: 310969
+  /api2/dashboard/users/support:
+    post:
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          $ref: '#/components/responses/401-unauthorized'
+        '422':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    x-stoplight:
+                      id: 9bphoz90yu3rq
+                    properties:
+                      base:
+                        type: array
+                        x-stoplight:
+                          id: qy6fp2gyy03gw
+                        items: {}
+              examples:
+                default:
+                  value:
+                    errors:
+                      base:
+                      - Please specify single entity for gifting.
+      summary: Support Gifting to a User
+      description: 'The Support Gifting API enables administrators (such as restaurant managers, support
+        staff, or corporate team members) to grant users different types of rewards (e.g., redeemables,
+        points, etc.). It is particularly valuable in customer support, operational adjustments, or exception-handling
+        scenarios where manual gifting is required.
+
+
+        <b>Caution</b>: It must not be used for bulk or large-scale gifting and is not a substitute for
+        marketing or promotional campaigns.
+
+
+        <b>Maximum allowed usage</b>: The API enforces a rate limit of 1,250 requests per minute (RPM).
+
+
+        <b>Recommendation</b>: For bulk gifting use cases (points or rewards), we recommend using [Asynchronous
+        Support Gifting](/docs/dev-portal-platform-functions/apis/headless-offers-api/post/api2/dashboard/users/support_gifting)
+        API, which supports up to 4,000 RPM and is optimized for high-volume gifting scenarios.'
+      operationId: dashboard_support_gifting_to_user
+      parameters:
+      - $ref: '#/components/parameters/content-type'
+      - $ref: '#/components/parameters/accept-header'
+      - $ref: '#/components/parameters/authorization-header'
+      x-stoplight:
+        id: b75aa83d15fa6
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  description: Unique ID of the user to whom you want to send the message. This is a unique
+                    ID assigned to the user by Punchh.
+                subject:
+                  type: string
+                  description: Subject of the message that you want to send to the user. If no value is
+                    provided, the default system value will be picked.
+                message:
+                  type: string
+                  description: The message that will be sent to the user. Messaging is optional. You can
+                    send either a message only or a gift only. However, at least one of the two should
+                    be sent.
+                gift_reason:
+                  type: string
+                  description: The reason these points, visits, or rewards are being gifted to the user.
+                    If no value is provided, the default system value of "Support Activity" will be provided.
+                gift_count:
+                  type: integer
+                  description: In a points-based business, the gift count is the number of points that
+                    will be gifted to guests. In a visit-based business, it is the number of visits that
+                    will be gifted. Gifting is optional. You can send either a message only or a gift
+                    only. However, at least one of the two should be sent.
+                reward_amount:
+                  type: integer
+                  description: Currency amount that will be gifted to the user. Gifting is optional. You
+                    can send either a message only or a gift only. However, at least one of the two should
+                    be sent.
+                redeemable_id:
+                  type: integer
+                  description: Unique ID of the redeemable that you want to gift to the user. Gifting
+                    is optional. You can send either a message only or a gift only. However, at least
+                    one of the two should be sent.
+                end_date:
+                  type: string
+                  format: date
+                  description: The date on which you want the gifted redeemable to expire. If this date
+                    is provided and there is an expiry configured on the redeemable, it will expire on
+                    the earlier date.
+                fuel_amount:
+                  type: number
+                  description: Fuel amount that you want to gift to the user
+                location_id:
+                  type: integer
+                  description: Unique ID of the location associated with the gift. This is for reference
+                    purposes. If no location ID is provided, the ID of the headquarters location will
+                    be used.
+                reset_guest_last_activity:
+                  type: boolean
+                  x-stoplight:
+                    id: ukavl0wchvhnx
+                  description: Resets the guest's last activity which is the expiry date to the current
+                    time
+                challenge_campaign_id:
+                  type: integer
+                  x-stoplight:
+                    id: igylbqbmml2tf
+                  description: Unique ID of the challenge in a campaign for which progress will be gifted
+                progress_count:
+                  type: integer
+                  x-stoplight:
+                    id: v6pezpd2lr2k2
+                  description: Number of steps that will be gifted to the user for the challenge ID specified
+                    in `challenge_campaign_id`. If the API call is successful, the progress made in the
+                    challenge is shown in the <b>Challenges</b> tab on the user timeline in the Punchh
+                    platform. Challenges must be enabled for the business in the Punchh platform, and
+                    the bearer token for admin authorization passed in the Authorization header must have
+                    the <b>Dashboard API Access</b> and <b>Gift or Force Redeem</b> permissions for the
+                    API to gift the user the progress for a challenge successfully. Contact your Punchh
+                    representative to update this Punchh platform configuration.
+            examples:
+              default:
+                value:
+                  user_id: 111111111
+                  subject: Gifts from us.
+                  message: Thank you for contacting us. Here are 50 extra points to make your day.
+                  gift_reason: Admin Generosity
+                  gift_count: 50
+                  location_id: 310969
+                  challenge_campaign_id: 48770
+                  progress_count: 1
+        description: ''
+x-stoplight:
+  id: 6a73c90b2896b
+openapi: 3.1.1
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+components:
+  schemas: {}
+  parameters:
+    content-type:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Content-Type
+      description: The media type of the request body. Must be `application/json`.
+      required: true
+    accept-header:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Accept
+      description: The media type the client expects in the response. Must be `application/json`.
+      required: true
+    authorization-header:
+      schema:
+        type: string
+      in: header
+      name: Authorization
+      description: 'Bearer token for admin authorization. Send the API key in the following format: "Authorization:
+        Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
+      required: true
+  responses:
+    401-unauthorized:
+      description: 'Unauthorized - A business admin key is missing or invalid. A request header in the
+        following format is needed to make the request:
+
+
+        Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+          examples:
+            default:
+              value:
+                error: You need to sign in or sign up before continuing.
+  securitySchemes: {}
+x-ext-urls: {}

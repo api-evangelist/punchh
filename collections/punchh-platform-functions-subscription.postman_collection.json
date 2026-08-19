@@ -1,0 +1,1006 @@
+{
+  "item": [
+    {
+      "id": "42aac1f0-e0a3-4616-a911-e8e404b290b6",
+      "name": "Purchase Subscription",
+      "request": {
+        "name": "Purchase Subscription",
+        "description": {
+          "content": "This API allows third-party platforms (e.g., middleware that interfaces with the mobile app of the business) to purchase a new subscription plan in the Punchh platform without the need for guests to be logged in to the Punchh platform.\n\nIf a business is migrating active subscriptions from an incumbent system to the Punchh platform, the subscription ID for each user in the incumbent system can be mapped to the corresponding subscription ID in the Punchh platform.\n\nIf the Single Use setting is enabled for the subscription plan, and if you send auto_renewal as `true` in the Purchase Subscription API, then the API returns an error: This is a single use subscription and cannot be renewed automatically. Please check the request to send auto_renewal as false.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api2",
+            "dashboard",
+            "subscriptions",
+            "purchase"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"user_id\": \"<long>\",\n  \"start_time\": \"<dateTime>\",\n  \"plan_id\": \"<long>\",\n  \"end_time\": \"<dateTime>\",\n  \"purchase_price\": \"<float>\",\n  \"auto_renewal\": false,\n  \"location_id\": \"<integer>\",\n  \"migration\": false,\n  \"lifetime_debits\": \"<float>\",\n  \"lifetime_savings\": \"<float>\",\n  \"initial_debits\": \"<float>\",\n  \"initial_savings\": \"<float>\",\n  \"source_subscription_id\": \"<long>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "88a5f4f2-88b8-423c-b79f-5378227e6e16",
+          "name": "Created",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "dashboard",
+                "subscriptions",
+                "purchase"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) application/json",
+                "key": "Content-Type",
+                "value": "string"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) application/json",
+                "key": "Accept",
+                "value": "string"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Bearer token for admin authorization, who is making a call on behalf of the customer",
+                "key": "Authorization",
+                "value": "string"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 1234,\n  \"start_time\": \"2021-05-18 11:34:46\",\n  \"plan_id\": 12,\n  \"end_time\": \"2021-05-28 11:34:46\",\n  \"purchase_price\": 20,\n  \"auto_renewal\": false,\n  \"migration\": false,\n  \"lifetime_debits\": 30,\n  \"lifetime_savings\": 50,\n  \"initial_debits\": 10,\n  \"initial_savings\": 20,\n  \"source_subscription_id\": \"null\",\n  \"location_id\": 12345\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"subscription_id\": 123,\n  \"start_time\": \"2021-05-18 11:34:46\",\n  \"end_time\": \"2021-05-28 11:34:46\",\n  \"external_plan_identifier\": \"string\",\n  \"location_id\": 6764\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "b9315a46-33e8-4888-9eee-a86bbfe84ea3",
+          "name": "Bad Request - Invalid or missing location_id",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "dashboard",
+                "subscriptions",
+                "purchase"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) application/json",
+                "key": "Content-Type",
+                "value": "string"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) application/json",
+                "key": "Accept",
+                "value": "string"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Bearer token for admin authorization, who is making a call on behalf of the customer",
+                "key": "Authorization",
+                "value": "string"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 1234,\n  \"start_time\": \"2021-05-18 11:34:46\",\n  \"plan_id\": 12,\n  \"end_time\": \"2021-05-28 11:34:46\",\n  \"purchase_price\": 20,\n  \"auto_renewal\": false,\n  \"migration\": false,\n  \"lifetime_debits\": 30,\n  \"lifetime_savings\": 50,\n  \"initial_debits\": 10,\n  \"initial_savings\": 20,\n  \"source_subscription_id\": \"null\",\n  \"location_id\": 12345\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Invalid or missing location_id\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "5cf3964b-7742-42ac-9ffb-4c58239031a1",
+          "name": "Unauthorized",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "dashboard",
+                "subscriptions",
+                "purchase"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) application/json",
+                "key": "Content-Type",
+                "value": "string"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) application/json",
+                "key": "Accept",
+                "value": "string"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Bearer token for admin authorization, who is making a call on behalf of the customer",
+                "key": "Authorization",
+                "value": "string"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 1234,\n  \"start_time\": \"2021-05-18 11:34:46\",\n  \"plan_id\": 12,\n  \"end_time\": \"2021-05-28 11:34:46\",\n  \"purchase_price\": 20,\n  \"auto_renewal\": false,\n  \"migration\": false,\n  \"lifetime_debits\": 30,\n  \"lifetime_savings\": 50,\n  \"initial_debits\": 10,\n  \"initial_savings\": 20,\n  \"source_subscription_id\": \"null\",\n  \"location_id\": 12345\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"You need to sign in or sign up before continuing.\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "9b96b050-dba1-4de6-b9bf-e6af0d817877",
+          "name": "Not Acceptable",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "dashboard",
+                "subscriptions",
+                "purchase"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) application/json",
+                "key": "Content-Type",
+                "value": "string"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) application/json",
+                "key": "Accept",
+                "value": "string"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Bearer token for admin authorization, who is making a call on behalf of the customer",
+                "key": "Authorization",
+                "value": "string"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 1234,\n  \"start_time\": \"2021-05-18 11:34:46\",\n  \"plan_id\": 12,\n  \"end_time\": \"2021-05-28 11:34:46\",\n  \"purchase_price\": 20,\n  \"auto_renewal\": false,\n  \"migration\": false,\n  \"lifetime_debits\": 30,\n  \"lifetime_savings\": 50,\n  \"initial_debits\": 10,\n  \"initial_savings\": 20,\n  \"source_subscription_id\": \"null\",\n  \"location_id\": 12345\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Not Acceptable",
+          "code": 406,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"invalid_subscription\": \"Invalid User Subscription.\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "7fe55c93-5291-4b93-890f-7ad20b048a96",
+          "name": "Unprocessable Entity",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "dashboard",
+                "subscriptions",
+                "purchase"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) application/json",
+                "key": "Content-Type",
+                "value": "string"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) application/json",
+                "key": "Accept",
+                "value": "string"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Bearer token for admin authorization, who is making a call on behalf of the customer",
+                "key": "Authorization",
+                "value": "string"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 1234,\n  \"start_time\": \"2021-05-18 11:34:46\",\n  \"plan_id\": 12,\n  \"end_time\": \"2021-05-28 11:34:46\",\n  \"purchase_price\": 20,\n  \"auto_renewal\": false,\n  \"migration\": false,\n  \"lifetime_debits\": 30,\n  \"lifetime_savings\": 50,\n  \"initial_debits\": 10,\n  \"initial_savings\": 20,\n  \"source_subscription_id\": \"null\",\n  \"location_id\": 12345\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"disabled_feature\": \"Your current loyalty program configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue.\"\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "dbdfbae2-1d82-4d17-9bf2-cfcf0f64b01a",
+      "name": "Renew Subscription",
+      "request": {
+        "name": "Renew Subscription",
+        "description": {
+          "content": "This API allows the business to renew subscriptions by making back-end calls on the designated date of renewal registered on the business end.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api2",
+            "dashboard",
+            "subscriptions",
+            "renew"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"subscription_id\": \"<integer>\",\n  \"start_time\": \"<dateTime>\",\n  \"end_time\": \"<dateTime>\",\n  \"purchase_price\": \"<float>\",\n  \"new_plan_id\": \"<integer>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "6b40496f-8d93-4ec3-95f4-2cd061fe6d58",
+          "name": "OK",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "dashboard",
+                "subscriptions",
+                "renew"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) application/json",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) application/json",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Bearer token for admin authorization, who is making a call on behalf of the customer",
+                "key": "Authorization",
+                "value": "string"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subscription_id\": 38,\n  \"start_time\": \"2021-04-20T21:09:38Z\",\n  \"end_time\": \"2021-04-20T21:09:38Z\",\n  \"purchase_price\": 23.98\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"subscription_id\": 40,\n  \"start_time\": \"2021-04-20T21:09:38Z\",\n  \"end_time\": \"2021-04-20T21:09:38Z\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "b738db3d-c2a7-4aaf-a6f1-f5493ee5e269",
+          "name": "Unauthorized",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "dashboard",
+                "subscriptions",
+                "renew"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) application/json",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) application/json",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Bearer token for admin authorization, who is making a call on behalf of the customer",
+                "key": "Authorization",
+                "value": "string"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subscription_id\": 38,\n  \"start_time\": \"2021-04-20T21:09:38Z\",\n  \"end_time\": \"2021-04-20T21:09:38Z\",\n  \"purchase_price\": 23.98\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"You need to sign in or sign up before continuing.\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "9b2722ef-b445-4ce9-ad23-ae7c6397325c",
+          "name": "Not Acceptable",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "dashboard",
+                "subscriptions",
+                "renew"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) application/json",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) application/json",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Bearer token for admin authorization, who is making a call on behalf of the customer",
+                "key": "Authorization",
+                "value": "string"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subscription_id\": 38,\n  \"start_time\": \"2021-04-20T21:09:38Z\",\n  \"end_time\": \"2021-04-20T21:09:38Z\",\n  \"purchase_price\": 23.98\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Not Acceptable",
+          "code": 406,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"invalid_subscription\": \"Invalid User Subscription.\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "44087cd4-3029-4d83-96b8-dde2a2b503fb",
+          "name": "Unprocessable Entity",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "dashboard",
+                "subscriptions",
+                "renew"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) application/json",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) application/json",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Bearer token for admin authorization, who is making a call on behalf of the customer",
+                "key": "Authorization",
+                "value": "string"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subscription_id\": 38,\n  \"start_time\": \"2021-04-20T21:09:38Z\",\n  \"end_time\": \"2021-04-20T21:09:38Z\",\n  \"purchase_price\": 23.98\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"disabled_feature\": \"Your current loyalty program configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue.\"\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "1b9cf59b-2364-47b4-842f-1b32c1d8702d",
+      "name": "Cancel Subscription (Turn off Auto Renewal)",
+      "request": {
+        "name": "Cancel Subscription (Turn off Auto Renewal)",
+        "description": {
+          "content": "This API can be used to cancel an active subscripition.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api2",
+            "dashboard",
+            "subscriptions",
+            "cancel"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "PATCH",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"subscription_id\": \"<long>\",\n  \"cancellation_reason\": \"<string>\",\n  \"cancellation_type\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "823eabba-0271-4f9b-9fae-1d7c7ec47257",
+          "name": "OK",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "dashboard",
+                "subscriptions",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) application/json",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) application/json",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Bearer token for admin authorization, who is making a call on behalf of the customer",
+                "key": "Authorization",
+                "value": "string"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subscription_id\": \"126\",\n  \"cancellation_reason\": \"Do not like your service\",\n  \"cancellation_type\": \"hard_cancelled\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "[\n  \"Subscription auto renewal cancelled.\"\n]",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "06556dfb-fa72-4daf-85ad-66ea109703c4",
+          "name": "Unauthorized",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "dashboard",
+                "subscriptions",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) application/json",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) application/json",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Bearer token for admin authorization, who is making a call on behalf of the customer",
+                "key": "Authorization",
+                "value": "string"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subscription_id\": \"126\",\n  \"cancellation_reason\": \"Do not like your service\",\n  \"cancellation_type\": \"hard_cancelled\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"You need to sign in or sign up before continuing.\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "91f7dfa6-d2be-43f4-bd73-8e7cefad2887",
+          "name": "Not Acceptable",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "dashboard",
+                "subscriptions",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) application/json",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) application/json",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Bearer token for admin authorization, who is making a call on behalf of the customer",
+                "key": "Authorization",
+                "value": "string"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subscription_id\": \"126\",\n  \"cancellation_reason\": \"Do not like your service\",\n  \"cancellation_type\": \"hard_cancelled\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Not Acceptable",
+          "code": 406,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"invalid_subscription\": \"Invalid User Subscription.\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "67ff6c69-90a7-40b9-90bb-8f1122a830bc",
+          "name": "Unprocessable Entity",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "dashboard",
+                "subscriptions",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) application/json",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) application/json",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Bearer token for admin authorization, who is making a call on behalf of the customer",
+                "key": "Authorization",
+                "value": "string"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subscription_id\": \"126\",\n  \"cancellation_reason\": \"Do not like your service\",\n  \"cancellation_type\": \"hard_cancelled\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"disabled_feature\": \"Your current loyalty program configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue.\"\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://SERVER_NAME_GOES_HERE.punchh.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c0096fa0-5471-48f7-b15d-7bbabe64f72d",
+    "name": "Subscription API - Platform Functions",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Subscriptions is an add-on Punchh loyalty product that allows businesses to create subscription plans to generate up-front revenue and offers benefits in addition to the standard benefits that unsubscribed members of the loyalty program receive.\nThe Subscription APIs are designed in a way that businesses can programatically achieve the benefits of the subscription for their guest in a mobile app or website. Also, there are aspects that require calling the API without any guest authentication (e.g., to control the auto-renewal of the subscription on behalf of the guest).\n\nContact Support:\n Name: Punchh Dev Support",
+      "type": "text/plain"
+    }
+  }
+}

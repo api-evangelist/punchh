@@ -1,0 +1,458 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.partech.com/docs/dev-portal-webhooks-manager
+provider: PAR Punchh
+providerId: punchh
+type: Webhooks
+asyncapi_published: false
+description: PAR Punchh ships a first-class outbound event surface — the Webhooks Manager / Events Framework — with
+  a documented envelope, documented delivery semantics, a circuit breaker, and a per-event payload reference page
+  for every event type. It does NOT publish an AsyncAPI document, so no AsyncAPI artifact is claimed here; this
+  file is the honest webhook catalog harvested from the provider's own event pages.
+docs:
+- https://developers.partech.com/docs/dev-portal-webhooks-manager
+- https://developers.partech.com/docs/dev-portal-webhooks-manager/events-framework-overview-of-webhooks-manager
+- https://developers.partech.com/docs/dev-portal-webhooks-manager/meta-fields
+- https://developers.partech.com/docs/dev-portal-webhooks-manager/configuration
+- https://developers.partech.com/docs/dev-portal-webhooks-manager/webhook-delivery-error-handling-and-retry-logic
+transport:
+  method: POST
+  content_type: application/json
+  tls: HTTPS required
+  timeout_seconds: 15
+  health_check: HTTPS GET against the same URL, once a day or every 6 hours, to verify and keep the endpoint active.
+authentication:
+  note: Punchh requires the consumer to pick one of four schemes; "none" is discouraged in the provider docs.
+  methods:
+  - name: Basic
+    header: authorization
+    value: basic base64(username:password)
+  - name: Bearer
+    header: authorization
+    value: bearer <token>
+  - name: HMAC-SHA1
+    header: authorization + x-pch-key
+    value: hmac sha1(<URI+BODY>, <secret>)
+  - name: HMAC-SHA256
+    header: authorization + x-pch-key
+    value: hmac sha256(<URI+BODY>, <secret>)
+envelope:
+  fields:
+  - name: content_id
+    type: string
+    description: Random UUID identifying message uniqueness — the idempotency key for consumers.
+  - name: timestamp
+    type: integer
+    description: UTC epoch (milliseconds) when the message was created.
+  - name: business_id
+    type: integer
+    description: Business identifier in the Punchh platform.
+  - name: business_uuid
+    type: string
+    description: Business UUID; used for POS integration.
+  - name: business_slug
+    type: string
+    description: Business slug used in iframe URLs.
+  - name: event_name
+    type: string
+    description: Event family (users, checkins, redemptions, rewards, coupons, ...).
+  - name: event_type
+    type: string
+    description: Specific event type within the family.
+  - name: action
+    type: string
+    description: Operation associated with the event (create/update/delete, or POS/console/online for check-ins).
+  - name: payload
+    type: object
+    description: The event body — user, checkin, redemption, and so on.
+  note: All Punchh integer ID fields in payload models must be handled as 64-bit integers (int64).
+delivery:
+  ordering: NOT guaranteed. Punchh states a later event can be processed before its parent event.
+  at_least_once: true
+  duplicate_handling: Consumers must make processing idempotent on content_id + timestamp.
+  latency: Typically within 50-60 seconds of the event.
+  success_codes:
+  - 200
+  - 202
+  retry:
+  - trigger: 429 Too Many Requests
+    attempts: 3
+    intervals_seconds:
+    - 15
+    - 45
+    - 180
+  - trigger: 408 Timeout
+    attempts: 3
+    intervals_seconds:
+    - 15
+    - 45
+    - 180
+  - trigger: 5xx server error
+    attempts: 7
+    intervals_seconds:
+    - 60
+    - 120
+    - 300
+    - 600
+    - 1800
+    - 3600
+    - 7200
+  - trigger: 3xx redirect
+    attempts: 0
+    note: Treated as a failure and never retried.
+  circuit_breaker:
+    threshold: 1000
+    behaviour: After the retry period, if the failure counter exceeds 1000 the event and its queued events are SUSPENDED
+      and no new requests are sent.
+    reactivation: Respond successfully to a ping webhook. Punchh auto-pings at 5 minutes, 10 minutes, then every
+      2 hours for 6 attempts; after that the webhook is DEACTIVATED.
+  logs:
+    granularity:
+    - 30 minutes
+    - 1 hour
+    - 3 hours
+    - 6 hours
+    - 12 hours
+    - 24 hours
+    retention_days: 7
+  locale: ENU only; timestamps in UTC. Locale and timezone conversion is the consumer's responsibility.
+  transformation: Punchh publishes its own JSON structure and performs no transformation to the target system's
+    schema.
+event_families:
+- checkins
+- coupons
+- marketing_notifications
+- redeemables
+- redemptions
+- rewards
+- transactional_notifications
+- user_coupon_redemptions
+- users
+event_count: 71
+adapter_count: 16
+events:
+- name: Anniversary Campaign
+  event_name: marketing_notifications
+  event_type: anniversary_campaign
+  action: create
+- name: Bumped Membership Level
+  event_name: transactional_notifications
+  event_type: bumped_membership_level
+  action: create
+- name: Business Migration Notification
+  event_name: transactional_notifications
+  event_type: business_migration_notification
+  action: create
+- name: Card Completion
+  event_name: transactional_notifications
+  event_type: card_completion
+  action: create
+- name: Challenge Campaign
+  event_name: marketing_notifications
+  event_type: challenge_campaign
+  action: create
+- name: Check-in - Gift and Loyalty
+  event_name: checkins
+  event_type: gift
+  action: create
+- name: Check-in Retry Fail
+  event_name: transactional_notifications
+  event_type: checkin_retry_fail
+  action: create
+- name: Check-in Retry Success
+  event_name: _notifications
+  event_type: checkin_retry_success
+  action: create
+- name: Check-in Void
+  event_name: _notifications
+  event_type: checkin_void
+  action: create
+- name: Compression Campaign
+  event_name: marketing_notifications
+  event_type: compression_campaign
+  action: create
+- name: Coupon Campaign
+  event_name: marketing_notifications
+  event_type: coupon_campaign
+  action: create
+- name: Coupon Expiry Reminder
+  event_name: transactional_notifications
+  event_type: coupon_expiry_reminder
+  action: create
+- name: Coupon Issuance - Discount Type
+  event_name: coupons
+  event_type: null
+  action: create
+- name: Coupon Issuance - Unlock Type
+  event_name: coupons
+  event_type: null
+  action: create
+- name: Coupon Redemption
+  event_name: user_coupon_redemptions
+  event_type: null
+  action: create
+- name: Currency Expiry Reminder
+  event_name: transactional_notifications
+  event_type: currency_expiry_reminder
+  action: create
+- name: Email Confirmation
+  event_name: transactional_notifications
+  event_type: confirmation_email
+  action: create
+- name: Feedback Reply
+  event_name: transactional_notifications
+  event_type: feedback_reply
+  action: create
+- name: Game Reward Notification
+  event_name: transactional_notifications
+  event_type: game_reward_notification
+  action: create
+- name: Gift Card Auto Reload
+  event_name: transactional_notifications
+  event_type: gift_card_auto_reload
+  action: create
+- name: Gift Card Auto Reload Disabled
+  event_name: transactional_notifications
+  event_type: gift_card_auto_reload_disabled
+  action: create
+- name: Gift Card Auto Reload Enabled
+  event_name: transactional_notifications
+  event_type: gift_card_auto_reload_enabled
+  action: create
+- name: Gift Card Auto Reload Payment Error
+  event_name: transactional_notifications
+  event_type: gift_card_auto_reload_payment_error
+  action: create
+- name: Gift Card Auto Reload Reminder
+  event_name: transactional_notifications
+  event_type: gift_card_pre_auto_reload_reminder
+  action: create
+- name: Gift Card Gifted
+  event_name: _notifications
+  event_type: gift_card_gifted
+  action: create
+- name: Gift Card Post Payment Error
+  event_name: _notifications
+  event_type: gift_card_post_payment_error
+  action: create
+- name: Gift Card Purchased
+  event_name: _notifications
+  event_type: gift_card_purchased
+  action: create
+- name: Gift Card Received
+  event_name: _notifications
+  event_type: gift_card_received
+  action: create
+- name: Gift Card Redeemed
+  event_name: _notifications
+  event_type: gift_card_redeemed
+  action: create
+- name: Gift Card Reloaded
+  event_name: _notifications
+  event_type: gift_card_reloaded
+  action: create
+- name: Gift Card Shared
+  event_name: _notifications
+  event_type: gift_card_shared
+  action: create
+- name: Gift Card Sharing Revoked
+  event_name: _notifications
+  event_type: gift_card_sharing_revoked
+  action: create
+- name: Gift Card Transferred
+  event_name: _notifications
+  event_type: gift_card_transferred
+  action: create
+- name: Guest
+  event_name: users
+  event_type: null
+  action: create
+- name: Invalid Receipt
+  event_name: transactional_notifications
+  event_type: invalid_receipt
+  action: create
+- name: Invitation Accepted
+  event_name: _notifications
+  event_type: invitation_accepted
+  action: create
+- name: Invitation Revoked
+  event_name: _notifications
+  event_type: invitation_revoked
+  action: create
+- name: Login From New Device
+  event_name: _notifications
+  event_type: login_from_new_device
+  action: create
+- name: Loyalty Transfer
+  event_name: _notifications
+  event_type: loyalty_transfer
+  action: create
+- name: Migration Verification
+  event_name: _notifications
+  event_type: migration_verification
+  action: create
+- name: POS Scanner Check-in
+  event_name: transactional_notifications
+  event_type: pos_scanner_checkin
+  action: create
+- name: Payment Card Expired
+  event_name: transactional_notifications
+  event_type: payment_card_expired
+  action: create
+- name: Payment Card Expiry Reminder
+  event_name: transactional_notifications
+  event_type: payment_card_expiry_reminder
+  action: create
+- name: Payment Refunded
+  event_name: _notifications
+  event_type: payment_refunded
+  action: create
+- name: Pending Check-in
+  event_name: _notifications
+  event_type: pending_checkin
+  action: create
+- name: Points Expiry
+  event_name: transactional_notifications
+  event_type: points_expiry
+  action: create
+- name: Points Expiry Reminder
+  event_name: transactional_notifications
+  event_type: points_expiry_reminder
+  action: create
+- name: Points to Reward
+  event_name: transactional_notifications
+  event_type: points_to_reward
+  action: create
+- name: Post Check-in Campaign Gift
+  event_name: marketing_notifications
+  event_type: post_checkin_campaign
+  action: create
+- name: Post Check-in Campaign Notification
+  event_name: marketing_notifications
+  event_type: post_checkin_campaign
+  action: create
+- name: Post Payment Campaign
+  event_name: marketing_notifications
+  event_type: post_payment_campaign
+  action: create
+- name: Profile Update Campaign
+  event_name: marketing_notifications
+  event_type: profile_update_campaign
+  action: create
+- name: Promo Campaign Notification
+  event_name: marketing_notifications
+  event_type: post_checkin_campaign
+  action: create
+- name: Recall Campaign
+  event_name: marketing_notifications
+  event_type: recall_campaign
+  action: create
+- name: Redeemable Unlocked
+  event_name: transactional_notifications
+  event_type: redeemable_unlocked
+  action: create
+- name: Redeemables
+  event_name: redeemables
+  event_type: null
+  action: create
+- name: Redemption Applied
+  event_name: transactional_notifications
+  event_type: redemption_applied
+  action: create
+- name: Redemptions
+  event_name: redemptions
+  event_type: null
+  action: create
+- name: Referral Campaign
+  event_name: marketing_notifications
+  event_type: referral_campaign
+  action: create
+- name: Reset Password Instruction
+  event_name: transactional_notifications
+  event_type: reset_password_instruction
+  action: create
+- name: Reward Notification
+  event_name: transactional_notifications
+  event_type: reward_notification
+  action: create
+- name: Rewards
+  event_name: rewards
+  event_type: null
+  action: create
+- name: Rewards Expiry Reminder
+  event_name: transactional_notifications
+  event_type: reward_expiry_reminder
+  action: create
+- name: Sign-up Campaign
+  event_name: marketing_notifications
+  event_type: signup_campaign
+  action: create
+- name: Social Cause Campaign
+  event_name: marketing_notifications
+  event_type: social_cause_campaign
+  action: create
+- name: Update Check-in
+  event_name: _notifications
+  event_type: update_checkin
+  action: create
+- name: User Notification
+  event_name: transactional_notifications
+  event_type: user_signup
+  action: create
+- name: Visits Expiry Reminder
+  event_name: transactional_notifications
+  event_type: visit_expiry_reminder
+  action: create
+- name: WiFi Registration
+  event_name: _notifications
+  event_type: wifi_registration
+  action: create
+- name: eClub Registration
+  event_name: transactional_notifications
+  event_type: eclub_registration
+  action: create
+- name: Reset Passcode Instruction
+  event_name: transactional_notifications
+  event_type: reset_passcode_instruction
+  action: create
+adapters:
+- name: Braze Event - Coupon Issuance - Unlock Type
+  target: Braze
+- name: Braze Event - Coupon Redemptions
+  target: Braze
+- name: Braze Event - Gift Check-in
+  target: Braze
+- name: Braze Event - Guest
+  target: Braze
+- name: Braze Event - Loyalty Check-in
+  target: Braze
+- name: Braze Event - Pending Check-ins
+  target: Braze
+- name: Braze Event - Post Check-in Campaign Gift
+  target: Braze
+- name: Braze Event - Redemptions
+  target: Braze
+- name: Braze Event - Rewards
+  target: Braze
+- name: mParticle Event - Gift Check-in
+  target: mParticle
+- name: mParticle Event - Guest
+  target: mParticle
+- name: mParticle Event - Loyalty Check-in
+  target: mParticle
+- name: mParticle Event - Marketing Notifications
+  target: mParticle
+- name: mParticle Event - Redemptions
+  target: mParticle
+- name: mParticle Event - Rewards
+  target: mParticle
+- name: mParticle Event - Transactional Notifications
+  target: mParticle
+notes:
+- Punchh publishes purpose-built adapter documentation for two marketing/CDP destinations — Braze and mParticle
+  — each with its own re-shaped event pages alongside the native Punchh events.
+- Several published event pages print event_name as the literal string "_notifications". That is what PAR's own
+  documentation shows; it appears to be a truncation of transactional_notifications / marketing_notifications in
+  the rendered sample. Recorded verbatim rather than guessed.
+- The events framework must be enabled per business by a Punchh representative; it is not self-service.
+- No AsyncAPI, CloudEvents or event JSON Schema is published for this surface.

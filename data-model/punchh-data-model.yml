@@ -1,0 +1,233 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/ (15 PAR Punchh OpenAPI 3.1.1 documents) + https://developers.partech.com/docs/dev-portal-webhooks-manager
+  (Meta Fields)
+provider: PAR Punchh
+providerId: punchh
+notes:
+- Derived from id-reference fields and component schemas across all 15 published Punchh OpenAPI documents (288 operations).
+  Punchh does not publish a formal object reference, so entities are named after the id fields the API actually
+  accepts and returns.
+- Every Punchh integer ID must be treated as int64 — stated explicitly in the webhooks Meta Fields documentation.
+- 'The tenant key appears in three forms: business_id (integer), business_uuid (used for POS integration) and business_slug
+  (used for iframe URLs).'
+- There are no opaque prefixed IDs (no cus_/evt_ style prefixes); IDs are bare integers or UUIDs.
+id_conventions:
+  integer_width: int64
+  prefixes: null
+  uuid_fields:
+  - business_uuid
+  - redeemable_uuid
+  - gift_card_uuid
+  - content_id
+  external_ids:
+  - external_id
+  - external_source_id
+  - external_store_id
+  - external_uid
+entities:
+- name: business
+  description: The brand/tenant in the Punchh platform. Every other object is scoped to a business.
+  identifiers:
+  - business_id
+  - business_uuid
+  - business_slug
+- name: user
+  description: A loyalty guest. Created by sign-up/SSO; identified by user_id and, for mobile, by punchh-app-device-id.
+  identifiers:
+  - user_id
+- name: location
+  description: A physical restaurant location; the unit a check-in, redemption or POS call is attributed to.
+  identifiers:
+  - location_id
+  - external_store_id
+- name: location_group
+  description: A grouping of locations used to scope offers and configuration.
+  identifiers:
+  - location_group_id
+- name: franchisee
+  description: A franchise operator owning a set of locations.
+  identifiers:
+  - franchisee_id
+- name: checkin
+  description: A loyalty or gift transaction posted against a user at a location; the earning event.
+  identifiers:
+  - checkin_id
+- name: redeemable
+  description: A grantable item — reward, coupon, comp or discount — that a user can redeem.
+  identifiers:
+  - redeemable_id
+  - redeemable_uuid
+- name: redemption
+  description: An instance of a redeemable being applied to a transaction (Redemptions 1.0).
+  identifiers:
+  - redemption_id
+- name: discount_basket
+  description: The Redemptions 2.0 server-side basket that holds selected discounts for an in-flight check.
+  identifiers:
+  - discount_basket_item_id
+- name: discount
+  description: A calculated discount produced by the Redemptions 2.0 engine.
+  identifiers:
+  - discount_id
+- name: reward
+  description: An earned loyalty reward held in the user account.
+  identifiers:
+  - reward_id
+- name: coupon
+  description: An issued coupon, of discount type or unlock type.
+  identifiers: []
+- name: menu_item
+  description: A menu item sent to Punchh so offers can qualify against basket contents.
+  identifiers:
+  - menu_item_id
+  - item_id
+- name: gift_card
+  description: A stored-value gift card that can be purchased, shared, transferred, reloaded and redeemed.
+  identifiers:
+  - gift_card_uuid
+- name: payment_card
+  description: A saved payment instrument used for Loyalty Pay / Pay-on-the-Go.
+  identifiers:
+  - payment_reference_id
+  - payment_transaction_id
+- name: subscription
+  description: A paid loyalty subscription plan a user enrolls in.
+  identifiers:
+  - subscription_id
+  - plan_id
+  - cancellation_reason_id
+- name: membership_level
+  description: A tier the user occupies in a tiered loyalty program.
+  identifiers:
+  - membership_level_id
+- name: challenge_campaign
+  description: A gamified challenge a user progresses through.
+  identifiers:
+  - challenge_campaign_id
+  - challenge_id
+- name: social_cause
+  description: A social-cause campaign a user can donate points toward.
+  identifiers:
+  - social_cause_id
+- name: custom_segment
+  description: A marketing segment a user can be added to or removed from.
+  identifiers:
+  - custom_segment_id
+- name: employee
+  description: A brand employee record used by POS and admin operations.
+  identifiers:
+  - employee_id
+  - role_id
+  - admin_id
+  - business_admin_id
+- name: feedback
+  description: Guest feedback submitted against a check-in.
+  identifiers:
+  - feedback_id
+- name: collectible
+  description: A collectible earned toward a category goal.
+  identifiers:
+  - collectible_category_id
+relationships:
+- from: user
+  type: belongs_to
+  to: business
+  via: business_id
+- from: user
+  type: has_many
+  to: checkin
+  via: user_id
+- from: user
+  type: has_many
+  to: redeemable
+  via: user_id
+- from: user
+  type: has_many
+  to: reward
+  via: user_id
+- from: user
+  type: has_many
+  to: gift_card
+  via: user_id
+- from: user
+  type: has_many
+  to: payment_card
+  via: user_id
+- from: user
+  type: has_one
+  to: membership_level
+  via: membership_level_id
+- from: user
+  type: has_many
+  to: subscription
+  via: user_id
+- from: checkin
+  type: belongs_to
+  to: location
+  via: location_id
+- from: checkin
+  type: belongs_to
+  to: user
+  via: user_id
+- from: checkin
+  type: has_many
+  to: menu_item
+  via: menu_item_id
+- from: redemption
+  type: belongs_to
+  to: redeemable
+  via: redeemable_id
+- from: redemption
+  type: belongs_to
+  to: user
+  via: user_id
+- from: redemption
+  type: belongs_to
+  to: location
+  via: location_id
+- from: discount_basket
+  type: belongs_to
+  to: user
+  via: user_id
+- from: discount_basket
+  type: has_many
+  to: discount
+  via: discount_id
+- from: discount
+  type: belongs_to
+  to: redeemable
+  via: redeemable_id
+- from: location
+  type: belongs_to
+  to: location_group
+  via: location_group_id
+- from: location
+  type: belongs_to
+  to: franchisee
+  via: franchisee_id
+- from: subscription
+  type: belongs_to
+  to: user
+  via: user_id
+- from: employee
+  type: belongs_to
+  to: location
+  via: location_id
+- from: feedback
+  type: belongs_to
+  to: checkin
+  via: checkin_id
+- from: challenge_campaign
+  type: has_many
+  to: user
+  via: user_id
+- from: custom_segment
+  type: has_many
+  to: user
+  via: user_id
+coverage:
+  entities: 23
+  relationships: 24
+  paths_analyzed: 231
+  specs_analyzed: 15

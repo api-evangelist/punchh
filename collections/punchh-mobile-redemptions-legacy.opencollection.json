@@ -1,0 +1,284 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Redemptions 1.0 (Legacy) API - Mobile",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Cancel Redemption (Redemptions 1.0)",
+        "type": "http"
+      },
+      "http": {
+        "method": "DELETE",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/mobile/redemptions/:redemption_id",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "User-Agent",
+            "value": ""
+          },
+          {
+            "name": "punchh-app-device-id",
+            "value": ""
+          },
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          },
+          {
+            "name": "Accept-Language",
+            "value": ""
+          }
+        ],
+        "params": [
+          {
+            "name": "redemption_id",
+            "value": "",
+            "type": "path",
+            "description": "Redemption ID returned when the redemption is created"
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Allows users to cancel their redemption if it has not been processed, enabling them to select a new one without waiting for the redemption code to expire. Once the redemption is processed, the user cannot cancel it.\n\nThe `cancel_redemption` response parameter in the [Program Meta](/docs/dev-portal-mobile/2617bed9b0e8e-program-meta) API indicates whether the user can revoke (cancel) the generated redemption code from the brand's app. This is controlled by hiding or displaying the cancel redemptio"
+    },
+    {
+      "info": {
+        "name": "Create Redemption Using Banked Currency (Redemptions 1.0)",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/mobile/redemptions/banked_currency",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "Accept-Language",
+            "value": ""
+          },
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "punchh-app-device-id",
+            "value": ""
+          },
+          {
+            "name": "User-Agent",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Creates a redemption using a currency amount. The amount is deducted from a user's available banked currency."
+    },
+    {
+      "info": {
+        "name": "Create Redemption Using Visits (Redemptions 1.0)",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/mobile/redemptions/visits",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          },
+          {
+            "name": "Accept-Language",
+            "value": ""
+          },
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "User-Agent",
+            "value": ""
+          },
+          {
+            "name": "punchh-app-device-id",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Creates a redemption for an unredeemed card. This is for use with visit-based businesses."
+    },
+    {
+      "info": {
+        "name": "Create Redemption Using Redeemable (Redemptions 1.0)",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/mobile/redemptions/redeemable",
+        "headers": [
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Accept-Language",
+            "value": ""
+          },
+          {
+            "name": "User-Agent",
+            "value": ""
+          },
+          {
+            "name": "punchh-app-device-id",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Creates a redemption for a redeemable based on a user's available loyalty points"
+    },
+    {
+      "info": {
+        "name": "Create Redemption Using Reward ID (Redemptions 1.0)",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/mobile/redemptions/reward",
+        "headers": [
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "Accept-Language",
+            "value": ""
+          },
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "User-Agent",
+            "value": ""
+          },
+          {
+            "name": "punchh-app-device-id",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Creates a redemption for a reward that has been given to a user (e.g., through a campaign)."
+    },
+    {
+      "info": {
+        "name": "List Applicable Offers (Redemptions 1.0)",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/mobile/redemptions/applicable_offers",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          },
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "User-Agent",
+            "value": ""
+          },
+          {
+            "name": "punchh-app-device-id",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Returns applicable offers based on the check details."
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,297 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Redemptions 2.0 (New) API - Online Ordering",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Auto Redemption (Redemptions 2.0)",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/discounts/auto_select",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "User-Agent",
+            "value": ""
+          },
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          },
+          {
+            "name": "Accept-Language",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "- A discount should be automatically queued up in the discount basket if the auto-redemption feature is enabled for the business.\n- The business can configure the auto-redemption strategy.\n- If a discount expires after being added to the discount basket, it is removed from the discount basket. When you make a call to the API, it validates the discounts added to the discount basket. If one or more discounts are found to be honored, expired, perished, or archived, the API returns an error message "
+    },
+    {
+      "info": {
+        "name": "Add Selection to Discount Basket (Redemptions 2.0)",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/discounts/select",
+        "headers": [
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "User-Agent",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "Accept-Language",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "- A single discount basket will be active at a time. If there is no active discount basket, the system will create a new active discount basket along with selected discounts passed in the request parameters.\n- The Punchh system will not have any validation based on points adjustments as discounts are added.\n- When a guest adds multiple discounts, and one is invalid for some reason, the entire request will fail with an error message. The guest will then be required to remove the invalid discount "
+    },
+    {
+      "info": {
+        "name": "Remove Item From Discount Basket (Redemptions 2.0)",
+        "type": "http"
+      },
+      "http": {
+        "method": "DELETE",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/discounts/unselect",
+        "headers": [
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "User-Agent",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "Accept-Language",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Delete one or more discounts from a discount basket."
+    },
+    {
+      "info": {
+        "name": "Get Active Discount Basket (Redemptions 2.0)",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/discounts/active",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "User-Agent",
+            "value": ""
+          },
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          },
+          {
+            "name": "Accept-Language",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "- Get a list of discount details that have been selected by a guest. Only one active basket can exist in the system for a particular guest.\n- If a discount expires after being added to the discount basket, it is removed from the discount basket. When you make a call to the API, it validates the discounts added to the discount basket. If one or more discounts are found to be honored, expired, perished, or archived, the API returns an error message indicating that these discounts cannot be honored"
+    },
+    {
+      "info": {
+        "name": "Batch Redemption Process (Redemptions 2.0)",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/batch_redemptions",
+        "headers": [
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "User-Agent",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "Accept-Language",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Evaluates the validity of all inputs and commits the redemption. \n\nPunchh evaluates eligibility during the Possible Redemptions call using the receipt details provided (item name, price, quantity, identifiers, etc.). During the Batch Redemption Process call, Punchh revalidates the same receipt to ensure the qualifying conditions are still met before honoring the redemption. \n\nIf any item attributes change between the two calls, Punchh may be unable to match the qualifying items, which can cause "
+    },
+    {
+      "info": {
+        "name": "Void Redemption (Redemptions 2.0)",
+        "type": "http"
+      },
+      "http": {
+        "method": "DELETE",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/batch_redemptions/:redemption_ref",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "User-Agent",
+            "value": ""
+          },
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          }
+        ],
+        "params": [
+          {
+            "name": "redemption_ref",
+            "value": "",
+            "type": "path",
+            "description": "Transaction level identifier for all discount selections<br>Example - aBCDEfghIJkL-MN1opR"
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Voids the complete discount basket. The value of `redemption_ref` must be appended to the URL path. You can get the `redemption_ref` value from the [Get Active Discount Basket](/docs/dev-portal-online-ordering/apis/oo-redemptions-2-0-new-api/paths/~1api~1auth~1discounts~1active/get) API response.\n\nExample:\n\n`DELETE https://{base}/api/auth/batch_redemptions/aBCDEfghIJkL-MN1opR`\n\nNote: It will not support partial voiding of a discount basket."
+    },
+    {
+      "info": {
+        "name": "Unlock Discount Basket (Redemptions 2.0)",
+        "type": "http"
+      },
+      "http": {
+        "method": "PUT",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/discounts/unlock",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "User-Agent",
+            "value": ""
+          },
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "When reward locking is enabled in the Punchh Platform, the guest's discount basket must be locked. An external ID will be required to lock the discount basket to prevent other channels from creating simultaneous transactions or modifying the discount basket. In this mode, the guest's discount basket must be locked when discounts are applied to a transaction, using a unique identifier `external_uid` specific to the transaction generated by your application.\n\nThe `external_uid` ensures that no mod"
+    }
+  ],
+  "bundled": true
+}

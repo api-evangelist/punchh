@@ -1,0 +1,195 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Subscription API - Online Ordering",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Fetch Active Purchasable Subscription Plans",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/subscriptions",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Accept-Language",
+            "value": ""
+          },
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "This API allows online ordering vendors to get a list of all subscription plans that are available for purchase."
+    },
+    {
+      "info": {
+        "name": "Purchase Subscription",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/subscriptions",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          },
+          {
+            "name": "Accept-Language",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "This API supports the purchase of a subscription plan created in the Punchh platform.\n\nIf the Single Use setting is enabled for the subscription plan, and if you send auto_renewal as `true` in the Purchase Subscription API, then the API returns an error: This is a single use subscription and cannot be renewed automatically. Please check the request to send auto_renewal as false."
+    },
+    {
+      "info": {
+        "name": "Cancel Subscription (Turn off Auto Renewal)",
+        "type": "http"
+      },
+      "http": {
+        "method": "PUT",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/subscriptions/cancel",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          },
+          {
+            "name": "Accept-Language",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "This API allows the end user to cancel an active subscription (turn off auto renewal for the subscription). This is a soft cancellation wherein the benefits remain valid until the end time of the subscription."
+    },
+    {
+      "info": {
+        "name": "Fetch Subscription Plans for a User",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/user_subscriptions",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Accept-Language",
+            "value": ""
+          },
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          }
+        ],
+        "params": [
+          {
+            "name": "filter",
+            "value": "",
+            "type": "query",
+            "description": "'Filter subscription by status and past_subscriptions.<br><br> If the status is not sent, the API returns subscriptions that are `active`, `soft_cancelled`, and have an end_time that is not in the past. Supported \"filter” values are ''active'', ''expired'', and ''cancelled''. <br><br>When the API call is made using the past_subscriptions filter, the response returns only such subscriptions that have their end date/time in the past. The status against each subscription can have the following possible values: ‘expired’, ‘renewed’, ‘soft_cancelled’, and ‘hard_cancelled’.'\n"
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "This API returns the subscriptions attached to a guest's profile. While the response can be filtered based on \"status\" and \"past_subscriptions\", the default response will include subscriptions that are either \"active\" or \"soft_cancelled\" and have their end time in the future.\n  "
+    },
+    {
+      "info": {
+        "name": "Subscription Meta",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/subscription_meta",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Accept-Language",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Returns subscription cancellation reasons, which are configured in the Punchh platform under Wallet and Passes > Subscription Cancellation Reasons.\n\nNote: If the option to enable meta cache update on request is not enabled in the Punchh platform, then the API won't return any subscription cancellation reasons in the Subscription Meta API response.\n\n<!-- Cockpit > Dashboard Miscellaneous Config > Enable meta cache update on request -->\n\nContact your Punchh representative to update this configurat"
+    }
+  ],
+  "bundled": true
+}

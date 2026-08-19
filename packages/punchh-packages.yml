@@ -1,0 +1,98 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  registry.npmjs.org, pypi.org, rubygems.org, search.maven.org,
+  azuresearch-usnc.nuget.org, packagist.org, cocoapods.org, api.github.com/orgs/punchh
+provider: PAR Punchh
+providerId: punchh
+package_count: 0
+official_sdk_count: 0
+description: >-
+  PAR Punchh publishes NO first-party client SDK on any public package registry.
+  Its published distribution channel for API consumers is a set of forkable
+  Postman collections in the "PAR Tech APIs (Official)" workspace, plus sample
+  code snippets embedded in the developer-portal documentation. This is an honest
+  zero, established by direct registry queries — not a gap in the search.
+
+packages: []
+
+registries_checked:
+  - registry: npm
+    endpoint: https://registry.npmjs.org/-/v1/search?text=punchh
+    result: no packages
+    version: null
+    note: >-
+      Zero results for "punchh". Searches for "par-punchh" and "partech" returned
+      only unrelated third-party packages (a parsing-techniques library, an
+      unrelated 2019 "partech" stub).
+  - registry: pypi
+    endpoint: https://pypi.org/pypi/punchh/json
+    result: 404
+    version: null
+  - registry: rubygems
+    endpoint: https://rubygems.org/api/v1/search.json?query=punchh
+    result: empty array
+    version: null
+    note: Notable, because the Punchh platform itself is a Ruby on Rails application.
+  - registry: maven-central
+    endpoint: https://search.maven.org/solrsearch/select?q=punchh
+    result: 0 found
+    version: null
+  - registry: nuget
+    endpoint: https://azuresearch-usnc.nuget.org/query?q=punchh
+    result: 0 hits
+    version: null
+  - registry: packagist
+    endpoint: https://packagist.org/search.json?q=punchh
+    result: no Punchh-owned packages
+    version: null
+  - registry: cocoapods
+    endpoint: https://cocoapods.org/pods/PunchhCore
+    result: 404
+    version: null
+    note: >-
+      Checked because Punchh ships branded mobile apps and the mobile API assumes
+      a native client; no public iOS pod is published. Any Punchh mobile SDK is
+      distributed to certified partners privately.
+
+github_organization:
+  url: https://github.com/punchh
+  public_repos: 66
+  first_party_sdks: 0
+  note: >-
+    The github.com/punchh organization is real and active, but every public repo
+    is a fork of a third-party library (react-native-*, gh-ost, doorkeeper,
+    Alamofire, FuelSDK-Ruby, odbc_adapter and similar). It contains no Punchh API
+    client, no OpenAPI definitions and no sample integration. The most recently
+    pushed repos are infrastructure forks, not developer-facing artifacts.
+
+alternative_distribution:
+  - kind: postman
+    name: PAR Tech APIs (Official)
+    url: https://www.postman.com/par-tech/workspace/par-tech-apis-official
+    official: true
+    collections:
+      - name: PAR Advanced Authentication
+        url: https://www.postman.com/par-tech/par-tech-apis-official/collection/5p8ayn6/par-advanced-authentication
+      - name: PAR Punchh Mobile
+      - name: PAR Punchh Online Ordering
+      - name: PAR Punchh Platform Functions
+        url: https://www.postman.com/par-tech/par-tech-apis-official/collection/582rn19/par-punchh-platform-functions-blueprint
+      - name: PAR Punchh POS
+      - name: PAR Punchh Wallet
+        url: https://www.postman.com/par-tech/par-tech-apis-official/collection/qvnwc0k/par-punchh-wallet-blueprint
+    note: >-
+      PAR documents forking these collections as the supported way to exercise the
+      APIs, and warns that they are a work in progress and do not cover every
+      endpoint. Running them requires API keys obtained from a Punchh
+      representative.
+    source: https://developers.partech.com/docs/dev-portal-developer-resources/overview-of-punchh-api-postman-collections
+  - kind: documentation-snippets
+    name: Developer portal sample code
+    official: true
+    languages: [Java, Objective-C]
+    note: >-
+      The portal embeds copy-paste sample code for generating the
+      punchh-app-device-id header (Android/Java and iOS/Objective-C) and an
+      interactive x-pch-digest generator, but these are snippets, not a packaged
+      library.

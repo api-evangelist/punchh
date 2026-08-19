@@ -1,0 +1,300 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Offers Ingestion API - Platform Functions",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Get Line Item Selector (LIS) List",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/dashboard/offers/lis",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Pulls a list of line item selectors available and defined at the business level. \n\nTo call this API, the offers ingestion option must be enabled for the business on the Punchh platform. Contact your Punchh representative to update this Punchh platform configuration.\n<!--Cockpit > Dashboard > Miscellaneous Config > Enable Offers Ingestion-->\n\nLine item selector search is on a business level, and the request can:\n* Set search limits and order by descending search\n* Filter based on name and other a"
+    },
+    {
+      "info": {
+        "name": "Create Line Item Selector (LIS)",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/dashboard/offers/lis",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Allows a business to define one or more line item selectors (LIS). You can bulk create a maximum of 20 line item selectors per API call. If the request input contains more than 20 LIS, only the first 20 are created, and the remaining are ignored. \n\nFor more information, see [Offers Ingestion Management](/docs/dev-portal-platform-functions/ms8qid5tdtvc6-offers-ingestion-management)\n\nTo call this API, the offers ingestion option must be enabled for the business on the Punchh platform. Contact your"
+    },
+    {
+      "info": {
+        "name": "Update Line Item Selector (LIS)",
+        "type": "http"
+      },
+      "http": {
+        "method": "PATCH",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/dashboard/offers/lis",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Allows a business to update one or more Line Item Selectors. You can bulk update a maximum of 20 line item selectors per API call. If the request input contains more than 20 LIS, only the first 20 are created, and the remaining are ignored.\n\nFor more information, see [Offers Ingestion Management](/docs/dev-portal-platform-functions/ms8qid5tdtvc6-offers-ingestion-management)\n\n#### Update Rules for Filter Item Set in LIS\n\n1\\. All clauses of the defined filter item set are updated in the update req"
+    },
+    {
+      "info": {
+        "name": "Get Qualification Criteria (QC) List",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/dashboard/offers/qc",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Pulls a list of all qualification criteria (QC) available and defined at the business level. \n\nTo call this API, the offers ingestion option must be enabled for the business on the Punchh platform. Contact your Punchh representative to update this Punchh platform configuration.\n<!--Cockpit > Dashboard > Miscellaneous Config > Enable Offers Ingestion-->\n\nQualification criteria search is on a business level, and the request can:\n* Set search limits and order by descending search\n* Filter based on "
+    },
+    {
+      "info": {
+        "name": "Create Qualification Criteria (QC)",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/dashboard/offers/qc",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Allows a business to define one or more qualification criteria (QC). You can bulk create a maximum of 20 qualification criteria per API call. If the request input contains more than 20 QC, only the first 20 are created, and the remaining are ignored.\n\nQC define the rules and conditions under which offers can be redeemed. It involves various processing functions that determine how offers are applied based on specific criteria, such as customer behavior, purchase details, or transaction data. QC p"
+    },
+    {
+      "info": {
+        "name": "Update Qualification Criteria (QC)",
+        "type": "http"
+      },
+      "http": {
+        "method": "PATCH",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/dashboard/offers/qc",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Allows a business to update one or more qualification criteria. The same validations as those in the [Create Qualification Criteria](/docs/dev-portal-platform-functions/009524a9d88ae-create-qualification-criteria-qc) API will apply. You can bulk update a maximum of 20 qualification criteria per API call. If the request input contains more than 20 QC, only the first 20 are created, and the remaining are ignored.\n\nFor more information, see [Offers Ingestion Management](/docs/dev-portal-platform-fu"
+    },
+    {
+      "info": {
+        "name": "Get Redeemable List",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/dashboard/offers/redeemable",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Pulls a list of all redeemables available and defined at the business level. \n\nTo call this API, the offers ingestion option must be enabled for the business on the Punchh platform. Contact your Punchh representative to update this Punchh platform configuration.\n<!--Cockpit > Dashboard > Miscellaneous Config > Enable Offers Ingestion-->\n\nRedeemable search is on a business level, and the request can:\n\n* Set search limits and order by descending search\n* Filter based on name and description\n\nFor m"
+    },
+    {
+      "info": {
+        "name": "Create Redeemable",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/dashboard/offers/redeemable",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Allows a business to define one or more redeemables. You can bulk create a maximum of 20 redeemables per API call. If the request input contains more than 20 redeemables, only the first 20 are created, and the remaining are ignored. \n\nFor more information, see [Offers Ingestion Management](/docs/dev-portal-platform-functions/ms8qid5tdtvc6-offers-ingestion-management)\n\nTo call this API, the offers ingestion option must be enabled for the business on the Punchh platform. Contact your Punchh repres"
+    },
+    {
+      "info": {
+        "name": "Update Redeemable",
+        "type": "http"
+      },
+      "http": {
+        "method": "PATCH",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/dashboard/offers/redeemable",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Allows a business to update one or more redeemables. You can bulk update a maximum of 20 redeemables per API call. If the request input contains more than 20 redeemables, only the first 20 are created, and the remaining are ignored.\n\nFor more information, see [Offers Ingestion Management](/docs/dev-portal-platform-functions/ms8qid5tdtvc6-offers-ingestion-management)\n\n### PATCH Requests: Partial Updates and Nested Object Replacements\nPATCH requests allow you to update specific parameters of a Red"
+    },
+    {
+      "info": {
+        "name": "Upload Redeemable Image",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/dashboard/offers/upload_redeemable_image",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Allows a business to upload images for redeemables in bulk by first uploading them to a server or network and then providing the image URL in the API request. The maximum allowed image size is 500 KB."
+    }
+  ],
+  "bundled": true
+}

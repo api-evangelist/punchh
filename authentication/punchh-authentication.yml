@@ -1,36 +1,147 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/punchh-mobile-openapi.yml, openapi/punchh-online-ordering-openapi.yml, openapi/punchh-platform-functions-openapi.yml,
-  openapi/punchh-pos-openapi.yml
+generated: '2026-08-13'
+method: searched
+source: https://developers.partech.com/docs/dev-portal-mobile/headers-and-caching
+docs:
+  - https://developers.partech.com/docs/dev-portal-mobile/headers-and-caching
+  - https://developers.partech.com/docs/dev-portal-mobile/user-authentication
+  - https://developers.partech.com/docs/dev-portal-developer-resources/advanced-authentication-developer-guide
+  - https://developers.partech.com/docs/dev-portal-developer-resources/punchh-api-security-guidelines
+  - https://developers.partech.com/docs/dev-portal-webhooks-manager/configuration
+provider: PAR Punchh
+providerId: punchh
+description: >-
+  PAR Punchh authentication is a layered, hand-rolled scheme rather than a
+  standards-discoverable one. A bearer access token establishes WHO is calling; an
+  HMAC-SHA256 request digest establishes that the request was not tampered with; a
+  device identifier establishes WHICH handset; and for proxied partners a
+  true-client-IP header establishes which guest the call is really on behalf of.
+  None of the 15 published OpenAPI documents declares a securityScheme — the auth
+  contract lives entirely in the developer-portal prose and in explicit header
+  parameters on individual operations.
+
 summary:
-  types:
-  - apiKey
-  - http
-  api_key_in:
-  - header
+  types: [http, apiKey, oauth2-flavoured]
+  api_key_in: [header]
+  declared_security_schemes_in_openapi: 0
+  well_known_metadata: none
+  scopes_published: false
+  note: >-
+    Auth headers appear as ordinary header PARAMETERS on operations (Authorization
+    on 23 operations, x-pch-digest on 1, User-Agent on 1) rather than as
+    components.securitySchemes. A generator reading these specs will produce a
+    client with no auth wired.
+
 schemes:
-- name: PunchhBearer
-  type: http
-  scheme: bearer
-  description: Bearer access token obtained via Sign In. Calls must also include an `x-pch-digest`
-    HMAC-SHA256 signature header and a `punchh-app-device-id` header.
-  sources:
-  - openapi/punchh-mobile-openapi.yml
-  - openapi/punchh-online-ordering-openapi.yml
-  - openapi/punchh-platform-functions-openapi.yml
-- name: PunchhDigest
-  type: apiKey
-  in: header
-  parameter: x-pch-digest
-  description: HMAC-SHA256 request signature. Unauthenticated mobile calls also pass the business
-    OAuth `client` id in the request body.
-  sources:
-  - openapi/punchh-mobile-openapi.yml
-- name: PunchhPosToken
-  type: apiKey
-  in: header
-  parameter: Authorization
-  description: Token pair credential of the form `Token token=LOCATION_KEY, btoken=BUSINESS_KEY`.
-    Requests must also send a structured `User-Agent` of the form `IntegratorName/IntegrationType/VersionNumber`.
-  sources:
-  - openapi/punchh-pos-openapi.yml
+  - name: PunchhBearer
+    type: http
+    scheme: bearer
+    parameter: Authorization
+    value: 'Bearer <access_token>'
+    description: >-
+      Access token issued by Sign In, SSO login, or the Advanced Authentication OTP
+      exchange. Used on Mobile, Online Ordering/SSO and Platform Functions surfaces.
+    applies_to: [mobile, online-ordering, platform-functions]
+
+  - name: PunchhDigest
+    type: apiKey
+    in: header
+    parameter: x-pch-digest
+    description: >-
+      HMAC-SHA256 digest of the request URI and body. Punchh describes it as
+      "security verification and protection against tampering during API calls
+      between the mobile application and the Punchh server". Required alongside the
+      bearer token; a wrong digest fails permanently, so never retry on it.
+    applies_to: [mobile, online-ordering]
+    tooling: >-
+      PAR publishes an interactive "Punchh x-pch-digest Generator" plus per-surface
+      pages ("Generating x-pch-digest Header for Mobile APIs", "... for Online
+      Ordering APIs").
+
+  - name: PunchhDeviceId
+    type: apiKey
+    in: header
+    parameter: punchh-app-device-id
+    description: >-
+      Stable per-device GUID. An anti-fraud control: sign-up rewards are granted per
+      device so a guest cannot re-register repeatedly on one handset. Must persist
+      across a device reset (iOS keychain / Android permanent storage). Punchh
+      publishes Java and Objective-C sample generators.
+    applies_to: [mobile]
+    required: true
+
+  - name: PunchhPosToken
+    type: apiKey
+    in: header
+    description: >-
+      POS and kiosk terminals authenticate with a location token / business token
+      pair rather than a guest bearer token. POS is also the only Punchh surface
+      still admitted at TLS 1.0+.
+    applies_to: [pos, kiosk]
+
+  - name: PunchhOAuthClient
+    type: oauth2-flavoured
+    parameter: client
+    in: body
+    description: >-
+      The business OAuth client id. Sent in the request body on unauthenticated
+      mobile calls, and as an argument to the Advanced Authentication Send OTP,
+      Verify Token and Refresh Token calls. Token endpoint is POST /oauth/token
+      (operationId oauth_token).
+
+  - name: PunchhTrueClientIp
+    type: apiKey
+    in: header
+    parameter: x_true_client_ip
+    description: >-
+      Mandatory for indirect-access partners who proxy guest traffic. Punchh
+      performs rate limiting and bot mitigation against this value instead of the
+      connecting IP; requests without it "will be filtered and ignored". On the
+      Platform Functions surface PAR's guidelines say this header must carry the
+      customer brand name rather than an IP.
+    required: conditional
+  - name: PunchhJa3
+    type: apiKey
+    in: header
+    parameter: x_ja3_fingerprint
+    required: false
+    description: Recommended JA3 TLS fingerprint of the originating client, used for abuse filtering.
+
+advanced_authentication:
+  feature: PAR Punchh Advanced Authentication
+  enabled_by: PAR representative, per business
+  capabilities:
+    - Third-party identity providers
+    - Passwordless one-time password over email
+    - Passwordless one-time password over SMS
+    - SAML Single Sign-on (online ordering)
+    - Sign in with Apple, Google sign-in (published mobile operations)
+  flow:
+    - step: Send OTP
+      inputs: [OAuth client id, validation method, email or phone + extension, terms_and_conditions=true, privacy_policy=true, PKCE code challenge]
+      operationId: mobile_generate_otp_token
+    - step: Verify Token
+      inputs: [OTP, identifier, OAuth client id, consent flags, PKCE code verifier]
+      returns: [access_token, refresh_token]
+      operationId: mobile_verify_token
+    - step: Refresh Token
+      inputs: [OAuth client id, refresh_token]
+      returns: [access_token, refresh_token]
+      note: Both tokens are replaced; Punchh rotates the refresh token.
+  note: >-
+    Sign-in and sign-up are the same call — if the user does not exist, one is
+    created. Consent flags are therefore load-bearing, not boilerplate.
+  id_token_shape: '{"id": "<Issuer_Identifier>", "sub": "<Subject_Identifier>", "access_token": "<User_Access_Token>"}'
+  source: https://developers.partech.com/docs/dev-portal-developer-resources/advanced-authentication-developer-guide
+
+webhook_consumer_authentication:
+  note: >-
+    Inbound-to-you auth for the Events Framework is separately specified — Basic,
+    Bearer, HMAC-SHA1 or HMAC-SHA256, with the client identifier in an x-pch-key
+    header. See asyncapi/punchh-webhooks.yml.
+
+gaps:
+  - No /.well-known/openid-configuration (404 on punchh.com, developers.partech.com, partech.com, api.punchh.com).
+  - No /.well-known/oauth-authorization-server (404 on all four hosts).
+  - No published OAuth scopes and no scopes/permissions reference page; derive-oauth-scopes found 0 oauth2 schemes across all 15 specs.
+  - No published token lifetimes for access_token or refresh_token.
+  - No securitySchemes block in any published OpenAPI document, so the auth contract is not machine-readable.

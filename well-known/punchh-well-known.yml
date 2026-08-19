@@ -1,0 +1,224 @@
+generated: '2026-08-13'
+method: probed
+source: live HTTP probes of every apis.yml host and every OpenAPI servers[] host, 2026-08-13
+provider: PAR Punchh
+providerId: punchh
+hits: 0
+probes_run: 35
+result: no-hits
+note: 'Every /.well-known/ path returned 404 on every Punchh and PAR host probed. No WellKnown or SecurityTxt pointer
+  is emitted in apis.yml, because this file records an ABSENCE, not a served surface. The templated OpenAPI server
+  host https://{server_name}.punchh.com could not be probed anonymously: the environment-specific hostname is issued
+  to certified partners by a Punchh representative and is not published. Punchh does operate a vulnerability disclosure
+  route, but it is a web page (https://punchh.com/security/ -> HackerOne), not RFC 9116 security.txt.'
+probes:
+- host: punchh.com
+  path: /.well-known/security.txt
+  url: https://punchh.com/.well-known/security.txt
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: punchh.com
+  path: /.well-known/openid-configuration
+  url: https://punchh.com/.well-known/openid-configuration
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: punchh.com
+  path: /.well-known/oauth-authorization-server
+  url: https://punchh.com/.well-known/oauth-authorization-server
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: punchh.com
+  path: /.well-known/api-catalog
+  url: https://punchh.com/.well-known/api-catalog
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: punchh.com
+  path: /.well-known/ai-plugin.json
+  url: https://punchh.com/.well-known/ai-plugin.json
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: punchh.com
+  path: /.well-known/agent-card.json
+  url: https://punchh.com/.well-known/agent-card.json
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: punchh.com
+  path: /.well-known/agent.json
+  url: https://punchh.com/.well-known/agent.json
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: www.punchh.com
+  path: /.well-known/security.txt
+  url: https://www.punchh.com/.well-known/security.txt
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: www.punchh.com
+  path: /.well-known/openid-configuration
+  url: https://www.punchh.com/.well-known/openid-configuration
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: www.punchh.com
+  path: /.well-known/oauth-authorization-server
+  url: https://www.punchh.com/.well-known/oauth-authorization-server
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: www.punchh.com
+  path: /.well-known/api-catalog
+  url: https://www.punchh.com/.well-known/api-catalog
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: www.punchh.com
+  path: /.well-known/ai-plugin.json
+  url: https://www.punchh.com/.well-known/ai-plugin.json
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: www.punchh.com
+  path: /.well-known/agent-card.json
+  url: https://www.punchh.com/.well-known/agent-card.json
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: www.punchh.com
+  path: /.well-known/agent.json
+  url: https://www.punchh.com/.well-known/agent.json
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: developers.partech.com
+  path: /.well-known/security.txt
+  url: https://developers.partech.com/.well-known/security.txt
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: developers.partech.com
+  path: /.well-known/openid-configuration
+  url: https://developers.partech.com/.well-known/openid-configuration
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: developers.partech.com
+  path: /.well-known/oauth-authorization-server
+  url: https://developers.partech.com/.well-known/oauth-authorization-server
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: developers.partech.com
+  path: /.well-known/api-catalog
+  url: https://developers.partech.com/.well-known/api-catalog
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: developers.partech.com
+  path: /.well-known/ai-plugin.json
+  url: https://developers.partech.com/.well-known/ai-plugin.json
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: developers.partech.com
+  path: /.well-known/agent-card.json
+  url: https://developers.partech.com/.well-known/agent-card.json
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: developers.partech.com
+  path: /.well-known/agent.json
+  url: https://developers.partech.com/.well-known/agent.json
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: partech.com
+  path: /.well-known/security.txt
+  url: https://partech.com/.well-known/security.txt
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: partech.com
+  path: /.well-known/openid-configuration
+  url: https://partech.com/.well-known/openid-configuration
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: partech.com
+  path: /.well-known/oauth-authorization-server
+  url: https://partech.com/.well-known/oauth-authorization-server
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: partech.com
+  path: /.well-known/api-catalog
+  url: https://partech.com/.well-known/api-catalog
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: partech.com
+  path: /.well-known/ai-plugin.json
+  url: https://partech.com/.well-known/ai-plugin.json
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: partech.com
+  path: /.well-known/agent-card.json
+  url: https://partech.com/.well-known/agent-card.json
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: partech.com
+  path: /.well-known/agent.json
+  url: https://partech.com/.well-known/agent.json
+  status: 404
+  file: null
+  body: HTML 404 page
+- host: api.punchh.com
+  path: /.well-known/security.txt
+  url: https://api.punchh.com/.well-known/security.txt
+  status: 404
+  file: null
+  body: JSON/HTML 404 page
+- host: api.punchh.com
+  path: /.well-known/openid-configuration
+  url: https://api.punchh.com/.well-known/openid-configuration
+  status: 404
+  file: null
+  body: JSON/HTML 404 page
+- host: api.punchh.com
+  path: /.well-known/oauth-authorization-server
+  url: https://api.punchh.com/.well-known/oauth-authorization-server
+  status: 404
+  file: null
+  body: JSON/HTML 404 page
+- host: api.punchh.com
+  path: /.well-known/api-catalog
+  url: https://api.punchh.com/.well-known/api-catalog
+  status: 404
+  file: null
+  body: JSON/HTML 404 page
+- host: api.punchh.com
+  path: /.well-known/ai-plugin.json
+  url: https://api.punchh.com/.well-known/ai-plugin.json
+  status: 404
+  file: null
+  body: JSON/HTML 404 page
+- host: api.punchh.com
+  path: /.well-known/agent-card.json
+  url: https://api.punchh.com/.well-known/agent-card.json
+  status: 404
+  file: null
+  body: JSON/HTML 404 page
+- host: api.punchh.com
+  path: /.well-known/agent.json
+  url: https://api.punchh.com/.well-known/agent.json
+  status: 404
+  file: null
+  body: JSON/HTML 404 page

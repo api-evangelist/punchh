@@ -1,0 +1,1265 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Online Ordering and SSO API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "User Sign-up and SSO",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create New User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/customers.json",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              },
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sign up a new user by using information such as email, first name, last name, birthday, anniversary, password, etc. This will create/register the new user in the Punchh system.\n\n**NOTE**\n\nIf the business is using a referral code, it is mandatory to pass the first_name and last_name of the guest as the referral code will be generated from first_name, last_name, and some random characters. Also, if you do not pass the first_name or the last_name, the API response may be delayed or time out.\n\n### U"
+        },
+        {
+          "info": {
+            "name": "Log in With Email and Password",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/customers/sign_in",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Log in a user with the user's email address and password information.\n"
+        },
+        {
+          "info": {
+            "name": "Create SSO Access Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/sso",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generates authentication token using the security token."
+        },
+        {
+          "info": {
+            "name": "Get Password Reset Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/users/reset_password_token",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get Password Reset Token"
+        },
+        {
+          "info": {
+            "name": "Get SSO Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/oauth/token",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              },
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves a client instance-level access token from your redirect URI after a successful user login through the Punchh-hosted authentication form. After you retrieve the client-level access token from this endpoint, supply it to the [Fetch User Information](/docs/dev-portal-online-ordering/b3A6NTAyODQ5NzA-fetch-user-information) API to retrieve a user-level authentication or access token. You can then use that user-level token to authenticate API calls for the remainder of the user's session.\n\n*"
+        },
+        {
+          "info": {
+            "name": "Log in With Facebook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/users/connect_with_facebook",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This API is invoked when a user registers on a business app using Facebook ID, email address, first name, last name, etc. On success, the API returns the user's profile details."
+        },
+        {
+          "info": {
+            "name": "Log in With Apple",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/users/connect_with_apple",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "A user can sign in with Apple using a random email ID generated by Apple on the web. The generated authorization code corresponds to each redirect URI as provided in the `redirect_uri` request parameter."
+        },
+        {
+          "info": {
+            "name": "Log in With Google",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/users/connect_with_google",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              },
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This API enables users to log in using Google Sign-in on the Web.\n\nThe following must be configured for the business in the Punchh platform to make a successful call to the API:\n\n* Google sign-in must be enabled. <!-- Cockpit > Guests > Miscellaneous Config -->\n* Google web client ID, Google iOS client ID / Google Andriod client ID, and Google web client secret must be specified. <!-- Whitelabel > Services > Google Sign-in -->\n\nContact your Punchh representative to update these configurations."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Check User Balance",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch Account Balance of User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/checkins/balance",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns account balance details of a guest, such as banked_rewards, membership_level, net_balance, net_debits, pending_points, points_balance, signup_anniversary_day, total_credits, total_debits, total_point_credits, total_redeemable_visits, etc.\n\n>User authentication required\n>\n>This API requires authentication_token to be supplied as `HTTP_AUTHORIZATION` header or in the `authentication_token` parameter."
+        },
+        {
+          "info": {
+            "name": "List Available Rewards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/rewards",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Fetch available rewards or offers details of a user. This request returns how many rewards are available to the user."
+        },
+        {
+          "info": {
+            "name": "Fetch User Balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/users/balance",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "cache-control",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Displays user information regarding active redemptions, notifications, badges, balance, etc."
+        },
+        {
+          "info": {
+            "name": "Balance Timelines",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/balance_timelines",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Gets balance timelines of the user"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "User Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Forgot Password",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/users/forgot_password",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Triggers the forgot password email sent to the user's email address containing the password reset link."
+        },
+        {
+          "info": {
+            "name": "Fetch User Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/users",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns the user's details including birthday, anniversary, gender, zip code, etc."
+        },
+        {
+          "info": {
+            "name": "Update User Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/users",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates details in the user profile, such as first name, last name, birthday, anniversary, or change password. \n\nNote: Due to fraud protections, guests are permitted to update their birthdays only once. Subsequent attempts to modify the birthday parameter using the API will fail. In such a case, the API returns a 200 response, but the birthday is not updated. "
+        },
+        {
+          "info": {
+            "name": "Get Account History",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/accounts",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns the user's account history details. Event expiry is displayed in date format for check-in and date/time format (ISO 8601) for other events.\n"
+        },
+        {
+          "info": {
+            "name": "Change Password",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/users/change_password",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Changes the user's password without using the current password"
+        },
+        {
+          "info": {
+            "name": "User Enrollment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/user_enrollments",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "cache-control",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Enrolls a user in a campaign (currently supported for social cause campaigns)"
+        },
+        {
+          "info": {
+            "name": "User Disenrollment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/user_enrollments",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "cache-control",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Disenrolls a user from a campaign (currently supported for social cause campaigns)"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Check-in",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Loyalty Check-in",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/checkins/online_order",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a loyalty check-in for an online order against a given receipt. Requires menu items and parameters to be sent."
+        },
+        {
+          "info": {
+            "name": "Update Loyalty Check-in",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/checkins/online_order",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a loyalty check-in in the pending state based on external_uid. Requires all parameters to be sent again (no deltas)."
+        },
+        {
+          "info": {
+            "name": "Fetch a Check-in by External ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/checkins",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns the details of a check-in using external_id for reference"
+        },
+        {
+          "info": {
+            "name": "Create Loyalty Check-in (OLD)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/checkins",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "NOTE: This is an old endpoint. Use [this endpoint](/docs/dev-portal-online-ordering/f1943957e38b4-grant-loyalty-checkin-against-given-receipt) instead.\n\nCreates a loyalty check-in by store number"
+        },
+        {
+          "info": {
+            "name": "Void Loyalty Check-in",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/checkins",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Deletes/voids a loyalty check-in in the pending state"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Rewards",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Estimate Loyalty Points Earning",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/loyalty_points_estimator",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns a prediction of how many points can be earned before submitting the transaction. The estimate is derived from the base earning rate of the business and does not account for special promotions or campaigns.\n"
+        },
+        {
+          "info": {
+            "name": "Convert Points",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/conversions",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Converts points to cash, fuel discounts, and charities based on the configuration or conversion rules set in the Punchh platform"
+        },
+        {
+          "info": {
+            "name": "Estimate Points Earning",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/estimate_points",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns a prediction of how many points can be earned before submitting the transaction. The estimate is derived from the base earning rate of the business and does not account for special promotions or campaigns."
+        },
+        {
+          "info": {
+            "name": "Ordering Meta",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/ordering_meta",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Send \"base_redeemable\" to get metadata about the redeemable"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves information about the base redeemable"
+        },
+        {
+          "info": {
+            "name": "Fetch Available Offers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/offers",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Fetches available offers or offer details of a user. This request returns how many offers are available to the user."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Deals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List All Deals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/deals",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "cache-control",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns all available deals for a user"
+        },
+        {
+          "info": {
+            "name": "Save Selected Deals",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/deals",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds the selected deal to the user's account"
+        },
+        {
+          "info": {
+            "name": "Get Deal Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/deals/:redeemable_uuid",
+            "headers": [
+              {
+                "name": "x-pch-digest",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "redeemable_uuid",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns the details of the deal"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

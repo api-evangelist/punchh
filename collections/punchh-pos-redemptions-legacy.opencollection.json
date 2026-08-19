@@ -1,0 +1,158 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Redemptions 1.0 (Legacy) API - POS",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Possible Redemptions (Redemptions 1.0)",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/pos/redemptions/possible",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "Accept-Language",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Use this API to verify that a redemption can be applied on a given check. \n\nNote: The API returns a 422 error message when a user attempts to redeem a loyalty/ non-loyalty discount at a location that is disabled for redemption by the business. This error message can be customized for the businesses in the Punchh platform to provide them greater flexibility and control over the user experience during redemption attempts at such locations. Contact your Punchh representative for more information ab"
+    },
+    {
+      "info": {
+        "name": "Create Redemption (Redemptions 1.0)",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/pos/redemptions",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "Accept-Language",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Redeems a card, reward, redeemable, or discount specified in the discount_type parameter against a receipt. Every request must have phone, email, card_number, or redemption_code as a parameter. \n\nPunchh evaluates eligibility during the Possible Redemptions call using the receipt details provided (item name, price, quantity, identifiers, etc.). During the Create Redemption call, Punchh revalidates the same receipt to ensure the qualifying conditions are still met before honoring the redemption. \n"
+    },
+    {
+      "info": {
+        "name": "Void Redemption (Redemptions 1.0)",
+        "type": "http"
+      },
+      "http": {
+        "method": "DELETE",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/pos/redemptions",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Voids a processed redemption. After a redemption is voided successfully, the offer tied to the redemption is returned to the guest's account.\n\n<b>Note</b>: The Void Redemption API allows you to cancel a redemption without any time restrictions for most types of redemptions. However, for coupons and promos, redemptions can only be voided within 24 hours of the redemption process.\n\nFor information about voiding multiple redemptions, see [this page](/docs/dev-portal-pos/b3A6NTAyODM5MjM-void-multipl"
+    },
+    {
+      "info": {
+        "name": "Void Multiple Redemptions (Redemptions 1.0)",
+        "type": "http"
+      },
+      "http": {
+        "method": "DELETE",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/pos/redemptions/multiple_destroy",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Deletes processed multiple redemptions at once and returns the reward to the user.\n"
+    },
+    {
+      "info": {
+        "name": "Applicable Offers (Redemptions 1.0)",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/pos/redemptions/applicable_offers",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "Accept-Language",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Returns applicable offers based on the check details.\n"
+    },
+    {
+      "info": {
+        "name": "Get Active Redemptions (Redemptions 1.0)",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/pos/users/active_redemptions",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": ""
+          }
+        ],
+        "params": [
+          {
+            "name": "email",
+            "value": "",
+            "type": "query",
+            "description": "The email of the user. If you send this parameter, do not include the phone parameter."
+          },
+          {
+            "name": "phone",
+            "value": "",
+            "type": "query",
+            "description": "The phone number of the user. If you send this parameter, do not include the email parameter."
+          }
+        ]
+      },
+      "docs": "This API returns all of the active redemptions of the user.\n"
+    }
+  ],
+  "bundled": true
+}

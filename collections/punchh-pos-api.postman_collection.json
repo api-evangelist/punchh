@@ -1,0 +1,2321 @@
+{
+  "item": [
+    {
+      "id": "8ea7aa68-59a5-4635-9d39-15acca56d320",
+      "name": "Point Of Sale",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1695cff6-f907-49be-a41c-9c893e840fd0",
+          "name": "Location Configuration",
+          "request": {
+            "name": "Location Configuration",
+            "description": {
+              "content": "Get the configuration for a location using a unique API key (i.e., location key).\n\nThis API call requires the API key as well as the business key to be sent in the HTTP Authorization header in the following format:\n\nAuthorization: Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE\n\nwhere \n\nLOCATION_KEY_GOES_HERE is the API key (which is unique for a location) and BUSINESS_KEY_GOES_HERE is the business key (which is unique for a business). \n\nSee cURL examples for more details.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "locations",
+                "configuration"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Short code for locale variant (e.g., fr-ca, es-ES, en-EN, etc.)",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b6400a0a-05d8-45b8-bbb8-63b26deceb5e",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "locations",
+                    "configuration"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) This is a combination of unique API key as well as business key (UUID) as the Authorization header.",
+                    "key": "Authorization",
+                    "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Short code for locale variant (e.g., fr-ca, es-ES, en-EN, etc.)",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"banked_rewards_mode\": \"1\",\n  \"business_name\": \"BUSINESS_NAME_GOES_HERE\",\n  \"header\": \"Header Punchh\",\n  \"location_id\": \"327922\",\n  \"location_name\": \"327922-punchh-demo\",\n  \"log_level\": \"6\",\n  \"points_unlock_mode\": \"0\",\n  \"print_barcodes\": \"1\",\n  \"send_to_datasink\": \"1\",\n  \"short_key\": \"6624\",\n  \"trailer_1\": \"Barcode Punchh Line #1\",\n  \"trailer_2\": \"Barcode Punchh Line #2\",\n  \"trailer_3\": \"Barcode Punchh Line #3\",\n  \"trailer_4\": \"Barcode Punchh Line #4\",\n  \"trailer_5\": \"THANKS Punchh\",\n  \"update_interval\": \"60\",\n  \"visits_mode\": \"0\",\n  \"multiple_redemption_on_location\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "92d0cdfa-0c5e-4f03-bdfe-f5e1ad3673a4",
+          "name": "Program Meta",
+          "request": {
+            "name": "Program Meta",
+            "description": {
+              "content": "Get information about business-level data, such as program type, platform configurations, list of redeemables (in case of points unlock redeemable program), etc.\n\n>Any update made to the configuration in the platform will be reflected in the response after 15 minutes, instead of in real time, in order to improve the response time.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "meta"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Short code for locale variant (e.g., fr-ca, es-ES, en-EN, etc.)",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5622e249-3292-435d-bc74-4ca3e58a616b",
+              "name": "Automated approach based on different programs: A partner could use different values and also programmatically identify to display them accordingly via the Program Meta API.\n1. For program_type as “visits”, in order to fetch the count for available unredeemed cards, use the “unredeemed_cards” field. In this case, net_balance will show the available visits balance earned for a user.\n2. For program_type as “points” -- “points_conversion_type”: “currency” -- in order to fetch the value for dollar amount available in the user’s account, use the “banked_rewards” field. In this case, net_balance will also show banked reward currency available, but if you want to display current points available, use points_balance. This gets reset once it reaches the threshold value (returned in meta API under “points_conversion_threshold”) where those points are converted to fixed banked reward value as configured in the platform. For example, if as per business setup every 100 points earned get converted to $10 and the user currently has 40 points, then the points_balance value will be 40 until the user earns 60 more points where they will get converted to $10. Once the user earns 60 more points, the points_balance reaches 100 where it will get converted to $10 and the points_balance value will become 0.\n3. For program_type as “points_unlock_redeemables” -- “points_conversion_type”: “staged” or “points_conversion_type”: “none” -- in this case, in order to fetch the current balance, you can use the net_balance value from the balance object which will get updated after every check-in or redemption. The points_balance value will also update based on earnings but will reset once it reaches the threshold value. Here, we do not recommend the point_balance value to be displayed as there is no conversion into currency or reward.\n4. For program_type as \"points\" -- “points_conversion_type”: “rewards” -- in this case, the points_balance will show current points which will get reset once it reaches the threshold value (returned in meta API under “points_conversion_threshold”) where points are converted to a reward. Also, net_balance will display total available points of the user. For example, if as per business setup every 100 points earned get converted to a reward and the user currently has 40 points, then the points_balance value will be 40 until the user earns 60 more points where they will get converted to a reward. Once the user earns 60 more points, the points_balance reaches 100 where it will get converted to a reward and the points_balance value will become 0.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "meta"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) This is a combination of unique API key as well as business key (UUID) as the Authorization header.",
+                    "key": "Authorization",
+                    "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Short code for locale variant (e.g., fr-ca, es-ES, en-EN, etc.)",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"minimum_payable_price\": null,\n  \"maximum_discountable_quantity\": null,\n  \"program_type\": \"points_unlock_redeemables\",\n  \"points_conversion_type\": \"staged\",\n  \"visits_per_card\": 5,\n  \"card_redemption_value\": 2,\n  \"minimum_visit_amount\": 5,\n  \"minimum_visit_hours\": 4,\n  \"minimum_age_to_signup\": 0,\n  \"earning_unit\": \"point\",\n  \"currency_earned\": 0,\n  \"points_conversion_threshold\": 50,\n  \"redemption_expiry_minutes\": 24,\n  \"pending_points\": true,\n  \"pending_points_duration\": 15,\n  \"configurable_default_time_eod\": \"23:59:59\",\n  \"autocreate_user_phone\": true,\n  \"coupon_prefix\": \"\",\n  \"redeemables\": [\n    {\n      \"redeemable_image_url\": \"IMAGE_URL_GOES_HERE\",\n      \"redeemable_properties\": null,\n      \"meta_data\": \"Meta data\",\n      \"redeemable_id\": \"REDEEMABLE_ID_GOES_HERE\",\n      \"name\": \"Test Redeemable #2\",\n      \"description\": \"Test redeemable description\",\n      \"points_required_to_redeem\": 20\n    },\n    {\n      \"redeemable_image_url\": \"IMAGE_URL_GOES_HERE\",\n      \"redeemable_properties\": null,\n      \"redeemable_id\": \"REDEEMABLE_ID_GOES_HERE\",\n      \"name\": \"Chips & Salsa\",\n      \"description\": \"Chips & Salsa redeemable. only be used in the redemption of Chips & Salsa\",\n      \"points_required_to_redeem\": 35\n    },\n    {\n      \"redeemable_image_url\": \"IMAGE_URL_GOES_HERE\",\n      \"redeemable_properties\": null,\n      \"meta_data\": \"deal 1\",\n      \"redeemable_id\": \"REDEEMABLE_ID_GOES_HERE\",\n      \"name\": \"50% off\",\n      \"description\": \"Test Description\",\n      \"points_required_to_redeem\": 200\n    },\n    {\n      \"redeemable_image_url\": \"IMAGE_URL_GOES_HERE\",\n      \"redeemable_properties\": null,\n      \"redeemable_id\": \"REDEEMABLE_ID_GOES_HERE\",\n      \"name\": \"Test Redeemable\",\n      \"description\": \"Redeemable to test redemption!\",\n      \"points_required_to_redeem\": 1500\n    }\n  ],\n  \"multiple_redemptions\": {\n    \"exclude_interoperability_strategy_between\": [\n      \"offer|loyalty\",\n      \"loyalty|pre_purchased\",\n      \"promo_coupon|offer\",\n      \"pre_purchased|promo_coupon\"\n    ],\n    \"auto_unlock_duration\": 100,\n    \"discount_processing_strategy\": \"date_of_expiry\",\n    \"processing_priority_by_discount_type\": [\n      \"reward\"\n    ],\n    \"allow_multiple_redemption_on_item\": true,\n    \"allow_qualifying_items_reused\": true,\n    \"auto_redemption\": true,\n    \"auto_redemption_discounts\": [\n      \"offer\",\n      \"subscription\"\n    ],\n    \"enable_auto_unlock\": true,\n    \"enable_discount_locking\": true,\n    \"max_redemptions_in_transaction\": 20,\n    \"processing_priority_by_acquisition_type\": [\n      {\n        \"code\": \"offer\",\n        \"priority\": 1,\n        \"multiplication_factor\": 20\n      },\n      {\n        \"code\": \"loyalty\",\n        \"priority\": 2,\n        \"multiplication_factor\": 10\n      },\n      {\n        \"code\": \"promo_coupon\",\n        \"priority\": 3,\n        \"multiplication_factor\": 5\n      },\n      {\n        \"code\": \"pre_purchased\",\n        \"priority\": 4,\n        \"multiplication_factor\": 4\n      }\n    ]\n  },\n  \"multiple_redemptions_enabled\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "65197ffc-b918-4529-984e-4eb4d263b96f",
+          "name": "Create New User",
+          "request": {
+            "name": "Create New User",
+            "description": {
+              "content": "This API creates a new user account by using phone or email or card (at least one of them).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"<string>\",\n  \"email\": \"<string>\",\n  \"card_number\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"birthday\": \"<date>\",\n  \"address_line1\": \"<string>\",\n  \"city\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"terms_and_conditions\": \"<boolean>\",\n  \"send_compliance_sms\": \"<boolean>\",\n  \"favourite_locations\": \"<string>\",\n  \"signup_channel\": \"POS\",\n  \"age_verified_status\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "97fc4be9-7dcf-4750-a08d-9239ca7ff77d",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) This is a combination of unique API key as well as business key (UUID) as the Authorization header.",
+                    "key": "Authorization",
+                    "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"FIRST_NAME_GOES_HERE\",\n  \"last_name\": \"LAST_NAME_GOES_HERE\",\n  \"phone\": \"1111111111\",\n  \"email\": \"test@example.com\",\n  \"terms_and_conditions\": true,\n  \"send_compliance_sms\": true,\n  \"favourite_locations\": \"352704,359591\",\n  \"zip_code\": 12344,\n  \"birthday\": \"1999-01-01\",\n  \"gender\": \"male\",\n  \"marketing_email_subscription\": true,\n  \"age_verified_status\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"address_line1\": null,\n  \"anniversary\": null,\n  \"avatar_remote_url\": null,\n  \"birthday\": \"1999-01-01\",\n  \"city\": null,\n  \"created_at\": \"2020-10-06T14:59:18Z\",\n  \"email\": \"test@example.com\",\n  \"email_verified\": false,\n  \"fb_uid\": null,\n  \"first_name\": \"FIRST_NAME_GOES_HERE\",\n  \"age_verified\": false,\n  \"privacy_policy\": false,\n  \"gender\": \"male\",\n  \"id\": 60389313,\n  \"last_name\": \"LAST_NAME_GOES_HERE\",\n  \"state\": null,\n  \"updated_at\": \"2020-10-06T14:59:18Z\",\n  \"zip_code\": \"12344\",\n  \"balance\": {\n    \"banked_rewards\": 0,\n    \"membership_level\": null,\n    \"membership_level_id\": null,\n    \"net_balance\": 0,\n    \"net_debits\": 0,\n    \"pending_points\": 0,\n    \"points_balance\": 0,\n    \"signup_anniversary_day\": \"10/06\",\n    \"total_credits\": 0,\n    \"total_debits\": \"0.0\",\n    \"total_point_credits\": 0,\n    \"total_redeemable_visits\": 0,\n    \"expired_membership_level\": null,\n    \"total_visits\": 0,\n    \"initial_visits\": 0,\n    \"unredeemed_cards\": 0\n  },\n  \"user_digest\": \"USER_DIGEST_GOES_HERE\",\n  \"selected_card_number\": null,\n  \"selected_reward_id\": null,\n  \"selected_redeemable_id\": null,\n  \"rewards\": [],\n  \"discount_type\": null,\n  \"phone\": \"1111111111\",\n  \"age_verified_status\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "80257824-7da5-42b4-ab49-bb314e64c9c9",
+          "name": "User Look-up and Fetch Balance",
+          "request": {
+            "name": "User Look-up and Fetch Balance",
+            "description": {
+              "content": "This API looks up a loyalty guest using an identifier to retrieve guest data and to assign the user to the check or transaction.\n\n## Fields Used for User Look-up\n\nThe following table summarizes the different look-up fields that are used in the request of this API endpoint. The POS makes a call using ***one*** of these identifiers (e.g., email address, phone number, QR code, or loyalty card number) to look up the loyalty user on the Punchh platform. **Sending one of the query parameters (see below) is required.**\n\nNote: User QR codes appear in three different ways, hence the three descriptions below.\n\n<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"756\" style=\"border-collapse:collapse;table-layout:fixed;width:350pt\">\n<colgroup><col width=\"224\" style=\"mso-width-source:userset;mso-width-alt:7168;width:168pt\"> <col width=\"161\" style=\"mso-width-source:userset;mso-width-alt:5162;width:121pt\"> <col width=\"160\" style=\"mso-width-source:userset;mso-width-alt:5120;width:120pt\"> <col width=\"211\" style=\"mso-width-source:userset;mso-width-alt:6741;width:158pt\"></colgroup>\n\n<tbody>\n\n<tr height=\"21\" style=\"height:16.0pt\">\n<td height=\"21\" class=\"xl67\" width=\"224\" style=\"height:16.0pt;width:168pt\"><b>Type</b></td>\n<td class=\"xl67\" width=\"161\" style=\"width:121pt\"><b>Character Length</b></td>\n<td class=\"xl67\" width=\"160\" style=\"width:120pt\"><b>Character Type</b></td>\n<td class=\"xl67\" width=\"211\" style=\"width:158pt\"><b>How To Identify</b></td>\n</tr>\n\n<tr height=\"21\" style=\"height:16.0pt\">\n<td height=\"21\" style=\"height:16.0pt\">Phone Number</td>\n<td class=\"xl65\">10</td>\n<td>Numeric</td>\n<td>10 digits</td>\n</tr>\n\n<tr height=\"21\" style=\"height:16.0pt\">\n<td height=\"21\" style=\"height:16.0pt\">Email</td>\n<td class=\"xl65\">6-255</td>\n<td>Alphanumeric</td>\n<td>String including @</td>\n</tr>\n\n<tr height=\"21\" style=\"height:16.0pt\">\n<td height=\"21\" style=\"height:16.0pt\">User QR Code</td>\n<td class=\"xl65\">2-12</td>\n<td>Alphanumeric</td>\n<td>Starts with \"P\"</td>\n</tr>\n\n<tr height=\"21\" style=\"height:16.0pt\">\n<td height=\"21\" style=\"height:16.0pt\"></td>\n<td class=\"xl65\">13-512</td>\n<td>Alphanumeric</td>\n<td>Starts and ends with \"Punchh\"</td>\n</tr>\n\n<tr height=\"21\" style=\"height:16.0pt\">\n<td height=\"21\" style=\"height:16.0pt\"></td>\n<td class=\"xl65\">8</td>\n<td>Alphanumeric</td>\n<td>Starts with \"S\"</td>\n</tr>\n\n<tr height=\"21\" style=\"height:16.0pt\">\n<td height=\"21\" style=\"height:16.0pt\">Single Scan Code</td>\n<td class=\"xl66\">6-34</td>\n<td>Alphanumeric</td>\n<td>Hexadecimal digits</td>\n</tr>\n\n<tr height=\"21\" style=\"height:16.0pt\">\n<td height=\"21\" style=\"height:16.0pt\">Redemption Code</td>\n<td class=\"xl65\">7</td>\n<td>Numeric</td>\n<td>7 digits</td>\n</tr>\n\n<tr height=\"21\" style=\"height:16.0pt\">\n<td height=\"21\" style=\"height:16.0pt\">Card Number</td>\n<td class=\"xl65\">16</td>\n<td>Numeric</td>\n<td>16 digits</td>\n</tr>\n\n<tr height=\"21\" style=\"height:16.0pt\">\n<td height=\"21\" style=\"height:16.0pt\">Drive-Thru Short Code</td>\n<td class=\"xl65\">4</td>\n<td>Numeric/<br>Alphanumeric</td>\n<td>4 digits or string</td>\n</tr>\n\n<tr height=\"21\" style=\"height:16.0pt\">\n<td height=\"21\" style=\"height:16.0pt\">Apple NFC Data</td>\n<td class=\"xl65\">N/A</td>\n<td>Alphanumeric</td>\n<td>Hexadecimal</td>\n</tr>\n\n<tr height=\"21\" style=\"height:16.0pt\">\n<td height=\"21\" style=\"height:16.0pt\">NFC Token</td>\n<td class=\"xl65\">N/A</td>\n<td>Alphanumeric</td>\n<td>Hexadecimal</td>\n</tr>\n\n<tr height=\"21\" style=\"height:16.0pt\">\n<td height=\"21\" style=\"height:16.0pt\">Reward ID</td>\n<td class=\"xl65\">11-20</td>\n<td>Numeric</td>\n<td>N/A</td>\n</tr>\n\n</tbody>\n\n</table>\n\n\n## POS Single Scan Flow (SSF) User Look-up API\n\nPunchh supports SSF token. The SSF token is used to make payments for the purchases made at POS stores.\n\nThis token is a UUID string, which is made up of alphanumeric characters and passed in the User Look-up API request in the single_scan_code parameter. The SSF token that is generated from the guest’s mobile app is used to look up the information required for processing the payment, such as the payment mode that the user selected for the purchase, the selected discount that the user wants to redeem, and the selected tip amount.\n\nFor more information, see [Single Scan Flow](/docs/dev-portal-pos/additional-topics/single-scan-flow).\n\n## User Look-up with Loyalty Short Code\n\nThe Loyalty Short Code is generated in the mobile app. When only the guest identification using the short code at drive-thru is enabled for a business, the short code is used for loyalty identification only. When **Single Scan Flow (SSF)** and **Payment with Short Code using SSF** are also enabled, the short code is used for both loyalty identification and payment.\n\nA short code used only for loyalty identification is generated using the [Generate a Drive-Thru Short Code API](https://developers.partech.com/docs/dev-portal-mobile/apis/mobile-api/tag/drive-thru/post/api2/mobile/drivethru_code). When the short code is used for look-up, the User Look-up API returns the user profile data, balance, and rewards in the response.\n\nA short code used for both loyalty identification and payment is generated using [Generate Single Scan Code API](https://developers.partech.com/docs/dev-portal-mobile/apis/mobile-api/tag/single-scan-code/post/api2/mobile/single_scan_tokens). When the POS calls the User Look-up API with the short code (passed in the `drive_thru_code` parameter), Punchh uses the short code and the user ID mapped to it to retrieve the associated `single_scan_code`.\n\nPunchh then uses the `single_scan_code` to look up the user and returns it in the response, along with any rewards and payment information selected by the user when generating the short code from the mobile app. The POS can use the `single_scan_code` for check-in, redemptions, and payments.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "users",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "email",
+                  "value": "<string>",
+                  "description": "Email address of the user."
+                },
+                {
+                  "disabled": false,
+                  "key": "phone",
+                  "value": "<string>",
+                  "description": "Phone number of the user."
+                },
+                {
+                  "disabled": false,
+                  "key": "card_number",
+                  "value": "<string>",
+                  "description": "Physical loyalty card generated by Punchh."
+                },
+                {
+                  "disabled": false,
+                  "key": "user_as_qrcode",
+                  "value": "<string>",
+                  "description": "QR code of the user."
+                },
+                {
+                  "disabled": false,
+                  "key": "single_scan_code",
+                  "value": "<string>",
+                  "description": "Single scan code of the user to be used in single scan flow. "
+                },
+                {
+                  "disabled": false,
+                  "key": "redemption_code",
+                  "value": "<string>",
+                  "description": "Redemption code of the user as generated on the app or web."
+                },
+                {
+                  "disabled": false,
+                  "key": "reward_id",
+                  "value": "<string>",
+                  "description": "ID of the user’s reward as generated on the app or web."
+                },
+                {
+                  "disabled": false,
+                  "key": "apple_nfc_data",
+                  "value": "<string>",
+                  "description": "User identifier that enables look-up of user information generated from the Apple Pass. See [Implement Apple Pass Integration With POS](/docs/dev-portal-pos/ea3c77d831261-implement-apple-pass-integration-with-pos)"
+                },
+                {
+                  "disabled": false,
+                  "key": "nfc_token",
+                  "value": "<string>",
+                  "description": "User identifier that enables the look-up of user information generated from the Google Pass. See [Implement Google Pass Integration With POS](/docs/dev-portal-pos/additional-topics/implement-google-pass-integration-with-pos)"
+                },
+                {
+                  "disabled": false,
+                  "key": "drive_thru_code",
+                  "value": "<string>",
+                  "description": "4-digit numeric/alphanumeric drive-thru short code generated by the user from the brand's mobile app that enables lookup of user details and balance. The short code is mapped to the user ID. See [Generate a Drive-Thru Short Code](https://developers.partech.com/docs/dev-portal-mobile/647b28e02d630-generate-a-drive-thru-short-code).\n\nWhen the short code passed in the API is enabled for payments, Punchh uses the short code and the user ID mapped to it to retrieve the associated single scan code. Punchh then uses the single scan code to look up the user and returns it in the response, along with any rewards and payment information selected when the short code was generated.\n\nThe POS can use the single_scan_code for check-in, redemptions, and payments. See [Generate Single Scan Code API](https://developers.partech.com/docs/dev-portal-mobile/apis/mobile-api/tag/single-scan-code/post/api2/mobile/single_scan_tokens).\n\nThe API returns a 404 or 410 status code with the error message \"CODE_EXPIRED\" for an expired short code, and a 404 status code with the error message \"CODE_NOT_FOUND\" for an invalid or unmapped short code.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Short code for locale variant (e.g., fr-ca, es-ES, en-EN, etc.)",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d762f07a-3850-44a1-9611-b4916708f5a5",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "users",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "phone",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "card_number",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "user_as_qrcode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "single_scan_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "redemption_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reward_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "apple_nfc_data",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nfc_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "drive_thru_code",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) This is a combination of unique API key as well as business key (UUID) as the Authorization header.",
+                    "key": "Authorization",
+                    "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Short code for locale variant (e.g., fr-ca, es-ES, en-EN, etc.)",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"address_line1\": \"\",\n  \"age_verified\": false,\n  \"anniversary\": null,\n  \"avatar_remote_url\": null,\n  \"balance\": {\n    \"banked_rewards\": \"3339.69\",\n    \"expired_membership_level\": null,\n    \"initial_visits\": 0,\n    \"membership_level\": null,\n    \"membership_level_id\": null,\n    \"net_balance\": 3339.69,\n    \"net_debits\": 425.31,\n    \"pending_points\": 434,\n    \"points_balance\": 41,\n    \"signup_anniversary_day\": \"10/17\",\n    \"total_credits\": 21091,\n    \"total_debits\": \"425.31\",\n    \"total_point_credits\": 21091,\n    \"total_redeemable_visits\": 210,\n    \"total_visits\": 201,\n    \"unredeemed_cards\": 0\n  },\n  \"birthday\": null,\n  \"city\": \"\",\n  \"created_at\": \"2017-10-17T18:40:05Z\",\n  \"discount_type\": null,\n  \"email\": \"test@example.com\",\n  \"email_verified\": false,\n  \"fb_uid\": null,\n  \"first_name\": \"FIRST_NAME_GOES_HERE\",\n  \"gender\": \"\",\n  \"id\": 1107620,\n  \"last_name\": \"LAST_NAME_GOES_HERE\",\n  \"phone\": 1111111111,\n  \"privacy_policy\": false,\n  \"rewards\": [\n    {\n      \"created_at\": \"2019-07-30T10:36:23Z\",\n      \"description\": \"Test Test\",\n      \"discount_amount\": 0,\n      \"end_date_tz\": null,\n      \"id\": 1380722,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"name\": \"Test1\",\n      \"points\": 0,\n      \"redeemable_properties\": null,\n      \"start_date_tz\": \"2019-07-30T10:36:23Z\",\n      \"status\": \"unredeemed\",\n      \"updated_at\": \"2019-07-30T10:36:23Z\"\n    },\n    {\n      \"created_at\": \"2019-09-28T07:05:50Z\",\n      \"description\": \"\",\n      \"discount_amount\": 5,\n      \"end_date_tz\": null,\n      \"id\": 1399333,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"name\": \"Test (basic)\",\n      \"points\": 0,\n      \"redeemable_properties\": null,\n      \"start_date_tz\": \"2019-09-28T07:05:50Z\",\n      \"status\": \"unredeemed\",\n      \"updated_at\": \"2020-04-20T19:36:03Z\"\n    },\n    {\n      \"created_at\": \"2019-09-28T07:05:50Z\",\n      \"description\": \"\",\n      \"discount_amount\": 5,\n      \"end_date_tz\": null,\n      \"id\": 1399334,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"name\": \"Test (basic)\",\n      \"points\": 0,\n      \"redeemable_properties\": null,\n      \"start_date_tz\": \"2019-09-28T07:05:50Z\",\n      \"status\": \"unredeemed\",\n      \"updated_at\": \"2019-09-28T07:05:50Z\"\n    },\n    {\n      \"created_at\": \"2019-09-28T07:05:50Z\",\n      \"description\": \"\",\n      \"discount_amount\": 5,\n      \"end_date_tz\": null,\n      \"id\": 1399335,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"name\": \"Test (basic)\",\n      \"points\": 0,\n      \"redeemable_properties\": null,\n      \"start_date_tz\": \"2019-09-28T07:05:50Z\",\n      \"status\": \"unredeemed\",\n      \"updated_at\": \"2019-09-28T07:05:50Z\"\n    },\n    {\n      \"created_at\": \"2019-09-28T07:05:50Z\",\n      \"description\": \"\",\n      \"discount_amount\": 5,\n      \"end_date_tz\": null,\n      \"id\": 1399336,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"name\": \"Test (basic)\",\n      \"points\": 0,\n      \"redeemable_properties\": null,\n      \"start_date_tz\": \"2019-09-28T07:05:50Z\",\n      \"status\": \"unredeemed\",\n      \"updated_at\": \"2019-09-28T07:05:50Z\"\n    },\n    {\n      \"created_at\": \"2020-01-30T13:26:40Z\",\n      \"description\": \"\",\n      \"discount_amount\": 0,\n      \"end_date_tz\": null,\n      \"id\": 1425570,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"name\": \"Test QC static discounrt\",\n      \"points\": 0,\n      \"redeemable_properties\": null,\n      \"start_date_tz\": \"2020-01-30T13:26:40Z\",\n      \"status\": \"unredeemed\",\n      \"updated_at\": \"2020-01-30T13:26:40Z\"\n    },\n    {\n      \"created_at\": \"2020-01-30T13:41:40Z\",\n      \"description\": \"\",\n      \"discount_amount\": 0,\n      \"end_date_tz\": null,\n      \"id\": 1425572,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"name\": \"Test QC static discounrt\",\n      \"points\": 0,\n      \"redeemable_properties\": null,\n      \"start_date_tz\": \"2020-01-30T13:41:40Z\",\n      \"status\": \"unredeemed\",\n      \"updated_at\": \"2020-01-30T13:41:40Z\"\n    },\n    {\n      \"created_at\": \"2020-01-30T13:57:07Z\",\n      \"description\": \"\",\n      \"discount_amount\": 0,\n      \"end_date_tz\": null,\n      \"id\": 1425574,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"name\": \"Test QC static discounrt\",\n      \"points\": 0,\n      \"redeemable_properties\": null,\n      \"start_date_tz\": \"2020-01-30T13:57:07Z\",\n      \"status\": \"unredeemed\",\n      \"updated_at\": \"2020-01-30T13:57:07Z\"\n    },\n    {\n      \"created_at\": \"2020-04-20T18:17:40Z\",\n      \"description\": \"\",\n      \"discount_amount\": 2,\n      \"end_date_tz\": null,\n      \"id\": 1478745,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"name\": \"Test $2\",\n      \"points\": 0,\n      \"redeemable_properties\": null,\n      \"start_date_tz\": \"2020-04-20T18:17:40Z\",\n      \"status\": \"unredeemed\",\n      \"updated_at\": \"2020-04-20T18:17:40Z\"\n    },\n    {\n      \"created_at\": \"2020-04-20T18:18:04Z\",\n      \"description\": \"\",\n      \"discount_amount\": 2,\n      \"end_date_tz\": null,\n      \"id\": 1478746,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"name\": \"Test $2\",\n      \"points\": 0,\n      \"redeemable_properties\": null,\n      \"start_date_tz\": \"2020-04-20T18:18:04Z\",\n      \"status\": \"unredeemed\",\n      \"updated_at\": \"2020-04-20T18:18:04Z\"\n    }\n  ],\n  \"selected_card_number\": null,\n  \"selected_discount_amount\": null,\n  \"selected_reward_id\": null,\n  \"selected_subscriptions\": [\n    {\n      \"subscription_id\": 331,\n      \"start_time\": \"2024-06-05T17:21:48+05:30\",\n      \"end_time\": \"2024-07-25T23:59:59+05:30\",\n      \"external_plan_identifier\": null,\n      \"plan_id\": 14,\n      \"cancelled_at\": null,\n      \"name\": \"Sub plan\",\n      \"description\": \"\",\n      \"miscellaneous\": \"\",\n      \"status\": \"active\"\n    }\n  ],\n  \"state\": \"\",\n  \"updated_at\": \"2020-04-28T14:43:15Z\",\n  \"user_digest\": \"USER_DIGEST_GOES_HERE\",\n  \"zip_code\": null,\n  \"age_verified_status\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "80c37735-6892-44fb-b42f-95c01d63c6aa",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "users",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "phone",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "card_number",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "user_as_qrcode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "single_scan_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "redemption_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reward_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "apple_nfc_data",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nfc_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "drive_thru_code",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) This is a combination of unique API key as well as business key (UUID) as the Authorization header.",
+                    "key": "Authorization",
+                    "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Short code for locale variant (e.g., fr-ca, es-ES, en-EN, etc.)",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"drive_thru_code required or Invalid code\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "111e37bf-6811-4a4f-a75d-f57e6c0cf567",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "users",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "phone",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "card_number",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "user_as_qrcode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "single_scan_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "redemption_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reward_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "apple_nfc_data",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nfc_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "drive_thru_code",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) This is a combination of unique API key as well as business key (UUID) as the Authorization header.",
+                    "key": "Authorization",
+                    "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Short code for locale variant (e.g., fr-ca, es-ES, en-EN, etc.)",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"User not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f39c0cc7-a30c-4ef3-81f5-3d2aa4bba897",
+          "name": "Create Check-in",
+          "request": {
+            "name": "Create Check-in",
+            "description": {
+              "content": "Creates a check-in for a customer.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "checkins"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Short code for locale variant (e.g., fr-ca, es-ES, en-EN, etc.)",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pos_version\": \"<string>\",\n  \"transaction_no\": \"<integer>\",\n  \"receipt_datetime\": \"<dateTime>\",\n  \"revenue_code\": \"<string>\",\n  \"revenue_id\": \"<string>\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"<string>\",\n      \"menu_item_id\": \"<string>\",\n      \"item_qty\": \"<string>\",\n      \"item_amount\": \"<float>\",\n      \"menu_item_type\": \"<string>\",\n      \"menu_major_group\": \"<string>\",\n      \"menu_family\": \"<string>\",\n      \"serial_number\": \"<string>\"\n    },\n    {\n      \"item_name\": \"<string>\",\n      \"menu_item_id\": \"<string>\",\n      \"item_qty\": \"<string>\",\n      \"item_amount\": \"<float>\",\n      \"menu_item_type\": \"<string>\",\n      \"menu_major_group\": \"<string>\",\n      \"menu_family\": \"<string>\",\n      \"serial_number\": \"<string>\"\n    }\n  ],\n  \"receipt_amount\": \"<double>\",\n  \"subtotal_amount\": \"<double>\",\n  \"punchh_key\": \"<string>\",\n  \"pos_type\": \"<string>\",\n  \"channel\": \"<string>\",\n  \"email\": \"<string>\",\n  \"single_scan_code\": \"<string>\",\n  \"payable\": \"<double>\",\n  \"sequence_no\": \"<integer>\",\n  \"employee_id\": \"<string>\",\n  \"employee_name\": \"<string>\",\n  \"cc_last4\": \"<integer>\",\n  \"external_uid\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3fbc2922-f8eb-41ec-b980-c9279352e477",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "checkins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) This is a combination of unique API key as well as business key (UUID) as the Authorization header.",
+                    "key": "Authorization",
+                    "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Short code for locale variant (e.g., fr-ca, es-ES, en-EN, etc.)",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pos_version\": \"V03\",\n  \"amp\": null,\n  \"sequence_no\": \"2124\",\n  \"transaction_no\": \"4488\",\n  \"receipt_datetime\": \"2018-10-26T23:59:59-07:00\",\n  \"revenue_id\": \"Dine In\",\n  \"revenue_code\": \"4\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"White rice\",\n      \"item_qty\": 1,\n      \"item_amount\": 2.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"3419\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\",\n      \"serial_number\": \"1.0\"\n    },\n    {\n      \"item_name\": \"Brown rice\",\n      \"item_qty\": 1,\n      \"item_amount\": 7.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"3418\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\",\n      \"serial_number\": \"2.0\"\n    },\n    {\n      \"item_name\": \"Free rice\",\n      \"item_qty\": 1,\n      \"item_amount\": 2.86,\n      \"menu_item_type\": \"D\",\n      \"menu_item_id\": \"3419\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\",\n      \"serial_number\": \"3.0\"\n    }\n  ],\n  \"employee_id\": \"135\",\n  \"employee_name\": \"EMPLOYEE_NAME_GOES_HERE\",\n  \"subtotal_amount\": 7.86,\n  \"receipt_amount\": 7.86,\n  \"cc_last4\": \"0000\",\n  \"punchh_key\": \"PUNCHH_KEY_GOES_HERE\",\n  \"pos_type\": \"Micros Simphony\",\n  \"external_uid\": \"a unique id\",\n  \"process\": \"true\",\n  \"channel\": \"pos\",\n  \"email\": \"test@example.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"address_line1\": \"\",\n  \"age_verified\": false,\n  \"anniversary\": null,\n  \"avatar_remote_url\": null,\n  \"balance\": {\n    \"banked_rewards\": \"3120.85\",\n    \"expired_membership_level\": null,\n    \"initial_visits\": 0,\n    \"membership_level\": null,\n    \"membership_level_id\": null,\n    \"net_balance\": 3120.85,\n    \"net_debits\": 424.15,\n    \"pending_points\": 434,\n    \"points_balance\": 42,\n    \"signup_anniversary_day\": \"10/17\",\n    \"total_credits\": 19342,\n    \"total_debits\": \"424.15\",\n    \"total_point_credits\": 19342,\n    \"total_redeemable_visits\": 187,\n    \"total_visits\": 178,\n    \"unredeemed_cards\": 0\n  },\n  \"birthday\": null,\n  \"city\": \"\",\n  \"created_at\": \"2017-10-17T18:40:05Z\",\n  \"discount_type\": null,\n  \"email\": \"test@example.com\",\n  \"email_verified\": false,\n  \"fb_uid\": null,\n  \"first_name\": \"FIRST_NAME_GOES_HERE\",\n  \"gender\": \"\",\n  \"id\": 1107620,\n  \"last_name\": \"LAST_NAME_GOES_HERE\",\n  \"phone\": 1111111111,\n  \"points_earned\": 113,\n  \"privacy_policy\": false,\n  \"rewards\": [\n    {\n      \"created_at\": \"2019-07-30T10:36:23Z\",\n      \"description\": \"Test Test\",\n      \"discount_amount\": 0,\n      \"end_date_tz\": null,\n      \"id\": 1380722,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"name\": \"Test1\",\n      \"points\": 0,\n      \"redeemable_properties\": null,\n      \"start_date_tz\": \"2019-07-30T10:36:23Z\",\n      \"status\": \"unredeemed\",\n      \"updated_at\": \"2019-07-30T10:36:23Z\"\n    },\n    {\n      \"created_at\": \"2019-09-28T07:05:50Z\",\n      \"description\": \"\",\n      \"discount_amount\": 5,\n      \"end_date_tz\": null,\n      \"id\": 1399333,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"name\": \"Test (basic)\",\n      \"points\": 0,\n      \"redeemable_properties\": null,\n      \"start_date_tz\": \"2019-09-28T07:05:50Z\",\n      \"status\": \"unredeemed\",\n      \"updated_at\": \"2019-09-28T07:05:50Z\"\n    },\n    {\n      \"created_at\": \"2019-09-28T07:05:50Z\",\n      \"description\": \"\",\n      \"discount_amount\": 5,\n      \"end_date_tz\": null,\n      \"id\": 1399334,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"name\": \"Test (basic)\",\n      \"points\": 0,\n      \"redeemable_properties\": null,\n      \"start_date_tz\": \"2019-09-28T07:05:50Z\",\n      \"status\": \"unredeemed\",\n      \"updated_at\": \"2019-09-28T07:05:50Z\"\n    },\n    {\n      \"created_at\": \"2019-09-28T07:05:50Z\",\n      \"description\": \"\",\n      \"discount_amount\": 5,\n      \"end_date_tz\": null,\n      \"id\": 1399335,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"name\": \"Test (basic)\",\n      \"points\": 0,\n      \"redeemable_properties\": null,\n      \"start_date_tz\": \"2019-09-28T07:05:50Z\",\n      \"status\": \"unredeemed\",\n      \"updated_at\": \"2019-09-28T07:05:50Z\"\n    },\n    {\n      \"created_at\": \"2019-09-28T07:05:50Z\",\n      \"description\": \"\",\n      \"discount_amount\": 5,\n      \"end_date_tz\": null,\n      \"id\": 1399336,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"name\": \"Test (basic)\",\n      \"points\": 0,\n      \"redeemable_properties\": null,\n      \"start_date_tz\": \"2019-09-28T07:05:50Z\",\n      \"status\": \"unredeemed\",\n      \"updated_at\": \"2019-09-28T07:05:50Z\"\n    },\n    {\n      \"created_at\": \"2020-01-30T13:26:40Z\",\n      \"description\": \"\",\n      \"discount_amount\": 0,\n      \"end_date_tz\": null,\n      \"id\": 1425570,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"name\": \"Test QC static discounrt\",\n      \"points\": 0,\n      \"redeemable_properties\": null,\n      \"start_date_tz\": \"2020-01-30T13:26:40Z\",\n      \"status\": \"unredeemed\",\n      \"updated_at\": \"2020-01-30T13:26:40Z\"\n    },\n    {\n      \"created_at\": \"2020-01-30T13:41:40Z\",\n      \"description\": \"\",\n      \"discount_amount\": 0,\n      \"end_date_tz\": null,\n      \"id\": 1425572,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"name\": \"Test QC static discounrt\",\n      \"points\": 0,\n      \"redeemable_properties\": null,\n      \"start_date_tz\": \"2020-01-30T13:41:40Z\",\n      \"status\": \"unredeemed\",\n      \"updated_at\": \"2020-01-30T13:41:40Z\"\n    },\n    {\n      \"created_at\": \"2020-01-30T13:57:07Z\",\n      \"description\": \"\",\n      \"discount_amount\": 0,\n      \"end_date_tz\": null,\n      \"id\": 1425574,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"name\": \"Test QC static discounrt\",\n      \"points\": 0,\n      \"redeemable_properties\": null,\n      \"start_date_tz\": \"2020-01-30T13:57:07Z\",\n      \"status\": \"unredeemed\",\n      \"updated_at\": \"2020-01-30T13:57:07Z\"\n    }\n  ],\n  \"selected_card_number\": null,\n  \"selected_discount_amount\": null,\n  \"selected_reward_id\": null,\n  \"state\": \"\",\n  \"updated_at\": \"2020-03-23T13:37:20Z\",\n  \"user_digest\": \"USER_DIGEST_GOES_HERE\",\n  \"zip_code\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "65169f7a-0aa4-4dae-abad-586635a14f53",
+          "name": "Store Receipt Details From POS",
+          "request": {
+            "name": "Store Receipt Details From POS",
+            "description": {
+              "content": "This API call requires the API key as well as the business key to be sent in the HTTP Authorization header in the following format:\n\nAuthorization: Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE\n\nwhere \n\nLOCATION_KEY_GOES_HERE is the API key (which is unique for a location) and BUSINESS_KEY_GOES_HERE is the business key (which is unique for a business). \n\nSee cURL examples for more details.   \n\n1\\. The receipt_details endpoint can store the same receipt multiple times. If the POS client sends the same receipt (same punchh_key, same location_key) many times, we store all the versions of that same receipt, provided that the time between HTTP requests is 1 second or more. However, if the same receipt is received via multiple HTTP calls in about the same time (less than 1 second), the last one overwrites the previous version of that receipt.\n\n2\\. The endpoint accepts parameters in JSON as well.\n\n3\\. “isl receipt details” endpoint for ALL transactions.\n\n4\\. “checkins” for registered Punchh users wanting credit at the register via email, phone, QR code, or card number\n\n5\\. All transactions generate the barcode / Punchh key.\n\n6\\. All transactions print a barcode (?) on the receipt with that Punchh key.\n\n7\\. In the event of a network outage, we expect data that was to be sent to the ISL and check-in endpoints to be queued and sent later. We do not expect the redemptions to work in that case as there is no way to receive the amount from Punchh.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "receipt_details"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"transaction_no\": \"<integer>\",\n  \"amount\": \"<double>\",\n  \"receipt_datetime\": \"<string>\",\n  \"payable\": \"<double>\",\n  \"pos_version\": \"<string>\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"<string>\",\n      \"menu_item_id\": \"<string>\",\n      \"item_qty\": \"<string>\",\n      \"item_amount\": \"<float>\",\n      \"menu_item_type\": \"<string>\",\n      \"menu_major_group\": \"<string>\",\n      \"menu_family\": \"<string>\",\n      \"serial_number\": \"<string>\"\n    },\n    {\n      \"item_name\": \"<string>\",\n      \"menu_item_id\": \"<string>\",\n      \"item_qty\": \"<string>\",\n      \"item_amount\": \"<float>\",\n      \"menu_item_type\": \"<string>\",\n      \"menu_major_group\": \"<string>\",\n      \"menu_family\": \"<string>\",\n      \"serial_number\": \"<string>\"\n    }\n  ],\n  \"punchh_key\": \"<string>\",\n  \"pos_type\": \"<string>\",\n  \"receipt_amount\": \"<double>\",\n  \"subtotal_amount\": \"<double>\",\n  \"vendor_transaction_no\": \"<integer>\",\n  \"employee_id\": \"<string>\",\n  \"employee_name\": \"<string>\",\n  \"revenue_id\": \"<string>\",\n  \"revenue_code\": \"<string>\",\n  \"cc_last4\": \"<integer>\",\n  \"status\": \"<string>\",\n  \"is_test\": \"<boolean>\",\n  \"channel\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4f333edf-17c7-4b36-9b3a-2c7db84ae736",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "receipt_details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) This is a combination of unique API key as well as business key (UUID) as the Authorization header.",
+                    "key": "Authorization",
+                    "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"transaction_no\": 20095,\n  \"vendor_transaction_no\": 1095,\n  \"employee_id\": \"5208\",\n  \"employee_name\": \"EMPLOYEE_NAME_GOES_HERE\",\n  \"revenue_id\": \"Dine In\",\n  \"revenue_code\": \"4\",\n  \"amount\": 15.99,\n  \"receipt_datetime\": \"2015-03-20T15:23:20+05:30\",\n  \"cc_last4\": 4321,\n  \"receipt_amount\": 15.99,\n  \"subtotal_amount\": 15.99,\n  \"payable\": 17.27,\n  \"pos_version\": \"V03\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"Capastrami\",\n      \"item_qty\": 1,\n      \"item_amount\": \"15.99\",\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"1015\",\n      \"menu_family\": \"52\",\n      \"menu_major_group\": \"52\",\n      \"serial_number\": \"1\"\n    },\n    {\n      \"item_name\": \"Drink\",\n      \"item_qty\": 1,\n      \"item_amount\": 2.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"1234\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\",\n      \"serial_number\": \"1\"\n    },\n    {\n      \"item_name\": \"Free Drink with White Rice\",\n      \"item_qty\": 1,\n      \"item_amount\": 2.86,\n      \"menu_item_type\": \"D\",\n      \"menu_item_id\": \"5678\",\n      \"menu_family\": \"801\",\n      \"menu_major_group\": \"153\",\n      \"serial_number\": \"1\"\n    }\n  ],\n  \"punchh_key\": \"PUNCHH_KEY_GOES_HERE\",\n  \"pos_type\": \"Aloha\",\n  \"channel\": \"POS\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cdc6c621-e5e8-4efb-9b46-f7e378e9be16",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "receipt_details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) This is a combination of unique API key as well as business key (UUID) as the Authorization header.",
+                    "key": "Authorization",
+                    "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"transaction_no\": 20095,\n  \"vendor_transaction_no\": 1095,\n  \"employee_id\": \"5208\",\n  \"employee_name\": \"EMPLOYEE_NAME_GOES_HERE\",\n  \"revenue_id\": \"Dine In\",\n  \"revenue_code\": \"4\",\n  \"amount\": 15.99,\n  \"receipt_datetime\": \"2015-03-20T15:23:20+05:30\",\n  \"cc_last4\": 4321,\n  \"receipt_amount\": 15.99,\n  \"subtotal_amount\": 15.99,\n  \"payable\": 17.27,\n  \"pos_version\": \"V03\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"Capastrami\",\n      \"item_qty\": 1,\n      \"item_amount\": \"15.99\",\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"1015\",\n      \"menu_family\": \"52\",\n      \"menu_major_group\": \"52\",\n      \"serial_number\": \"1\"\n    },\n    {\n      \"item_name\": \"Drink\",\n      \"item_qty\": 1,\n      \"item_amount\": 2.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"1234\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\",\n      \"serial_number\": \"1\"\n    },\n    {\n      \"item_name\": \"Free Drink with White Rice\",\n      \"item_qty\": 1,\n      \"item_amount\": 2.86,\n      \"menu_item_type\": \"D\",\n      \"menu_item_id\": \"5678\",\n      \"menu_family\": \"801\",\n      \"menu_major_group\": \"153\",\n      \"serial_number\": \"1\"\n    }\n  ],\n  \"punchh_key\": \"PUNCHH_KEY_GOES_HERE\",\n  \"pos_type\": \"Aloha\",\n  \"channel\": \"POS\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Required parameter missing or the value is empty: location_key\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "62ed02b0-a07e-437a-9673-d06b9c4ee9d7",
+              "name": "Not authorized. Location token missing/invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "receipt_details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) This is a combination of unique API key as well as business key (UUID) as the Authorization header.",
+                    "key": "Authorization",
+                    "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"transaction_no\": 20095,\n  \"vendor_transaction_no\": 1095,\n  \"employee_id\": \"5208\",\n  \"employee_name\": \"EMPLOYEE_NAME_GOES_HERE\",\n  \"revenue_id\": \"Dine In\",\n  \"revenue_code\": \"4\",\n  \"amount\": 15.99,\n  \"receipt_datetime\": \"2015-03-20T15:23:20+05:30\",\n  \"cc_last4\": 4321,\n  \"receipt_amount\": 15.99,\n  \"subtotal_amount\": 15.99,\n  \"payable\": 17.27,\n  \"pos_version\": \"V03\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"Capastrami\",\n      \"item_qty\": 1,\n      \"item_amount\": \"15.99\",\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"1015\",\n      \"menu_family\": \"52\",\n      \"menu_major_group\": \"52\",\n      \"serial_number\": \"1\"\n    },\n    {\n      \"item_name\": \"Drink\",\n      \"item_qty\": 1,\n      \"item_amount\": 2.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"1234\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\",\n      \"serial_number\": \"1\"\n    },\n    {\n      \"item_name\": \"Free Drink with White Rice\",\n      \"item_qty\": 1,\n      \"item_amount\": 2.86,\n      \"menu_item_type\": \"D\",\n      \"menu_item_id\": \"5678\",\n      \"menu_family\": \"801\",\n      \"menu_major_group\": \"153\",\n      \"serial_number\": \"1\"\n    }\n  ],\n  \"punchh_key\": \"PUNCHH_KEY_GOES_HERE\",\n  \"pos_type\": \"Aloha\",\n  \"channel\": \"POS\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  \"Invalid LocationKey\"\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2c055373-d6b0-475e-9666-00f1b62bc9b8",
+          "name": "Create Transaction",
+          "request": {
+            "name": "Create Transaction",
+            "description": {
+              "content": "Use the Create Transaction API to create a transaction for a customer (provided this functionality is enabled for the business by Punchh). The transaction registers the visit of the customer at a certain store, but the customer will not earn loyalty (points, etc.). One of the identifiers (`email`, `phone`, `card_number`, `user_as_qrcode`, `single_scan_token` or `redemption_code`) must be provided along with `location_key`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "transactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Short code for locale variant (e.g., fr-ca, es-ES, en-EN, etc.)",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"<string>\",\n  \"receipt_amount\": \"<double>\",\n  \"subtotal_amount\": \"<double>\",\n  \"receipt_datetime\": \"<dateTime>\",\n  \"punchh_key\": \"<string>\",\n  \"transaction_no\": \"<integer>\",\n  \"channel\": \"<string>\",\n  \"payable\": \"<double>\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"<string>\",\n      \"menu_item_id\": \"<string>\",\n      \"item_qty\": \"<string>\",\n      \"item_amount\": \"<float>\",\n      \"menu_item_type\": \"<string>\",\n      \"menu_major_group\": \"<string>\",\n      \"menu_family\": \"<string>\",\n      \"serial_number\": \"<string>\"\n    },\n    {\n      \"item_name\": \"<string>\",\n      \"menu_item_id\": \"<string>\",\n      \"item_qty\": \"<string>\",\n      \"item_amount\": \"<float>\",\n      \"menu_item_type\": \"<string>\",\n      \"menu_major_group\": \"<string>\",\n      \"menu_family\": \"<string>\",\n      \"serial_number\": \"<string>\"\n    }\n  ],\n  \"amount\": \"<double>\",\n  \"sequence_no\": \"<integer>\",\n  \"revenue_id\": \"<string>\",\n  \"revenue_code\": \"<string>\",\n  \"employee_id\": \"<string>\",\n  \"employee_name\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"card_number\": \"<string>\",\n  \"user_as_qrcode\": \"<string>\",\n  \"single_scan_code\": \"<string>\",\n  \"cc_last4\": \"<integer>\",\n  \"external_uid\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f75b7bc6-a99a-48fb-8f13-28b5628ce0bb",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) This is a combination of unique API key as well as business key (UUID) as the Authorization header.",
+                    "key": "Authorization",
+                    "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Short code for locale variant (e.g., fr-ca, es-ES, en-EN, etc.)",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\":\"test@example.com\",\n  \"receipt_amount\":40,\n  \"receipt_datetime\":\"2018-12-17T03:14:00-08:00\",\n  \"sequence_no\":12345,\n  \"punchh_key\":\"PUNCHH_KEY_GOES_HERE\",\n  \"transaction_no\":3502723201,\n  \"subtotal_amount\":40,\n  \"channel\":\"pos\",\n  \"revenue_id\":\"Dine In\",\n  \"revenue_code\":\"4\",\n  \"employee_id\":\"135\",\n  \"employee_name\":\"EMPLOYEE_NAME_GOES_HERE\",\n  \"payable\":44.50,\n  \"menu_items\":\n       [\n           {\n                \"item_name\":\"REG SIERRA MIST\",\n                \"item_qty\":1,\n                \"item_amount\":40,\n                \"menu_item_type\":\"M\",\n                \"menu_item_id\":\"2032\",\n                \"menu_family\":\"106\",\n                \"menu_major_group\":\"152\",\n                \"serial_number\":\"1\"\n           }\n       ]\n}'",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"anniversary\": null,\n  \"avatar_remote_url\": \"URL_GOES_HERE\",\n  \"birthday\": \"1999-01-01\",\n  \"created_at\": \"2012-11-21T10:52:32Z\",\n  \"email\": \"test@example.com\",\n  \"fb_uid\": \"FB_UID_GOES_HERE\",\n  \"first_name\": \"FIRST_NAME_GOES_HERE\",\n  \"gender\": \"male\",\n  \"id\": 542057,\n  \"last_name\": \"LAST_NAME_GOES_HERE\",\n  \"updated_at\": \"2015-05-15T18:53:38Z\",\n  \"balance\": {\n    \"banked_rewards\": \"259.00\",\n    \"membership_level\": \"CAPADDICT\",\n    \"membership_level_id\": 16,\n    \"membership_program_id\": null,\n    \"net_balance\": 259,\n    \"net_debits\": 0,\n    \"pending_points\": 0,\n    \"points_balance\": 59,\n    \"signup_anniversary_day\": \"05/06\",\n    \"total_credits\": 259,\n    \"total_debits\": 0,\n    \"total_point_credits\": 185,\n    \"total_redeemable_visits\": 12,\n    \"expired_membership_level\": \"CAPREHENSIVE\",\n    \"total_visits\": 8\n  },\n  \"address_line1\": null,\n  \"zip_code\": null,\n  \"phone\": null,\n  \"rewards\": [\n    {\n      \"created_at\": \"2015-05-08T13:30:18Z\",\n      \"end_date_tz\": \"2016-05-08T06:59:59Z\",\n      \"start_date_tz\": \"2015-05-07T18:30:00Z\",\n      \"updated_at\": \"2015-05-08T13:30:18Z\",\n      \"id\": 619162,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"description\": \"Happy Birthday! Here's a 9\\\" Sub for you to enjoy.\",\n      \"discount_amount\": 0,\n      \"name\": \"9\\\" Sub!\",\n      \"points\": 0\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "03ac29c9-8bc4-48a4-b871-1ab378230f05",
+          "name": "Fetch Account Balance",
+          "request": {
+            "name": "Fetch Account Balance",
+            "description": {
+              "content": "The API fetches the account balance details of the user based on the program type of the business and different subscriptions if purchased by the user along with their benefits and discounts.  \n\nNote: \n\n1\\. The `net_balance`, `points_balance`, `net_debits`, `pending_points`, `total_credits`, `total_debits`, and `total_points_credits` parameters are applicable if the program type is Points unlock redeemables. \n\n2\\. The `total_redeemable_visits`, `total_visits`, and `unredeemed_cards` parameters are applicable if the program type is Visit-based. \n\n3\\. The `banked_rewards` parameter is applicable if the program type is Points convert to currency.\n\n4\\. The `banked_currency` and `balance` parameters are applicable if the program type is Points to Manual.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "users",
+                "balance"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"<string>\",\n  \"discount_type\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "68bd6e67-e8f6-4749-8e49-a20bd4bc0eb7",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "users",
+                    "balance"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) This is a combination of unique API key as well as business key (UUID) as the Authorization header.",
+                    "key": "Authorization",
+                    "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"111111\",\n  \"discount_type\": [\n    \"subscription\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"account_balance\": {\n    \"net_balance\": 108,\n    \"points_balance\": 8,\n    \"net_debits\": 100,\n    \"pending_points\": 0,\n    \"total_credits\": 208,\n    \"total_debits\": \"100.0\",\n    \"total_point_credits\": 208\n  },\n  \"subscriptions\": [\n    {\n      \"subscription_id\": 39,\n      \"benefits\": [\n        {\n          \"benefit_id\": 1,\n          \"benefit_type\": \"sku_discounting\",\n          \"discounts\": [\n            {\n              \"discount_id\": 42,\n              \"threshold\": 2,\n              \"discounted_value\": \"$0.00\",\n              \"discounted_quantity\": 0,\n              \"threshold_discount\": 2,\n              \"discount_type\": \"%_or_$_off\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0d26916d-b527-4e06-8200-b97fd00711fb",
+              "name": "Bad Request: Missing user ID parameter or value is empty",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "users",
+                    "balance"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) This is a combination of unique API key as well as business key (UUID) as the Authorization header.",
+                    "key": "Authorization",
+                    "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"111111\",\n  \"discount_type\": [\n    \"subscription\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Required parameter missing or the value is empty: user_id\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d3525fc0-cccb-4e63-b4af-849fdbc33df3",
+              "name": "Not Found: Sending invalid user ID",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "users",
+                    "balance"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) This is a combination of unique API key as well as business key (UUID) as the Authorization header.",
+                    "key": "Authorization",
+                    "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"111111\",\n  \"discount_type\": [\n    \"subscription\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  \"User not found\"\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "501a2087-ee7b-4443-a339-582f27d4c198",
+      "name": "Payments",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9479c8a6-9038-4025-9018-cd86fa5097f0",
+          "name": "Create Payment",
+          "request": {
+            "name": "Create Payment",
+            "description": {
+              "content": "The Create Payment API commits the payment via the PAR Payment Services Gateway.\n\nFor more information, see: [Creating Payment](/docs/dev-portal-pos/fc53c158c75c6-pos-payments#creating-payments)\n\n### Headers\n\n#### `Token token`\nThe Location API key from the Punchh platform located under **Store Locations** > **All Store Locations** > **[Choose your location]** > **POS tab** > **Location key**\n#### `btoken`\nThe API key for the business, located in the Punchh platform. **Note:** This can be obtained only from Punchh administrators (e.g., Customer Success Manager). \n\n_For assistance with any API keys, reach out to your Punchh Customer Success Manager (CSM) or Implementation Manager (if applicable)._\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payment_type\": \"<string>\",\n  \"single_scan_code\": \"<string>\",\n  \"payable\": \"<integer>\",\n  \"pos_type\": \"<string>\",\n  \"pos_version\": \"<string>\",\n  \"amount\": \"<number>\",\n  \"subtotal_amount\": \"<number>\",\n  \"currency_code\": \"<string>\",\n  \"receipt_datetime\": \"<string>\",\n  \"punchh_key\": \"<string>\",\n  \"transaction_no\": \"<string>\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"<string>\",\n      \"menu_item_id\": \"<string>\",\n      \"item_qty\": \"<string>\",\n      \"item_amount\": \"<float>\",\n      \"menu_item_type\": \"<string>\",\n      \"menu_major_group\": \"<string>\",\n      \"menu_family\": \"<string>\",\n      \"serial_number\": \"<string>\"\n    },\n    {\n      \"item_name\": \"<string>\",\n      \"menu_item_id\": \"<string>\",\n      \"item_qty\": \"<string>\",\n      \"item_amount\": \"<float>\",\n      \"menu_item_type\": \"<string>\",\n      \"menu_major_group\": \"<string>\",\n      \"menu_family\": \"<string>\",\n      \"serial_number\": \"<string>\"\n    }\n  ],\n  \"cc_last4\": \"<string>\",\n  \"employee_id\": \"<string>\",\n  \"employee_name\": \"<string>\",\n  \"revenue_id\": \"<string>\",\n  \"revenue_code\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "489c6dad-c6b3-4081-a356-5d6a256ff58f",
+              "name": "Successful response\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "**Token token** Location API key from the Punchh platform. **btoken** Business API key from the Punchh platform.",
+                    "key": "Authorization",
+                    "value": "Token token=\"LOCATION_KEY_GOES_HERE\"  btoken=\"BUSINESS_KEY_GOES_HERE\""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set to **application/json**",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payment_type\": \"CreditCard\",\n  \"single_scan_code\": \"SINGLE_SCAN_CODE_GOES_HERE\",\n  \"payable\": 46,\n  \"pos_type\": \"Aloha\",\n  \"pos_version\": \"v1.0\",\n  \"cc_last4\": \"\",\n  \"employee_id\": \"01\",\n  \"employee_name\": \"EMPLOYEE_NAME_GOES_HERE\",\n  \"revenue_id\": \"111\",\n  \"revenue_code\": \"CODE_GOES_HERE\",\n  \"amount\": 12.72,\n  \"subtotal_amount\": 12.72,\n  \"currency_code\": \"USD\",\n  \"receipt_datetime\": \"2020-02-25T20:10:45+05:30\",\n  \"punchh_key\": \"PUNCHH_KEY_GOES_HERE\",\n  \"transaction_no\": \"3387553\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"White rice\",\n      \"item_qty\": 1,\n      \"item_amount\": 2.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"3419\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\"\n    },\n    {\n      \"item_name\": \"Brown rice\",\n      \"item_qty\": 1,\n      \"item_amount\": 7.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"3418\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"first_name\": \"FIRST_NAME_GOES_HERE\",\n  \"last_name\": \"LAST_NAME_GOES_HERE\",\n  \"transaction_no\": \"5678\",\n  \"payment_reference_id\": \"1562\",\n  \"status\": \"Processing\",\n  \"payment_type\": \"CreditCard\",\n  \"payment_transaction_id\": \"TRANSACTION_ID_GOES_HERE\",\n  \"response_message\": \"CREATED\",\n  \"created_at\": \"2021-05-01T12:00:00.000Z\",\n  \"updated_at\": \"2021-05-01T12:00:00.000Z\",\n  \"card_type\": \"VIC\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9aef24d0-daef-4073-ab53-9a75b983283b",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "**Token token** Location API key from the Punchh platform. **btoken** Business API key from the Punchh platform.",
+                    "key": "Authorization",
+                    "value": "Token token=\"LOCATION_KEY_GOES_HERE\"  btoken=\"BUSINESS_KEY_GOES_HERE\""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set to **application/json**",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payment_type\": \"CreditCard\",\n  \"single_scan_code\": \"SINGLE_SCAN_CODE_GOES_HERE\",\n  \"payable\": 46,\n  \"pos_type\": \"Aloha\",\n  \"pos_version\": \"v1.0\",\n  \"cc_last4\": \"\",\n  \"employee_id\": \"01\",\n  \"employee_name\": \"EMPLOYEE_NAME_GOES_HERE\",\n  \"revenue_id\": \"111\",\n  \"revenue_code\": \"CODE_GOES_HERE\",\n  \"amount\": 12.72,\n  \"subtotal_amount\": 12.72,\n  \"currency_code\": \"USD\",\n  \"receipt_datetime\": \"2020-02-25T20:10:45+05:30\",\n  \"punchh_key\": \"PUNCHH_KEY_GOES_HERE\",\n  \"transaction_no\": \"3387553\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"White rice\",\n      \"item_qty\": 1,\n      \"item_amount\": 2.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"3419\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\"\n    },\n    {\n      \"item_name\": \"Brown rice\",\n      \"item_qty\": 1,\n      \"item_amount\": 7.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"3418\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Invalid Location Key\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f239645e-7afb-4a21-969f-0767ca8359c3",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "**Token token** Location API key from the Punchh platform. **btoken** Business API key from the Punchh platform.",
+                    "key": "Authorization",
+                    "value": "Token token=\"LOCATION_KEY_GOES_HERE\"  btoken=\"BUSINESS_KEY_GOES_HERE\""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set to **application/json**",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payment_type\": \"CreditCard\",\n  \"single_scan_code\": \"SINGLE_SCAN_CODE_GOES_HERE\",\n  \"payable\": 46,\n  \"pos_type\": \"Aloha\",\n  \"pos_version\": \"v1.0\",\n  \"cc_last4\": \"\",\n  \"employee_id\": \"01\",\n  \"employee_name\": \"EMPLOYEE_NAME_GOES_HERE\",\n  \"revenue_id\": \"111\",\n  \"revenue_code\": \"CODE_GOES_HERE\",\n  \"amount\": 12.72,\n  \"subtotal_amount\": 12.72,\n  \"currency_code\": \"USD\",\n  \"receipt_datetime\": \"2020-02-25T20:10:45+05:30\",\n  \"punchh_key\": \"PUNCHH_KEY_GOES_HERE\",\n  \"transaction_no\": \"3387553\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"White rice\",\n      \"item_qty\": 1,\n      \"item_amount\": 2.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"3419\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\"\n    },\n    {\n      \"item_name\": \"Brown rice\",\n      \"item_qty\": 1,\n      \"item_amount\": 7.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"3418\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"User not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2071d105-3ed6-47ba-b09e-4dbd51fd73e6",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "**Token token** Location API key from the Punchh platform. **btoken** Business API key from the Punchh platform.",
+                    "key": "Authorization",
+                    "value": "Token token=\"LOCATION_KEY_GOES_HERE\"  btoken=\"BUSINESS_KEY_GOES_HERE\""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set to **application/json**",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payment_type\": \"CreditCard\",\n  \"single_scan_code\": \"SINGLE_SCAN_CODE_GOES_HERE\",\n  \"payable\": 46,\n  \"pos_type\": \"Aloha\",\n  \"pos_version\": \"v1.0\",\n  \"cc_last4\": \"\",\n  \"employee_id\": \"01\",\n  \"employee_name\": \"EMPLOYEE_NAME_GOES_HERE\",\n  \"revenue_id\": \"111\",\n  \"revenue_code\": \"CODE_GOES_HERE\",\n  \"amount\": 12.72,\n  \"subtotal_amount\": 12.72,\n  \"currency_code\": \"USD\",\n  \"receipt_datetime\": \"2020-02-25T20:10:45+05:30\",\n  \"punchh_key\": \"PUNCHH_KEY_GOES_HERE\",\n  \"transaction_no\": \"3387553\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"White rice\",\n      \"item_qty\": 1,\n      \"item_amount\": 2.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"3419\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\"\n    },\n    {\n      \"item_name\": \"Brown rice\",\n      \"item_qty\": 1,\n      \"item_amount\": 7.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"3418\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Invalid payment type\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "13175f77-ce1e-476c-90e1-baf387eeb7d9",
+          "name": "Update Payment Status",
+          "request": {
+            "name": "Update Payment Status",
+            "description": {
+              "content": "The Update Payment Status API updates the payment status in the Punchh platform after the POS marks the payment as complete. \n\nFor more information, see: [Updating Payment Status](/docs/dev-portal-pos/fc53c158c75c6-pos-payments#updating-payments)\n\n### Headers\n\n#### `Token token` \nThe Location API key from the Punchh platform located under **Store Locations** > **All Store Locations** > **[Choose your location]** > **POS tab** > **Location key**\n#### `btoken`\nThe API key for the business, located in the Punchh platform. **Note:** This can be obtained only from Punchh administrators (e.g., Customer Success Manager). \n\n_For assistance with any API keys, reach out to your Punchh Customer Success Manager (CSM) or Implementation Manager (if applicable)._\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payment_type\": \"<string>\",\n  \"email\": \"<string>\",\n  \"status\": \"<string>\",\n  \"payment_reference_id\": \"<string>\",\n  \"single_scan_code\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a15716da-0547-4dcd-b066-bcaee6d430fc",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "**Token token** Location API key from the Punchh platform. **btoken** Business API key from the Punchh platform.",
+                    "key": "Authorization",
+                    "value": "Token token=\"LOCATION_KEY_GOES_HERE\"  btoken=\"BUSINESS_KEY_GOES_HERE\""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set to **aplication/json**",
+                    "key": "Content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payment_type\": \"CreditCard\",\n  \"email\": \"test@example.com\",\n  \"status\": \"completed\",\n  \"single_scan_code\": \"SINGLE_SCAN_CODE_GOES_HERE\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"first_name\": \"FIRST_NAME_GOES_HERE\",\n  \"last_name\": \"LAST_NAME_GOES_HERE\",\n  \"transaction_no\": \"352083094-10040\",\n  \"payment_reference_id\": \"14000\",\n  \"status\": \"processed\",\n  \"response_message\": \"COMPLETED\",\n  \"payment_type\": \"CreditCard\",\n  \"created_at\": \"2020-12-18T07:05:11Z\",\n  \"card_type\": \"VIC\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4a08fb3a-fd11-4f20-a83b-afaa1fbd593a",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "**Token token** Location API key from the Punchh platform. **btoken** Business API key from the Punchh platform.",
+                    "key": "Authorization",
+                    "value": "Token token=\"LOCATION_KEY_GOES_HERE\"  btoken=\"BUSINESS_KEY_GOES_HERE\""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set to **aplication/json**",
+                    "key": "Content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payment_type\": \"CreditCard\",\n  \"email\": \"test@example.com\",\n  \"status\": \"completed\",\n  \"single_scan_code\": \"SINGLE_SCAN_CODE_GOES_HERE\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Invalid Location Key\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "111149dd-3c13-42f6-8cc8-e04938bb87f5",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "**Token token** Location API key from the Punchh platform. **btoken** Business API key from the Punchh platform.",
+                    "key": "Authorization",
+                    "value": "Token token=\"LOCATION_KEY_GOES_HERE\"  btoken=\"BUSINESS_KEY_GOES_HERE\""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set to **aplication/json**",
+                    "key": "Content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payment_type\": \"CreditCard\",\n  \"email\": \"test@example.com\",\n  \"status\": \"completed\",\n  \"single_scan_code\": \"SINGLE_SCAN_CODE_GOES_HERE\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"User not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "00260c49-244a-43e3-8d14-5d3cfd75b13c",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "**Token token** Location API key from the Punchh platform. **btoken** Business API key from the Punchh platform.",
+                    "key": "Authorization",
+                    "value": "Token token=\"LOCATION_KEY_GOES_HERE\"  btoken=\"BUSINESS_KEY_GOES_HERE\""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set to **aplication/json**",
+                    "key": "Content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payment_type\": \"CreditCard\",\n  \"email\": \"test@example.com\",\n  \"status\": \"completed\",\n  \"single_scan_code\": \"SINGLE_SCAN_CODE_GOES_HERE\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Invalid payment type\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "975fdb8d-b34f-4f29-8936-b6c9c21297b0",
+          "name": "Void/Cancel Payment",
+          "request": {
+            "name": "Void/Cancel Payment",
+            "description": {
+              "content": "The Void/Cancel Payments API voids the payment request. \n\nFor more information, see: [Voiding Payments](/docs/dev-portal-pos/additional-topics/pos-payments#voiding-payment)\n\n### Headers\n\n#### `Token token`\nThe Location API key from the Punchh platform located under **Store Locations** > **All Store Locations** > **[Choose your location]** > **POS tab** > **Location key** \n#### `btoken`\nThe API key for the business, located in the Punchh platform. **Note:** This can be obtained only from Punchh administrators (e.g., Customer Success Manager). \n\n_For assistance with any API keys, reach out to your Punchh Customer Success Manager (CSM) or Implementation Manager (if applicable)._",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Set to **application/json**",
+                "key": "Content/type",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payment_reference_id\": \"<string>\",\n  \"payment_type\": \"<string>\",\n  \"transaction_no\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "81cd97aa-43ae-4751-afd9-0df4f396dd50",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "**Token token** Location API key from the Punchh platform. **btoken** Business API key from the Punchh platform.",
+                    "key": "Authorization",
+                    "value": "Token token=\"LOCATION_KEY_GOES_HERE\" btoken=\"BUSINESS_KEY_GOES_HERE\""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set to **application/json**",
+                    "key": "Content/type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"first_name\": \"FIRST_NAME_GOES_HERE\",\n    \"last_name\": \"LAST_NAME_GOES_HERE\",\n    \"transaction_no\": \"352083094-10040\",\n    \"payment_reference_id\": \"14000\",\n    \"status\": \"unable_to_process\",\n    \"response_message\": \"CANCELLED\",\n    \"payment_type\": \"CreditCard\",\n    \"created_at\": \"2020-12-18T07:05:11Z\",\n    \"card_type\": \"VIC\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6012143d-f740-4304-9b45-556ceb209e55",
+          "name": "Get Payment Status",
+          "request": {
+            "name": "Get Payment Status",
+            "description": {
+              "content": "The Get Payment Status API retrieves the correct status and response message to know how to handle the next step (e.g., success--apply payment, cancel--payment cancelled by user, etc.). \n\nFor more information, see: [Getting Payment Status](/docs/dev-portal-pos/fc53c158c75c6-pos-payments#getting-payment-status)\n\n### Headers\n\n#### `Token token` \nThe Location API key from the Punchh platform located under **Store Locations** > **All Store Locations** > [**Choose your location**] > **POS tab** > **Location key**\n\n#### `btoken`\nThe API key for the business, located in the Punchh platform. **Note:** This can be obtained only from Punchh administrators (e.g., Customer Success Manager). \n\n_For assistance with any API keys, reach out to your Punchh Customer Success Manager (CSM) or Implementation Manager (if applicable)._\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "payments",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payment_date\": \"<dateTime>\",\n  \"payment_reference_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b9333690-f97d-4e66-a91a-dee40d4cd403",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "payments",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "**Token token** Location API key from the Punchh platform. **btoken** Business API key from the Punchh platform.",
+                    "key": "Authorization",
+                    "value": "Token token=\"LOCATION_KEY_GOES_HERE\" btoken=\"BUSINESS_KEY_GOES_HERE\""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set to **application/json**.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payment_date\": \"2019-08-24T14:15:22Z\",\n  \"payment_reference_id\": \"14000\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"first_name\": \"FIRST_NAME_GOES_HERE\",\n    \"last_name\": \"LAST_NAME_GOES_HERE\",\n    \"transaction_no\": \"014038904-10012\",\n    \"payment_reference_id\": \"14232\",\n    \"status\": \"success\",\n    \"response_message\": \"COMPLETED\",\n    \"payment_type\": \"CreditCard\",\n    \"payment_transaction_id\": \"TRANSACTION_ID_GOES_HERE\",\n    \"created_at\": \"2021-01-14T18:48:39Z\",\n    \"updated_at\": \"2020-11-19T06:25:59Z\",\n    \"card_type\": \"null\"\n  },\n  {\n    \"first_name\": null,\n    \"last_name\": null,\n    \"transaction_no\": \"014029904-10011\",\n    \"payment_reference_id\": \"14231\",\n    \"status\": \"success\",\n    \"response_message\": \"SUCCESS\",\n    \"payment_type\": \"CreditCard\",\n    \"payment_transaction_id\": \"TRANSACTION_ID_GOES_HERE\",\n    \"created_at\": \"2021-01-14T16:18:35Z\",\n    \"updated_at\": \"2020-11-19T06:25:59Z\",\n    \"card_type\": \"null\"\n  },\n  {\n    \"first_name\": null,\n    \"last_name\": null,\n    \"transaction_no\": \"014029819-10010\",\n    \"payment_reference_id\": \"14230\",\n    \"status\": \"success\",\n    \"response_message\": \"SUCCESS\",\n    \"payment_type\": \"CreditCard\",\n    \"payment_transaction_id\": \"TRANSACTION_ID_GOES_HERE\",\n    \"created_at\": \"2021-01-14T16:17:09Z\",\n    \"updated_at\": \"2020-11-19T06:25:59Z\",\n    \"card_type\": \"null\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "50fcdbff-974b-48bb-9235-c49c435b745a",
+              "name": "\"Invalid Location Key\"",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "payments",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "**Token token** Location API key from the Punchh platform. **btoken** Business API key from the Punchh platform.",
+                    "key": "Authorization",
+                    "value": "Token token=\"LOCATION_KEY_GOES_HERE\" btoken=\"BUSINESS_KEY_GOES_HERE\""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set to **application/json**.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payment_date\": \"2019-08-24T14:15:22Z\",\n  \"payment_reference_id\": \"14000\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8c0fe4a6-39c8-435f-aa0f-6c4932e8730a",
+              "name": "\"Incorrect reference_id\"",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "payments",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "**Token token** Location API key from the Punchh platform. **btoken** Business API key from the Punchh platform.",
+                    "key": "Authorization",
+                    "value": "Token token=\"LOCATION_KEY_GOES_HERE\" btoken=\"BUSINESS_KEY_GOES_HERE\""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set to **application/json**.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payment_date\": \"2019-08-24T14:15:22Z\",\n  \"payment_reference_id\": \"14000\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4fa20314-91b4-4c6d-951c-fb830806cbd6",
+          "name": "Refund Payment",
+          "request": {
+            "name": "Refund Payment",
+            "description": {
+              "content": "After an accepted/processed payment, you can use the Refund Payments API to refund the payment. \n\nFor more information, see [Refunding Payment](/docs/dev-portal-pos/additional-topics/pos-payments#refunding-payment)\n\n### Headers\n\n#### `Token token` \nThe Location API key from the Punchh platform located under **Store Locations** > **All Store Locations** > [**Choose your location**] > **POS tab** > **Location key**\n\n#### `btoken`\nThe API key for the business, located in the Punchh platform. Note: This can be obtained only from Punchh administrators (e.g., Customer Success Manager).\n\n_For assistance with any API keys, reach out to your Punchh Customer Success Manager (CSM) or Implementation Manager (if applicable)._\t",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "payments",
+                "refund"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payment_type\": \"<string>\",\n  \"payment_reference_id\": \"<string>\",\n  \"transaction_no\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "17092a1b-564a-45ad-8cb9-3107a9b7e072",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pos",
+                    "payments",
+                    "refund"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "**Token token** Location API key from the Punchh platform. **btoken** Business API key from the Punchh platform.",
+                    "key": "Authorization",
+                    "value": "Token token=\"LOCATION_KEY_GOES_HERE\"   btoken=\"BUSINESS_KEY_GOES_HERE\""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set to **application/json**",
+                    "key": "Content-type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payment_type\": \"CreditCard\",\n  \"payment_reference_id\": \"784733681950555245904\",\n  \"transaction_no\": \"3387553\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"first_name\": null,\n  \"last_name\": null,\n  \"transaction_no\": \"3387553\",\n  \"payment_reference_id\": \"784733681950555245904\",\n  \"status\": \"refunded\",\n  \"response_message\": \"COMPLETED\",\n  \"payment_type\": \"CreditCard\",\n  \"created_at\": \"2021-02-01T20:58:10Z\",\n  \"updated_at\": \"2021-02-08T05:40:09Z\",\n  \"payment_transaction_id\": \"TRANSACTION_ID_GOES_HERE\",\n  \"card_type\": \"VIC\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://SERVER_NAME_GOES_HERE.punchh.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "762dcbcd-4e48-44eb-9438-859399f3501a",
+    "name": "POS API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Punchh provides robust APIs for integrating POS (Point-of-Sale) terminals with its back end. The integration helps businesses to offer their customers loyalty programs directly from their POS systems.\n\nContact Support:\n Name: Punchh Dev Support",
+      "type": "text/plain"
+    }
+  }
+}

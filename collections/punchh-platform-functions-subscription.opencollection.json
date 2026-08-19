@@ -1,0 +1,97 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Subscription API - Platform Functions",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Purchase Subscription",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/dashboard/subscriptions/purchase",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "This API allows third-party platforms (e.g., middleware that interfaces with the mobile app of the business) to purchase a new subscription plan in the Punchh platform without the need for guests to be logged in to the Punchh platform.\n\nIf a business is migrating active subscriptions from an incumbent system to the Punchh platform, the subscription ID for each user in the incumbent system can be mapped to the corresponding subscription ID in the Punchh platform.\n\nIf the Single Use setting is ena"
+    },
+    {
+      "info": {
+        "name": "Renew Subscription",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/dashboard/subscriptions/renew",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "This API allows the business to renew subscriptions by making back-end calls on the designated date of renewal registered on the business end."
+    },
+    {
+      "info": {
+        "name": "Cancel Subscription (Turn off Auto Renewal)",
+        "type": "http"
+      },
+      "http": {
+        "method": "PATCH",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/dashboard/subscriptions/cancel",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "This API can be used to cancel an active subscripition."
+    }
+  ],
+  "bundled": true
+}

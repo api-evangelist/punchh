@@ -1,0 +1,1828 @@
+{
+  "item": [
+    {
+      "id": "60f515d4-4bf7-4424-ae2b-5dcefae5e1a2",
+      "name": "Fetch Active Purchasable Subscription Plans",
+      "request": {
+        "name": "Fetch Active Purchasable Subscription Plans",
+        "description": {
+          "content": "This API allows online ordering vendors to get a list of all subscription plans that are available for purchase.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "auth",
+            "subscriptions"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. ",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)",
+            "key": "x-pch-digest",
+            "value": "<string>"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "80de8c96-f853-4a46-8af4-fd068505b6b4",
+          "name": "Success response if the business supports subscriptions",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "string"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "[\n  {\n    \"name\": \"SUBSCRIPTION_NAME_GOES_HERE\",\n    \"description\": \"DESCRIPTION_GOES_HERE\",\n    \"miscellaneous\": \"MISC_INFORMATION_GOES_HERE\",\n    \"validity\": 30,\n    \"start_time\": \"2023-05-28T13:59:47+05:30\",\n    \"end_time\": \"2023-09-28T13:59:47+05:30\",\n    \"signup_start_date\": \"2023-05-28T13:59:47+05:30\",\n    \"signup_end_date\": \"2023-09-28T13:59:47+05:30\",\n    \"subscriber_capping\": 500,\n    \"external_plan_identifier\": null,\n    \"plan_id\": 10,\n    \"purchase_price\": 100,\n    \"image\": \"test-image.png\",\n    \"time_zone\": \"Asia/Kolkata\",\n    \"plan_image_url\": \"PLAN_IMAGE_URL_GOES_HERE\",\n    \"active_subscribers\": 250,\n    \"enable_multibenefit\": true,\n    \"purchasable_location_ids\": [\n      2,\n      11\n    ],\n    \"purchasable_tag_ids\": [\n      1,\n      2\n    ],\n    \"multiple_effective_locations_name\": \"location-name-1, location-name-10, PineCrossing, Eagle Creek\"\n  }\n]",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "067dda9b-a05d-401b-a59a-e227e634252c",
+          "name": "Bad Request",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "string"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"client\": \"Required parameter missing or the value is empty.\"\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "fe31a94e-c53d-4416-9120-b6eeb78c1358",
+          "name": "Precondition Failed",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "string"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Precondition Failed",
+          "code": 412,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"invalid_signature\": [\n      \"Signature doesn't match. For information about generating the x-pch-digest header, see https://developers.punchh.com.\"\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "8d290470-f3ce-427d-9d3a-f04019e406d1",
+          "name": "Unprocessable Entity",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "string"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"disabled_feature\": \"Your current loyalty program configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue.\"\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "fd0d5fe6-4ef4-4abe-b72b-4f261a358aa1",
+      "name": "Purchase Subscription",
+      "request": {
+        "name": "Purchase Subscription",
+        "description": {
+          "content": "This API supports the purchase of a subscription plan created in the Punchh platform.\n\nIf the Single Use setting is enabled for the subscription plan, and if you send auto_renewal as `true` in the Purchase Subscription API, then the API returns an error: This is a single use subscription and cannot be renewed automatically. Please check the request to send auto_renewal as false.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "auth",
+            "subscriptions"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)",
+            "key": "x-pch-digest",
+            "value": "<string>"
+          },
+          {
+            "disabled": false,
+            "description": "Language parameter",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"client\": \"<string>\",\n  \"authentication_token\": \"<string>\",\n  \"plan_id\": \"<integer>\",\n  \"start_time\": \"<dateTime>\",\n  \"end_time\": \"<dateTime>\",\n  \"purchase_price\": \"<float>\",\n  \"auto_renewal\": false,\n  \"payment_card_uuid\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "746aa8d2-293b-462c-a693-0440128b3b4d",
+          "name": "OK",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "string"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Language parameter",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"authentication_token\": \"AUTH_TOKEN_GOES HERE\",\n  \"plan_id\": 23,\n  \"start_time\": \"2023-04-28T13:59:47+05:30\",\n  \"end_time\": \"2023-04-28T13:59:47+05:30\",\n  \"purchase_price\": \"23.09\",\n  \"auto_renewal\": \"true\",\n  \"payment_card_uuid\": \"PAYMENT_CARD_UUID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"subscription_id\": 23,\n  \"start_time\": \"2021-04-28T13:59:47+05:30\",\n  \"end_time\": \"2021-04-28T13:59:47+05:30\",\n  \"external_plan_identifier\": \"EXTERNAL_PLAN_IDENTIFIER GOES HERE\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "59f36141-65b9-49a9-b27d-8ae8e5098898",
+          "name": "Bad Request",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "string"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Language parameter",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"authentication_token\": \"AUTH_TOKEN_GOES HERE\",\n  \"plan_id\": 23,\n  \"start_time\": \"2023-04-28T13:59:47+05:30\",\n  \"end_time\": \"2023-04-28T13:59:47+05:30\",\n  \"purchase_price\": \"23.09\",\n  \"auto_renewal\": \"true\",\n  \"payment_card_uuid\": \"PAYMENT_CARD_UUID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"client\": \"Required parameter missing or value empty.\"\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "6200c31f-c0e9-46a4-8758-df1413d1c026",
+          "name": "Unauthorized",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "string"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Language parameter",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"authentication_token\": \"AUTH_TOKEN_GOES HERE\",\n  \"plan_id\": 23,\n  \"start_time\": \"2023-04-28T13:59:47+05:30\",\n  \"end_time\": \"2023-04-28T13:59:47+05:30\",\n  \"purchase_price\": \"23.09\",\n  \"auto_renewal\": \"true\",\n  \"payment_card_uuid\": \"PAYMENT_CARD_UUID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"unauthorized\": [\n      \"An active access token must be used to query information about the current user.\"\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "5252ce88-273d-4720-9395-1c30cb60a40c",
+          "name": "Precondition Failed",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "string"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Language parameter",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"authentication_token\": \"AUTH_TOKEN_GOES HERE\",\n  \"plan_id\": 23,\n  \"start_time\": \"2023-04-28T13:59:47+05:30\",\n  \"end_time\": \"2023-04-28T13:59:47+05:30\",\n  \"purchase_price\": \"23.09\",\n  \"auto_renewal\": \"true\",\n  \"payment_card_uuid\": \"PAYMENT_CARD_UUID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Precondition Failed",
+          "code": 412,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"invalid_signature\": [\n      \"Signature doesn't match. Please see our documentation https://developers.punchh.com/docs/dev-portal-mobile/17c2f8eb39142-generating-x-pch-digest-header-for-mobile-ap-is\"\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "520ee546-22cf-49b4-aa48-29b45cfe677f",
+          "name": "Unprocessable Entity",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "string"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Language parameter",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"authentication_token\": \"AUTH_TOKEN_GOES HERE\",\n  \"plan_id\": 23,\n  \"start_time\": \"2023-04-28T13:59:47+05:30\",\n  \"end_time\": \"2023-04-28T13:59:47+05:30\",\n  \"purchase_price\": \"23.09\",\n  \"auto_renewal\": \"true\",\n  \"payment_card_uuid\": \"PAYMENT_CARD_UUID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"disabled_feature\": \"Your current loyalty program configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue.\"\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "d527751a-48b2-4f70-b41c-0ac7b3c242b7",
+      "name": "Cancel Subscription (Turn off Auto Renewal)",
+      "request": {
+        "name": "Cancel Subscription (Turn off Auto Renewal)",
+        "description": {
+          "content": "This API allows the end user to cancel an active subscription (turn off auto renewal for the subscription). This is a soft cancellation wherein the benefits remain valid until the end time of the subscription.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "auth",
+            "subscriptions",
+            "cancel"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)",
+            "key": "x-pch-digest",
+            "value": "<string>"
+          },
+          {
+            "disabled": false,
+            "description": "Language parameter",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "PUT",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"client\": \"<string>\",\n  \"subscription_id\": \"<integer>\",\n  \"cancellation_feedback\": \"<string>\",\n  \"cancellation_type\": \"<string>\",\n  \"cancellation_reason_id\": \"<string>\",\n  \"authentication_token\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "e3771d55-0775-4db5-8950-482e6124dee8",
+          "name": "OK",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "subscriptions",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "string"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Language parameter",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"subscription_id\": 24,\n  \"cancellation_feedback\": \"Price too High.\",\n  \"cancellation_reason_id\": \"1\",\n  \"cancellation_type\": \"soft_cancelled\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"message\": \"Subscription auto renewal cancelled\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "a19d3417-877a-4049-9422-4db3639fc677",
+          "name": "Bad Request: Sending an invalid/blank cancellation reason ID",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "subscriptions",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "string"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Language parameter",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"subscription_id\": 24,\n  \"cancellation_feedback\": \"Price too High.\",\n  \"cancellation_reason_id\": \"1\",\n  \"cancellation_type\": \"soft_cancelled\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Required parameter missing or the value is empty: cancellation_reason_id\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "1041afc1-c044-48b7-80cb-10ee8e6ae5ee",
+          "name": "Unauthorized: Sending an invalid/empty access or authentication token ",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "subscriptions",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "string"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Language parameter",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"subscription_id\": 24,\n  \"cancellation_feedback\": \"Price too High.\",\n  \"cancellation_reason_id\": \"1\",\n  \"cancellation_type\": \"soft_cancelled\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"You need to sign in or sign up before continuing.\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "c0dc8a9a-944e-4b43-b428-2a8436b907ac",
+          "name": "Precondition Failed: Sending an invalid/empty client \n\nInvalid Signature means the signature generated at the Punchh Server for the API call does not match the signature generated by the client. See [Generating x-pch-digest Header for Online Ordering APIs](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1)",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "subscriptions",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "string"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Language parameter",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"subscription_id\": 24,\n  \"cancellation_feedback\": \"Price too High.\",\n  \"cancellation_reason_id\": \"1\",\n  \"cancellation_type\": \"soft_cancelled\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Precondition Failed",
+          "code": 412,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "[\n  \"Invalid Signature\"\n]",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "2f410f5a-0d3a-4f53-9478-4137b5e8ee8c",
+          "name": "Unprocessable Entity",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "subscriptions",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "string"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Language parameter",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"subscription_id\": 24,\n  \"cancellation_feedback\": \"Price too High.\",\n  \"cancellation_reason_id\": \"1\",\n  \"cancellation_type\": \"soft_cancelled\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": {\n    \"message\": [\n      \"This subscription is already renewed. You can cancel the newly issued Subscription which will remain valid till its end date.\"\n    ],\n    \"code\": \"cancel_renewed_subscription\"\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "92c0f475-9268-4e4a-ac19-e6d6749f7b24",
+      "name": "Fetch Subscription Plans for a User",
+      "request": {
+        "name": "Fetch Subscription Plans for a User",
+        "description": {
+          "content": "This API returns the subscriptions attached to a guest's profile. While the response can be filtered based on \"status\" and \"past_subscriptions\", the default response will include subscriptions that are either \"active\" or \"soft_cancelled\" and have their end time in the future.\n  ",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "auth",
+            "user_subscriptions"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [
+            {
+              "disabled": false,
+              "key": "filter",
+              "value": "<string>",
+              "description": "'Filter subscription by status and past_subscriptions.<br><br> If the status is not sent, the API returns subscriptions that are `active`, `soft_cancelled`, and have an end_time that is not in the past. Supported \"filter” values are ''active'', ''expired'', and ''cancelled''. <br><br>When the API call is made using the past_subscriptions filter, the response returns only such subscriptions that have their end date/time in the past. The status against each subscription can have the following possible values: ‘expired’, ‘renewed’, ‘soft_cancelled’, and ‘hard_cancelled’.'\n"
+            }
+          ],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. ",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)",
+            "key": "x-pch-digest",
+            "value": "<string>"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"client\": \"<string>\",\n  \"authentication_token\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "e751d9d2-43a0-4a5c-94fa-12dd4722c55d",
+          "name": "OK",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "user_subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "filter",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "string"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"has_any_subscriptions\": true,\n  \"subscriptions\": [\n    {\n      \"subscription_id\": 19,\n      \"start_time\": \"2023-05-18T21:09:38+05:30\",\n      \"end_time\": \"2023-06-03T21:09:38+05:30\",\n      \"plan_id\": 9,\n      \"image\": \"test-image.png\",\n      \"cancellation_reason\": \"Found better alternative\",\n      \"cancelled_at\": null,\n      \"name\": \"fuel_price\",\n      \"description\": \"\",\n      \"miscellaneous\": \"\",\n      \"status\": \"Active\",\n      \"external_plan_identifier\": \"EXTERNAL_PLAN_IDENTIFIER_GOES_HERE\",\n      \"plan_image_url\": \"PLAN_IMAGE_URL_GOES_HERE\",\n      \"renewed_on\": \"2023-04-10T05:00:00+05:30\",\n      \"upcoming_renewal\": \"2023-05-11T05:00:00+05:30\",\n      \"purchase_price\": 100,\n      \"auto_renewal\": true,\n      \"benefits\": [\n        {\n          \"benefit_id\": 3,\n          \"benefit_type\": \"sku_discounting\",\n          \"benefit_name\": \"Free Coffee\",\n          \"benefit_description\": \"Get a free coffee on your next visit\",\n          \"benefit_priority\": 1,\n          \"discounts\": [\n            {\n              \"discount_id\": 7,\n              \"occurrence\": 5,\n              \"gap_units\": 24,\n              \"gap_unit_type\": \"hours\",\n              \"start_time\": \"2023-05-18T00:00:00+05:30\",\n              \"end_time\": \"2023-06-03T23:59:59+05:30\",\n              \"threshold\": 40,\n              \"threshold_discount\": 100,\n              \"discount_type\": \"sku_discounting\",\n              \"discounted_value\": 80,\n              \"discounted_quantity\": 40\n            },\n            {\n              \"discount_id\": 8,\n              \"occurrence\": null,\n              \"gap_units\": null,\n              \"gap_unit_type\": \"hours\",\n              \"start_time\": null,\n              \"end_time\": null,\n              \"threshold\": 1000,\n              \"threshold_discount\": 100,\n              \"discount_type\": \"sku_discounting\",\n              \"discounted_value\": 1000,\n              \"discounted_quantity\": 1000\n            }\n          ]\n        },\n        {\n          \"benefit_id\": 4,\n          \"benefit_type\": \"sku_discounting\",\n          \"benefit_name\": \"Fuel Discount\",\n          \"benefit_description\": \"Get 10% off on fuel purchases\",\n          \"benefit_priority\": 2,\n          \"discounts\": [\n            {\n              \"discount_id\": 7,\n              \"occurrence\": 10,\n              \"gap_units\": null,\n              \"gap_unit_type\": \"hours\",\n              \"start_time\": null,\n              \"end_time\": null,\n              \"threshold\": 40,\n              \"threshold_discount\": 50,\n              \"discount_type\": \"%_or_$_off\",\n              \"discounted_value\": 80,\n              \"discounted_quantity\": 40\n            },\n            {\n              \"discount_id\": 8,\n              \"occurrence\": null,\n              \"gap_units\": null,\n              \"gap_unit_type\": \"hours\",\n              \"start_time\": null,\n              \"end_time\": null,\n              \"threshold\": 1000,\n              \"threshold_discount\": 100,\n              \"discount_type\": \"receipt_level_discount\",\n              \"discounted_value\": 1000,\n              \"discounted_quantity\": 1000\n            }\n          ]\n        }\n      ],\n      \"payment_card\": {\n        \"uuid\": \"SAVED_CARD_UUID\",\n        \"nickname\": \"My card\",\n        \"preferred\": true,\n        \"card_details\": {\n          \"name_on_card\": \"CARDHOLDER_NAME_GOES_HERE\",\n          \"cc_4\": \"1111\",\n          \"card_type\": \"Visa\",\n          \"expiry_month\": 9,\n          \"expiry_year\": \"23\"\n        }\n      },\n      \"cancellation_feedback\": \"Found better alternative\"\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "28253a0f-c8e2-4061-9291-d72df640a454",
+          "name": "Unauthorized: Sending an invalid/empty access or authentication token",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "user_subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "filter",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "string"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"You need to sign in or sign up before continuing.\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "46c69ee4-a52a-48d4-8837-316c61ff9b7e",
+          "name": "Precondition Failed: Sending an invalid/empty client \n\nInvalid Signature means the signature generated at the Punchh Server for the API call does not match the signature generated by the client. See [Generating x-pch-digest Header for Online Ordering APIs](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1)",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "user_subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "filter",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "string"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Precondition Failed",
+          "code": 412,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "[\n  \"Invalid Signature\"\n]",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "1a0d3748-34e9-4acf-a0f6-ef3b468d72d1",
+          "name": "Unprocessable Entity",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "user_subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "filter",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "string"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": {\n    \"message\": [\n      \"Possible values are active, expired, cancelled.\"\n    ],\n    \"code\": \"invalid_status\"\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "08a694dd-1021-43d0-83e1-589a7a33fec9",
+      "name": "Subscription Meta",
+      "request": {
+        "name": "Subscription Meta",
+        "description": {
+          "content": "Returns subscription cancellation reasons, which are configured in the Punchh platform under Wallet and Passes > Subscription Cancellation Reasons.\n\nNote: If the option to enable meta cache update on request is not enabled in the Punchh platform, then the API won't return any subscription cancellation reasons in the Subscription Meta API response.\n\n<!-- Cockpit > Dashboard Miscellaneous Config > Enable meta cache update on request -->\n\nContact your Punchh representative to update this configuration.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "auth",
+            "subscription_meta"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. ",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business",
+            "key": "x-pch-digest",
+            "value": "<string>"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \" client\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "2487adc3-59be-429a-9fb6-521985f9b6d8",
+          "name": "OK",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "subscription_meta"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "string"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \" client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"enable_cancellation_feedback\": false,\n  \"cancellation_feedback_placeholder\": \"Test\",\n  \"subscription_cancellation_reasons\": [\n    {\n      \"cancellation_reason_id\": 1,\n      \"cancellation_reason\": \"Overvalued for me.\",\n      \"component_code\": \"price\"\n    },\n    {\n      \"cancellation_reason_id\": 2,\n      \"cancellation_reason\": \"Service not up to the mark.\",\n      \"component_code\": \"service\"\n    },\n    {\n      \"cancellation_reason_id\": 3,\n      \"cancellation_reason\": \"Switching to other plan.\",\n      \"component_code\": \"other plan\"\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "39d6af2e-07ab-4bf0-bddb-0a9b87ab69e2",
+          "name": " Unprocessable Entity: The feature is turned off for the business.",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "subscription_meta"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "string"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \" client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": {\n    \"message\": [\n      \"Your current loyalty program configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue.\"\n    ],\n    \"code\": \"disabled_feature\"\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://SERVER_NAME_GOES_HERE.punchh.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c6be468f-df8a-4c79-a042-b52677817064",
+    "name": "Subscription API - Online Ordering",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Subscriptions is an add-on Punchh loyalty product that allows businesses to create subscription plans to generate up-front revenue and offers benefits in addition to the standard benefits that unsubscribed members of the loyalty program receive. The Subscription APIs are designed in a way that businesses can programatically achieve the benefits of the subscription for their guest in a mobile app or website. Also, there are aspects that require calling the API without any guest authentication (e.g., to control the auto-renewal of the subscription on behalf of the guest). \n\nContact Support:\n Name: Punchh Dev Support",
+      "type": "text/plain"
+    }
+  }
+}

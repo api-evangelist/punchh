@@ -1,0 +1,1064 @@
+info:
+  title: Redemptions 1.0 (Legacy) API - Online Ordering
+  version: '1.0'
+  description: 'For more information, see [Online Ordering Module 5: Redemptions](/docs/dev-portal-online-ordering/tutorials/modules/5-redemptions/overview).'
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+paths:
+  /api/auth/redemptions/online_order:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Message that explains if the customer's redemption was successfully completed
+                      or not
+                  redemption_amount:
+                    type: integer
+                    description: Total redemption amount that can be applied on the order
+                  category:
+                    type: string
+                    description: 'Category returned for redemption requested where values can be: `redeemable`,
+                      `processed`, `expired`, `invalid`, `unassigned`. Consider redemption valid only
+                      when the category is returned as `redeemable`.'
+                  qualified_menu_items:
+                    $ref: '#/components/schemas/Menu-items'
+                  discount_distribution_items:
+                    $ref: '#/components/schemas/discount_distribution_items'
+                  redemption_id:
+                    type: integer
+                    format: int64
+                    description: Unique ID associated with the redemption. Save this in your system for
+                      future reference.
+                  redemption_code:
+                    type: string
+                    description: Redemption code associated with redemption
+                  max_applicable_quantity:
+                    type: number
+                    description: 'Maximum quantity that can be discounted. Note: This parameter will be
+                      returned for offers related to Price Rollback.'
+                  campaign_name:
+                    type: string
+                    x-stoplight:
+                      id: 7s3sui5p01net
+                    description: Name of the campaign through which the guest received the offer
+                  qualifying_conditions:
+                    type: object
+                    x-stoplight:
+                      id: ox2f9fs82bs54
+                    description: The object lists all qualification criteria (both receipt-level and line-item)
+                      for submitted offers that failed while processing the redemption. This object is
+                      returned in the response only if the option to return the qualifying conditions
+                      for Redemption 1.0 APIs is enabled for the business in the Punchh platform. See
+                      the `data` object under [Get Qualification Criteria Response](https://developers.partech.com/docs/dev-portal-platform-functions/97ec083d6cf57-get-qualification-criteria-qc-list#response-body)
+                      in Platform Functions for descriptions of the parameters in `qualifying_conditions`.
+              examples:
+                default:
+                  value:
+                    status: Redeemed at Feb 26, 2026 10:49 by FIRST_NAME_GOES_HERE LAST_NAME_GOES_HERE
+                      at Naperville. Please HONOR it.
+                    redemption_amount: 8
+                    category: redeemable
+                    qualified_menu_items:
+                    - item_name: Sandwich
+                      item_qty: 1
+                      item_amount: 5
+                      menu_item_type: M
+                      menu_item_id: '102000'
+                      menu_family: Sandwich
+                      menu_major_group: Sandwich
+                      serial_number: '1.0'
+                    - item_name: Coke
+                      item_qty: 1
+                      item_amount: 7
+                      menu_item_type: M
+                      menu_item_id: '102000'
+                      menu_family: Coke
+                      menu_major_group: Coke
+                      serial_number: '2.0'
+                    discount_distribution_items:
+                    - item_name: Sandwich DISCOUNT
+                      item_qty: 1
+                      item_amount: -3
+                      menu_item_type: R
+                      menu_item_id: '102000'
+                      menu_family: Sandwich
+                      menu_major_group: Sandwich
+                      serial_number: 1
+                    - item_name: Coke DISCOUNT
+                      item_qty: 1
+                      item_amount: -5
+                      menu_item_type: R
+                      menu_item_id: '102000'
+                      menu_family: Coke
+                      menu_major_group: Coke
+                      serial_number: 2
+                    max_applicable_quantity: 1
+                    campaign_name: Mass Campaign Offer
+                    redemption_id: 21762
+                    redemption_code: REDEMPTION_CODE_GOES_HERE
+        '401':
+          description: Sending invalid credentials
+        '412':
+          description: Sending invalid Signature
+        '422':
+          description: ''
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                  - Given reward is not accessible for this guest
+      description: "Redeems a card, reward, redeemable, or discount specified in the `discount_type` parameter\
+        \ against a receipt.\n\nPunchh evaluates eligibility during the Possible Redemptions call using\
+        \ the receipt details provided (item name, price, quantity, identifiers, etc.). During the Create\
+        \ Online Redemption API call, Punchh revalidates the same receipt to ensure the qualifying conditions\
+        \ are still met before honoring the redemption. \n\nIf any item attributes change between the\
+        \ two calls, Punchh may be unable to match the qualifying items, which can cause the Create Online\
+        \ Redemption API call to fail or return a different result—even if the Possible Redemptions call\
+        \ was successful.\n\n**NOTE**: **When processing a redemption, DO NOT include the `query` parameter\
+        \ in the API request.** Use this parameter only to check for possible redemptions. "
+      summary: Create Online Redemption (Redemptions 1.0)
+      operationId: sso_create_online_redemption
+      parameters:
+      - $ref: '#/components/parameters/Signature'
+      - $ref: '#/components/parameters/content type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: 60069336e34d4
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                authentication_token:
+                  type: string
+                  description: The authentication token of the user. You can retrieve this from the response
+                    of a successful sign-in API call or through the [SSO process](/docs/dev-portal-online-ordering/9a41534336c87-sso-flow-for-web-and-mobile).
+                query:
+                  type: boolean
+                  description: Include this parameter only if you want to make a possible redemptions
+                    call. The parameter value must be true. If you want to process a redemption, do not
+                    include this parameter in the request.
+                cc_last4:
+                  type: string
+                  description: Last 4 digits of credit card number
+                employee_id:
+                  type: string
+                  description: Employee ID
+                employee_name:
+                  type: string
+                  description: Employee name
+                store_number:
+                  type: string
+                  description: The location where the redemption must be redeemed
+                menu_items:
+                  $ref: '#/components/schemas/menu_items'
+                receipt_amount:
+                  type: number
+                  format: double
+                  description: Order amount before taxes, calculated as the sum of all item amounts minus
+                    any discounts. This is the amount used to calculate loyalty points/visits. The value
+                    of this parameter should match `subtotal_amount`. For example, if the order amount
+                    is $10, both `receipt_amount` and `subtotal_amount` will be 10. If a $2 discount is
+                    applied, both will be 8.
+                subtotal_amount:
+                  type: number
+                  format: double
+                  description: Order amount before taxes (sum of all item amounts minus any discounts).
+                    Same as `receipt_amount`. For historical reasons, include this parameter along with
+                    `receipt_amount` in the API request.
+                receipt_datetime:
+                  type: string
+                  description: Timestamp of receipt as per ISO 8601, in YYYY-MM-DDThh:mm:ssZ format
+                transaction_no:
+                  type: string
+                  description: Receipt number or transaction number on the receipt
+                external_uid:
+                  type: string
+                  description: 'Unique ID generated by your system. We use this to prevent duplicates
+                    in case the same transaction gets triggered twice.
+
+                    '
+                client:
+                  type: string
+                  description: Client key of the business
+                channel:
+                  type: string
+                  enum:
+                  - pos
+                  - web
+                  - online_order
+                  - mobile
+                  - dashboard
+                  - chatbot
+                  - kiosk
+                  description: 'Channel through which the redemption was requested. Possible values are:
+                    online_order, pos, web, mobile, dashboard, chatbot, and kiosk.
+
+                    '
+                state:
+                  type: string
+                  description: 'The current state of the check-in. Possible values are: committed, pending,
+                    or void'
+                discount_type:
+                  type: string
+                  enum:
+                  - reward
+                  - card_completion
+                  - redeemable
+                  - discount_amount
+                  - redemption_code
+                  - subscription
+                  description: 'Any one of these values: card_completion || reward || redeemable || discount_amount
+                    || redemption_code || subscription. For details, see [Getting Started With Online
+                    Ordering APIs](/docs/dev-portal-online-ordering/0130fe9413a97-getting-started-with-online-ordering-ap-is).'
+                reward_id:
+                  type: integer
+                  description: Send this value when discount_type is reward. This is the ID of the reward
+                    the user wants to redeem.
+                  format: int64
+                redeemable_id:
+                  type: string
+                  description: Send this value when discount_type is redeemable. This is the ID of the
+                    redeemable the user wants to redeem.
+                redeemed_points:
+                  type: string
+                  description: Send this value when discount_type is discount_amount. This is the amount
+                    of the banked rewards the user wants to redeem.
+                redemption_code:
+                  type: string
+                  description: Send this value when discount_type is redemption_code. This is the redemption
+                    code or Punchh coupon code that is associated with redemption.
+                subscription_id:
+                  type: string
+                  description: Send this value when discount_type is subscription. This is a system-generated
+                    unique ID of the subscription that is issued to the guest.
+                email:
+                  type: string
+                  description: Email address of the user (required to be sent only in case of coupons
+                    and promos)
+              required:
+              - store_number
+              - receipt_amount
+              - subtotal_amount
+              - receipt_datetime
+              - transaction_no
+              - client
+              - discount_type
+  /api/auth/redemptions:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  internal_tracking_code:
+                    type: integer
+                    description: Internal tracking code generated on the redemption
+                  expiry_hours:
+                    type: integer
+                    description: Total number of hours after which the redemption code will expire
+              examples:
+                default:
+                  value:
+                    internal_tracking_code: '2142353'
+                    expiry_hours: '24'
+        '401':
+          description: Sending invalid credentials
+        '412':
+          description: Sending invalid Signature
+        '422':
+          description: Sending invalid Entity
+      summary: Fetch Redemption Code (Redemptions 1.0)
+      description: 'This endpoint generates an internal tracking code, which can be used to [look up a
+        user on the POS system](/docs/dev-portal-pos/b3A6NTAyODM5MTc-user-lookup-and-fetch-balance) and
+        [redeem the selected reward or banked currency at the POS](/docs/dev-portal-pos/4aa6c9741c85d-create-redemption-redemptions-1-0).
+        To generate an internal tracking code via this endpoint, you must supply either a reward ID in
+        the **reward_id** parameter or a value for the banked currency to redeem in the **redeemed_points**
+        parameter. While the internal tracking code is active, the selected reward or banked currency
+        value is eligible for redemption at the POS using the value of the internal tracking code as the
+        **redemption_code** in the [POS Redemption API endpoint](/docs/dev-portal-pos/4aa6c9741c85d-create-redemption-redemptions-1-0).
+
+
+        >User authentication required
+
+        >
+
+        >This API requires authentication_token to be supplied as `HTTP_AUTHORIZATION` header or in the
+        `authentication_token` parameter.'
+      operationId: sso_fetch_redemption_code
+      parameters:
+      - $ref: '#/components/parameters/Signature'
+      - $ref: '#/components/parameters/content type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/Authorization'
+      x-stoplight:
+        id: 85f9cf163d423
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                authentication_token:
+                  type: string
+                  default: AUTHENTICATION_TOKEN_GOES_HERE
+                  description: The authentication token of the user. You can retrieve this from the response
+                    of a successful sign-in API call or through the [SSO process](/docs/dev-portal-online-ordering/9a41534336c87-sso-flow-for-web-and-mobile).
+                client:
+                  type: string
+                  description: Client key of the business
+                location_id:
+                  type: integer
+                  format: int32
+                  description: Location ID of the redemption
+                locale:
+                  type: string
+                  description: Locale used for language
+                longitude:
+                  type: string
+                  description: Longitude of the redemption location
+                latitude:
+                  type: string
+                  description: Latitude of the redemption location
+                redeemed_points:
+                  type: number
+                  format: double
+                  description: Value of banked currency to redeem. Use this field only if you have a Points
+                    Convert to Currency program type and you are trying to redeem banked currency. Otherwise,
+                    use the **reward_id** field only.
+                reward_id:
+                  type: integer
+                  format: int64
+                  description: Reward ID (required if redeemed_points is not provided)
+                gps_accuracy:
+                  type: integer
+                  description: 'GPS accuracy
+
+                    '
+                store_number:
+                  type: string
+                  description: 'Store number of the location. This can be used as an alternative to specify
+                    the location if location_id/latitute/longitude are not provided.
+
+                    '
+              required:
+              - client
+              - redeemed_points
+              - reward_id
+            examples:
+              default:
+                value:
+                  authentication_token: AUTHENTICATION_TOKEN_GOES_HERE
+                  client: CLIENT_GOES_HERE
+                  location_id: 304155
+                  locale: ''
+                  longitude: '75.8136926'
+                  latitude: '26.9167509'
+                  redeemed_points: null
+                  reward_id: 12345
+                  gps_accuracy: 27
+                  store_number: '12'
+        description: ''
+    delete:
+      responses:
+        '202':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      summary: Void Processed Redemption (Redemptions 1.0)
+      description: 'Voids a processed redemption. After a redemption is voided successfully, the offer
+        tied to the redemption is returned to the guest''s account.
+
+
+        <b>Note</b>: The Void Redemption API allows you to cancel a redemption without any time restrictions
+        for most types of redemptions. However, for coupons and promos, redemptions can only be voided
+        within 24 hours of the redemption process.'
+      operationId: sso_void_processed_redemption
+      parameters:
+      - $ref: '#/components/parameters/Signature'
+      - $ref: '#/components/parameters/content type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/Authorization'
+      x-stoplight:
+        id: b7e6468ce7ed7
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                redemption_id:
+                  type: integer
+                  format: int64
+                  description: ID of the redemption that you want to delete
+                authentication_token:
+                  type: string
+                  description: The authentication token of the user. You can retrieve this from the response
+                    of a successful sign-in API call or through the [SSO process](/docs/dev-portal-online-ordering/9a41534336c87-sso-flow-for-web-and-mobile).
+                client:
+                  type: string
+                  description: Client key of the business
+                reason:
+                  type: string
+                  description: Why the redemption is being deleted
+                redemption_code:
+                  type: string
+                  description: To be entered if the redemption ID is not provided. If both redemption_id
+                    and redemption_code are provided, then only redemption_id will be processed.
+              required:
+              - redemption_id
+              - client
+            examples:
+              default:
+                value:
+                  redemption_id: 323242
+                  authentication_token: AUTHENTICATION_TOKEN_GOES_HERE
+                  client: CLIENT_GOES_HERE
+  /api/auth/redemptions/applicable_offers:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    menu_items:
+                      $ref: '#/components/schemas/Menu-items'
+                    discount_amount:
+                      type: integer
+                      description: Discount amount applied to the order for an applicable offer or reward
+                    reward:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          enum:
+                          - YYYY-MM-DDThh:mm:ssZ
+                          format: date-time
+                          description: Date/time when the reward was created, in YYYY-MM-DD format
+                        end_date_tz:
+                          type: string
+                          enum:
+                          - YYYY-MM-DDThh:mm:ssZ
+                          format: date-time
+                          description: Date/time when the reward will expire, in YYYY-MM-DD format
+                        start_date_tz:
+                          type: string
+                          enum:
+                          - YYYY-MM-DDThh:mm:ssZ
+                          format: date-time
+                          description: Date/time when the reward becomes available, in YYYY-MM-DD format
+                        updated_at:
+                          type: string
+                          enum:
+                          - YYYY-MM-DDThh:mm:ssZ
+                          format: date-time
+                          description: Date/time when the reward was updated, in YYYY-MM-DD format
+                        id:
+                          type: integer
+                          format: int64
+                          description: ID of the reward
+                        image:
+                          type: string
+                          description: Image of the reward
+                        status:
+                          type: string
+                          description: 'Status of the reward (e.g., "unreedemmed", "expired") '
+                        points:
+                          type: integer
+                          description: Points needed to redeem the reward
+                        discount_amount:
+                          type: integer
+                          description: Discount amount of the reward
+                        description:
+                          type: string
+                          description: Description of the reward
+                        name:
+                          type: string
+                          description: Name of the reward
+                        redeemable_properties:
+                          type: string
+                          description: Reedemable properties of the reward. Properties such as "Merchandise",
+                            "Food Item", etc. added to a particular redeemable.
+              examples:
+                default:
+                  value:
+                  - menu_items:
+                    - item_name: Adult
+                      item_qty: 1
+                      item_amount: 100
+                      menu_item_type: M
+                      menu_item_id: '1'
+                      menu_family: '1'
+                      menu_major_group: '1'
+                      serial_number: '3.0'
+                    discount_amount: 2
+                    reward:
+                      created_at: '2023-04-03T05:42:02Z'
+                      end_date_tz: null
+                      start_date_tz: '2023-04-03T05:42:02Z'
+                      updated_at: '2023-04-03T05:42:02Z'
+                      id: 1
+                      image: IMAGE_URL_GOES_HERE
+                      status: unredeemed
+                      points: 0
+                      discount_amount: 2
+                      description: $2 Off Your Order. Participating locations only.
+                      name: Redeemable - $2 Off Your Order
+                      redeemable_properties: null
+                  - menu_items:
+                    - item_name: Adult
+                      item_qty: 1
+                      item_amount: 100
+                      menu_item_type: M
+                      menu_item_id: '1'
+                      menu_family: '1'
+                      menu_major_group: '1'
+                      serial_number: '3.0'
+                    discount_amount: 2
+                    reward:
+                      created_at: '2023-04-03T05:46:32Z'
+                      end_date_tz: null
+                      start_date_tz: '2023-04-03T05:46:32Z'
+                      updated_at: '2023-04-03T05:46:32Z'
+                      id: 2
+                      image: IMAGE_URL_GOES_HERE
+                      status: unredeemed
+                      points: 0
+                      discount_amount: 2
+                      description: ''
+                      name: 2% off Subtotal Amount
+                      redeemable_properties: null
+        '401':
+          description: Sending invalid credentials
+        '412':
+          description: Sending invalid Signature
+        '422':
+          description: The given reward can't be applied to the given receipt details
+      summary: Applicable Offers (Redemptions 1.0)
+      description: Returns all applicable rewards available to the user per the items added to the check
+      operationId: sso_applicable_offers
+      parameters:
+      - $ref: '#/components/parameters/Signature'
+      - $ref: '#/components/parameters/content type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/Authorization'
+      x-stoplight:
+        id: ae5f635ab632f
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                authentication_token:
+                  type: string
+                  description: The authentication token of the user. You can retrieve this from the response
+                    of a successful sign-in API call or through the [SSO process](/docs/dev-portal-online-ordering/9a41534336c87-sso-flow-for-web-and-mobile).
+                client:
+                  type: string
+                  description: Client key of the business
+                receipt_amount:
+                  type: number
+                  format: double
+                  description: Order amount before taxes, calculated as the sum of all item amounts minus
+                    any discounts. This is the amount used to calculate loyalty points/visits. The value
+                    of this parameter should match `subtotal_amount`. For example, if the order amount
+                    is $10, both `receipt_amount` and `subtotal_amount` will be 10. If a $2 discount is
+                    applied, both will be 8.
+                subtotal_amount:
+                  type: number
+                  format: double
+                  description: Order amount before taxes (sum of all item amounts minus any discounts).
+                    Same as `receipt_amount`. For historical reasons, include this parameter along with
+                    `receipt_amount` in the API request.
+                receipt_datetime:
+                  type: string
+                  format: date-time
+                  description: Timestamp of the receipt as per ISO 8601, in YYYY-MM-DDThh:mm:ssZ format
+                store_number:
+                  type: string
+                  description: Location where the redemption must be redeemed
+                menu_items:
+                  $ref: '#/components/schemas/menu_items'
+                channel:
+                  type: string
+                  x-stoplight:
+                    id: tfd4xyagg7i9x
+                  description: 'Channel through which the order was placed. If a channel is defined in
+                    the Receipt Qualifier condition under Offers > Qualification Criteria in the Punchh
+                    platform, the API returns the list of offers applicable to the transaction after evaluating
+                    the value set for the channel. Possible values: online_order, web.'
+                  enum:
+                  - online_order
+                  - web
+              required:
+              - client
+              - receipt_amount
+              - subtotal_amount
+              - receipt_datetime
+              - channel
+x-stoplight:
+  id: a417170d64e9b
+openapi: 3.1.1
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+components:
+  schemas:
+    background-content:
+      type: object
+      properties:
+        type:
+          type: string
+          description: 'The type of the background content. It can be an image or a color.
+
+            '
+        url:
+          type: string
+          description: 'The URL of the image that will be used as the background
+
+            '
+        alt_text:
+          type: string
+          description: 'Alternate text that appears if the app cannot render the background content of
+            the message
+
+            '
+        initial_frame:
+          type: string
+          description: The initial frame or first frame is what appears behind the play button before
+            a user taps it to start playing the video.
+      description: "This is the content that makes the background of the message.\n\n```\n{\n    \"type\"\
+        : \"image\",\n    \"url\": \"IMAGE_URL\",\n    \"alt_text\": \"Black Background Image\",\n   \
+        \ \"initial_frame\": \"\"\n}\n```"
+      title: Background Content (Object)
+      x-stoplight:
+        id: 2aaafe87b4797
+    cta:
+      type: array
+      items:
+        type: object
+        properties:
+          type:
+            type: string
+            description: 'Three possible values can be returned to the mobile client:
+
+              - web_link: The cta button prompts the user to open the link in a web browser available
+              on the mobile client.
+
+              - deep_link: The cta button takes the user to a particular deep link specified in the app.
+
+              - drill_down: The cta button opens the detailed view of the rich message received by the
+              app.'
+          link:
+            type: string
+            description: The URL to which the user will be directed, depending on the type of the cta
+          label:
+            type: string
+            description: The text that appears on the cta button in the app
+          cta_type:
+            type: string
+            description: 'More than one cta object can be returned to the app. The cta_type can have two
+              possible values: primary and secondary. The primary cta is higher priority and is the main
+              cta button. The secondary cta can be something like a terms and conditions link that can
+              be rendered appropriately in the app.'
+      title: CTA (Object)
+      x-stoplight:
+        id: d23e01d757cab
+    discount_distribution_items:
+      type: array
+      title: Discount Distribution Items (Array Object)
+      description: 'An array containing details of how the applied discount is distributed across individual
+        menu items. Each object represents one line item that receives a portion of the discount.
+
+        '
+      items:
+        type: object
+        properties:
+          item_name:
+            type: string
+            description: Name of the discounted menu item as it displays in the POS catalog
+          menu_item_id:
+            type: string
+            description: Unique identifier that your POS system uses for the discounted menu item
+          item_qty:
+            type: number
+            description: Quantity associated with the discounted item.
+          item_amount:
+            type: number
+            description: A negative amount that indicates a reduction in price. The sum of all `item_amount`
+              values across the array equals the total discount applied.
+          menu_item_type:
+            type: string
+            description: 'The classification of the item.
+
+
+              R - Redemption Discount item (negative). The `menu_item_type` attribute will always be set
+              to "R" to indicate that it is a redemption-related discount. If a user redeemed a reward
+              giving $3 off, the response may include a line with `menu_item_type` as "R" and `item_amount`
+              as -3.'
+          menu_major_group:
+            type: string
+            description: The major group that the discounted item belongs to
+          menu_family:
+            type: string
+            description: The family that the discounted item belongs to
+          serial_number:
+            type: number
+            description: A serialized number that differentiates distinct items on the check. The value
+              in the field identifies which items on the check are base items and which items are modifiers
+              to the base items. For example, a main menu item (such as pizza) may have serial number
+              1.0, and the associated modifiers (such as "extra cheese", "olives", and "jalapenos") may
+              have serial numbers 1.1, 1.2, and 1.3 respectively.
+    hero-content:
+      type: object
+      description: "This is the first visual content that a user encounters when the user views a rich\
+        \ message. This can be an image or a video.\n\n```\n{\n    \"type\": \"image\",\n    \"url\":\
+        \ \"IMAGE_URL_GOES_HERE\",\n    \"alt_text\": \"Fries\",\n    \"initial_frame\": \"\"\n}\n```\n"
+      properties:
+        type:
+          type: string
+          description: 'Hero content can be an image or a video.
+
+            '
+        url:
+          type: string
+          description: 'The URL of the image/video that will be used as the hero content in a rich message
+
+            '
+        alt_text:
+          type: string
+          description: 'Alternate text that appears if the app cannot render the hero content of the message
+
+            '
+        initial_frame:
+          type: string
+          description: The initial frame or first frame is what appears behind the play button before
+            a user taps it to start playing the video.
+      title: Hero Content (Object)
+      x-stoplight:
+        id: cb8a3233b8940
+    menu_items:
+      type: array
+      title: Menu Items (Array Object)
+      x-stoplight:
+        id: 8e03e64d17406
+      description: This object used in the API request contains one or more menu items added to an order.
+        See [How To Send Menu Items to Punchh](/docs/dev-portal-online-ordering/5277d762b8c6d-how-to-send-menu-items-to-punchh)
+      items:
+        type: object
+        properties:
+          item_name:
+            type: string
+            description: 'Name of the menu item
+
+              '
+          item_qty:
+            type: integer
+            description: Quantity ordered by the customer. If the item is a modifier (such as extra cheese
+              on a pizza base item), make sure the quantity reflects the total number of base items included.
+              For example, if you have a pizza base item with a certain item ID and a quantity of two,
+              and the pizzas each have an extra cheese modifier added to them, then the modifier quantity
+              should be two to account for the modifier across both pizzas. This applies only to base
+              items of the same ID. If different base items include the same modifier, you do not need
+              to sum the modifiers.
+          item_amount:
+            type: number
+            description: 'The total price of the line item or the amount of the discount that you applied
+              to an item. In case of multiple quantities, this means the sum total of all item amounts.
+              Always represent this value as a positive number, even when the item is a discount.
+
+              '
+            format: float
+          menu_item_type:
+            type: string
+            description: 'The classification of the item. Choose from the following types based on the
+              item:
+
+
+              M - Menu item ( + or - )
+
+
+              S - Service item. Any item representing money received that is not a sale. For example,
+              service charges, delivery fees, tips, purchase of gift cards/certificates, etc.
+
+
+              D - Discount (negative). Either internal or Punchh will always evaluate lines as ( - ) regardless
+              of the sign assigned in the API call. We do not recommend sending any line item types set
+              to D in any Redemptions 1.0 requests. Instead, send them in the [Create Loyalty Check-in](/docs/dev-portal-online-ordering/f1943957e38b4-create-loyalty-check-in)
+              and [Update Loyalty Check-in](/docs/dev-portal-online-ordering/386045cf184bc-update-loyalty-check-in)
+              API calls. <br><br>If any items with line item type D are sent in these requests, the business
+              will require additional configuration for all offers to filter out the line item type D.
+              See the [Qualification Criteria](https://support.punchh.com/s/article/Qualification-Criteria)
+              article on the Support Portal. Note: To view the Punchh product documentation on the Punchh
+              Support Portal, you must log in to a Punchh platform production environment. If you already
+              have access to a production environment, follow the instructions [here](https://support.punchh.com/s/article/How-do-I-access-the-Punchh-Support-Portal-Single-Sign-On)
+              to access the Punchh Support Portal. <br><br>Any non-loyalty discounts should be reflected
+              in reduced totals of the line items of type M that the discounts apply to. For example,
+              if a business offers a $2 discount on a $10 burger, send the burger as $8 ($10 - $2) in
+              the API request.
+
+
+              T - Tax item. Taxes of all sorts
+
+
+              P - Payment item. Visa, MasterCard, cash, gift card/certificate (when used to pay for the
+              order)
+
+
+              <b>Note</b>: See [Multiple Redemptions Example](/docs/dev-portal-online-ordering/5277d762b8c6d-how-to-send-menu-items-to-punchh#multiple-redemptions-example)
+              for processing multiple discounts.'
+          menu_item_id:
+            type: string
+            description: Unique identifier for the item
+          menu_family:
+            type: string
+            description: The family that the item belongs to. The family is the subcategory for the item.
+              Even though the parameter is required, you can pass it in the request with a blank value.
+              You can leave this blank if the item does not belong to a family.
+          menu_major_group:
+            type: string
+            description: 'The major group that the item belongs to. The major group is the parent category
+              for the item. Even though the parameter is required, you can pass it in the request with
+              a blank value. You can leave this blank if the item does not belong to a major group.
+
+              '
+          serial_number:
+            type: string
+            description: A serialized number that differentiates distinct menu items on a receipt. The
+              purpose of this field is to identify which items on the receipt are base items and which
+              items are modifiers to the base items. For example, a main menu item (such as pizza) may
+              have serial number "1.0", and the associated modifiers (such as "extra cheese", "olives",
+              and "jalapenos") may have serial numbers "1.1", "1.2", and "1.3" respectively. Serialization
+              is limited to one decimal point, so you can only modify the base item. You cannot modify
+              a modifier with 1.x.x, and so on.
+        required:
+        - item_name
+        - item_qty
+        - item_amount
+        - menu_item_type
+        - menu_item_id
+        - menu_family
+        - menu_major_group
+        - serial_number
+    Menu-items:
+      title: Menu Items (Array Object)
+      x-stoplight:
+        id: fk2m3spgtavow
+      type: array
+      description: Returns a list of menu items in the API response
+      items:
+        x-stoplight:
+          id: 39aiodk09xagj
+        type: object
+        properties:
+          item_name:
+            type: string
+            x-stoplight:
+              id: zuuv1bygx021y
+            description: Name of the menu item
+          item_qty:
+            type: integer
+            x-stoplight:
+              id: 131hg1tvuvejg
+            description: Quantity ordered by the customer. If the item is a modifier (such as extra cheese
+              on a pizza base item), the quantity reflects the total number of base items included. For
+              example, if you have a pizza base item with a certain item ID and a quantity of two, and
+              the pizzas each have an extra cheese modifier added to them, then the modifier quantity
+              should be two to account for the modifier across both pizzas. This applies only to base
+              items of the same ID. If different base items include the same modifier, you do not need
+              to sum the modifiers.
+          item_amount:
+            type: number
+            x-stoplight:
+              id: i1ib310cm4q9z
+            format: float
+            description: The total price of the line item or the amount of the discount that you applied
+              to an item. In case of multiple quantities, this means the sum total of all item amounts.
+              This value is always represented as a positive number, even when the item is a discount.
+          menu_item_type:
+            type: string
+            x-stoplight:
+              id: pft0otv42wuox
+            description: 'The classification of the item. Choose from the following types based on the
+              item:
+
+
+              M - Menu item ( + or - )
+
+
+              S - Service item. Any item representing money received that is not a sale. For example,
+              service charges, delivery fees, tips, purchase of gift cards/certificates, etc.
+
+
+              D - Discount (negative). Either internal or Punchh will always evaluate lines as ( - ) regardless
+              of the sign assigned in the API call
+
+
+              T - Tax item. Taxes of all sorts
+
+
+              P - Payment item. Visa, MasterCard, cash, gift card/certificate (when used to pay for the
+              order)'
+          menu_item_id:
+            type: string
+            x-stoplight:
+              id: kf0plfkst335o
+            description: Unique identifier for the item
+          menu_family:
+            type: string
+            x-stoplight:
+              id: ioa8b7ctpuek0
+            description: The family that the item belongs to. The family is the subcategory for the item.
+              A blank value means the item does not belong to a family.
+          menu_major_group:
+            type: string
+            x-stoplight:
+              id: 1gk2qcww5dghn
+            description: The major group that the item belongs to. The major group is the parent category
+              for the item. A blank value means the item does not belong to a major group.
+          serial_number:
+            type: string
+            x-stoplight:
+              id: opx6xr7o23r4i
+            description: A serialized number that differentiates distinct menu items on a receipt. The
+              value identifies which items on the receipt are base items and which items are modifiers
+              to the base items. For example, a main menu item (such as pizza) may have serial number
+              "1.0", and the associated modifiers (such as "extra cheese", "olives", and "jalapenos")
+              may have serial numbers "1.1", "1.2", and "1.3" respectively. Serialization is limited to
+              one decimal point, so you can only modify the base item. You cannot modify a modifier with
+              1.x.x, and so on.
+    profile_field_answers:
+      type: object
+      description: Answers given by the user while filling in the user profile. The user submits answers
+        to profile field questions that are configured in the Punchh dashboard. A total of 25 answers
+        can be submitted. The keys range from 'upf0' to 'upf24'. If questions have multiple answers, the
+        values should be separated by a | character (pipe).
+      title: Profile Field Answers (Object)
+      properties:
+        profile_field_answers:
+          type: object
+          properties:
+            upf0:
+              type: string
+              description: 'Each profile field (upf0 - upf24) corresponds to a line from the configuration
+                in the Punchh platform. '
+            upf1:
+              type: string
+              description: 'Each profile field (upf0 - upf24) corresponds to a line from the configuration
+                in the Punchh platform. '
+            upf2:
+              type: string
+              description: 'Each profile field (upf0 - upf24) corresponds to a line from the configuration
+                in the Punchh platform. '
+      x-stoplight:
+        id: ca26660554526
+    user-relation-attribute:
+      type: object
+      properties:
+        relation:
+          type: string
+          description: Relation to the user. Valid values are "spouse" and "kid".
+        name:
+          type: string
+          description: Name of the relative
+        birthday:
+          type: string
+          enum:
+          - YYYY-MM-DD
+          format: date
+          description: Birthday of the relative
+      title: User Relation Attribute (Object)
+      x-stoplight:
+        id: ba3a39d648ee0
+  parameters:
+    Signature:
+      schema:
+        type: string
+        default: SIGNATURE_GOES_HERE
+      in: header
+      name: x-pch-digest
+      description: The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1)
+        for the API call
+      required: true
+    content type:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Content-Type
+      description: Set this header to **application/json**.
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Accept
+      description: Advertises which content types the client is able to understand
+      required: true
+    accept language:
+      schema:
+        type: string
+        default: en
+      in: header
+      name: Accept-Language
+      description: Set to the language you are using.
+    Authentication Token:
+      schema:
+        type: string
+        default: AUTHENTICATION_TOKEN_GOES_HERE
+      in: query
+      name: authentication_token
+      description: The authentication token of the user. You can retrieve this from the response of a
+        successful sign-in API call or through the [SSO process](/docs/dev-portal-online-ordering/9a41534336c87-sso-flow-for-web-and-mobile).
+    Client:
+      schema:
+        type: string
+        default: CLIENT_GOES_HERE
+      in: query
+      name: client
+      description: Client key of the business
+    User-Agent:
+      schema:
+        type: string
+        default: Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type
+      name: User-Agent
+      in: header
+      required: true
+      description: For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      required: true
+      description: You may pass the access_token instead of the authentication_token in Online Ordering
+        endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+x-ext-urls: {}

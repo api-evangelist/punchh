@@ -1,0 +1,40 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.partech.com/docs/dev-portal-pos/changelog
+provider: PAR Punchh
+providerId: punchh
+scheme: dated numbered entries
+current_version: null
+entry_count: 1
+description: >-
+  PAR publishes a dated changelog on the developer portal, but it currently
+  documents portal features rather than API surface changes. There is no
+  per-API release note stream, no version history for any of the 15 published
+  OpenAPI documents, and no RSS/Atom feed for developer changes.
+
+entries:
+  - id: '001'
+    date: '2026-03-17'
+    title: Introducing AI chat in docs
+    breaking: false
+    additions:
+      - AI chat assistant available on every page of the PAR developer portal, answering across documentation for all PAR products.
+    highlights:
+      - >-
+        Portal-level feature, not an API change. No Punchh endpoint, schema or
+        authentication behaviour was altered.
+    source: https://developers.partech.com/docs/dev-portal-pos/changelog
+
+gaps:
+  - >-
+    None of the 15 published OpenAPI documents carries a meaningful info.version
+    (all are "1.0"), so a consumer cannot diff releases from the specs either.
+  - >-
+    The Redemptions 1.0 to Redemptions 2.0 migration — the largest live change on
+    the Punchh API surface — is documented as separate "(Legacy)" and "(New)"
+    specs and a tutorial track, but it has no changelog entry and no dated
+    deprecation notice.
+  - >-
+    Product release news is published on the marketing blog
+    (https://punchh.com/blog/) rather than the developer portal; the 2025 product
+    release wrap-up post is the closest thing to an annual release note.

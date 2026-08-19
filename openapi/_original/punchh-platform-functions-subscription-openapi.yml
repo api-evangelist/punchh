@@ -1,0 +1,801 @@
+info:
+  title: Subscription API - Platform Functions
+  version: '1.0'
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+  description: 'Subscriptions is an add-on Punchh loyalty product that allows businesses to create subscription
+    plans to generate up-front revenue and offers benefits in addition to the standard benefits that unsubscribed
+    members of the loyalty program receive.
+
+    The Subscription APIs are designed in a way that businesses can programatically achieve the benefits
+    of the subscription for their guest in a mobile app or website. Also, there are aspects that require
+    calling the API without any guest authentication (e.g., to control the auto-renewal of the subscription
+    on behalf of the guest).'
+paths:
+  /api2/dashboard/subscriptions/purchase:
+    post:
+      summary: Purchase Subscription
+      operationId: post-api2-dashboard-subscriptions-purchase
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    subscription_id: 1234
+                    start_time: '2021-05-18 11:34:46'
+                    end_time: '2021-05-28 11:34:46'
+                    external_plan_identifier: EXTERNAL_PLAN_IDENTIFIER_GOES_HERE
+                    location_id: 12345
+                properties:
+                  subscription_id:
+                    type: integer
+                    format: int64
+                    description: System-generated unique ID of the subscription that is issued for a guest
+                    examples:
+                    - 123
+                  start_time:
+                    type: string
+                    minLength: 1
+                    format: date-time
+                    description: Date and time (in ISO 8601 format) from which the subscription plan purchased
+                      for the guest will become active
+                    examples:
+                    - '2021-05-18 11:34:46'
+                  end_time:
+                    type: string
+                    minLength: 1
+                    format: date-time
+                    description: Date and time (in ISO 8601 format) until the subscription plan purchased
+                      for the guest will remain active
+                    examples:
+                    - '2021-05-28 11:34:46'
+                  external_plan_identifier:
+                    type: string
+                    description: 'UPC/SKU of the subscription plan as present on third-party applications
+                      of enterprise businesses and is configured on this subscription plan. This will
+                      be stored in the database, and the business can use it for analytics purposes. '
+                  location_id:
+                    type: integer
+                    x-stoplight:
+                      id: 2y9gerkqfxe32
+                    description: ID of a valid Punchh location where the subscription plan is purchased.
+                      It identifies the origin of the subscription purchase for the loyalty guest. If
+                      an invalid or missing location_id is passed, the API returns a 400 Bad Request error
+                      with the message "Invalid or missing location_id".
+                required:
+                - subscription_id
+                - start_time
+                - end_time
+        '400':
+          description: Bad Request - Invalid or missing location_id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    x-stoplight:
+                      id: azkv213niqwq4
+              examples:
+                Invalid or missing location_id:
+                  value:
+                    error: Invalid or missing location_id
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    error: You need to sign in or sign up before continuing.
+                properties:
+                  error:
+                    type: string
+                    minLength: 1
+                    examples:
+                    - You need to sign in or sign up before continuing.
+                required:
+                - error
+              examples:
+                example:
+                  value:
+                    error: You need to sign in or sign up before continuing.
+        '406':
+          description: Not Acceptable
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    invalid: Subscription cannot be renewed.
+                properties:
+                  invalid:
+                    type: string
+                    minLength: 1
+                    examples:
+                    - Subscription cannot be renewed.
+              examples:
+                Invalid User Subscription:
+                  value:
+                    invalid_subscription: Invalid User Subscription.
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    errors:
+                      disabled_feature: Your current loyalty program configuration does not support this
+                        feature. Please connect with your Customer Success representative for resolution
+                        of the issue.
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      disabled_feature:
+                        type: string
+                        minLength: 1
+                        examples:
+                        - Your current loyalty program configuration does not support this feature. Please
+                          connect with your Customer Success representative for resolution of the issue.
+              examples:
+                Subscriptions is not enabled:
+                  value:
+                    errors:
+                      disabled_feature: Your current loyalty program configuration does not support this
+                        feature. Please connect with your Customer Success representative for resolution
+                        of the issue.
+                Invalid Plan Id:
+                  value:
+                    errors:
+                      base:
+                      - Invalid Plan ID
+                Auto renewal is set as true for a single use subscription:
+                  value:
+                    errors:
+                      base:
+                      - This is a single use subscription and cannot be renewed automatically. Please
+                        check request to send 'auto_renewal' as 'false'.
+                Plan not active:
+                  value:
+                    errors:
+                      base:
+                      - Plan is not active.
+                Plan Expired:
+                  value:
+                    errors:
+                      base:
+                      - Plan has expired.
+                Plan is not available for purchase:
+                  value:
+                    errors:
+                      base:
+                      - Plan is not available for purchase.
+                Start time is blank:
+                  value:
+                    errors:
+                      start_time:
+                      - Start time can't be blank
+                End Time is Blank:
+                  value:
+                    errors:
+                      end_time:
+                      - End time can't be blank
+                Invalid Price:
+                  value:
+                    errors:
+                      price:
+                      - Price is not a number
+                Recurring payments option is disabled:
+                  value:
+                    errors:
+                      recurring_payment_off_for_adapter:
+                      - Payment Service not available.
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Content-Type
+        description: application/json
+        required: true
+      - schema:
+          type: string
+        in: header
+        name: Accept
+        description: application/json
+        required: true
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: Bearer token for admin authorization, who is making a call on behalf of the customer
+        required: true
+      description: 'This API allows third-party platforms (e.g., middleware that interfaces with the mobile
+        app of the business) to purchase a new subscription plan in the Punchh platform without the need
+        for guests to be logged in to the Punchh platform.
+
+
+        If a business is migrating active subscriptions from an incumbent system to the Punchh platform,
+        the subscription ID for each user in the incumbent system can be mapped to the corresponding subscription
+        ID in the Punchh platform.
+
+
+        If the Single Use setting is enabled for the subscription plan, and if you send auto_renewal as
+        `true` in the Purchase Subscription API, then the API returns an error: This is a single use subscription
+        and cannot be renewed automatically. Please check the request to send auto_renewal as false.'
+      x-stoplight:
+        id: 31a7819307f07
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  format: int64
+                  description: 'System-generated unique ID of a guest created on the Punchh platform
+
+                    '
+                  examples:
+                  - 1234
+                start_time:
+                  type: string
+                  minLength: 1
+                  format: date-time
+                  description: Date and time (in ISO 8601 format) from which the subscription being issued
+                    will become active
+                  examples:
+                  - '2021-05-18 11:34:46'
+                plan_id:
+                  type: integer
+                  format: int64
+                  description: System-generated unique ID of a subscription plan created in the Punchh
+                    platform. A subscription based on this plan ID will be issued to the guest when a
+                    purchase call is made.
+                  examples:
+                  - 12
+                end_time:
+                  type: string
+                  minLength: 1
+                  format: date-time
+                  description: 'Date and time (in ISO 8601 format) until which the subscription being
+                    issued will remain active '
+                  examples:
+                  - '2021-05-28 11:34:46'
+                purchase_price:
+                  type: number
+                  description: Price charged to the user for purchasing the subscription plan
+                  format: float
+                  examples:
+                  - 20
+                auto_renewal:
+                  type: boolean
+                  default: false
+                  description: A guest’s preference of having a newly purchased subscription plan get
+                    automatically renewed per the plan's schedule. Third parties where auto renewal is
+                    considered default should send this value as "true".
+                migration:
+                  type: boolean
+                  default: false
+                  description: This key determines if a particular purchase call should be considered
+                    as a fresh purchase or the migration of an existing subscription from the incumbent
+                    system to the Punchh platform. A value of "true" indicates that this purchase is a
+                    migration, and value of "false" indicates that this is a fresh purchase.
+                lifetime_debits:
+                  type: number
+                  format: float
+                  description: Total discounted units under this plan ID, issued in the incumbent system
+                    before the guest migrated over to Punchh. This value should be sent only once at the
+                    time of making the purchase call for migration. This is relevant only if the value
+                    of the "migration" parameter is "true".
+                  examples:
+                  - 30
+                lifetime_savings:
+                  type: number
+                  format: float
+                  description: Total volume of savings under this plan ID, issued in the incumbent system
+                    before the guest migrated over to Punchh. This value should be sent only once at the
+                    time of making the purchase call for migration. This is relevant only if the value
+                    of the "migration" parameter is "true".
+                  examples:
+                  - 50
+                initial_debits:
+                  type: number
+                  format: float
+                  description: Number of discounted units for the migrated subscription. Based on this
+                    value, further discounting of units will be done in the Punchh system after the guest
+                    migrates. This value should not be included in lifetime_debits and should be sent
+                    only once at the time of making the purchase call for migration. This is relevant
+                    only if the value of the "migration" parameter is "true".
+                  examples:
+                  - 10
+                initial_savings:
+                  type: number
+                  format: float
+                  description: 'Volume of savings for the migrated subscription. Further savings in the
+                    Punchh platform will be added to this. This value should not be included in lifetime_savings
+                    and should be sent only once at the time of making the purchase call for migration.
+                    This is relevant only if the value of the "migration" parameter is "true". '
+                  examples:
+                  - 20
+                source_subscription_id:
+                  type: integer
+                  description: This key should be sent if the purchase call is being made because a guest
+                    decides to change the subscription plan. In all other cases, this key should be sent
+                    as null.
+                  format: int64
+                  examples:
+                  - 'null'
+                location_id:
+                  type: integer
+                  x-stoplight:
+                    id: pfyeucrbvxgv2
+                  description: ID of the location where the subscription plan is purchased. It identifies
+                    the origin of the subscription purchase for the loyalty guest. If an invalid or missing
+                    location_id is passed, the API returns a 400 Bad Request error with the message "Invalid
+                    or missing location_id".
+              required:
+              - user_id
+              - start_time
+              - plan_id
+              - end_time
+              - purchase_price
+              - auto_renewal
+              - location_id
+            examples:
+              Request:
+                value:
+                  user_id: 1234
+                  start_time: '2021-05-18 11:34:46'
+                  plan_id: 12
+                  end_time: '2021-05-28 11:34:46'
+                  purchase_price: 20
+                  auto_renewal: false
+                  migration: false
+                  lifetime_debits: 30
+                  lifetime_savings: 50
+                  initial_debits: 10
+                  initial_savings: 20
+                  source_subscription_id: 'null'
+                  location_id: 12345
+        description: ''
+  /api2/dashboard/subscriptions/renew:
+    parameters: []
+    post:
+      summary: Renew Subscription
+      operationId: post-api2-dashboard-subscription
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    subscription_id: 40
+                    start_time: '2021-04-20T21:09:38Z'
+                    end_time: '2021-04-20T21:09:38Z'
+                properties:
+                  subscription_id:
+                    type: integer
+                    description: System-generated unique ID of the subscription that is issued for a guest
+                    examples:
+                    - 40
+                  start_time:
+                    type: string
+                    minLength: 1
+                    format: date-time
+                    description: Date and time (in ISO 8601 format) from which the renewed subscription
+                      will become active
+                    examples:
+                    - '2021-04-20T21:09:38Z'
+                  end_time:
+                    type: string
+                    minLength: 1
+                    format: date-time
+                    description: Date and time (in ISO 8601 format) from until which the renewed subscription
+                      will remain active
+                    examples:
+                    - '2021-04-20T21:09:38Z'
+                  external_plan_identifier:
+                    type: string
+                    description: 'UPC/SKU of the subscription plan as present on third-party applications
+                      of enterprise businesses and is configured on this subscription plan. This will
+                      be stored in the database, and the business can use it for analytics purposes. '
+                required:
+                - subscription_id
+                - start_time
+                - end_time
+              examples:
+                example:
+                  value:
+                    subscription_id: 40
+                    start_time: '2021-04-20T21:09:38Z'
+                    end_time: '2021-04-20T21:09:38Z'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    error: You need to sign in or sign up before continuing.
+                properties:
+                  error:
+                    type: string
+                    minLength: 1
+                    examples:
+                    - You need to sign in or sign up before continuing.
+                required:
+                - error
+              examples:
+                example:
+                  value:
+                    error: You need to sign in or sign up before continuing.
+        '406':
+          description: Not Acceptable
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    invalid: Subscription cannot be renewed.
+                properties:
+                  invalid:
+                    type: string
+                    minLength: 1
+                    examples:
+                    - Subscription cannot be renewed.
+              examples:
+                Invalid User Subscription:
+                  value:
+                    invalid_subscription: Invalid User Subscription.
+                Subscription is not of auto renewal type:
+                  value:
+                    invalid_subscription: Subscription cannot be renewed.
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    errors:
+                      disabled_feature: Your current loyalty program configuration does not support this
+                        feature. Please connect with your Customer Success representative for resolution
+                        of the issue.
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      disabled_feature:
+                        type: string
+                        minLength: 1
+                        examples:
+                        - Your current loyalty program configuration does not support this feature. Please
+                          connect with your Customer Success representative for resolution of the issue.
+              examples:
+                Subscriptions is not enabled:
+                  value:
+                    errors:
+                      disabled_feature: Your current loyalty program configuration does not support this
+                        feature. Please connect with your Customer Success representative for resolution
+                        of the issue.
+                Invalid Plan Id:
+                  value:
+                    errors:
+                      base:
+                      - Invalid Plan ID
+                Plan not active:
+                  value:
+                    errors:
+                      base:
+                      - Plan is not active.
+                Plan Expired:
+                  value:
+                    errors:
+                      base:
+                      - Plan has expired.
+                Plan is not available for purchase:
+                  value:
+                    errors:
+                      base:
+                      - Plan is not available for purchase.
+                Start time is blank:
+                  value:
+                    errors:
+                      start_time:
+                      - Start time can't be blank
+                End Time is Blank:
+                  value:
+                    errors:
+                      end_time:
+                      - End time can't be blank
+                Invalid Price:
+                  value:
+                    errors:
+                      price:
+                      - Price is not a number
+      description: This API allows the business to renew subscriptions by making back-end calls on the
+        designated date of renewal registered on the business end.
+      parameters:
+      - schema:
+          type: string
+          default: application/json
+        in: header
+        name: Content-Type
+        description: application/json
+        required: true
+      - schema:
+          type: string
+          default: application/json
+        in: header
+        name: Accept
+        description: application/json
+        required: true
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: Bearer token for admin authorization, who is making a call on behalf of the customer
+        required: true
+      x-stoplight:
+        id: 69ba7735654cb
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              x-examples:
+                example-1:
+                  subscription_id: '35'
+                  start_time: '2021-04-20T21:09:38Z'
+                  end_time: '2021-05-20T21:09:38Z'
+                  purchase_price: '23.09'
+              properties:
+                subscription_id:
+                  type: integer
+                  description: Unique ID of the subscription plan that was issued to the guest and is
+                    being renewed
+                  examples:
+                  - 38
+                start_time:
+                  type: string
+                  minLength: 1
+                  format: date-time
+                  description: Date and time (in ISO 8601 format) from which the renewed subscription
+                    will become active
+                  examples:
+                  - '2021-04-20T21:09:38Z'
+                end_time:
+                  type: string
+                  minLength: 1
+                  format: date-time
+                  description: Date and time (in ISO 8601 format) until which the renewed subscription
+                    will remain active
+                  examples:
+                  - '2021-04-20T21:09:38Z'
+                purchase_price:
+                  type: number
+                  format: float
+                  description: Cost of renewal of one unit of the subscription plan that is being renewed
+                  examples:
+                  - 23.98
+                new_plan_id:
+                  type: integer
+                  description: This is sent only if the guest wants to switch to a different subscription
+                    plan (e.g., changing from a monthly plan to a quarterly plan)
+                  examples:
+                  - 24
+              required:
+              - subscription_id
+              - start_time
+              - end_time
+              - purchase_price
+            examples:
+              example:
+                value:
+                  subscription_id: 38
+                  start_time: '2021-04-20T21:09:38Z'
+                  end_time: '2021-04-20T21:09:38Z'
+                  purchase_price: 23.98
+  /api2/dashboard/subscriptions/cancel:
+    patch:
+      summary: Cancel Subscription (Turn off Auto Renewal)
+      operationId: patch-api2-dashboard-subscriptions-cancel
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 1
+                uniqueItems: true
+                x-examples:
+                  example-1:
+                  - Subscription auto renewal cancelled.
+                description: Cancellation response from the server.
+                items:
+                  type: string
+                  examples:
+                  - Subscription auto renewal cancelled.
+              examples:
+                200 Ok:
+                  value:
+                  - Subscription auto renewal cancelled.
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    error: You need to sign in or sign up before continuing.
+                properties:
+                  error:
+                    type: string
+                    minLength: 1
+                    examples:
+                    - You need to sign in or sign up before continuing.
+                required:
+                - error
+              examples:
+                example:
+                  value:
+                    error: You need to sign in or sign up before continuing.
+        '406':
+          description: Not Acceptable
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    invalid: Subscription cannot be renewed.
+                properties:
+                  invalid:
+                    type: string
+                    minLength: 1
+                    examples:
+                    - Subscription cannot be renewed.
+              examples:
+                Invalid User Subscription:
+                  value:
+                    invalid_subscription: Invalid User Subscription.
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    errors:
+                      disabled_feature: Your current loyalty program configuration does not support this
+                        feature. Please connect with your Customer Success representative for resolution
+                        of the issue.
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      disabled_feature:
+                        type: string
+                        minLength: 1
+                        examples:
+                        - Your current loyalty program configuration does not support this feature. Please
+                          connect with your Customer Success representative for resolution of the issue.
+              examples:
+                Subscriptions is not enabled:
+                  value:
+                    errors:
+                      disabled_feature: Your current loyalty program configuration does not support this
+                        feature. Please connect with your Customer Success representative for resolution
+                        of the issue.
+                Plan not active:
+                  value:
+                    errors:
+                      base:
+                      - Plan is not active.
+      description: This API can be used to cancel an active subscripition.
+      parameters:
+      - schema:
+          type: string
+          default: application/json
+        in: header
+        name: Content-Type
+        description: application/json
+        required: true
+      - schema:
+          type: string
+          default: application/json
+        in: header
+        name: Accept
+        description: application/json
+        required: true
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: Bearer token for admin authorization, who is making a call on behalf of the customer
+      x-stoplight:
+        id: 2d76036913613
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                example-1:
+                  subscription_id: '126'
+                  cancellation_reason: Do not like your service
+                  cancellation_type: hard_cancelled
+              properties:
+                subscription_id:
+                  type: integer
+                  format: int64
+                  description: Punchh-generated unique ID of the subscription that needs to be cancelled
+                  examples:
+                  - 123
+                cancellation_reason:
+                  type: string
+                  minLength: 1
+                  description: Reason provided by the admin at the time of cancellation
+                  examples:
+                  - Guest does not need service any more.
+                cancellation_type:
+                  type: string
+                  minLength: 1
+                  enum:
+                  - hard_cancelled
+                  - soft_cancelled
+                  description: 'Type of cancellation -- either "hard_cancelled" or "soft_cancelled". If
+                    “soft_cancelled”, end users can enjoy the benefits until the “end_time” of the subscription.
+                    If “hard_cancelled”, subscription benefits are terminated immediately.  '
+                  examples:
+                  - hard_cancelled
+              required:
+              - subscription_id
+              - cancellation_reason
+              - cancellation_type
+            examples:
+              Example Request:
+                value:
+                  subscription_id: '126'
+                  cancellation_reason: Do not like your service
+                  cancellation_type: hard_cancelled
+x-stoplight:
+  id: 7e93bcfd755c7
+openapi: 3.1.1
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+components:
+  schemas: {}
+  securitySchemes: {}
+x-ext-urls: {}

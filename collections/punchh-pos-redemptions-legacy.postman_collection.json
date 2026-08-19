@@ -1,0 +1,781 @@
+{
+  "item": [
+    {
+      "id": "2befdead-2837-46d3-a639-d99d00daac9c",
+      "name": "Possible Redemptions (Redemptions 1.0)",
+      "request": {
+        "name": "Possible Redemptions (Redemptions 1.0)",
+        "description": {
+          "content": "Use this API to verify that a redemption can be applied on a given check. \n\nNote: The API returns a 422 error message when a user attempts to redeem a loyalty/ non-loyalty discount at a location that is disabled for redemption by the business. This error message can be customized for the businesses in the Punchh platform to provide them greater flexibility and control over the user experience during redemption attempts at such locations. Contact your Punchh representative for more information about this Punchh platform configuration.\n\n## Rules To Select Discount Type\n\nFollowing are the rules to decide what `discount_type` to use in the Possible Redemptions and Create Redemption API requests:\n\n### `reward`\nIn the User Lookup and Fetch Balance API request, if any item in the `rewards` array has either `type` as `reward` or does not have a `type` key, use its `id` to pass in the `reward_id` parameter and use `discount_type` = `reward` in the Possible Redemptions and Create Redemption API requests.\n\n### `redeemable`\nIn the User Lookup and Fetch Balance API request, if any item in the `rewards` array has `type` as `redeemable`, use its `id` to pass in the `redeemable_id` parameter and use `discount_type` = `redeemable` in the Possible Redemptions and Create Redemption API requests.\n\n### `discount_amount`\nIn the User Lookup and Fetch Balance API request, if the value of `banked_rewards` returned in the `balance` object is greater than 0, then pass a dollar amount in the `redeemed_points` parameter not exceeding the value of `banked_rewards` and use `discount_type` = `discount_amount` in the Possible Redemptions and Create Redemption API requests.\n\n### `card_completion`\nIn the User Lookup and Fetch Balance API request, if the value of `unredeemed_cards` returned in the `balance` object is greater than 0, then use `discount_type` = `card_completion` in the Possible Redemptions and Create Redemption API requests.\n\n### `redemption_code`\nWhen Redemption Code or Punchh Coupon Code is entered on the POS either by scanning it using the QR code scanner or by manually entering it, pass that code in the `redemption_code` parameter and use `discount_type` = `redemption_code` in the Possible Redemptions and Create Redemption API requests.\n\n### `fuel_reward`\nIt allows a user to use the fuel discount balance, and it can be redeemed when the user is identified on the check. Use `discount_type` as `fuel_reward` in API requests.\n\n### `subscription`\nIt allows a user to redeem subscription related benefits. In the User Lookup and Fetch Balance API request, if the `subscriptions` object has `subscription_id`, use this ID to pass in the `subscription_id` parameter and use `discount_type` = `subscription` in the Possible Redemptions and Create Redemption API requests.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "pos",
+            "redemptions",
+            "possible"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "Short code for locale variant (e.g., fr-ca, es-ES, en-EN, etc.)",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"discount_type\": \"<string>\",\n  \"reward_id\": \"<long>\",\n  \"redeemable_id\": \"<string>\",\n  \"redeemed_points\": \"<string>\",\n  \"redemption_code\": \"<string>\",\n  \"subscription_id\": \"<string>\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"<string>\",\n      \"menu_item_id\": \"<string>\",\n      \"item_amount\": \"<number>\",\n      \"menu_item_type\": \"<string>\",\n      \"menu_major_group\": \"<string>\",\n      \"menu_family\": \"<string>\",\n      \"serial_number\": \"<string>\",\n      \"item_qty\": \"<number>\"\n    },\n    {\n      \"item_name\": \"<string>\",\n      \"menu_item_id\": \"<string>\",\n      \"item_amount\": \"<number>\",\n      \"menu_item_type\": \"<string>\",\n      \"menu_major_group\": \"<string>\",\n      \"menu_family\": \"<string>\",\n      \"serial_number\": \"<string>\",\n      \"item_qty\": \"<number>\"\n    }\n  ],\n  \"receipt_amount\": \"<double>\",\n  \"subtotal_amount\": \"<double>\",\n  \"receipt_datetime\": \"<dateTime>\",\n  \"transaction_no\": \"<string>\",\n  \"punchh_key\": \"<string>\",\n  \"email\": \"<string>\",\n  \"single_scan_code\": \"<string>\",\n  \"cc_last4\": \"<integer>\",\n  \"employee_id\": \"<string>\",\n  \"employee_name\": \"<string>\",\n  \"external_uid\": \"<string>\",\n  \"channel\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "a3e44b48-32d3-4eae-8a64-0a7814529b11",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "redemptions",
+                "possible"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Short code for locale variant (e.g., fr-ca, es-ES, en-EN, etc.)",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discount_type\": \"subscription\",\n  \"subscription_id\": \"1111111\",\n  \"cc_last4\": 1111,\n  \"employee_id\": 7,\n  \"employee_name\": \"EMPLOYEE_NAME_GOES_HERE\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"Whiterice\",\n      \"item_qty\": 1,\n      \"item_amount\": 2.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"12\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\",\n      \"serial_number\": \"1.0\"\n    }\n  ],\n  \"subtotal_amount\": 10.72,\n  \"receipt_amount\": 10.72,\n  \"receipt_datetime\": \"2023-02-18T18:05:01+05:30\",\n  \"transaction_no\": 5678,\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\",\n  \"punchh_key\": \"PUNCHH_KEY_GOES_HERE\",\n  \"email\": \"test@example.com\",\n  \"channel\": \"pos\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"status\": \"Redeemed at February 23, 2026 13:02 by <user> at Punchh Demo. It can be honored.\",\n  \"redemption_amount\": 8,\n  \"category\": \"redeemable\",\n  \"qualified_menu_items\": [\n    {\n      \"item_name\": \"Sandwich\",\n      \"item_qty\": 1,\n      \"item_amount\": 5,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"102000\",\n      \"menu_family\": \"Sandwich\",\n      \"menu_major_group\": \"Sandwich\",\n      \"serial_number\": \"1.0\"\n    },\n    {\n      \"item_name\": \"Coke\",\n      \"item_qty\": 1,\n      \"item_amount\": 7,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"102000\",\n      \"menu_family\": \"Coke\",\n      \"menu_major_group\": \"Coke\",\n      \"serial_number\": \"2.0\"\n    }\n  ],\n  \"discount_distribution_items\": [\n    {\n      \"item_name\": \"Sandwich DISCOUNT\",\n      \"item_qty\": 1,\n      \"item_amount\": -3,\n      \"menu_item_type\": \"R\",\n      \"menu_item_id\": \"102000\",\n      \"menu_family\": \"Sandwich\",\n      \"menu_major_group\": \"Sandwich\",\n      \"serial_number\": 1\n    },\n    {\n      \"item_name\": \"Coke DISCOUNT\",\n      \"item_qty\": 1,\n      \"item_amount\": -5,\n      \"menu_item_type\": \"R\",\n      \"menu_item_id\": \"102000\",\n      \"menu_family\": \"Coke\",\n      \"menu_major_group\": \"Coke\",\n      \"serial_number\": 2\n    }\n  ],\n  \"max_applicable_quantity\": 1,\n  \"campaign_name\": \"Mass Campaign Offer\",\n  \"redemption_id\": 21762,\n  \"redemption_code\": \"REDEMPTION_CODE_GOES_HERE\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "e2019edd-137b-4452-8933-353a04778050",
+          "name": "Unprocessable Entity - Unauthorized attempt to redeem a discount at a restricted location",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "redemptions",
+                "possible"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Short code for locale variant (e.g., fr-ca, es-ES, en-EN, etc.)",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discount_type\": \"subscription\",\n  \"subscription_id\": \"1111111\",\n  \"cc_last4\": 1111,\n  \"employee_id\": 7,\n  \"employee_name\": \"EMPLOYEE_NAME_GOES_HERE\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"Whiterice\",\n      \"item_qty\": 1,\n      \"item_amount\": 2.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"12\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\",\n      \"serial_number\": \"1.0\"\n    }\n  ],\n  \"subtotal_amount\": 10.72,\n  \"receipt_amount\": 10.72,\n  \"receipt_datetime\": \"2023-02-18T18:05:01+05:30\",\n  \"transaction_no\": 5678,\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\",\n  \"punchh_key\": \"PUNCHH_KEY_GOES_HERE\",\n  \"email\": \"test@example.com\",\n  \"channel\": \"pos\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "[\n  \"The location (location name) has been disabled for redemption. Please alert a staff member if you think this is an error.\"\n]",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "e20eabad-45f4-4bf7-b4b3-d811525af9e6",
+      "name": "Create Redemption (Redemptions 1.0)",
+      "request": {
+        "name": "Create Redemption (Redemptions 1.0)",
+        "description": {
+          "content": "Redeems a card, reward, redeemable, or discount specified in the discount_type parameter against a receipt. Every request must have phone, email, card_number, or redemption_code as a parameter. \n\nPunchh evaluates eligibility during the Possible Redemptions call using the receipt details provided (item name, price, quantity, identifiers, etc.). During the Create Redemption call, Punchh revalidates the same receipt to ensure the qualifying conditions are still met before honoring the redemption. \n\nIf any item attributes change between the two calls, Punchh may be unable to match the qualifying items, which can cause the Create Redemption call to fail or return a different result—even if the Possible Redemptions call was successful.\n\nNote: The API returns a 422 error message when a user attempts to redeem a loyalty/ non-loyalty discount at a location that is disabled for redemption by the business. This error message can be customized for the businesses in the Punchh platform to provide them greater flexibility and control over the user experience during redemption attempts at such locations. Contact your Punchh representative for more information about this Punchh platform configuration.\n\n## Rules to Select Discount Type\n\nFollowing are the rules to decide what `discount_type` to use in the Possible Redemptions and Create Redemption API requests:\n\n### `reward`\nIn the User Lookup and Fetch Balance API request, if any item in the `rewards` array has either `type` as `reward` or does not have a `type` key, use its `id` to pass in the `reward_id` parameter and use `discount_type` = `reward` in the Possible Redemptions and Create Redemption API requests.\n\n### `redeemable`\nIn the User Lookup and Fetch Balance API request, if any item in the `rewards` array has `type` as `redeemable`, use its `id` to pass in the `redeemable_id` parameter and use `discount_type` = `redeemable` in the Possible Redemptions and Create Redemption API requests.\n\n### `discount_amount`\nIn the User Lookup and Fetch Balance API request, if the value of `banked_rewards` returned in the `balance` object is greater than 0, then pass a dollar amount in the `redeemed_points` parameter not exceeding the value of `banked_rewards` and use `discount_type` = `discount_amount` in the Possible Redemptions and Create Redemption API requests.\n\n### `card_completion`\nIn the User Lookup and Fetch Balance API request, if the value of `unredeemed_cards` returned in the `balance` object is greater than 0, then use `discount_type` = `card_completion` in the Possible Redemptions and Create Redemption API requests.\n\n### `redemption_code`\nWhen Redemption Code or Punchh Coupon Code is entered on the POS either by scanning it using the QR code scanner or by manually entering it, pass that code in the `redemption_code` parameter and use `discount_type` = `redemption_code` in the Possible Redemptions and Create Redemption API requests.\n\n### `fuel_reward`\nIt allows a user to use the fuel discount balance, and it can be redeemed when the user is identified on the check. Use `discount_type` as `fuel_reward` in API requests.\n\n### `subscription`\nIt allows a user to redeem subscription related benefits. In the User Lookup and Fetch Balance API request, if the `subscriptions` object has `subscription_id`, use this ID to pass in the `subscription_id` parameter and use `discount_type` = `subscription` in the Possible Redemptions and Create Redemption API requests.\n",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "pos",
+            "redemptions"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "Short code for locale variant (e.g., fr-ca, es-ES, en-EN, etc.)",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"discount_type\": \"<string>\",\n  \"reward_id\": \"<long>\",\n  \"redeemable_id\": \"<string>\",\n  \"redeemed_points\": \"<string>\",\n  \"redemption_code\": \"<string>\",\n  \"subscription_id\": \"<string>\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"<string>\",\n      \"menu_item_id\": \"<string>\",\n      \"item_amount\": \"<number>\",\n      \"menu_item_type\": \"<string>\",\n      \"menu_major_group\": \"<string>\",\n      \"menu_family\": \"<string>\",\n      \"serial_number\": \"<string>\",\n      \"item_qty\": \"<number>\"\n    },\n    {\n      \"item_name\": \"<string>\",\n      \"menu_item_id\": \"<string>\",\n      \"item_amount\": \"<number>\",\n      \"menu_item_type\": \"<string>\",\n      \"menu_major_group\": \"<string>\",\n      \"menu_family\": \"<string>\",\n      \"serial_number\": \"<string>\",\n      \"item_qty\": \"<number>\"\n    }\n  ],\n  \"receipt_amount\": \"<double>\",\n  \"subtotal_amount\": \"<double>\",\n  \"receipt_datetime\": \"<dateTime>\",\n  \"transaction_no\": \"<string>\",\n  \"punchh_key\": \"<string>\",\n  \"email\": \"<string>\",\n  \"single_scan_code\": \"<string>\",\n  \"cc_last4\": \"<integer>\",\n  \"employee_id\": \"<string>\",\n  \"employee_name\": \"<string>\",\n  \"external_uid\": \"<string>\",\n  \"channel\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "e793ded1-9680-4206-8186-32a20aede2fc",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "redemptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Short code for locale variant (e.g., fr-ca, es-ES, en-EN, etc.)",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discount_type\": \"subscription\",\n  \"subscription_id\": \"1111111\",\n  \"cc_last4\": 1111,\n  \"employee_id\": 7,\n  \"employee_name\": \"EMPLOYEE_NAME_GOES_HERE\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"Whiterice\",\n      \"item_qty\": 1,\n      \"item_amount\": 2.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"12\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\",\n      \"serial_number\": \"1.0\"\n    }\n  ],\n  \"subtotal_amount\": 10.72,\n  \"receipt_amount\": 10.72,\n  \"receipt_datetime\": \"2023-02-18T18:05:01+05:30\",\n  \"transaction_no\": 5678,\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\",\n  \"punchh_key\": \"PUNCHH_KEY_GOES_HERE\",\n  \"email\": \"test@example.com\",\n  \"channel\": \"pos\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"status\": \"Redeemed at February 23, 2026 13:02 by <user> at Punchh Demo. It can be honored.\",\n  \"redemption_amount\": 8,\n  \"category\": \"redeemable\",\n  \"qualified_menu_items\": [\n    {\n      \"item_name\": \"Sandwich\",\n      \"item_qty\": 1,\n      \"item_amount\": 5,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"102000\",\n      \"menu_family\": \"Sandwich\",\n      \"menu_major_group\": \"Sandwich\",\n      \"serial_number\": \"1.0\"\n    },\n    {\n      \"item_name\": \"Coke\",\n      \"item_qty\": 1,\n      \"item_amount\": 7,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"102000\",\n      \"menu_family\": \"Coke\",\n      \"menu_major_group\": \"Coke\",\n      \"serial_number\": \"2.0\"\n    }\n  ],\n  \"discount_distribution_items\": [\n    {\n      \"item_name\": \"Sandwich DISCOUNT\",\n      \"item_qty\": 1,\n      \"item_amount\": -3,\n      \"menu_item_type\": \"R\",\n      \"menu_item_id\": \"102000\",\n      \"menu_family\": \"Sandwich\",\n      \"menu_major_group\": \"Sandwich\",\n      \"serial_number\": 1\n    },\n    {\n      \"item_name\": \"Coke DISCOUNT\",\n      \"item_qty\": 1,\n      \"item_amount\": -5,\n      \"menu_item_type\": \"R\",\n      \"menu_item_id\": \"102000\",\n      \"menu_family\": \"Coke\",\n      \"menu_major_group\": \"Coke\",\n      \"serial_number\": 2\n    }\n  ],\n  \"max_applicable_quantity\": 1,\n  \"campaign_name\": \"Mass Campaign Offer\",\n  \"redemption_id\": 21762,\n  \"redemption_code\": \"REDEMPTION_CODE_GOES_HERE\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "aa0647bd-06dc-4cd9-9f62-358996d1ca10",
+          "name": "Unprocessable Entity - Unauthorized attempt to redeem a discount at a restricted location",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "redemptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Short code for locale variant (e.g., fr-ca, es-ES, en-EN, etc.)",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discount_type\": \"subscription\",\n  \"subscription_id\": \"1111111\",\n  \"cc_last4\": 1111,\n  \"employee_id\": 7,\n  \"employee_name\": \"EMPLOYEE_NAME_GOES_HERE\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"Whiterice\",\n      \"item_qty\": 1,\n      \"item_amount\": 2.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"12\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\",\n      \"serial_number\": \"1.0\"\n    }\n  ],\n  \"subtotal_amount\": 10.72,\n  \"receipt_amount\": 10.72,\n  \"receipt_datetime\": \"2023-02-18T18:05:01+05:30\",\n  \"transaction_no\": 5678,\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\",\n  \"punchh_key\": \"PUNCHH_KEY_GOES_HERE\",\n  \"email\": \"test@example.com\",\n  \"channel\": \"pos\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "[\n  \"The location (location name) has been disabled for redemption. Please alert a staff member if you think this is an error.\"\n]",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "819d007e-21f7-470d-8c3f-9c7131f3e333",
+      "name": "Void Redemption (Redemptions 1.0)",
+      "request": {
+        "name": "Void Redemption (Redemptions 1.0)",
+        "description": {
+          "content": "Voids a processed redemption. After a redemption is voided successfully, the offer tied to the redemption is returned to the guest's account.\n\n<b>Note</b>: The Void Redemption API allows you to cancel a redemption without any time restrictions for most types of redemptions. However, for coupons and promos, redemptions can only be voided within 24 hours of the redemption process.\n\nFor information about voiding multiple redemptions, see [this page](/docs/dev-portal-pos/b3A6NTAyODM5MjM-void-multiple-redemptions).\n",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "pos",
+            "redemptions"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "DELETE",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"<string>\",\n  \"single_scan_code\": \"<string>\",\n  \"redemption_id\": \"<long>\",\n  \"redemption_code\": \"<string>\",\n  \"transaction_no\": \"<string>\",\n  \"card_number\": \"<string>\",\n  \"phone\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "28113633-b340-4517-bd36-b70646a9613f",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "redemptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"redemption_id\": 717344\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Accepted",
+          "code": 202,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "dcbd4438-f6a4-4640-b546-fde5f084ae09",
+      "name": "Void Multiple Redemptions (Redemptions 1.0)",
+      "request": {
+        "name": "Void Multiple Redemptions (Redemptions 1.0)",
+        "description": {
+          "content": "Deletes processed multiple redemptions at once and returns the reward to the user.\n",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "pos",
+            "redemptions",
+            "multiple_destroy"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "DELETE",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"<string>\",\n  \"single_scan_code\": \"<string>\",\n  \"redemption_id\": [\n    \"<long>\",\n    \"<long>\"\n  ],\n  \"redemption_code\": \"<string>\",\n  \"transaction_no\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"card_number\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "86e1aeb4-76de-4b2c-8e3c-f069a8654b3f",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "redemptions",
+                "multiple_destroy"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"redemption_id\": [\n    577084,\n    577085\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Accepted",
+          "code": 202,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "155606eb-40ae-4b57-b6ab-a394e9e87d19",
+      "name": "Applicable Offers (Redemptions 1.0)",
+      "request": {
+        "name": "Applicable Offers (Redemptions 1.0)",
+        "description": {
+          "content": "Returns applicable offers based on the check details.\n",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "pos",
+            "redemptions",
+            "applicable_offers"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "Short code for locale variant (e.g., fr-ca, es-ES, en-EN, etc.)",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"<string>\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"<string>\",\n      \"menu_item_id\": \"<string>\",\n      \"item_amount\": \"<number>\",\n      \"menu_item_type\": \"<string>\",\n      \"menu_major_group\": \"<string>\",\n      \"menu_family\": \"<string>\",\n      \"serial_number\": \"<string>\",\n      \"item_qty\": \"<number>\"\n    },\n    {\n      \"item_name\": \"<string>\",\n      \"menu_item_id\": \"<string>\",\n      \"item_amount\": \"<number>\",\n      \"menu_item_type\": \"<string>\",\n      \"menu_major_group\": \"<string>\",\n      \"menu_family\": \"<string>\",\n      \"serial_number\": \"<string>\",\n      \"item_qty\": \"<number>\"\n    }\n  ],\n  \"receipt_amount\": \"<double>\",\n  \"subtotal_amount\": \"<double>\",\n  \"amount\": \"<double>\",\n  \"receipt_datetime\": \"<string>\",\n  \"channel\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "2cc29171-6802-4c2a-8aa3-d3e23040a60e",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "redemptions",
+                "applicable_offers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Short code for locale variant (e.g., fr-ca, es-ES, en-EN, etc.)",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"receipt_amount\": 300,\n  \"menu_items\": [\n    {\n      \"item_name\": \"Whiterice\",\n      \"item_qty\": 1,\n      \"item_amount\": 2.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"3419\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\",\n      \"serial_number\": \"1.0\"\n    },\n    {\n      \"item_name\": \"Brownrice\",\n      \"item_qty\": 1,\n      \"item_amount\": 7.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"3418\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\",\n      \"serial_number\": \"2.0\"\n    }\n  ],\n  \"amount\": 300,\n  \"subtotal_amount\": 300,\n  \"receipt_datetime\": \"2020-03-06T15:01:55.704Z\",\n  \"channel\": \"pos\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "[\n  {\n    \"discount_amount\": 10,\n    \"menu_items\": [],\n    \"reward\": {\n      \"created_at\": \"2020-01-30T13:26:40Z\",\n      \"description\": \"\",\n      \"discount_amount\": 0,\n      \"end_date_tz\": null,\n      \"id\": 1425570,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"name\": \"Test QC static discounrt\",\n      \"points\": 0,\n      \"redeemable_properties\": null,\n      \"start_date_tz\": \"2020-01-30T13:26:40Z\",\n      \"status\": \"unredeemed\",\n      \"updated_at\": \"2020-01-30T13:26:40Z\"\n    }\n  },\n  {\n    \"discount_amount\": 10,\n    \"menu_items\": [],\n    \"reward\": {\n      \"created_at\": \"2020-01-30T13:41:40Z\",\n      \"description\": \"\",\n      \"discount_amount\": 0,\n      \"end_date_tz\": null,\n      \"id\": 1425572,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"name\": \"Test QC static discounrt\",\n      \"points\": 0,\n      \"redeemable_properties\": null,\n      \"start_date_tz\": \"2020-01-30T13:41:40Z\",\n      \"status\": \"unredeemed\",\n      \"updated_at\": \"2020-01-30T13:41:40Z\"\n    }\n  },\n  {\n    \"discount_amount\": 10,\n    \"menu_items\": [],\n    \"reward\": {\n      \"created_at\": \"2020-01-30T13:57:07Z\",\n      \"description\": \"\",\n      \"discount_amount\": 0,\n      \"end_date_tz\": null,\n      \"id\": 1425574,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"name\": \"Test QC static discounrt\",\n      \"points\": 0,\n      \"redeemable_properties\": null,\n      \"start_date_tz\": \"2020-01-30T13:57:07Z\",\n      \"status\": \"unredeemed\",\n      \"updated_at\": \"2020-01-30T13:57:07Z\"\n    }\n  }\n]",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "2483bfcd-7df2-486b-a541-770e85e73941",
+      "name": "Get Active Redemptions (Redemptions 1.0)",
+      "request": {
+        "name": "Get Active Redemptions (Redemptions 1.0)",
+        "description": {
+          "content": "This API returns all of the active redemptions of the user.\n",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "pos",
+            "users",
+            "active_redemptions"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [
+            {
+              "disabled": false,
+              "key": "email",
+              "value": "test@example.com",
+              "description": "(Required) The email of the user. If you send this parameter, do not include the phone parameter."
+            },
+            {
+              "disabled": false,
+              "key": "phone",
+              "value": "1111111111",
+              "description": "(Required) The phone number of the user. If you send this parameter, do not include the email parameter."
+            }
+          ],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "14a99757-a72c-4ea7-b45b-91e6518fc7c4",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "users",
+                "active_redemptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "test@example.com"
+                },
+                {
+                  "key": "phone",
+                  "value": "1111111111"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "[\n  {\n    \"internal_tracking_code\": \"7738989\",\n    \"type_of_redemption\": \"BankedRewardRedemption\",\n    \"expiring_on\": \"2019-11-21T17:42:59Z\"\n  },\n  {\n    \"internal_tracking_code\": \"8106394\",\n    \"type_of_redemption\": \"RewardRedemption\",\n    \"expiring_on\": \"2019-11-21T17:44:41Z\",\n    \"redeemable\": {\n      \"redeemable_image_url\": \"IMAGE_URL_GOES_HERE\",\n      \"redeemable_properties\": null,\n      \"redeemable_id\": \"REDEEMABLE_ID_GOES_HERE\",\n      \"name\": \"Large Pizza\",\n      \"description\": \"test\",\n      \"points_required_to_redeem\": 100\n    }\n  }\n]",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://SERVER_NAME_GOES_HERE.punchh.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3021903f-9807-4049-8ef5-a97472c5552b",
+    "name": "Redemptions 1.0 (Legacy) API - POS",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "For more information, see [POS Module 6 - Redemptions](/docs/dev-portal-pos/tutorials/modules/6-redemptions/overview).\n\nContact Support:\n Name: Punchh Dev Support",
+      "type": "text/plain"
+    }
+  }
+}

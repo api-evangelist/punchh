@@ -1,0 +1,109 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.partech.com/docs/dev-portal-developer-resources/punchh-api-security-guidelines
+provider: PAR Punchh
+providerId: punchh
+docs:
+  - https://developers.partech.com/docs/dev-portal-developer-resources/punchh-api-security-guidelines
+  - https://developers.partech.com/docs/dev-portal-pos/changelog
+  - https://status.punchh.com
+  - https://status.us-west.punchh.com
+
+versioning:
+  scheme: path-prefix plus named API generations
+  current_version: '1.0'
+  note: >-
+    Every published Punchh OpenAPI document carries info.version "1.0"; the real
+    version signal is in the URL path prefix (/api2/mobile, /api/auth,
+    /api2/dashboard) and in the named generation of the redemption engine.
+  generations:
+    - name: Redemptions 1.0
+      status: legacy
+      evidence: >-
+        PAR titles three published specs "Redemptions 1.0 (Legacy) API" — for
+        Mobile, Online Ordering and POS.
+      specs:
+        - openapi/punchh-mobile-redemptions-legacy-openapi.yml
+        - openapi/punchh-online-ordering-redemptions-legacy-openapi.yml
+        - openapi/punchh-pos-redemptions-legacy-openapi.yml
+    - name: Redemptions 2.0
+      status: current
+      evidence: PAR titles three published specs "Redemptions 2.0 (New) API".
+      specs:
+        - openapi/punchh-mobile-redemptions-v2-openapi.yml
+        - openapi/punchh-online-ordering-redemptions-v2-openapi.yml
+        - openapi/punchh-pos-redemptions-v2-openapi.yml
+
+deprecation:
+  policy_published: true
+  policy_url: https://developers.partech.com/docs/dev-portal-developer-resources/punchh-api-security-guidelines
+  statement: >-
+    "Please ensure that you are not using any deprecated endpoints in your
+    integration architecture as these will be terminated in the near future."
+    Punchh publishes a list of its public web and API integration endpoints in the
+    API Security Guidelines and marks deprecated entries there.
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  notice_window: not published
+  deprecated_operations_in_spec: 0
+  note: >-
+    No operation in any of the 15 published OpenAPI documents carries
+    `deprecated: true`, and Punchh does not emit RFC 8594 Sunset / Deprecation
+    response headers. Deprecation is communicated in prose to certified partners
+    and by the Legacy / New naming of the redemption specs, not machine-readably.
+    The concrete migration in flight is Redemptions 1.0 to Redemptions 2.0.
+
+status_page:
+  published: true
+  urls:
+    - url: https://status.punchh.com
+      name: Punchh Status
+      http_status: 200
+      machine_readable: https://status.punchh.com/api/v2/summary.json
+      platform: Atlassian Statuspage
+    - url: https://status.us-west.punchh.com
+      name: Punchh US-West Status
+      http_status: 200
+      platform: Atlassian Statuspage
+  components_observed:
+    - name: Punchh API
+      status_at_probe: operational
+  note: >-
+    Discovered in the Punchh API Security Guidelines: "We will also publish an
+    advisory on our status pages: https://status.punchh.com or
+    https://status.us-west.punchh.com." Both answer 200 and the primary page
+    exposes the standard Statuspage JSON API.
+
+sla:
+  published: false
+  note: >-
+    No public uptime SLA. Availability commitments are contractual and negotiated
+    with PAR as part of the enterprise agreement.
+
+incident_process:
+  published: true
+  source: https://developers.partech.com/docs/dev-portal-developer-resources/punchh-api-security-guidelines
+  steps:
+    - Verify the incident is real and determine impact
+    - Secure / contain the incident (a partner connection may be terminated at this stage)
+    - Remediate — a partner must demonstrate remediation before connectivity is restored
+    - Recover systems and restore terminated connections
+    - Notify affected customers and publish an advisory on the status pages
+    - Notify authorities (FBI / state / local cybercrime unit) where a criminal act is involved
+
+changelog:
+  published: true
+  url: https://developers.partech.com/docs/dev-portal-pos/changelog
+  see: changelog/punchh-changelog.yml
+  note: >-
+    A dated changelog exists on the developer portal but currently carries a
+    single portal-level entry; it does not track API surface changes.
+
+support:
+  developer_support: Punchh Dev Support (https://developers.punchh.com)
+  contact: https://punchh.com/contact/
+  gate: >-
+    Every Punchh API surface is marked "Certification REQUIRED" on the developer
+    portal — access is granted through the PAR partner certification process, not
+    self-service sign-up.

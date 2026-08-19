@@ -1,0 +1,79 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.partech.com/docs/dev-portal-developer-resources/punchh-base-uris-overview
+provider: PAR Punchh
+providerId: punchh
+published: true
+self_service: false
+description: >-
+  PAR Punchh operates a real sandbox, but it is a provisioned environment rather
+  than a public test mode. There are no published test keys, test cards or hosted
+  fixtures — every credential and every base URI comes from a Punchh
+  representative during partner certification.
+
+environments:
+  - name: sandbox
+    base_uri: 'https://{server_name}.punchh.com'
+    published_host: false
+    note: >-
+      "You will need to use Punchh base URIs when making API calls to the Punchh
+      server in sandbox and production environments. If you do not know which
+      environment to use, contact your Punchh representative." The concrete
+      server_name is not published anywhere on the developer portal.
+  - name: production
+    base_uri: 'https://{server_name}.punchh.com'
+    published_host: false
+  - name: integration
+    note: >-
+      A third environment name leaks through the x-pch-env response header, which
+      the docs describe as returning "the Punchh environment (integration,
+      production, etc.)".
+
+key_modes:
+  test_vs_live_prefixes: null
+  note: >-
+    Punchh does not use test/live key prefixes. Environment separation is by
+    hostname, not by credential shape, so a key is only valid against the
+    environment it was issued for.
+
+test_data:
+  test_cards: not published
+  test_accounts: not published
+  fixtures: not published
+  time_simulation: not published
+  note: >-
+    No published test card numbers, test bank accounts, seeded guests, test clocks
+    or trigger tooling. The certification tutorials instead walk a partner through
+    creating real objects in their own provisioned sandbox — e.g. "Module 1b:
+    Complete Sign-up for a POS Dummy Account".
+
+tooling:
+  - name: PAR Tech APIs (Official) Postman workspace
+    url: https://www.postman.com/par-tech/workspace/par-tech-apis-official
+    note: >-
+      Forkable collections plus a PAR Punchh Environment holding the variables a
+      partner fills in with their own sandbox host and keys. Running any request
+      requires keys obtained from a Punchh representative.
+  - name: Punchh x-pch-digest Generator
+    url: https://developers.partech.com/docs/dev-portal-developer-resources
+    note: >-
+      An interactive page on the developer portal that computes the HMAC-SHA256
+      request digest for a given URI and body — genuinely usable pre-credential.
+  - name: POS Punchh Key & Barcode Generator
+    url: https://developers.partech.com/docs/dev-portal-developer-resources
+    note: >-
+      Generates the Punchh barcode / QR payloads a POS or kiosk must produce.
+  - name: Certification tutorials
+    url: https://developers.partech.com/docs/dev-portal-pos
+    note: >-
+      Ten-module POS, seven-module Online Ordering, Kiosk, SMS, Single Scan,
+      Loyalty Pay, Pay-on-the-Go, Mobile SSO and Offers Ingestion certification
+      tracks, each with Concepts and Example Scenarios pages. This is the closest
+      thing Punchh publishes to a sandbox walkthrough.
+
+security_testing:
+  note: >-
+    Punchh explicitly asks partners to "test your integration and simulate a
+    security incident using our sandbox environment", and to test bot-management
+    and rate-limiting controls before go-live.
+  source: https://developers.partech.com/docs/dev-portal-developer-resources/punchh-api-security-guidelines

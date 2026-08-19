@@ -1,0 +1,1217 @@
+{
+  "item": [
+    {
+      "id": "90042813-cc8a-4c67-bd02-d9acde0ba817",
+      "name": "Create Online Redemption (Redemptions 1.0)",
+      "request": {
+        "name": "Create Online Redemption (Redemptions 1.0)",
+        "description": {
+          "content": "Redeems a card, reward, redeemable, or discount specified in the `discount_type` parameter against a receipt.\n\nPunchh evaluates eligibility during the Possible Redemptions call using the receipt details provided (item name, price, quantity, identifiers, etc.). During the Create Online Redemption API call, Punchh revalidates the same receipt to ensure the qualifying conditions are still met before honoring the redemption. \n\nIf any item attributes change between the two calls, Punchh may be unable to match the qualifying items, which can cause the Create Online Redemption API call to fail or return a different result—even if the Possible Redemptions call was successful.\n\n**NOTE**: **When processing a redemption, DO NOT include the `query` parameter in the API request.** Use this parameter only to check for possible redemptions. ",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "auth",
+            "redemptions",
+            "online_order"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+            "key": "x-pch-digest",
+            "value": "SIGNATURE_GOES_HERE"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+            "key": "User-Agent",
+            "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"store_number\": \"<string>\",\n  \"receipt_amount\": \"<double>\",\n  \"subtotal_amount\": \"<double>\",\n  \"receipt_datetime\": \"<string>\",\n  \"transaction_no\": \"<string>\",\n  \"client\": \"<string>\",\n  \"discount_type\": \"<string>\",\n  \"authentication_token\": \"<string>\",\n  \"query\": \"<boolean>\",\n  \"cc_last4\": \"<string>\",\n  \"employee_id\": \"<string>\",\n  \"employee_name\": \"<string>\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"<string>\",\n      \"item_qty\": \"<integer>\",\n      \"item_amount\": \"<float>\",\n      \"menu_item_type\": \"<string>\",\n      \"menu_item_id\": \"<string>\",\n      \"menu_family\": \"<string>\",\n      \"menu_major_group\": \"<string>\",\n      \"serial_number\": \"<string>\"\n    },\n    {\n      \"item_name\": \"<string>\",\n      \"item_qty\": \"<integer>\",\n      \"item_amount\": \"<float>\",\n      \"menu_item_type\": \"<string>\",\n      \"menu_item_id\": \"<string>\",\n      \"menu_family\": \"<string>\",\n      \"menu_major_group\": \"<string>\",\n      \"serial_number\": \"<string>\"\n    }\n  ],\n  \"external_uid\": \"<string>\",\n  \"channel\": \"<string>\",\n  \"state\": \"<string>\",\n  \"reward_id\": \"<long>\",\n  \"redeemable_id\": \"<string>\",\n  \"redeemed_points\": \"<string>\",\n  \"redemption_code\": \"<string>\",\n  \"subscription_id\": \"<string>\",\n  \"email\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "c50a15de-4778-4f7f-9d86-e495a602747e",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "redemptions",
+                "online_order"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"store_number\": \"<string>\",\n  \"receipt_amount\": \"<double>\",\n  \"subtotal_amount\": \"<double>\",\n  \"receipt_datetime\": \"<string>\",\n  \"transaction_no\": \"<string>\",\n  \"client\": \"<string>\",\n  \"discount_type\": \"<string>\",\n  \"authentication_token\": \"<string>\",\n  \"query\": \"<boolean>\",\n  \"cc_last4\": \"<string>\",\n  \"employee_id\": \"<string>\",\n  \"employee_name\": \"<string>\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"string\",\n      \"item_qty\": 5894,\n      \"item_amount\": 1900.6849619443622,\n      \"menu_item_type\": \"string\",\n      \"menu_item_id\": \"string\",\n      \"menu_family\": \"string\",\n      \"menu_major_group\": \"string\",\n      \"serial_number\": \"string\"\n    },\n    {\n      \"item_name\": \"string\",\n      \"item_qty\": 1399,\n      \"item_amount\": 1820.3322896801055,\n      \"menu_item_type\": \"string\",\n      \"menu_item_id\": \"string\",\n      \"menu_family\": \"string\",\n      \"menu_major_group\": \"string\",\n      \"serial_number\": \"string\"\n    }\n  ],\n  \"external_uid\": \"<string>\",\n  \"channel\": \"<string>\",\n  \"state\": \"<string>\",\n  \"reward_id\": \"<long>\",\n  \"redeemable_id\": \"<string>\",\n  \"redeemed_points\": \"<string>\",\n  \"redemption_code\": \"<string>\",\n  \"subscription_id\": \"<string>\",\n  \"email\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"status\": \"Redeemed at Feb 26, 2026 10:49 by FIRST_NAME_GOES_HERE LAST_NAME_GOES_HERE at Naperville. Please HONOR it.\",\n  \"redemption_amount\": 8,\n  \"category\": \"redeemable\",\n  \"qualified_menu_items\": [\n    {\n      \"item_name\": \"Sandwich\",\n      \"item_qty\": 1,\n      \"item_amount\": 5,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"102000\",\n      \"menu_family\": \"Sandwich\",\n      \"menu_major_group\": \"Sandwich\",\n      \"serial_number\": \"1.0\"\n    },\n    {\n      \"item_name\": \"Coke\",\n      \"item_qty\": 1,\n      \"item_amount\": 7,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"102000\",\n      \"menu_family\": \"Coke\",\n      \"menu_major_group\": \"Coke\",\n      \"serial_number\": \"2.0\"\n    }\n  ],\n  \"discount_distribution_items\": [\n    {\n      \"item_name\": \"Sandwich DISCOUNT\",\n      \"item_qty\": 1,\n      \"item_amount\": -3,\n      \"menu_item_type\": \"R\",\n      \"menu_item_id\": \"102000\",\n      \"menu_family\": \"Sandwich\",\n      \"menu_major_group\": \"Sandwich\",\n      \"serial_number\": 1\n    },\n    {\n      \"item_name\": \"Coke DISCOUNT\",\n      \"item_qty\": 1,\n      \"item_amount\": -5,\n      \"menu_item_type\": \"R\",\n      \"menu_item_id\": \"102000\",\n      \"menu_family\": \"Coke\",\n      \"menu_major_group\": \"Coke\",\n      \"serial_number\": 2\n    }\n  ],\n  \"max_applicable_quantity\": 1,\n  \"campaign_name\": \"Mass Campaign Offer\",\n  \"redemption_id\": 21762,\n  \"redemption_code\": \"REDEMPTION_CODE_GOES_HERE\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "9d42c339-e84f-4a66-88e6-21dad71d16fa",
+          "name": "Sending invalid credentials",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "redemptions",
+                "online_order"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"store_number\": \"<string>\",\n  \"receipt_amount\": \"<double>\",\n  \"subtotal_amount\": \"<double>\",\n  \"receipt_datetime\": \"<string>\",\n  \"transaction_no\": \"<string>\",\n  \"client\": \"<string>\",\n  \"discount_type\": \"<string>\",\n  \"authentication_token\": \"<string>\",\n  \"query\": \"<boolean>\",\n  \"cc_last4\": \"<string>\",\n  \"employee_id\": \"<string>\",\n  \"employee_name\": \"<string>\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"string\",\n      \"item_qty\": 5894,\n      \"item_amount\": 1900.6849619443622,\n      \"menu_item_type\": \"string\",\n      \"menu_item_id\": \"string\",\n      \"menu_family\": \"string\",\n      \"menu_major_group\": \"string\",\n      \"serial_number\": \"string\"\n    },\n    {\n      \"item_name\": \"string\",\n      \"item_qty\": 1399,\n      \"item_amount\": 1820.3322896801055,\n      \"menu_item_type\": \"string\",\n      \"menu_item_id\": \"string\",\n      \"menu_family\": \"string\",\n      \"menu_major_group\": \"string\",\n      \"serial_number\": \"string\"\n    }\n  ],\n  \"external_uid\": \"<string>\",\n  \"channel\": \"<string>\",\n  \"state\": \"<string>\",\n  \"reward_id\": \"<long>\",\n  \"redeemable_id\": \"<string>\",\n  \"redeemed_points\": \"<string>\",\n  \"redemption_code\": \"<string>\",\n  \"subscription_id\": \"<string>\",\n  \"email\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        },
+        {
+          "id": "2cd774d0-7e3a-48f9-8327-111f9669f05c",
+          "name": "Sending invalid Signature",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "redemptions",
+                "online_order"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"store_number\": \"<string>\",\n  \"receipt_amount\": \"<double>\",\n  \"subtotal_amount\": \"<double>\",\n  \"receipt_datetime\": \"<string>\",\n  \"transaction_no\": \"<string>\",\n  \"client\": \"<string>\",\n  \"discount_type\": \"<string>\",\n  \"authentication_token\": \"<string>\",\n  \"query\": \"<boolean>\",\n  \"cc_last4\": \"<string>\",\n  \"employee_id\": \"<string>\",\n  \"employee_name\": \"<string>\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"string\",\n      \"item_qty\": 5894,\n      \"item_amount\": 1900.6849619443622,\n      \"menu_item_type\": \"string\",\n      \"menu_item_id\": \"string\",\n      \"menu_family\": \"string\",\n      \"menu_major_group\": \"string\",\n      \"serial_number\": \"string\"\n    },\n    {\n      \"item_name\": \"string\",\n      \"item_qty\": 1399,\n      \"item_amount\": 1820.3322896801055,\n      \"menu_item_type\": \"string\",\n      \"menu_item_id\": \"string\",\n      \"menu_family\": \"string\",\n      \"menu_major_group\": \"string\",\n      \"serial_number\": \"string\"\n    }\n  ],\n  \"external_uid\": \"<string>\",\n  \"channel\": \"<string>\",\n  \"state\": \"<string>\",\n  \"reward_id\": \"<long>\",\n  \"redeemable_id\": \"<string>\",\n  \"redeemed_points\": \"<string>\",\n  \"redemption_code\": \"<string>\",\n  \"subscription_id\": \"<string>\",\n  \"email\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Precondition Failed",
+          "code": 412,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        },
+        {
+          "id": "9678cfde-587a-40f7-9762-b8170761f6f7",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "redemptions",
+                "online_order"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"store_number\": \"<string>\",\n  \"receipt_amount\": \"<double>\",\n  \"subtotal_amount\": \"<double>\",\n  \"receipt_datetime\": \"<string>\",\n  \"transaction_no\": \"<string>\",\n  \"client\": \"<string>\",\n  \"discount_type\": \"<string>\",\n  \"authentication_token\": \"<string>\",\n  \"query\": \"<boolean>\",\n  \"cc_last4\": \"<string>\",\n  \"employee_id\": \"<string>\",\n  \"employee_name\": \"<string>\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"string\",\n      \"item_qty\": 5894,\n      \"item_amount\": 1900.6849619443622,\n      \"menu_item_type\": \"string\",\n      \"menu_item_id\": \"string\",\n      \"menu_family\": \"string\",\n      \"menu_major_group\": \"string\",\n      \"serial_number\": \"string\"\n    },\n    {\n      \"item_name\": \"string\",\n      \"item_qty\": 1399,\n      \"item_amount\": 1820.3322896801055,\n      \"menu_item_type\": \"string\",\n      \"menu_item_id\": \"string\",\n      \"menu_family\": \"string\",\n      \"menu_major_group\": \"string\",\n      \"serial_number\": \"string\"\n    }\n  ],\n  \"external_uid\": \"<string>\",\n  \"channel\": \"<string>\",\n  \"state\": \"<string>\",\n  \"reward_id\": \"<long>\",\n  \"redeemable_id\": \"<string>\",\n  \"redeemed_points\": \"<string>\",\n  \"redemption_code\": \"<string>\",\n  \"subscription_id\": \"<string>\",\n  \"email\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "[\n  \"Given reward is not accessible for this guest\"\n]",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "1651173d-97d5-4d12-8785-a251c2c5e6ad",
+      "name": "Fetch Redemption Code (Redemptions 1.0)",
+      "request": {
+        "name": "Fetch Redemption Code (Redemptions 1.0)",
+        "description": {
+          "content": "This endpoint generates an internal tracking code, which can be used to [look up a user on the POS system](/docs/dev-portal-pos/b3A6NTAyODM5MTc-user-lookup-and-fetch-balance) and [redeem the selected reward or banked currency at the POS](/docs/dev-portal-pos/4aa6c9741c85d-create-redemption-redemptions-1-0). To generate an internal tracking code via this endpoint, you must supply either a reward ID in the **reward_id** parameter or a value for the banked currency to redeem in the **redeemed_points** parameter. While the internal tracking code is active, the selected reward or banked currency value is eligible for redemption at the POS using the value of the internal tracking code as the **redemption_code** in the [POS Redemption API endpoint](/docs/dev-portal-pos/4aa6c9741c85d-create-redemption-redemptions-1-0).\n\n>User authentication required\n>\n>This API requires authentication_token to be supplied as `HTTP_AUTHORIZATION` header or in the `authentication_token` parameter.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "auth",
+            "redemptions"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+            "key": "x-pch-digest",
+            "value": "SIGNATURE_GOES_HERE"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+            "key": "User-Agent",
+            "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"client\": \"<string>\",\n  \"redeemed_points\": \"<double>\",\n  \"reward_id\": \"<long>\",\n  \"authentication_token\": \"AUTHENTICATION_TOKEN_GOES_HERE\",\n  \"location_id\": \"<integer>\",\n  \"locale\": \"<string>\",\n  \"longitude\": \"<string>\",\n  \"latitude\": \"<string>\",\n  \"gps_accuracy\": \"<integer>\",\n  \"store_number\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "cb0927cf-f2e0-4eb6-9147-74ec0182a598",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "redemptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"authentication_token\": \"AUTHENTICATION_TOKEN_GOES_HERE\",\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"location_id\": 304155,\n  \"locale\": \"\",\n  \"longitude\": \"75.8136926\",\n  \"latitude\": \"26.9167509\",\n  \"redeemed_points\": null,\n  \"reward_id\": 12345,\n  \"gps_accuracy\": 27,\n  \"store_number\": \"12\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"internal_tracking_code\": \"2142353\",\n  \"expiry_hours\": \"24\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "174a39dc-141a-42d1-8717-6d3184208dfe",
+          "name": "Sending invalid credentials",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "redemptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"authentication_token\": \"AUTHENTICATION_TOKEN_GOES_HERE\",\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"location_id\": 304155,\n  \"locale\": \"\",\n  \"longitude\": \"75.8136926\",\n  \"latitude\": \"26.9167509\",\n  \"redeemed_points\": null,\n  \"reward_id\": 12345,\n  \"gps_accuracy\": 27,\n  \"store_number\": \"12\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        },
+        {
+          "id": "eac0e393-2206-40f0-a080-75b721b92928",
+          "name": "Sending invalid Signature",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "redemptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"authentication_token\": \"AUTHENTICATION_TOKEN_GOES_HERE\",\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"location_id\": 304155,\n  \"locale\": \"\",\n  \"longitude\": \"75.8136926\",\n  \"latitude\": \"26.9167509\",\n  \"redeemed_points\": null,\n  \"reward_id\": 12345,\n  \"gps_accuracy\": 27,\n  \"store_number\": \"12\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Precondition Failed",
+          "code": 412,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        },
+        {
+          "id": "89c89cd1-5950-46db-bcee-1057c1720cfe",
+          "name": "Sending invalid Entity",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "redemptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"authentication_token\": \"AUTHENTICATION_TOKEN_GOES_HERE\",\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"location_id\": 304155,\n  \"locale\": \"\",\n  \"longitude\": \"75.8136926\",\n  \"latitude\": \"26.9167509\",\n  \"redeemed_points\": null,\n  \"reward_id\": 12345,\n  \"gps_accuracy\": 27,\n  \"store_number\": \"12\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "f119d60d-e41c-4f10-88a7-43690037268c",
+      "name": "Void Processed Redemption (Redemptions 1.0)",
+      "request": {
+        "name": "Void Processed Redemption (Redemptions 1.0)",
+        "description": {
+          "content": "Voids a processed redemption. After a redemption is voided successfully, the offer tied to the redemption is returned to the guest's account.\n\n<b>Note</b>: The Void Redemption API allows you to cancel a redemption without any time restrictions for most types of redemptions. However, for coupons and promos, redemptions can only be voided within 24 hours of the redemption process.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "auth",
+            "redemptions"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+            "key": "x-pch-digest",
+            "value": "SIGNATURE_GOES_HERE"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+            "key": "User-Agent",
+            "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "DELETE",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"redemption_id\": \"<long>\",\n  \"client\": \"<string>\",\n  \"authentication_token\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"redemption_code\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "9d1cdede-a214-4b6c-9625-0389374062b7",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "redemptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"redemption_id\": 323242,\n  \"authentication_token\": \"AUTHENTICATION_TOKEN_GOES_HERE\",\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Accepted",
+          "code": 202,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "3ba4a38e-0e2a-4bf6-943e-f473ced8005a",
+      "name": "Applicable Offers (Redemptions 1.0)",
+      "request": {
+        "name": "Applicable Offers (Redemptions 1.0)",
+        "description": {
+          "content": "Returns all applicable rewards available to the user per the items added to the check",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "auth",
+            "redemptions",
+            "applicable_offers"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+            "key": "x-pch-digest",
+            "value": "SIGNATURE_GOES_HERE"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+            "key": "User-Agent",
+            "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"client\": \"<string>\",\n  \"receipt_amount\": \"<double>\",\n  \"subtotal_amount\": \"<double>\",\n  \"receipt_datetime\": \"<dateTime>\",\n  \"channel\": \"<string>\",\n  \"authentication_token\": \"<string>\",\n  \"store_number\": \"<string>\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"<string>\",\n      \"item_qty\": \"<integer>\",\n      \"item_amount\": \"<float>\",\n      \"menu_item_type\": \"<string>\",\n      \"menu_item_id\": \"<string>\",\n      \"menu_family\": \"<string>\",\n      \"menu_major_group\": \"<string>\",\n      \"serial_number\": \"<string>\"\n    },\n    {\n      \"item_name\": \"<string>\",\n      \"item_qty\": \"<integer>\",\n      \"item_amount\": \"<float>\",\n      \"menu_item_type\": \"<string>\",\n      \"menu_item_id\": \"<string>\",\n      \"menu_family\": \"<string>\",\n      \"menu_major_group\": \"<string>\",\n      \"serial_number\": \"<string>\"\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "b0379d1b-1210-4200-ac9e-18572ea55347",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "redemptions",
+                "applicable_offers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"<string>\",\n  \"receipt_amount\": \"<double>\",\n  \"subtotal_amount\": \"<double>\",\n  \"receipt_datetime\": \"<dateTime>\",\n  \"channel\": \"<string>\",\n  \"authentication_token\": \"<string>\",\n  \"store_number\": \"<string>\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"string\",\n      \"item_qty\": 162,\n      \"item_amount\": 9438.008339524062,\n      \"menu_item_type\": \"string\",\n      \"menu_item_id\": \"string\",\n      \"menu_family\": \"string\",\n      \"menu_major_group\": \"string\",\n      \"serial_number\": \"string\"\n    },\n    {\n      \"item_name\": \"string\",\n      \"item_qty\": 1935,\n      \"item_amount\": 6988.941810645756,\n      \"menu_item_type\": \"string\",\n      \"menu_item_id\": \"string\",\n      \"menu_family\": \"string\",\n      \"menu_major_group\": \"string\",\n      \"serial_number\": \"string\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "[\n  {\n    \"menu_items\": [\n      {\n        \"item_name\": \"Adult\",\n        \"item_qty\": 1,\n        \"item_amount\": 100,\n        \"menu_item_type\": \"M\",\n        \"menu_item_id\": \"1\",\n        \"menu_family\": \"1\",\n        \"menu_major_group\": \"1\",\n        \"serial_number\": \"3.0\"\n      }\n    ],\n    \"discount_amount\": 2,\n    \"reward\": {\n      \"created_at\": \"2023-04-03T05:42:02Z\",\n      \"end_date_tz\": null,\n      \"start_date_tz\": \"2023-04-03T05:42:02Z\",\n      \"updated_at\": \"2023-04-03T05:42:02Z\",\n      \"id\": 1,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"status\": \"unredeemed\",\n      \"points\": 0,\n      \"discount_amount\": 2,\n      \"description\": \"$2 Off Your Order. Participating locations only.\",\n      \"name\": \"Redeemable - $2 Off Your Order\",\n      \"redeemable_properties\": null\n    }\n  },\n  {\n    \"menu_items\": [\n      {\n        \"item_name\": \"Adult\",\n        \"item_qty\": 1,\n        \"item_amount\": 100,\n        \"menu_item_type\": \"M\",\n        \"menu_item_id\": \"1\",\n        \"menu_family\": \"1\",\n        \"menu_major_group\": \"1\",\n        \"serial_number\": \"3.0\"\n      }\n    ],\n    \"discount_amount\": 2,\n    \"reward\": {\n      \"created_at\": \"2023-04-03T05:46:32Z\",\n      \"end_date_tz\": null,\n      \"start_date_tz\": \"2023-04-03T05:46:32Z\",\n      \"updated_at\": \"2023-04-03T05:46:32Z\",\n      \"id\": 2,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"status\": \"unredeemed\",\n      \"points\": 0,\n      \"discount_amount\": 2,\n      \"description\": \"\",\n      \"name\": \"2% off Subtotal Amount\",\n      \"redeemable_properties\": null\n    }\n  }\n]",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "4593a355-a021-480f-9b84-596362b6c2a9",
+          "name": "Sending invalid credentials",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "redemptions",
+                "applicable_offers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"<string>\",\n  \"receipt_amount\": \"<double>\",\n  \"subtotal_amount\": \"<double>\",\n  \"receipt_datetime\": \"<dateTime>\",\n  \"channel\": \"<string>\",\n  \"authentication_token\": \"<string>\",\n  \"store_number\": \"<string>\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"string\",\n      \"item_qty\": 162,\n      \"item_amount\": 9438.008339524062,\n      \"menu_item_type\": \"string\",\n      \"menu_item_id\": \"string\",\n      \"menu_family\": \"string\",\n      \"menu_major_group\": \"string\",\n      \"serial_number\": \"string\"\n    },\n    {\n      \"item_name\": \"string\",\n      \"item_qty\": 1935,\n      \"item_amount\": 6988.941810645756,\n      \"menu_item_type\": \"string\",\n      \"menu_item_id\": \"string\",\n      \"menu_family\": \"string\",\n      \"menu_major_group\": \"string\",\n      \"serial_number\": \"string\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        },
+        {
+          "id": "a435524c-247b-40d5-9205-cae6cc4bccd2",
+          "name": "Sending invalid Signature",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "redemptions",
+                "applicable_offers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"<string>\",\n  \"receipt_amount\": \"<double>\",\n  \"subtotal_amount\": \"<double>\",\n  \"receipt_datetime\": \"<dateTime>\",\n  \"channel\": \"<string>\",\n  \"authentication_token\": \"<string>\",\n  \"store_number\": \"<string>\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"string\",\n      \"item_qty\": 162,\n      \"item_amount\": 9438.008339524062,\n      \"menu_item_type\": \"string\",\n      \"menu_item_id\": \"string\",\n      \"menu_family\": \"string\",\n      \"menu_major_group\": \"string\",\n      \"serial_number\": \"string\"\n    },\n    {\n      \"item_name\": \"string\",\n      \"item_qty\": 1935,\n      \"item_amount\": 6988.941810645756,\n      \"menu_item_type\": \"string\",\n      \"menu_item_id\": \"string\",\n      \"menu_family\": \"string\",\n      \"menu_major_group\": \"string\",\n      \"serial_number\": \"string\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Precondition Failed",
+          "code": 412,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        },
+        {
+          "id": "6533adf7-9aa9-469d-8df8-61d837a37f67",
+          "name": "The given reward can't be applied to the given receipt details",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "redemptions",
+                "applicable_offers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"<string>\",\n  \"receipt_amount\": \"<double>\",\n  \"subtotal_amount\": \"<double>\",\n  \"receipt_datetime\": \"<dateTime>\",\n  \"channel\": \"<string>\",\n  \"authentication_token\": \"<string>\",\n  \"store_number\": \"<string>\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"string\",\n      \"item_qty\": 162,\n      \"item_amount\": 9438.008339524062,\n      \"menu_item_type\": \"string\",\n      \"menu_item_id\": \"string\",\n      \"menu_family\": \"string\",\n      \"menu_major_group\": \"string\",\n      \"serial_number\": \"string\"\n    },\n    {\n      \"item_name\": \"string\",\n      \"item_qty\": 1935,\n      \"item_amount\": 6988.941810645756,\n      \"menu_item_type\": \"string\",\n      \"menu_item_id\": \"string\",\n      \"menu_family\": \"string\",\n      \"menu_major_group\": \"string\",\n      \"serial_number\": \"string\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://SERVER_NAME_GOES_HERE.punchh.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ddf25ea2-bb14-4d4f-a270-f0e70fc9330f",
+    "name": "Redemptions 1.0 (Legacy) API - Online Ordering",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "For more information, see [Online Ordering Module 5: Redemptions](/docs/dev-portal-online-ordering/tutorials/modules/5-redemptions/overview).\n\nContact Support:\n Name: Punchh Dev Support",
+      "type": "text/plain"
+    }
+  }
+}

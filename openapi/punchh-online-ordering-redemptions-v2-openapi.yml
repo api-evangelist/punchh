@@ -1,0 +1,1958 @@
+info:
+  title: Redemptions 2.0 (New) API - Online Ordering
+  version: '2.0'
+  description: 'The Redemptions 2.0 protocol has been designed to replace the legacy Redemptions 1.0 endpoints.
+    The new protocol allows for the following features:
+
+
+    - Single-scan flow support
+
+    - Batching of redemptions to occur in a single API call
+
+    - Stacked discounting
+
+    - Proportional breakdown of discounted items
+
+    - Item qualifier recycling
+
+    - Enhance flexibility to redemption rules and processing orders
+
+
+    The Redemptions 2.0 protocol is not backward compatible with the [legacy Redemptions 1.0 endpoints](/docs/dev-portal-online-ordering/apis/oo-redemptions-1-0-legacy-api).
+    Configurations within the Punchh platform are required, so please contact your Punchh representative
+    for help before starting development.
+
+
+    Redemptions 2.0 API endpoints - general workflow
+
+    1. Guest adds discount if not already selected.
+
+    2. Fetch active basket details.
+
+    3. Update discount basket if required. Add/remove discount selection.
+
+    4. After successful submission of order, the Batch Redemption API will be called to process the redemption
+    of all selected discounts.
+
+
+    For more information, see [Online Ordering Module 5: Redemptions](/docs/dev-portal-online-ordering/tutorials/modules/5-redemptions/overview).'
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+paths:
+  /api/auth/discounts/auto_select:
+    post:
+      summary: Auto Redemption (Redemptions 2.0)
+      operationId: post-api-auth-discounts-auto_select
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  redemption_ref:
+                    type: string
+                    description: Transaction level identifier for all discount selections
+                  locked:
+                    type: boolean
+                    x-stoplight:
+                      id: bza0ruu9nwh31
+                    description: Indicates whether the discount basket is locked. A value of true means
+                      the basket is locked.
+                  created_at:
+                    type: string
+                    description: Date/time when the first discount was selected, in YYYY-MM-DDThh:mm:ss
+                      format
+                    format: date-time
+                  discount_basket_items:
+                    $ref: '#/components/schemas/discount_basket_items'
+              examples:
+                Example:
+                  value:
+                    redemption_ref: REDEMPTION_REF_GOES_HERE
+                    locked: true
+                    created_at: null
+                    discount_basket_items:
+                    - discount_basket_item_id: 4699
+                      discount_type: reward
+                      discount_id: '33703164'
+                      discount_value: null
+                      created_at: '2022-08-25T10:03:48Z'
+                      discount_details:
+                        item_id: 777658
+                        name: Flat $5 Off (Unlocks at 100 points)
+                        campaign_name: Mass Campaign Offer
+                        image: IMAGE_URL_GOES_HERE
+                        points: 100
+                        base_amount: 5
+                        description: ''
+                        item_properties: null
+                        meta_detail: null
+                        start_date_tz: null
+                        end_date_tz: null
+                        created_at: '2022-09-08T18:41:16Z'
+                        auto_select: true
+                Listing expired discount with error message:
+                  value:
+                    redemption_ref: REDEMPTION_REF_GOES_HERE
+                    locked: true
+                    created_at: null
+                    discount_basket_items:
+                    - discount_basket_item_id: 4699
+                      discount_type: reward
+                      discount_id: '33703164'
+                      discount_value: null
+                      created_at: '2022-08-25T10:03:48Z'
+                      discount_details:
+                        item_id: 777658
+                        name: Flat $5 Off (Unlocks at 100 points)
+                        campaign_name: Mass Campaign Offer
+                        image: IMAGE_URL_GOES_HERE
+                        points: 100
+                        base_amount: 5
+                        description: ''
+                        item_properties: null
+                        meta_detail: null
+                        start_date_tz: null
+                        end_date_tz: null
+                        created_at: '2022-09-08T18:41:16Z'
+                        auto_select: true
+                    - discount_basket_item_id: 4890
+                      discount_type: reward
+                      discount_id: '33703165'
+                      discount_value: null
+                      created_at: '2022-08-25T10:03:48Z'
+                      message:
+                      - Invalid Reward ID.
+                      discount_details: null
+        '400':
+          description: 'Bad Request - Example error responses:
+
+            - Required parameter missing or the value is empty: receipt_amount
+
+            - Required parameter missing or the value is empty: line_items'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '404':
+          description: Not Found - User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '422':
+          description: 'Unprocessable Entity - Example error responses:
+
+            - Guest is not allowed to select/unselect from basket as he/she is banned or deactivated from
+            the Loyalty program
+
+            - Invalid Receipt Amount
+
+            - Your current loyalty program configuration does not support this feature. Please connect
+            with your Customer Success representative for resolution of the issue.
+
+            - Unable to access the user’s Discount Basket, the Basket is currently locked'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      description: '- A discount should be automatically queued up in the discount basket if the auto-redemption
+        feature is enabled for the business.
+
+        - The business can configure the auto-redemption strategy.
+
+        - If a discount expires after being added to the discount basket, it is removed from the discount
+        basket. When you make a call to the API, it validates the discounts added to the discount basket.
+        If one or more discounts are found to be honored, expired, perished, or archived, the API returns
+        an error message indicating that these discounts cannot be honored. The API lists the invalid
+        discounts in the `discount_basket_items` object with a message stating that the discount is invalid
+        and returns a null value in the `discount_details` object.
+
+
+        **Note**: Auto-redemption currently supports only subscriptions and non-points-based rewards.'
+      parameters:
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/content type'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/Signature'
+      - $ref: '#/components/parameters/accept language'
+      x-stoplight:
+        id: d3e1d4293ad65
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: Client key of the business
+                line_items:
+                  $ref: '#/components/schemas/line_items'
+                receipt_datetime:
+                  type: string
+                  description: Timestamp of receipt per ISO 8601 format, including TZ offset from UTC
+                    (YYYY-MM-DDThh:mm:ss-±hh:mm)
+                  format: date-time
+                subtotal_amount:
+                  type: number
+                  format: float
+                  description: Order amount before taxes (sum of all item amounts minus any discounts).
+                    Same as `receipt_amount`. For historical reasons, include this parameter along with
+                    `receipt_amount` in the API request.
+                receipt_amount:
+                  type: number
+                  format: float
+                  description: Order amount before taxes, calculated as the sum of all item amounts minus
+                    any discounts. This is the amount used to calculate loyalty points/visits. The value
+                    of this parameter should match `subtotal_amount`. For example, if the order amount
+                    is $10, both `receipt_amount` and `subtotal_amount` will be 10. If a $2 discount is
+                    applied, both will be 8.
+                business_date:
+                  type: string
+                  description: Business date
+                transaction_no:
+                  type: string
+                  description: Transaction number
+                external_uid:
+                  type: string
+                  x-stoplight:
+                    id: l8errxvcbef2m
+                  description: 'Unique identifier generated by the system to lock the discount basket
+                    and prevent duplicate transactions. This parameter is optional when reward locking
+                    is enabled for the business in the Punchh platform. <b>Note</b>: Contact your Punchh
+                    representative to update this configuration.'
+              required:
+              - client
+              - receipt_datetime
+              - subtotal_amount
+              - receipt_amount
+            examples:
+              Example:
+                value:
+                  line_items:
+                  - item_name: coffee
+                    item_qty: 1
+                    amount: 10
+                    item_type: M
+                    item_id: 330
+                    item_family: '10'
+                    item_group: gp
+                    serial_number: 1
+                  - item_name: pizza
+                    item_qty: 1
+                    amount: 20
+                    item_type: M
+                    item_id: 331
+                    item_family: '10'
+                    item_group: gp
+                    serial_number: 2
+                  receipt_datetime: '2019-04-11T14:14:07+05:30'
+                  subtotal_amount: 100
+                  receipt_amount: 100
+                  business_date: <store this information>
+                  transaction_no: '11111111111'
+                  client: CLIENT_GOES_HERE
+                  external_uid: EXTERNAL_UID_GOES_HERE
+  /api/auth/discounts/select:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  redemption_ref:
+                    type: string
+                    description: Transaction level identifier for all discount selections
+                  locked:
+                    type: boolean
+                    x-stoplight:
+                      id: eada20qcylhhh
+                    description: Indicates whether the discount basket is locked. A value of true means
+                      the basket is locked.
+                  created_at:
+                    type: string
+                    format: date-time
+                    description: Date/time when the first discount was selected, in YYYY-MM-DDThh:mm:ss
+                      format
+                  discount_basket_items:
+                    $ref: '#/components/schemas/discount_basket_items'
+              examples:
+                Example:
+                  value:
+                    redemption_ref: REDEMPTION_REF_GOES_HERE
+                    locked: false
+                    created_at: '2024-05-21T15:14:02Z'
+                    discount_basket_items:
+                    - discount_basket_item_id: 469363
+                      discount_type: reward
+                      discount_id: '41049646877'
+                      discount_value: null
+                      created_at: '2024-05-24T08:36:52Z'
+                      discount_details:
+                        item_id: 48188
+                        name: Sandwich Test | AK
+                        campaign_name: Mass Campaign Offer
+                        image: IMAGE_URL_GOES_HERE
+                        points: null
+                        base_amount: null
+                        description: ''
+                        item_properties: ''
+                        meta_detail: null
+                        start_date_tz: '2024-05-24T08:34:24Z'
+                        end_date_tz: '2024-06-30T03:15:00Z'
+                        created_at: '2023-08-18T08:29:36Z'
+                        auto_select: false
+                    - discount_basket_item_id: 541689
+                      discount_type: reward
+                      discount_id: '41378920421'
+                      discount_value: null
+                      created_at: '2024-06-11T12:56:33Z'
+                      discount_details:
+                        item_id: 48188
+                        name: Sandwich Test | AK
+                        campaign_name: Mass Campaign Offer
+                        image: IMAGE_URL_GOES_HERE
+                        points: null
+                        base_amount: null
+                        description: ''
+                        item_properties: ''
+                        meta_detail: null
+                        start_date_tz: '2024-05-31T13:25:08Z'
+                        end_date_tz: '2024-06-30T03:15:00Z'
+                        created_at: '2023-08-18T08:29:36Z'
+                        auto_select: false
+        '400':
+          description: 'Bad Request - Example error responses:
+
+            - Required parameter missing or the value is empty: user_id
+
+            - Required parameter missing or the value is empty: discount_basket_items_attributes
+
+            - Required parameter missing or the value is empty: discount_type
+
+            - Required parameter missing or the value is empty: external_uid'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '404':
+          description: Not Found - User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '422':
+          description: 'Unprocessable Entity - Example error responses:
+
+            - Discount basket items have already been taken for the user
+
+            - Same parameters provided multiple times
+
+            - Not enough cards
+
+            - Processing limit for discounts of loyalty type has been reached
+
+            - Invalid Code
+
+            - Coupon/Promo code is not active
+
+            - The code can not be added, as the campaign has exceeded its usage limit
+
+            - This coupon can only be used 1 time(s) per day
+
+            - Invalid Business Configuration. Please connect with your Customer Success representative
+            for resolution of the issue.
+
+            - Mobile Coupon/Promo cannot be added into basket
+
+            - Balance is insufficient to process request
+
+            - Max Redemption Amount has been reached
+
+            - Invalid Discount Value
+
+            - Unable to access the user’s Discount Basket, the Basket is currently locked
+
+            - Interoperability validation failed
+
+            - Invalid Subscription ID
+
+            - Invalid Redeemable ID
+
+            - Invalid Reward ID
+
+            - Guest is not allowed to select/unselect from basket as he/she is banned or deactivated from
+            the Loyalty program
+
+            - Redemption limit reached
+
+            - Discount type should be card_completion, discount_amount, redemption_code, reward, fuel_reward,
+            redeemable, subscription
+
+            - Another transaction is currently accessing the same code. Please try after some time.
+
+            - Cannot add more than one subscription into basket'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      description: '- A single discount basket will be active at a time. If there is no active discount
+        basket, the system will create a new active discount basket along with selected discounts passed
+        in the request parameters.
+
+        - The Punchh system will not have any validation based on points adjustments as discounts are
+        added.
+
+        - When a guest adds multiple discounts, and one is invalid for some reason, the entire request
+        will fail with an error message. The guest will then be required to remove the invalid discount
+        and resubmit. '
+      summary: Add Selection to Discount Basket (Redemptions 2.0)
+      operationId: sso_create_online_redemption
+      parameters:
+      - $ref: '#/components/parameters/Signature'
+      - $ref: '#/components/parameters/content type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/accept language'
+      x-stoplight:
+        id: 49c4867d18844
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: Client key of the business
+                discount_basket_items_attributes:
+                  type: array
+                  description: List of discounts to add to basket
+                  items:
+                    type: object
+                    properties:
+                      discount_type:
+                        type: string
+                        enum:
+                        - reward
+                        - card_completion
+                        - redeemable
+                        - discount_amount
+                        - redemption_code
+                        - subscription
+                        - fuel_reward
+                        description: 'The discount type can be any one of these values: card_completion
+                          || reward || redeemable || discount_amount || redemption_code || subscription
+                          || fuel_reward. For details, see [Getting Started With Online Ordering APIs](/docs/dev-portal-online-ordering/0130fe9413a97-getting-started-with-online-ordering-ap-is).'
+                      discount_id:
+                        type: integer
+                        description: Discount ID
+                      discount_value:
+                        type: number
+                        description: Value of discount. Send this value when discount_type is discount_amount.
+                          This is the amount of the banked rewards the user wants to redeem.
+                        format: float
+                    required:
+                    - discount_type
+                external_uid:
+                  type: string
+                  x-stoplight:
+                    id: 3y6agmfqv4r4w
+                  description: 'Unique identifier generated by the system to lock the discount basket
+                    and prevent duplicate transactions. This parameter is optional when reward locking
+                    is enabled for the business in the Punchh platform. <b>Note</b>: Contact your Punchh
+                    representative to update this configuration.'
+              required:
+              - client
+              - discount_basket_items_attributes
+            examples:
+              Example:
+                value:
+                  discount_basket_items_attributes:
+                  - discount_id: 131
+                    discount_type: reward
+                  - discount_value: 2
+                    discount_type: discount_amount
+                  client: CLIENT_GOES_HERE
+                  external_uid: EXTERNAL_UID_GOES_HERE
+        description: ''
+  /api/auth/discounts/unselect:
+    parameters: []
+    delete:
+      summary: Remove Item From Discount Basket (Redemptions 2.0)
+      operationId: delete-api-auth-discounts-unselect
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  redemption_ref:
+                    type: string
+                    description: Transaction level identifier for all discount selections
+                  locked:
+                    type: boolean
+                    x-stoplight:
+                      id: rl8ecf3bw8dll
+                    description: Indicates whether the discount basket is locked. A value of true means
+                      the basket is locked.
+                  created_at:
+                    type: string
+                    format: date-time
+                    description: Date/time when the first discount was selected, in YYYY-MM-DDThh:mm:ss
+                      format
+                  discount_basket_items:
+                    $ref: '#/components/schemas/discount_basket_items'
+              examples:
+                Example:
+                  value:
+                    redemption_ref: REDEMPTION_REF_GOES_HERE
+                    locked: false
+                    created_at: '2024-05-21T15:14:02Z'
+                    discount_basket_items:
+                    - discount_basket_item_id: 469363
+                      discount_type: reward
+                      discount_id: '41049646877'
+                      discount_value: null
+                      created_at: '2024-05-24T08:36:52Z'
+                      discount_details:
+                        item_id: 48188
+                        name: Sandwich Test | AK
+                        campaign_name: Mass Campaign Offer
+                        image: IMAGE_URL_GOES_HERE
+                        points: null
+                        base_amount: null
+                        description: ''
+                        item_properties: ''
+                        meta_detail: null
+                        start_date_tz: '2024-05-24T08:34:24Z'
+                        end_date_tz: '2024-06-30T03:15:00Z'
+                        created_at: '2023-08-18T08:29:36Z'
+                        auto_select: false
+                    - discount_basket_item_id: 541689
+                      discount_type: reward
+                      discount_id: '41378920421'
+                      discount_value: null
+                      created_at: '2024-06-11T12:56:33Z'
+                      discount_details:
+                        item_id: 48188
+                        name: Sandwich Test | AK
+                        campaign_name: Mass Campaign Offer
+                        image: IMAGE_URL_GOES_HERE
+                        points: null
+                        base_amount: null
+                        description: ''
+                        item_properties: ''
+                        meta_detail: null
+                        start_date_tz: '2024-05-31T13:25:08Z'
+                        end_date_tz: '2024-06-30T03:15:00Z'
+                        created_at: '2023-08-18T08:29:36Z'
+                        auto_select: false
+        '400':
+          description: 'Bad Request - Required parameter missing or the value is empty: discount_basket_item_ids'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '404':
+          description: 'Not Found - Example error responses:
+
+            - User does not have an active basket
+
+            - User not found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '422':
+          description: 'Unprocessable Entity - Example error responses:
+
+            - Discount Items not found with any given ids
+
+            - Guest is not allowed to select/unselect from basket as he/she is banned or deactivated from
+            the Loyalty program
+
+            - Unable to access the user’s Discount Basket, the Basket is currently locked'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      description: Delete one or more discounts from a discount basket.
+      parameters:
+      - $ref: '#/components/parameters/Signature'
+      - $ref: '#/components/parameters/content type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/accept language'
+      x-stoplight:
+        id: 8a087a5033151
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: Client key of the business
+                discount_basket_item_ids:
+                  type: array
+                  description: IDs of items that need to be removed from the discount basket
+                  items:
+                    type: integer
+                external_uid:
+                  type: string
+                  x-stoplight:
+                    id: wy2ef1w8pibgg
+                  description: 'Unique identifier generated by the system to lock the discount basket
+                    and prevent duplicate transactions. This parameter is optional when reward locking
+                    is enabled for the business in the Punchh platform. <b>Note</b>: Contact your Punchh
+                    representative to update this configuration.'
+              required:
+              - client
+              - discount_basket_item_ids
+            examples:
+              Example:
+                value:
+                  discount_basket_item_ids:
+                  - 4690
+                  - 4691
+                  client: CLIENT_GOES_HERE
+                  external_uid: EXTERNAL_UID_GOES_HERE
+  /api/auth/discounts/active:
+    get:
+      summary: Get Active Discount Basket (Redemptions 2.0)
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  redemption_ref:
+                    type: string
+                    description: Transaction level identifier for all discount selections
+                  locked:
+                    type: boolean
+                    x-stoplight:
+                      id: rq8knfiuv9tfn
+                    description: Indicates whether the discount basket is locked. A value of true means
+                      the basket is locked.
+                  created_at:
+                    type: string
+                    description: Date/time when the first discount was selected, in YYYY-MM-DDThh:mm:ss
+                      format
+                    format: date-time
+                  discount_basket_items:
+                    $ref: '#/components/schemas/discount_basket_items'
+              examples:
+                Example:
+                  value:
+                    redemption_ref: REDEMPTION_REF_GOES_HERE
+                    locked: true
+                    created_at: null
+                    discount_basket_items:
+                    - discount_basket_item_id: 4699
+                      discount_type: reward
+                      discount_id: '33703164'
+                      discount_value: null
+                      created_at: '2022-08-25T10:03:48Z'
+                      discount_details:
+                        item_id: 777658
+                        name: Flat $5 Off (Unlocks at 100 points)
+                        campaign_name: Mass Campaign Offer
+                        image: IMAGE_URL_GOES_HERE
+                        points: 100
+                        base_amount: 5
+                        description: ''
+                        item_properties: null
+                        meta_detail: null
+                        start_date_tz: null
+                        end_date_tz: null
+                        created_at: '2022-09-08T18:41:16Z'
+                        auto_select: true
+                Listing expired discount with error message:
+                  value:
+                    redemption_ref: REDEMPTION_REF_GOES_HERE
+                    locked: true
+                    created_at: null
+                    discount_basket_items:
+                    - discount_basket_item_id: 4699
+                      discount_type: reward
+                      discount_id: '33703164'
+                      discount_value: null
+                      created_at: '2022-08-25T10:03:48Z'
+                      discount_details:
+                        item_id: 777658
+                        name: Flat $5 Off (Unlocks at 100 points)
+                        campaign_name: Mass Campaign Offer
+                        image: IMAGE_URL_GOES_HERE
+                        points: 100
+                        base_amount: 5
+                        description: ''
+                        item_properties: null
+                        meta_detail: null
+                        start_date_tz: null
+                        end_date_tz: null
+                        created_at: '2022-09-08T18:41:16Z'
+                        auto_select: true
+                    - discount_basket_item_id: 4890
+                      discount_type: reward
+                      discount_id: '33703165'
+                      discount_value: null
+                      created_at: '2022-08-25T10:03:48Z'
+                      message:
+                      - Invalid Reward ID.
+                      discount_details: null
+        '404':
+          description: 'Not Found - Example error responses:
+
+            - User does not have an active basket
+
+            - User not found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '422':
+          description: 'Unprocessable Entity - Example error responses:
+
+            - Your current loyalty program configuration does not support this feature. Please connect
+            with your Customer Success representative for resolution of the issue.
+
+            - Unable to access the user’s Discount Basket, the Basket is currently locked'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: get-api-auth-discounts-active
+      parameters:
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/content type'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/Signature'
+      - $ref: '#/components/parameters/accept language'
+      description: '- Get a list of discount details that have been selected by a guest. Only one active
+        basket can exist in the system for a particular guest.
+
+        - If a discount expires after being added to the discount basket, it is removed from the discount
+        basket. When you make a call to the API, it validates the discounts added to the discount basket.
+        If one or more discounts are found to be honored, expired, perished, or archived, the API returns
+        an error message indicating that these discounts cannot be honored. The API lists the invalid
+        discounts in the `discount_basket_items` object with a message stating that the discount is invalid
+        and returns a null value in the `discount_details` object.'
+      x-stoplight:
+        id: 1d4f01cf7aa32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: Client key of the business
+                external_uid:
+                  type: string
+                  x-stoplight:
+                    id: 0bylg45q0jgsf
+                  description: 'Unique identifier generated by the system to lock the discount basket
+                    and prevent duplicate transactions. This parameter is optional when reward locking
+                    is enabled for the business in the Punchh platform. <b>Note</b>: Contact your Punchh
+                    representative to update this configuration.'
+              required:
+              - client
+            examples:
+              Example:
+                value:
+                  client: CLIENT_GOES_HERE
+                  external_uid: EXTERNAL_UID_GOES_HERE
+  /api/auth/batch_redemptions:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  redemption_ref:
+                    type: string
+                    description: Transaction level identifier for all discount selections
+                  success:
+                    type: array
+                    description: List of discounts results that are successfully redeemed
+                    items:
+                      type: object
+                  failures:
+                    type: array
+                    description: The failures array in the response lists discounts that are not successfully
+                      redeemed, even if the HTTP request returns a 200 status. Note that not all HTTP
+                      request failures result in a 4xx HTTP status code.
+                    items:
+                      type: object
+                  discount_basket_item_id:
+                    type: integer
+                    description: Unique identifier of selection
+                  discount_amount:
+                    type: integer
+                    description: Discount amount/points
+                  redemption_id:
+                    type: integer
+                    format: int64
+                    description: Unique ID of the redemption
+                  redemption_type:
+                    type: string
+                    description: Redemption status
+                  discount_type:
+                    type: string
+                    description: Discount type (e.g., reward, redeemable, etc.)
+                  discount_id:
+                    type: integer
+                    description: Discount ID (e.g., reward_id, redeemable_id, redemption_code, coupon_code)
+                  discount_value:
+                    type: number
+                    description: Value of the currency that a user wants to redeem. This value is set
+                      for users on the “Points Convert to Currency” loyalty program. The default value
+                      is 0 if the user has not selected any amount to redeem or has no currency in the
+                      loyalty account. The parameter returns a “null” value for a business that does not
+                      support banking of points into currency.
+                    format: float
+                  message:
+                    type: string
+                    description: Error message
+                  qualified:
+                    type: boolean
+                    description: Indicates a discount's applicability to the receipt
+                  remaining_balance:
+                    type: number
+                    description: Total amount remaining
+                  meta_data:
+                    type: string
+                    description: Metadata that can be added to a redeemable. This can be used to program
+                      mobile apps to have a certain behavior when specific data are received from the
+                      server. Or it can be used as the business wishes. This can be configured from the
+                      Punchh platform and has a maximum length of 255 characters.<br><br>The `meta_data`
+                      value for the coupon redemption (i.e., when discount_type = redemption_code) is
+                      returned in the language specified in the Accept-Language request header, provided
+                      the meta_data has been translated into the relevant language in the Punchh platform.
+                      If the translation is unavailable, the response returns the value for this parameter
+                      in the default English language. For example, if the header specifies “fr” (French),
+                      the `meta_data` value for a coupon is returned in French only if a French translation
+                      is configured for the coupon meta data in the Punchh platform; otherwise the value
+                      is returned in the default English language.
+                  discount_details:
+                    $ref: '#/components/schemas/discount_details'
+                  qualified_items:
+                    $ref: '#/components/schemas/qualified_items'
+                  qualifying_conditions:
+                    type: object
+                    x-stoplight:
+                      id: o9y5lovw1ufdq
+                    description: The object lists all qualification criteria (both receipt-level and line-item)
+                      for submitted offers that failed while processing the redemption. This object is
+                      returned in the response only if the option to return the qualifying conditions
+                      for Redemption 2.0 flow is enabled for the business in the Punchh platform. See
+                      the `data` object under [Get Qualification Criteria Response](https://developers.partech.com/docs/dev-portal-platform-functions/97ec083d6cf57-get-qualification-criteria-qc-list#response-body)
+                      in Platform Functions for descriptions of the parameters in `qualifying_conditions`.
+              examples:
+                Discount Qualification on Receipt Failed:
+                  value:
+                    redemption_ref: REDEMPTION_REF_GOES_HERE
+                    success: []
+                    failures:
+                    - discount_basket_item_id: 1
+                      discount_amount: null
+                      redemption_id: null
+                      redemption_type: null
+                      discount_type: reward
+                      discount_id: '367778'
+                      discount_value: null
+                      message:
+                      - Discount qualification on receipt failed for Shubham Gupta at Airway.
+                      qualified: false
+                      remaining_balance: null
+                      meta_data: null
+                      qualifying_conditions:
+                        name: LIS QC 21 july 2025
+                        external_id: EXTERNAL_UID_GOES_HERE
+                        amount_cap: null
+                        rounding_rule: ''
+                        max_discount_units: null
+                        target_price: null
+                        effective_location: []
+                        stack_discounting: null
+                        reuse_qualifying_items: null
+                        enable_menu_item_aggregator: false
+                        min_post_rollback_rate: null
+                        unit_discount: null
+                        receipt_qualifiers:
+                        - attribute: amount
+                          operator: '>='
+                          value: '5'
+                        - attribute: subtotal_amount
+                          operator: '>='
+                          value: '5'
+                        percentage_of_processed_amount: null
+                        qc_processing_function: sum_amounts
+                        line_item_filters:
+                        - quantity: null
+                          processing_method: ''
+                          line_item_selector:
+                            name: LIS 17 july 2025
+                            external_id: EXTERNAL_UID_GOES_HERE
+                            exclude_non_payable: false
+                            filter_item_set: base_and_modifiers
+                            base_items:
+                              clauses:
+                              - attribute: item_id
+                                operator: in
+                                value: 101,106,107
+                              - attribute: item_name
+                                operator: like
+                                value: Cookie
+                            modifiers:
+                              processing_method: min_price
+                              max_discount_units: 2
+                              clauses:
+                              - attribute: item_id
+                                operator: in
+                                value: '1010'
+                        item_qualifiers:
+                        - expression_type: net_amount_greater_than_or_equal_to
+                          net_value: 6
+                          line_item_selector:
+                            name: LIS 2 17 july 2025
+                            external_id: EXTERNAL_UID_GOES_HERE
+                            exclude_non_payable: false
+                            filter_item_set: base_only
+                            base_items:
+                              clauses:
+                              - attribute: item_id
+                                operator: in
+                                value: '102'
+                            modifiers:
+                              processing_method: ''
+                              max_discount_units: null
+                              clauses: []
+                        aggregator_grouping_attributes:
+                          item_name: true
+                          item_id: true
+                          item_major_group: true
+                          item_family: true
+                          item_type: true
+                      discount_details:
+                        item_id: 92
+                        name: LIS QC 21 july 2025 redeemable
+                        image: IMAGE_URL_GOES_HERE
+                        points: null
+                        base_amount: null
+                        description: LIS QC 21 july 2025 redeemable
+                        item_properties: null
+                        meta_detail: ''
+                        start_date_tz: '2025-08-04T05:48:26Z'
+                        end_date_tz: '2025-08-31T18:29:59Z'
+                        created_at: '2025-07-21T12:34:09Z'
+                        max_applicable_quantity: null
+                        prompt_text_short: null
+                        prompt_text_long: null
+                      qualified_items: []
+                    - discount_basket_item_id: 2
+                      discount_amount: null
+                      redemption_id: null
+                      redemption_type: null
+                      discount_type: reward
+                      discount_id: '367779'
+                      discount_value: null
+                      message:
+                      - Discount qualification on receipt failed for Shubham Gupta at Airway.
+                      qualified: false
+                      remaining_balance: null
+                      meta_data: null
+                      qualifying_conditions:
+                        name: LIS QC 21 july 2025
+                        external_id: EXTERNAL_UID_GOES_HERE
+                        amount_cap: null
+                        rounding_rule: ''
+                        max_discount_units: null
+                        target_price: null
+                        effective_location: []
+                        stack_discounting: null
+                        reuse_qualifying_items: null
+                        enable_menu_item_aggregator: false
+                        min_post_rollback_rate: null
+                        unit_discount: null
+                        receipt_qualifiers:
+                        - attribute: amount
+                          operator: '>='
+                          value: '5'
+                        - attribute: subtotal_amount
+                          operator: '>='
+                          value: '5'
+                        percentage_of_processed_amount: null
+                        qc_processing_function: sum_amounts
+                        line_item_filters:
+                        - quantity: null
+                          processing_method: ''
+                          line_item_selector:
+                            name: LIS 17 july 2025
+                            external_id: EXTERNAL_UID_GOES_HERE
+                            exclude_non_payable: false
+                            filter_item_set: base_and_modifiers
+                            base_items:
+                              clauses:
+                              - attribute: item_id
+                                operator: in
+                                value: 101,106,107
+                              - attribute: item_name
+                                operator: like
+                                value: Cookie
+                            modifiers:
+                              processing_method: min_price
+                              max_discount_units: 2
+                              clauses:
+                              - attribute: item_id
+                                operator: in
+                                value: '1010'
+                        item_qualifiers:
+                        - expression_type: net_amount_greater_than_or_equal_to
+                          net_value: 6
+                          line_item_selector:
+                            name: LIS 2 17 july 2025
+                            external_id: EXTERNAL_UID_GOES_HERE
+                            exclude_non_payable: false
+                            filter_item_set: base_only
+                            base_items:
+                              clauses:
+                              - attribute: item_id
+                                operator: in
+                                value: '102'
+                            modifiers:
+                              processing_method: ''
+                              max_discount_units: null
+                              clauses: []
+                        aggregator_grouping_attributes:
+                          item_name: true
+                          item_id: true
+                          item_major_group: true
+                          item_family: true
+                          item_type: true
+                      discount_details:
+                        item_id: 92
+                        name: LIS QC 21 july 2025 redeemable
+                        image: IMAGE_URL_GOES_HERE
+                        points: null
+                        base_amount: null
+                        description: LIS QC 21 july 2025 redeemable
+                        item_properties: null
+                        meta_detail: ''
+                        start_date_tz: '2025-08-04T05:53:04Z'
+                        end_date_tz: '2025-08-31T18:29:59Z'
+                        created_at: '2025-07-21T12:34:09Z'
+                        max_applicable_quantity: null
+                        prompt_text_short: null
+                        prompt_text_long: null
+                      qualified_items: []
+                Possible Redemption:
+                  value:
+                    redemption_ref: REDEMPTION_REF_GOES_HERE
+                    success:
+                    - discount_basket_item_id: 266118
+                      discount_amount: 5
+                      redemption_id: 130097719
+                      redemption_type: Redemption
+                      discount_type: redeemable
+                      discount_id: 777658
+                      discount_value: null
+                      message: null
+                      qualified: true
+                      remaining_balance: null
+                      meta_data: null
+                      discount_details:
+                        item_id: 777658
+                        name: Flat $5 Off (Unlocks at 100 points)
+                        campaign_name: Mass Campaign Offer
+                        image: IMAGE_URL_GOES_HERE
+                        points: 100
+                        base_amount: 5
+                        description: ''
+                        item_properties: null
+                        meta_detail: null
+                        start_date_tz: null
+                        end_date_tz: null
+                        created_at: '2022-09-08T18:41:16Z'
+                        auto_select: true
+                      qualified_items:
+                      - item_name: Pizza1 DISCOUNT
+                        item_qty: 2
+                        amount: 3.04
+                        item_type: R
+                        item_id: 101
+                        item_family: '10'
+                        item_group: '999'
+                        serial_number: '1.0'
+                    failures: []
+                Process Redemption:
+                  value:
+                    redemption_ref: REDEMPTION_REF_GOES_HERE
+                    success:
+                    - discount_basket_item_id: 266118
+                      discount_amount: 5
+                      redemption_id: 130097719
+                      redemption_type: Redemption
+                      discount_type: redeemable
+                      discount_id: 777658
+                      discount_value: null
+                      message: null
+                      qualified: true
+                      remaining_balance: null
+                      meta_data: null
+                      discount_details:
+                        item_id: 777658
+                        name: Flat $5 Off (Unlocks at 100 points)
+                        image: IMAGE_URL_GOES_HERE
+                        points: 100
+                        base_amount: 5
+                        description: ''
+                        item_properties: null
+                        meta_detail: null
+                        start_date_tz: null
+                        end_date_tz: null
+                        created_at: '2022-09-08T18:41:16Z'
+                      qualified_items:
+                      - item_name: Pizza1 DISCOUNT
+                        item_qty: 2
+                        amount: 3.04
+                        item_type: R
+                        item_id: 101
+                        item_family: '10'
+                        item_group: '999'
+                        serial_number: '1.0'
+                    failures: []
+                Redemption is not successful:
+                  value:
+                    redemption_ref: REDEMPTION_REF_GOES_HERE
+                    success: []
+                    failures:
+                    - discount_basket_item_id: 274165
+                      discount_amount: 0
+                      redemption_id: 311367823
+                      redemption_type: Redemption
+                      discount_type: redeemable
+                      discount_id: '33089'
+                      discount_value: null
+                      message: null
+                      qualified: false
+                      remaining_balance: null
+                      meta_data: null
+                      discount_details:
+                        item_id: 33089
+                        name: Punchh Free Beverage
+                        image: IMAGE_URL_GOES_HERE
+                        points: 50
+                        base_amount: null
+                        description: ''
+                        item_properties: ''
+                        meta_detail: null
+                        start_date_tz: null
+                        end_date_tz: null
+                        created_at: '2024-04-09T23:27:45Z'
+                        auto_select: false
+                        prompt_text_short: ''
+                        prompt_text_long: ''
+                      qualified_items: []
+        '400':
+          description: 'Bad Request - Example error responses:
+
+            - Required parameter missing or the value is empty: line_items
+
+            - Required parameter missing or the value is empty: item_name_0
+
+            - Required parameter missing or the value is empty: item_qty_0
+
+            - Required parameter missing or the value is empty: receipt_amount
+
+            - Required parameter missing or the value is empty: id'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '404':
+          description: Not Found - User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '422':
+          description: 'Unprocessable Entity - Example error responses:
+
+            - Processing limit for discounts of loyalty type has been reached
+
+            - Redemption limit reached
+
+            - No Basket found
+
+            - Points Balance is insufficient to process request
+
+            - Your current loyalty program configuration does not support this feature. Please connect
+            with your Customer Success representative for resolution of the issue.
+
+            - Invalid Receipt Amount
+
+            - Unable to access the user’s Discount Basket, the Basket is currently locked'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      description: "Evaluates the validity of all inputs and commits the redemption. \n\nPunchh evaluates\
+        \ eligibility during the Possible Redemptions call using the receipt details provided (item name,\
+        \ price, quantity, identifiers, etc.). During the Batch Redemption Process call, Punchh revalidates\
+        \ the same receipt to ensure the qualifying conditions are still met before honoring the redemption.\
+        \ \n\nIf any item attributes change between the two calls, Punchh may be unable to match the qualifying\
+        \ items, which can cause the Batch Redemption Process call to fail or return a different result—even\
+        \ if the Possible Redemptions call was successful.\n\n<b>NOTE: When processing a redemption, DO\
+        \ NOT include the `query` parameter in the API request.</b> Use this parameter only to check for\
+        \ possible redemptions.\n\nAdditional behavior:\n - For orders placed for a future date, the guest’s\
+        \ loyalty account balance is evaluated on the order commit date (sysdate), not on the scheduled\
+        \ pickup or delivery date.\n - Locks the user's discount basket using a unique identifier `external_uid`\
+        \ generated by your application for the transaction when reward locking is enabled in the Punchh\
+        \ platform for the business. Locking the discount basket prevents other channels from creating\
+        \ simultaneous transactions or modifying the discount basket. See [Discount Basket Locking Developer\
+        \ Guide](/docs/dev-portal-developer-resources/d7b83074c9f23-redemptions-2-0-discount-basket-locking).\
+        \ You must log in to the developer portal to access the developer guide.\n\nWhen the Batch Redemption\
+        \ Process API commits the redemption, one of the following actions may occur based on the discount\
+        \ type:\n - Loyalty points are deducted from the guest account when `discount_type` = \"redeemable\"\
+        \ or \"card_completion\"\n - The reward is debited from the guest account when `discount_type`\
+        \ = \"reward\"\n - Banked rewards / currency are deducted from the guest’s loyalty account when\
+        \ `discount_type` = \"discount_amount\""
+      summary: Batch Redemption Process (Redemptions 2.0)
+      operationId: sso_create_online_redemption
+      parameters:
+      - $ref: '#/components/parameters/Signature'
+      - $ref: '#/components/parameters/content type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/accept language'
+      x-stoplight:
+        id: 6031cbeb5bec2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: boolean
+                  description: Include this parameter only if you want to make a possible redemptions
+                    call. The parameter value must be true. If you want to process a redemption, do not
+                    include this parameter in the request.
+                store_number:
+                  type: integer
+                  description: Unique identifier for store location
+                client:
+                  type: string
+                  description: Client key of the business
+                line_items:
+                  $ref: '#/components/schemas/line_items'
+                receipt_datetime:
+                  type: string
+                  description: Timestamp of receipt per ISO 8601 format, including TZ offset from UTC
+                    (YYYY-MM-DDThh:mm:ss-±hh:mm)
+                  format: date-time
+                subtotal_amount:
+                  type: number
+                  format: float
+                  description: Order amount before taxes (sum of all item amounts minus any discounts).
+                    Same as `receipt_amount`. For historical reasons, include this parameter along with
+                    `receipt_amount` in the API request.
+                receipt_amount:
+                  type: number
+                  format: float
+                  description: Order amount before taxes, calculated as the sum of all item amounts minus
+                    any discounts. This is the amount used to calculate loyalty points/visits. The value
+                    of this parameter should match `subtotal_amount`. For example, if the order amount
+                    is $10, both `receipt_amount` and `subtotal_amount` will be 10. If a $2 discount is
+                    applied, both will be 8.
+                transaction_no:
+                  type: string
+                  description: Transaction number
+                external_uid:
+                  type: string
+                  x-stoplight:
+                    id: x2lb8yfixy7a4
+                  description: 'Unique identifier generated by the system to lock the discount basket
+                    and prevent duplicate transactions. This parameter is required when reward locking
+                    is enabled for the business in the Punchh platform. <b>Note</b>: Contact your Punchh
+                    representative to update this configuration.'
+              required:
+              - store_number
+              - client
+              - line_items
+              - receipt_datetime
+              - subtotal_amount
+              - receipt_amount
+            examples:
+              Possible Redemption:
+                value:
+                  query: true
+                  store_number: 900
+                  client: CLIENT_GOES_HERE
+                  line_items:
+                  - item_name: coffee
+                    item_qty: 1
+                    amount: 10
+                    item_type: M
+                    item_id: 330
+                    item_family: '10'
+                    item_group: gp
+                    serial_number: 1
+                  - item_name: pizza
+                    item_qty: 1
+                    amount: 20
+                    item_type: M
+                    item_id: 331
+                    item_family: '10'
+                    item_group: gp
+                    serial_number: 2
+                  receipt_datetime: '2019-04-11T14:14:07+05:30'
+                  subtotal_amount: 100
+                  receipt_amount: 100
+                  transaction_no: '11111111111'
+                  external_uid: EXTERNAL_UID_GOES_HERE
+              Process Redemption:
+                value:
+                  store_number: 900
+                  client: CLIENT_GOES_HERE
+                  line_items:
+                  - item_name: coffee
+                    item_qty: 1
+                    amount: 10
+                    item_type: M
+                    item_id: 330
+                    item_family: '10'
+                    item_group: gp
+                    serial_number: 1
+                  - item_name: pizza
+                    item_qty: 1
+                    amount: 20
+                    item_type: M
+                    item_id: 331
+                    item_family: '10'
+                    item_group: gp
+                    serial_number: 2
+                  receipt_datetime: '2019-04-11T14:14:07+05:30'
+                  subtotal_amount: 100
+                  receipt_amount: 100
+                  transaction_no: '11111111111'
+                  external_uid: EXTERNAL_UID_GOES_HERE
+        description: ''
+    parameters: []
+  /api/auth/batch_redemptions/{redemption_ref}:
+    delete:
+      summary: Void Redemption (Redemptions 2.0)
+      operationId: delete-api-auth-batch_redemptions
+      responses:
+        '202':
+          description: Accepted - Success Response
+        '400':
+          description: 'Bad Request - Required parameter missing or the value is empty: id'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '404':
+          description: Not Found - User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '410':
+          description: The checkin associated with the external_uid has already been committed and cannot
+            be voided.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                      code:
+                        type: string
+              examples:
+                Example:
+                  value:
+                    error:
+                      message: Checkin associated with external_uid 9020-202-102252700 has been committed.
+                      code: commited
+        '422':
+          description: 'Unprocessable Entity - Example error responses:
+
+            - Your current loyalty program configuration does not support this feature. Please connect
+            with your Customer Success representative for resolution of the issue.
+
+            - No Basket found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      description: 'Voids the complete discount basket. The value of `redemption_ref` must be appended
+        to the URL path. You can get the `redemption_ref` value from the [Get Active Discount Basket](/docs/dev-portal-online-ordering/apis/oo-redemptions-2-0-new-api/paths/~1api~1auth~1discounts~1active/get)
+        API response.
+
+
+        Example:
+
+
+        `DELETE https://{base}/api/auth/batch_redemptions/aBCDEfghIJkL-MN1opR`
+
+
+        Note: It will not support partial voiding of a discount basket.'
+      parameters:
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/content type'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/Signature'
+      x-stoplight:
+        id: 5938281f47e7a
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: Client key of the business
+              required:
+              - client
+            examples:
+              Example:
+                value:
+                  client: CLIENT_GOES_HERE
+    parameters:
+    - schema:
+        type: string
+      name: redemption_ref
+      in: path
+      required: true
+      description: Transaction level identifier for all discount selections<br>Example - aBCDEfghIJkL-MN1opR
+  /api/auth/discounts/unlock:
+    put:
+      summary: Unlock Discount Basket (Redemptions 2.0)
+      operationId: put-api-auth-discounts-unlock
+      responses:
+        '200':
+          description: OK - Discount Basket is unlocked successfully.
+        '404':
+          description: Not Found - User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '422':
+          description: 'Unprocessable Entity - Example error responses:
+
+
+            - Unable to find valid discount basket
+
+            - Invalid Business Configuration. Please connect with your Customer Success representative
+            for resolution of the issue.
+
+            - Your current loyalty program configuration does not support this feature. Please connect
+            with your Customer Success representative for resolution of the issue.
+
+            - User does not have an active basket'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      description: 'When reward locking is enabled in the Punchh Platform, the guest''s discount basket
+        must be locked. An external ID will be required to lock the discount basket to prevent other channels
+        from creating simultaneous transactions or modifying the discount basket. In this mode, the guest''s
+        discount basket must be locked when discounts are applied to a transaction, using a unique identifier
+        `external_uid` specific to the transaction generated by your application.
+
+
+        The `external_uid` ensures that no modifications or updates are allowed by any channel (e.g.,
+        POS terminals/devices, mobile, etc.) except the application that initially locked the discount
+        basket with the `external_uid`. Contact your Punchh representative to update this Punchh platform
+        configuration setting.
+
+
+        In some scenarios, such as where a transaction is cancelled or when the guest modifies the order
+        after the basket is locked, the guest''s discount basket needs to be unlocked so that transactions
+        can be processed for the guest via other channels (e.g., POS terminals/devices, mobile, etc.).
+        To unlock the discount basket, the `external_uid` must be passed in the API request along with
+        the user-level `access_token` of the guest.'
+      parameters:
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/content type'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/Signature'
+      x-stoplight:
+        id: dd5af3bade194
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  x-stoplight:
+                    id: q6dstpcnyg9rp
+                  description: Client key of the business
+                external_uid:
+                  type: string
+                  x-stoplight:
+                    id: g2knm8l3t6byc
+                  description: Unique identifier generated by the system to lock the discount basket to
+                    prevent duplicate transactions
+              required:
+              - client
+              - external_uid
+            examples:
+              example:
+                value:
+                  client: CLIENT_GOES_HERE
+                  external_uid: EXTERNAL_UID_GOES_HERE
+x-stoplight:
+  id: 7f560cdc414d9
+openapi: 3.1.1
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+components:
+  schemas:
+    discount_basket_items:
+      title: Discount Basket Items (Array Object)
+      x-stoplight:
+        id: 3a95e69093e06
+      type: array
+      description: List of discounts. In the case of the [Auto Redemption](/docs/dev-portal-online-ordering/d3e1d4293ad65-auto-redemption-redemptions-2-0)
+        and [Get Active Discount Basket](/docs/dev-portal-online-ordering/1d4f01cf7aa32-get-active-discount-basket-redemptions-2-0)
+        APIs, the object lists invalid discounts with a message stating that the discount is invalid.
+      x-examples:
+        Example:
+        - discount_basket_item_id: 4699
+          discount_type: reward
+          discount_id: 131
+          discount_value: null
+          created_at: '2024-01-25T10:03:48Z'
+      items:
+        type: object
+        properties:
+          discount_basket_item_id:
+            type: integer
+            description: Unique identifier of selection
+          discount_type:
+            type: string
+            description: Discount type (e.g., reward, redeemable, etc.)
+          discount_id:
+            type: string
+            description: Discount ID
+          discount_value:
+            type: number
+            format: float
+            description: Value of the currency that a user wants to redeem. This value is set for users
+              on the “Points Convert to Currency” loyalty program. The default value is 0 if the user
+              has not selected any amount to redeem or has no currency in the loyalty account. The parameter
+              returns a “null” value for a business that does not support banking of points into currency.
+          created_at:
+            type: string
+            format: date-time
+            description: Date/time when the discount was selected, in YYYY-MM-DDThh:mm:ss format
+          message:
+            type: string
+            x-stoplight:
+              id: 8ho23rz6fjjfq
+            description: Error message for invalid discount. If a discount is found to be honored, expired,
+              perished, or archived, the API returns an error message in the parameter for the discount
+              indicating that the discount is invalid.
+          discount_details:
+            $ref: '#/components/schemas/discount_details'
+    discount_details:
+      title: Discount Details (Object)
+      x-stoplight:
+        id: jb42b7k6rcni9
+      type: object
+      description: List of a discount's defining attributes. In the case of the [Auto Redemption](/docs/dev-portal-online-ordering/d3e1d4293ad65-auto-redemption-redemptions-2-0)
+        and [Get Active Discount Basket](/docs/dev-portal-online-ordering/1d4f01cf7aa32-get-active-discount-basket-redemptions-2-0)
+        APIs, the object returns a null value for invalid discounts.
+      x-examples:
+        Example:
+        - item_id: 777658
+          name: Flat $5 Off (Unlocks at 100 points)
+          image: IMAGE_URL_GOES_HERE
+          points: 100
+          base_amount: 5
+          description: ''
+          item_properties: null
+          meta_detail: null
+          start_date_tz: null
+          end_date_tz: null
+          created_at: '2022-09-08T18:41:16Z'
+      properties:
+        item_id:
+          type: integer
+          x-stoplight:
+            id: 80qo2jvwbm2ty
+          description: Item ID
+        name:
+          type: string
+          x-stoplight:
+            id: egg0ue3bz5ooy
+          description: External discount name.<br><br>The `name` value is returned in the language specified
+            in the Accept-Language request header, provided the redeemable name and subscription plan
+            name have been translated into the relevant language in the Punchh platform. If the translation
+            is unavailable, the response returns the value for this parameter in the default English language.
+            For example, if the header specifies “fr” (French), the name is returned in French if a French
+            translation is configured for the name in the Punchh platform; otherwise the value is returned
+            in the default English language.
+        image:
+          type: string
+          x-stoplight:
+            id: uifkndmwtrpl0
+          description: Image URL of the reward
+        points:
+          type: integer
+          x-stoplight:
+            id: 2h0pv5to7g1zu
+          description: Points associated with the current reward
+        base_amount:
+          type: integer
+          x-stoplight:
+            id: 6utoa8q5q6jgk
+          description: Discounted value
+        description:
+          type: string
+          x-stoplight:
+            id: 77ptihpodzby8
+          description: Description that explains rewards as configured in the Punchh platform.<br><br>The
+            `description` value is returned in the language specified in the Accept-Language request header,
+            provided the descriptions of redeemable and subscription have been translated into the relevant
+            language in the Punchh platform. If the translation is unavailable, the response returns the
+            value for this parameter in the default English language. For example, if the header specifies
+            “fr” (French), the description is returned in French only if a French translation is configured
+            for the description in the Punchh platform; otherwise the value is returned in the default
+            English language.
+        item_properties:
+          type: string
+          x-stoplight:
+            id: fvvz638acsq2n
+          description: Comma-separated values that provide additional details about a redeemable. For
+            example, a redeemable could be a "Food_Item" or "Merchandise", etc. Can be configured for
+            a business in the Punchh platform and attached to a redeemable. If no value is attached to
+            a redeemable, a blank field will be returned.
+        meta_detail:
+          type: string
+          x-stoplight:
+            id: 1mn40oficjohy
+          description: 'Meta information configured for `discount_type` values: redemption_code, subscription,
+            reward, and redeemable. The response returns a value only if the meta data field is configured
+            in the Punchh platform when creating the discount. Currently, the Punchh platform supports
+            multilingual values for `meta_detail` only for coupon redemption. <br><br>The `meta_detail`
+            value for the coupon redemption (i.e., when discount_type = redemption_code) is returned in
+            the language specified in the Accept-Language request header, provided the coupon meta data
+            has been translated into the relevant language in the Punchh platform. If the translation
+            is unavailable, the response returns the value for this parameter in the default English language.
+            For example, if the header specifies “fr” (French), the `meta_data` value for a coupon is
+            returned in French only if a French translation is configured for the coupon meta data in
+            the Punchh platform; otherwise the value is returned in the default English language.'
+        start_date_tz:
+          type: string
+          x-stoplight:
+            id: isw2tsm6zr6mk
+          description: Start date of the reward in ISO 8601 format
+          format: date-time
+        end_date_tz:
+          type: string
+          x-stoplight:
+            id: tlmhixyau7uxk
+          description: Expiry date of the reward in ISO 8601 format
+          format: date-time
+        created_at:
+          type: string
+          x-stoplight:
+            id: baxgj83g3j6ou
+          format: date-time
+          description: Date/time when the reward was created, in YYYY-MM-DDThh:mm:ss format
+        auto_select:
+          type: boolean
+          x-stoplight:
+            id: zqd660e52fd5u
+          description: 'Whether the offer is enabled for auto-redemption or not. Possible values: true,
+            false'
+        campaign_name:
+          type: string
+          x-stoplight:
+            id: gq2mm46hfx7vv
+          description: Name of the campaign through which the guest received the offer
+        max_applicable_quantity:
+          type: integer
+          x-stoplight:
+            id: 8a7wbw8b7d76w
+          description: 'The maximum quantity that can be discounted. Note: This parameter is returned
+            for offers related to Price Rollback, Target Price for Bundle, and Target Price for Bundle
+            (Advanced).'
+    line_items:
+      title: Line Items (Array Object)
+      x-stoplight:
+        id: ij9mvwtn03jof
+      type: array
+      description: List of line items
+      x-examples:
+        Example:
+        - item_name: coffee
+          item_qty: 1
+          amount: 10
+          item_type: M
+          item_id: 330
+          item_family: '10'
+          item_group: gp
+          serial_number: 1
+      items:
+        type: object
+        properties:
+          item_name:
+            type: string
+            description: Item name
+          item_qty:
+            type: integer
+            description: The input of item quantity which reflects the specified number of items ordered
+          amount:
+            type: number
+            format: float
+            description: Total item amount. In case of multiple quantities, this is the sum total of all
+              item amounts.
+          item_type:
+            type: string
+            description: "M - Menu item ( + or - )\n\nS - Service item. Any item representing money received\
+              \ that is not a sale. For example: service charges, delivery fees, tips, purchase of gift\
+              \ cards/certificates, etc. In the case of a single scan flow, send a menu item with the\
+              \ service menu item type for the selected tip amount. \n\n<b>Note</b>: We do not recommend\
+              \ sending the following menu item types in this API call. Instead, send them in the [Create\
+              \ Loyalty Check-in](/docs/dev-portal-online-ordering/f1943957e38b4-create-loyalty-check-in)\
+              \ and [Update Loyalty Check-in](/docs/dev-portal-online-ordering/386045cf184bc-update-loyalty-check-in)\
+              \ API calls.\n\nD - Discount (negative). Either internal or Punchh will always evaluate\
+              \ lines as ( - ) regardless of the sign assigned in the API call. We do not recommend sending\
+              \ any line item types set to D in any multiple Redemptions 2.0 requests. If any items with\
+              \ line item type D are sent in these requests, the business will require additional configuration\
+              \ for all offers to filter out the line item type D. See the [Qualification Criteria](https://support.punchh.com/s/article/Qualification-Criteria)\
+              \ article on the Support Portal. <br><br>Note: To view the Punchh product documentation\
+              \ on the Punchh Support Portal, you must log in to a Punchh platform production environment.\
+              \ If you already have access to a production environment, follow the instructions [here](https://support.punchh.com/s/article/How-do-I-access-the-Punchh-Support-Portal-Single-Sign-On)\
+              \ to access the Punchh Support Portal.\n\nT - Tax item. Taxes of all sorts\n\nP - Payment\
+              \ item. Visa, MasterCard, cash, gift card/certificate (when used to pay for the order)\n\
+              \nFor example, if a business offers a $2 discount on a $10 burger, send the burger as $8\
+              \ ($10 - $2) in the API request. These discounts should be sent as line item type D in the\
+              \ Check-in or Update API call."
+          item_id:
+            type: integer
+            description: Item ID
+          item_family:
+            type: string
+            description: Item family is required if the menu family is categorized for the item. For more
+              information, see [How To Send Menu Items to Punchh](/docs/dev-portal-online-ordering/5277d762b8c6d-how-to-send-menu-items-to-punchh#structure-of-menu-item-data).
+          item_group:
+            type: string
+            description: Item group is required if menu_major_group is categorized for the item. For more
+              information, see [How To Send Menu Items to Punchh](/docs/dev-portal-online-ordering/5277d762b8c6d-how-to-send-menu-items-to-punchh#structure-of-menu-item-data).
+          serial_number:
+            type: number
+            format: float
+            description: Serial numbers are assigned to menu items on a receipt. A main menu item (such
+              as pizza) may have serial number "1.0", and the associated modifiers (such as "Extra Cheese",
+              "Olives", and "Jalapenos") may have serial numbers "1.1", "1.2", and "1.3" respectively.
+              The numbering explains that particular items are modifiers associated with the main item.
+        required:
+        - item_name
+        - item_qty
+        - amount
+        - item_type
+        - item_id
+        - item_family
+        - item_group
+        - serial_number
+    qualified_items:
+      title: Qualified Items (Array Object)
+      x-stoplight:
+        id: l9prb666730b6
+      type: array
+      description: List of qualified items
+      x-examples:
+        Example:
+        - item_name: Pizza1 DISCOUNT
+          item_qty: 2
+          amount: 3.04
+          item_type: R
+          item_id: 101
+          item_family: '10'
+          item_group: '999'
+          serial_number: '1.0'
+      items:
+        type: object
+        properties:
+          item_name:
+            type: string
+            description: Menu item name
+          item_qty:
+            type: integer
+            description: The input of item quantity which reflects the specified number of items ordered
+          amount:
+            type: number
+            format: float
+            description: Total item amount. In case of multiple quantities, this is the sum total of all
+              item amounts.
+          item_type:
+            type: string
+            description: "M - Menu item ( + or - )\n\nS - Service item. Any item representing money received\
+              \ that is not a sale. For example: service charges, delivery fees, tips, purchase of gift\
+              \ cards/certificates, etc. In the case of a single scan flow, send a menu item with the\
+              \ service menu item type for the selected tip amount. \n\n<b>Note</b>: We recommend not\
+              \ sending the following menu item types in this API call. Instead, send them in the [Create\
+              \ Loyalty Check-in](/docs/dev-portal-online-ordering/f1943957e38b4-create-loyalty-check-in)\
+              \ and [Update Loyalty Check-in](/docs/dev-portal-online-ordering/386045cf184bc-update-loyalty-check-in)\
+              \ API calls.\n\nD - Discount (negative). Either internal or Punchh will always evaluate\
+              \ lines as ( - ) regardless of the sign assigned in the API call\n\nT - Tax item. Taxes\
+              \ of all sorts\n\nP - Payment item. Visa, MasterCard, cash, gift card/certificate (when\
+              \ used to pay for the order)\n\nFor example, if a business offers a $2 discount on a $10\
+              \ burger, send the burger as $8 ($10 - $2) in the API request. Send the discount as a line\
+              \ item in the Check-in API call."
+          item_id:
+            type: integer
+            description: Item ID
+          item_family:
+            type: string
+            description: Item family is required if menu_family is categorized for the item. For more
+              information, see [How To Send Menu Items to Punchh](/docs/dev-portal-online-ordering/5277d762b8c6d-how-to-send-menu-items-to-punchh#structure-of-menu-item-data).
+          item_group:
+            type: string
+            description: Item major group. Required if menu_major_group is categorized for the item; else
+              pass it as a blank field in the API request. Generically, every menu item belongs to a family
+              group. A family group is a sub-category of a major group. For more information, see [How
+              To Send Menu Items to Punchh](/docs/dev-portal-online-ordering/5277d762b8c6d-how-to-send-menu-items-to-punchh#structure-of-menu-item-data).
+          serial_number:
+            type: string
+            format: float
+            description: Serial numbers are assigned to menu items on a receipt. A main menu item (such
+              as pizza) may have serial number "1.0", and the associated modifiers (such as "Extra Cheese",
+              "Olives", and "Jalapenos") may have serial numbers "1.1", "1.2", and "1.3" respectively.
+              The numbering explains that particular items are modifiers associated with the main item.
+  parameters:
+    Signature:
+      schema:
+        type: string
+        default: SIGNATURE_GOES_HERE
+      in: header
+      name: x-pch-digest
+      description: The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1)
+        for the API call
+      required: true
+    content type:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Content-Type
+      description: Set this header to **application/json**.
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Accept
+      description: Advertises which content types the client is able to understand
+      required: true
+    accept language:
+      schema:
+        type: string
+        default: en
+      in: header
+      name: Accept-Language
+      description: 'Preferred language. Punchh supports multiple languages for the redeemable name, redeemable
+        description, meta data for coupon, subscription plan name, and subscription description in the
+        API response as per the locale specified in the Accept-Language request header. Possible values:
+        es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania,
+        es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh
+        platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the
+        Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable
+        name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>,
+        2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>,
+        and 3) subscription plan name and subscription description when creating/editing a subscription
+        plan under <b>Wallet and Passes > Subscription Plans</b>. '
+    Authentication Token:
+      schema:
+        type: string
+        default: AUTHENTICATION_TOKEN_GOES_HERE
+      in: query
+      name: authentication_token
+      description: The authentication token of the user. You can retrieve this from the response of a
+        successful sign-in API call or through the [SSO process](/docs/dev-portal-online-ordering/9a41534336c87-sso-flow-for-web-and-mobile).
+    Client:
+      schema:
+        type: string
+        default: CLIENT_GOES_HERE
+      in: query
+      name: client
+      description: Client key of the business
+    User-Agent:
+      schema:
+        type: string
+        default: Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type
+      name: User-Agent
+      in: header
+      required: true
+      description: For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      required: true
+      description: You may pass the access_token instead of the authentication_token in Online Ordering
+        endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+x-ext-urls: {}

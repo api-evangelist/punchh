@@ -1,0 +1,225 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.partech.com/docs/dev-portal-mobile/headers-and-caching
+docs:
+  - https://developers.partech.com/docs/dev-portal-mobile/headers-and-caching
+  - https://developers.partech.com/docs/dev-portal-mobile/user-agent
+  - https://developers.partech.com/docs/dev-portal-mobile/redirects
+  - https://developers.partech.com/docs/dev-portal-developer-resources/punchh-api-security-guidelines
+  - https://developers.partech.com/docs/dev-portal-developer-resources/advanced-authentication-developer-guide
+  - https://developers.partech.com/docs/dev-portal-webhooks-manager/webhook-delivery-error-handling-and-retry-logic
+provider: PAR Punchh
+providerId: punchh
+description: >-
+  Cross-cutting runtime semantics for the PAR Punchh APIs, read from the PAR
+  developer portal and cross-checked against the 15 published OpenAPI 3.1.1
+  documents (288 operations). Punchh publishes an unusually explicit request /
+  response header contract for a partner-gated API — mandatory User-Agent,
+  request-size ceilings, an HMAC request digest, and a documented set of
+  observability response headers.
+
+auth_style:
+  summary: >-
+    Bearer access token in the Authorization header, plus an HMAC-SHA256
+    request digest (x-pch-digest) for mobile and online-ordering surfaces, plus
+    a device identifier for mobile. POS uses a location/business token pair.
+  see: authentication/punchh-authentication.yml
+  headers:
+    - name: Authorization
+      value: 'Bearer <access_token>'
+      required: true
+      note: Present as an explicit header parameter on 23 operations across the published specs.
+    - name: x-pch-digest
+      value: HMAC-SHA256 digest of URI and body
+      required: true
+      applies_to: [mobile, online-ordering]
+      note: >-
+        Security verification and tamper protection between the client and the
+        Punchh server. PAR publishes an interactive digest generator at
+        https://developers.partech.com/docs/dev-portal-developer-resources (Punchh x-pch-digest Generator).
+    - name: punchh-app-device-id
+      value: Stable per-device GUID
+      required: true
+      applies_to: [mobile]
+      note: >-
+        Anti-fraud control — sign-up rewards are granted per device so a guest
+        cannot re-sign-up repeatedly on one handset. Must survive a device reset
+        (store in keychain / permanent storage).
+    - name: x_true_client_ip
+      value: Single client IP as a string
+      required: true
+      applies_to: [indirect-access partner integrations]
+      note: >-
+        Mandatory for partners who proxy guest traffic. Punchh performs rate
+        limiting and bot mitigation on this header rather than the connecting IP.
+        Requests without it are filtered and ignored.
+    - name: x_ja3_fingerprint
+      value: JA3 TLS fingerprint of the originating client
+      required: false
+      recommended: true
+
+idempotency:
+  supported: true
+  mechanism: client-supplied natural keys, not a generic Idempotency-Key header
+  header: null
+  keys:
+    - name: external_uid
+      scope: check-ins and redemptions
+      note: >-
+        Online-ordering and POS check-in / redemption calls carry the partner's
+        own transaction identifier so a retry does not double-count loyalty
+        activity or re-issue a discount.
+    - name: content_id
+      scope: outbound webhooks
+      note: >-
+        Punchh states it may publish a webhook message at least once, so the same
+        event can arrive more than once. Consumers are told explicitly to make
+        event processing idempotent using content_id plus timestamp validation.
+    - name: discount basket (Redemptions 2.0)
+      scope: in-flight check
+      note: >-
+        Redemptions 2.0 replaces fire-and-forget redemption with a server-side
+        discount basket that is created, mutated, locked and then voided or
+        committed — so a repeated apply is a basket mutation rather than a second
+        redemption. See "Redemptions 2.0 - Discount Basket Locking" in the
+        developer resources.
+  retention: not published
+  note: >-
+    Punchh does not publish a generic Idempotency-Key request header or a replay
+    window. Idempotency is real but is expressed through per-domain natural keys
+    and the basket lifecycle.
+
+pagination:
+  style: page-number
+  params:
+    - name: page
+      in: query
+      description: 1-based page number.
+    - name: per
+      in: query
+      description: Page size.
+  response_fields: not published
+  note: >-
+    Pagination is documented on only one published operation (Platform Functions
+    user search); the great majority of Punchh collection endpoints return an
+    unpaged array. Treat pagination as per-endpoint, not platform-wide.
+
+filtering_and_expansion:
+  filter_param: filter
+  sparse_fields: false
+  expansion: false
+  note: >-
+    A `filter` query parameter appears on three Platform Functions operations.
+    There is no field-expansion or sparse-fieldset facility.
+
+metadata:
+  custom_fields: true
+  note: >-
+    Brands can define custom profile fields on the guest record and update them
+    through the Platform Functions API ("Updating Custom Profile Fields With the
+    Punchh Platform API"). There is no free-form `metadata` object on API objects.
+
+request_id_tracing:
+  header: X-Request-Id
+  direction: response
+  note: >-
+    Punchh generates a unique request ID for every incoming HTTP request and
+    returns it as X-Request-Id. Quote it in support tickets.
+  companions:
+    - header: X-Runtime
+      description: Server-side response time for the request.
+    - header: x-pch-env
+      description: The Punchh environment that served the request (integration, production, ...).
+
+caching:
+  headers: [Cache-Control, Expires, Etag]
+  note: >-
+    Cache-Control and Expires are set to conservative values based on the data in
+    the response body. ETag is supported on both request and response and is the
+    recommended freshness check.
+  compression:
+    header: 'Accept-Encoding: gzip'
+    note: Recommended by Punchh; responses are materially smaller over the wire.
+
+localization:
+  language_header: Accept-Language
+  default: en
+  examples: [en, es]
+  timezone_header: Accept-Timezone
+  timezone_note: >-
+    Punchh requires a time zone from the Olson/IANA database. Server-generated
+    timestamps use the zone supplied on the call. Webhook payload timestamps are
+    always UTC and always in the ENU locale — conversion is the consumer's job.
+
+user_agent:
+  required: true
+  enforcement: Requests with no User-Agent header are rejected.
+  formats:
+    ios: 'AppIdentifier/VersionNumber/BuildNumber(iPhoneModelIdentifier;iOS;iOSVersion;RenderingScale)'
+    android: 'AppIdentifier/VersionNumber/BuildNumber(Android;DeviceManufacturer;ModelNumber;AndroidVersion;ScreenDensity)'
+  note: >-
+    The app identifier is the package name with the com.punchh. prefix stripped.
+    Punchh agrees the User-Agent string with each partner during onboarding and
+    uses it to contact the partner when a problem is detected.
+
+request_limits:
+  total_headers_bytes: 32768
+  single_header_bytes: 16384
+  extra_headers: >-
+    Do not send request headers that are not specifically requested by the API
+    specification. Messages that exceed these limits are rejected by the server
+    and never processed.
+
+redirects:
+  documented: true
+  doc: https://developers.partech.com/docs/dev-portal-mobile/redirects
+  note: >-
+    A 302 is used on two published Platform Functions operations. For outbound
+    webhooks, HTTP 3xx responses from the consumer are treated as failures and
+    are NOT retried.
+
+versioning:
+  style: path-prefix plus named API generations
+  path_prefixes: ['/api2/mobile', '/api/auth', '/api2/dashboard']
+  generations:
+    - name: Redemptions 1.0
+      status: legacy
+      note: Titled "(Legacy)" by PAR in the published specs for Mobile, Online Ordering and POS.
+    - name: Redemptions 2.0
+      status: current
+      note: Titled "(New)"; discount-basket model.
+  see: lifecycle/punchh-lifecycle.yml
+
+error_envelope:
+  content_type: application/json
+  shape: '{"errors": "<message>"}'
+  rfc9457: false
+  see: errors/punchh-problem-types.yml
+
+rate_limit_signalling:
+  response_headers: not published
+  status_on_exhaustion: 429
+  note: >-
+    Punchh publishes rate-limiting behaviour in prose (authentication lockouts,
+    partner-tier thresholds) but does not document X-RateLimit-* / RateLimit-*
+    response headers on the API. The one place a 429 contract is published is the
+    outbound webhook delivery path, where a consumer returning 429 triggers three
+    retries at 15 / 45 / 180 seconds.
+  see: rate-limits/punchh-rate-limits.yml
+
+transport:
+  tls_minimum:
+    online-ordering: TLS 1.2+
+    mobile: TLS 1.2+
+    platform-functions: TLS 1.2+
+    pos: TLS 1.0+
+  note: >-
+    Published per-surface in the Punchh API Security Guidelines. POS terminals are
+    the only surface still admitted at TLS 1.0.
+
+cross_links:
+  errors: errors/punchh-problem-types.yml
+  lifecycle: lifecycle/punchh-lifecycle.yml
+  authentication: authentication/punchh-authentication.yml
+  rate_limits: rate-limits/punchh-rate-limits.yml
+  webhooks: asyncapi/punchh-webhooks.yml

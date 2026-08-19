@@ -1,0 +1,155 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Headless Offers API - Platform Functions",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Get Segment List",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/dashboard/segments",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Pulls a list of segments available and/or defined on Punchh, allowing for browsing/selecting of Punchh segments natively in an external platform. Segment search is on a business level, and the request can:\n* Set search limits and order by desc search\n* Search based on name or segment type filter\n* Filter based on name or description\n\n\n\nFor more information, see [Headless Offers Management - Distribution](/docs/dev-portal-platform-functions/4fabd3e0da881-headless-offers-management-distribution)\n\n"
+    },
+    {
+      "info": {
+        "name": "Get Redeemable List",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/dashboard/redeemables",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Pulls a list of offers available and defined on Punchh, allowing for browsing/selecting of Punchh offers natively in an external platform. Redeemable search is on a business level, and the request can:\n* Set search limits and order by desc search\n* Search based on name or segment type filter\n* Filter based on name or description\nFor more information, see [Headless Offers Management - Distribution](/docs/dev-portal-platform-functions/4fabd3e0da881-headless-offers-management-distribution)\n\nTo call"
+    },
+    {
+      "info": {
+        "name": "Commit Redeemable Distribution",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/dashboard/campaigns",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Triggers configuration and scheduling of a mass offer campaign on Punchh. This is used by an external platform to request Punchh to deliver offers to a target segment of guests using the Punchh mass offer campaign functionality. When using this endpoint to request scheduling of a mass offer campaign on Punchh, the mass offer campaign created will not have any marketing communication configured (email, push notification, SMS, etc.), and the mass offer campaign will only distribute a Punchh redeem"
+    },
+    {
+      "info": {
+        "name": "Asynchronous Support Gifting",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/dashboard/users/support_gifting",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Allows an admin to gift a single entity (points, visits, currency or rewards) to a specific user. This API can handle higher volumes of support gifting requests, as it processes them in the background rather than immediately.\n\nFor bulk gifting use cases (points or rewards), we recommend using this API, which supports up to 4,000 requests per minute (RPM) and is optimized for high-volume gifting scenarios."
+    },
+    {
+      "info": {
+        "name": "Support Gifting to a User",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/dashboard/users/support",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "The Support Gifting API enables administrators (such as restaurant managers, support staff, or corporate team members) to grant users different types of rewards (e.g., redeemables, points, etc.). It is particularly valuable in customer support, operational adjustments, or exception-handling scenarios where manual gifting is required.\n\n<b>Caution</b>: It must not be used for bulk or large-scale gifting and is not a substitute for marketing or promotional campaigns.\n\n<b>Maximum allowed usage</b>: "
+    }
+  ],
+  "bundled": true
+}

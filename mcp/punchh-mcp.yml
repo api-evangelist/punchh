@@ -1,0 +1,170 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/ (15 PAR Punchh OpenAPI 3.1.1 documents) + live MCP probes
+provider: PAR Punchh
+providerId: punchh
+status: candidate
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: probed
+probes:
+- url: https://developers.partech.com/mcp
+  method: POST tools/list
+  status: 404
+  body: '{"error":true,"message":"Agent is not enabled for this project"}'
+- url: https://developers.partech.com/sse
+  method: POST tools/list
+  status: 404
+  body: '{"error":true,"message":"Not found."}'
+- url: https://developers.partech.com/api/mcp
+  method: POST tools/list
+  status: 404
+- url: https://api.punchh.com/mcp
+  method: POST tools/list
+  status: 404
+- url: https://api.punchh.com/sse
+  method: POST tools/list
+  status: 404
+- url: https://punchh.com/mcp
+  method: POST tools/list
+  status: 404
+- url: https://mcp.punchh.com/mcp
+  method: POST tools/list
+  status: 0
+  note: DNS does not resolve
+- url: https://mcp.partech.com/mcp
+  method: POST tools/list
+  status: 0
+  note: DNS does not resolve
+note: PAR Punchh ships NO MCP server, hosted or local. The developer portal is Scalar-hosted and exposes an /mcp
+  route that answers "Agent is not enabled for this project" — that is the Scalar docs platform declining, not a
+  Punchh server. PAR does ship an AI chat assistant inside the docs (changelog entry 2026-03-17), but it is a first-party
+  chat widget with no MCP endpoint. The tools below are a CANDIDATE surface derived from the published OpenAPI operationIds.
+  Nothing here is served by the provider. No endpoint URL has been invented.
+source_specs:
+- openapi/punchh-mobile-api-openapi.yml
+- openapi/punchh-pos-api-openapi.yml
+- openapi/punchh-online-ordering-sso-api-openapi.yml
+- openapi/punchh-platform-functions-api-openapi.yml
+candidate_tools:
+- name: punchh_lookup_guest
+  category: guest
+  rest:
+  - pos_user_search
+  - mobile_fetch_user_information
+  - sso_fetch_user_informaton
+  description: Look up a loyalty guest from POS, mobile or an online-ordering session.
+  binding: derived from published operationId
+  confidence: high
+- name: punchh_create_guest
+  category: guest
+  rest:
+  - pos_create_user
+  - mobile_sign_up
+  - sso_signup
+  description: Create a loyalty guest account from POS, mobile or online ordering.
+  binding: derived from published operationId
+  confidence: high
+- name: punchh_get_guest_balance
+  category: guest
+  rest:
+  - mobile_fetch_user_balance
+  - get-api-pos-users-balance
+  - sso_fetch_user_balance
+  description: Fetch a guest point/currency balance and membership level.
+  binding: derived from published operationId
+  confidence: high
+- name: punchh_create_checkin
+  category: loyalty
+  rest:
+  - pos_checkin
+  - sso_loyalty_checkin
+  - mobile_create_loyalty_checkin_by_qr_code
+  description: Post a loyalty check-in for a guest at a location.
+  binding: derived from published operationId
+  confidence: high
+- name: punchh_void_checkin
+  category: loyalty
+  rest:
+  - sso_void_loyalty_checkin
+  - sso_update_loyalty_checkin
+  description: Void or amend a previously posted check-in.
+  binding: derived from published operationId
+  confidence: high
+- name: punchh_list_applicable_offers
+  category: offers
+  rest:
+  - pos_applicable_offers
+  - mobile_list_applicable_offers
+  - sso_auth_fetchavailableoffers
+  description: List the offers and rewards a guest can use against the current basket.
+  binding: derived from published operationId
+  confidence: high
+- name: punchh_create_redemption
+  category: redemption
+  rest:
+  - pos_create_redemption
+  - mobile_create_redemption_using_redeemable
+  description: Redeem a redeemable against a transaction (Redemptions 1.0).
+  binding: derived from published operationId
+  confidence: high
+- name: punchh_void_redemption
+  category: redemption
+  rest:
+  - pos_void_redemption
+  - pos_void_multiple_redemptions
+  - sso_void_processed_redemption
+  description: Void one or more processed redemptions.
+  binding: derived from published operationId
+  confidence: high
+- name: punchh_manage_discount_basket
+  category: redemption
+  rest:
+  - get-api-auth-discounts-active
+  - post-api-auth-discounts-auto_select
+  - put-api-auth-discounts-unlock
+  - delete-api-auth-discounts-unselect
+  description: Create, inspect, lock and void a Redemptions 2.0 discount basket.
+  binding: derived from published operationId
+  confidence: high
+- name: punchh_get_location_config
+  category: configuration
+  rest:
+  - pos_location_config
+  - mobile_location_configuration
+  description: Fetch location configuration and loyalty program meta for a terminal or app.
+  binding: derived from published operationId
+  confidence: high
+- name: punchh_manage_offer
+  category: offers
+  rest:
+  - get-api2-dashboard-offers-redeemable
+  - post-api2-dashboard-offers-redeemable
+  - patch-api2-dashboard-offers-redeemable
+  description: Create, read and update an offer/redeemable through Platform Functions.
+  binding: derived from published operationId
+  confidence: high
+- name: punchh_manage_subscription
+  category: subscription
+  rest:
+  - post-api-auth-subscriptions
+  - get-api-auth-subscription_meta
+  - patch-api2-dashboard-subscriptions-cancel
+  description: Enrol, inspect or cancel a paid loyalty subscription.
+  binding: derived from published operationId
+  confidence: high
+- name: punchh_manage_gift_card
+  category: gift-card
+  rest:
+  - mobile_purchase_gift_card
+  - mobile_reload_gift_card
+  - mobile_fetch_gift_card_balance
+  description: Purchase, reload and read the balance of a stored-value gift card.
+  binding: derived from published operationId
+  confidence: high
+candidate_note: Every operationId listed is VERIFIED present in openapi/ (275 distinct operationIds across 288 operations).
+  These are candidate tool groupings only — PAR Punchh serves no MCP endpoint, so nothing here is callable today.

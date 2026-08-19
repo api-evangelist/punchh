@@ -1,0 +1,169 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.partech.com/docs/dev-portal-developer-resources/punchh-api-security-guidelines
+provider: PAR Punchh
+providerId: punchh
+description: >-
+  Cross-cutting standards conformance for the PAR Punchh APIs, asserted from the
+  PAR developer portal and from the 15 published OpenAPI 3.1.1 documents. Each
+  entry records what the provider actually publishes; a false conforms value is a
+  measurement, not a criticism.
+
+standards:
+  - id: openapi
+    conforms: true
+    version: 3.1.1
+    evidence: >-
+      PAR publishes 15 OpenAPI 3.1.1 documents through the Scalar-hosted developer
+      portal at developers.partech.com — Mobile, POS, Online Ordering and SSO,
+      Platform Functions, Offers Ingestion, Headless Offers, Subscription, and the
+      Redemptions 1.0 / 2.0 generations. 288 operations, all with operationIds.
+    source: https://developers.partech.com/docs/dev-portal-mobile/apis/mobile-api
+
+  - id: oauth2
+    conforms: partial
+    evidence: >-
+      Punchh issues OAuth-shaped credentials — a business OAuth client id, an
+      access_token and a refresh_token, with a documented refresh flow — and the
+      Advanced Authentication feature uses PKCE code challenge/verifier pairs for
+      passwordless email and SMS OTP login. However no OAuth 2.0 authorization
+      server metadata is served (/.well-known/oauth-authorization-server 404s on
+      every host), no scopes are published, and none of the 15 OpenAPI documents
+      declares an oauth2 securityScheme.
+    source: https://developers.partech.com/docs/dev-portal-developer-resources/advanced-authentication-developer-guide
+
+  - id: oidc
+    conforms: partial
+    evidence: >-
+      The mobile User Authentication page documents an ID token with `id`, `sub`
+      and `access_token` claims, and the platform supports third-party identity
+      providers and SAML single sign-on for online ordering. There is no
+      /.well-known/openid-configuration (probed 404 on punchh.com,
+      developers.partech.com, partech.com and api.punchh.com), so this is an
+      OIDC-flavoured design rather than a discoverable OIDC deployment.
+    source: https://developers.partech.com/docs/dev-portal-mobile/user-authentication
+
+  - id: saml
+    conforms: true
+    evidence: >-
+      SAML Single Sign-on is documented as a supported online-ordering
+      authentication path, alongside the Punchh-native SSO API.
+    source: https://developers.partech.com/docs/dev-portal-online-ordering
+
+  - id: rfc9457
+    conforms: false
+    evidence: >-
+      No application/problem+json anywhere. 346 of 347 documented failure
+      responses are application/json carrying a flat {"errors": "..."} envelope;
+      one is text/plain. No machine-readable error code field is published.
+    source: errors/punchh-problem-types.yml
+
+  - id: rfc8594
+    conforms: false
+    evidence: >-
+      No Sunset or Deprecation response headers are documented, and no operation
+      in any published spec carries `deprecated: true`. Deprecation is
+      communicated in prose to certified partners.
+    source: lifecycle/punchh-lifecycle.yml
+
+  - id: idempotency
+    conforms: partial
+    evidence: >-
+      No generic Idempotency-Key header. Idempotency is real but domain-specific —
+      external_uid on check-ins and redemptions, content_id plus timestamp for
+      webhook consumers, and the Redemptions 2.0 discount-basket lifecycle
+      (create / mutate / lock / void) which replaces fire-and-forget redemption.
+    source: conventions/punchh-conventions.yml
+
+  - id: pagination
+    conforms: partial
+    evidence: >-
+      Page-number pagination (`page` + `per`) is documented on a single Platform
+      Functions operation; most collection endpoints return unpaged arrays.
+    source: conventions/punchh-conventions.yml
+
+  - id: webhooks
+    conforms: true
+    evidence: >-
+      A documented Events Framework with 71 native event types across 8 event
+      families, a fixed envelope, four consumer authentication schemes, published
+      retry schedules and a circuit breaker. No AsyncAPI or CloudEvents document
+      is published.
+    source: asyncapi/punchh-webhooks.yml
+
+  - id: cloudevents
+    conforms: false
+    evidence: >-
+      The webhook envelope is Punchh-native (content_id / event_name / event_type
+      / action / payload), not CloudEvents.
+    source: asyncapi/punchh-webhooks.yml
+
+  - id: asyncapi
+    conforms: false
+    evidence: >-
+      An event surface exists and is well documented, but no AsyncAPI document is
+      published for it.
+
+  - id: tls
+    conforms: true
+    evidence: >-
+      TLS 1.2+ is required on the Online Ordering, Mobile and Platform Functions
+      endpoints; POS terminals are admitted at TLS 1.0+. Published per-surface in
+      the Punchh API Security Guidelines. Live probe of punchh.com and
+      developers.partech.com negotiated TLS 1.3.
+    source: security/punchh-domain-security.yml
+
+  - id: pci-dss
+    conforms: partial
+    evidence: >-
+      Punchh states it does not store card data on its own servers and that card
+      transactions are handled by third-party PCI-compliant networks. No Punchh
+      AoC or ROC, and no PCI certification claim for Punchh itself, is published.
+    source: https://punchh.com/security/
+
+  - id: vulnerability-disclosure
+    conforms: true
+    evidence: >-
+      A published vulnerability-reporting route via HackerOne with a stated
+      24-hour first-response target.
+    source: https://punchh.com/security/
+
+  - id: security-txt
+    conforms: false
+    evidence: >-
+      /.well-known/security.txt returns 404 on punchh.com, partech.com,
+      developers.partech.com and api.punchh.com. The disclosure route is a web
+      page, not RFC 9116 machine-readable.
+    source: well-known/punchh-well-known.yml
+
+  - id: json-schema
+    conforms: partial
+    evidence: >-
+      Schemas are declared inline in the OpenAPI 3.1.1 documents (which use the
+      2020-12 JSON Schema dialect by definition), but Punchh publishes no
+      standalone JSON Schema documents and no webhook payload schemas.
+
+  - id: mcp
+    conforms: false
+    evidence: >-
+      No MCP server. POST tools/list against developers.partech.com/mcp returns
+      "Agent is not enabled for this project"; /mcp, /sse and /api/mcp 404 on
+      api.punchh.com and punchh.com.
+    source: mcp/punchh-mcp.yml
+
+  - id: a2a
+    conforms: false
+    evidence: >-
+      /.well-known/agent-card.json and /.well-known/agent.json return 404 on every
+      probed host.
+    source: well-known/punchh-well-known.yml
+
+compliance_programs:
+  published: partial
+  note: >-
+    Punchh publishes a security overview page describing AWS multi-AZ redundancy,
+    encryption in transit and at rest, mandatory 2FA and signed commits for its
+    engineering team, and reliance on PCI-compliant third-party payment networks.
+    It does NOT publish a trust center or any named third-party certification
+    (no SOC 2, ISO 27001, HIPAA or FedRAMP claim was found).
+  source: https://punchh.com/security/

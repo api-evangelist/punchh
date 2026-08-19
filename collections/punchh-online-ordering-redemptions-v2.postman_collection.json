@@ -1,0 +1,2691 @@
+{
+  "item": [
+    {
+      "id": "a41c1ae2-d748-4389-8c16-fa4305339922",
+      "name": "Auto Redemption (Redemptions 2.0)",
+      "request": {
+        "name": "Auto Redemption (Redemptions 2.0)",
+        "description": {
+          "content": "- A discount should be automatically queued up in the discount basket if the auto-redemption feature is enabled for the business.\n- The business can configure the auto-redemption strategy.\n- If a discount expires after being added to the discount basket, it is removed from the discount basket. When you make a call to the API, it validates the discounts added to the discount basket. If one or more discounts are found to be honored, expired, perished, or archived, the API returns an error message indicating that these discounts cannot be honored. The API lists the invalid discounts in the `discount_basket_items` object with a message stating that the discount is invalid and returns a null value in the `discount_details` object.\n\n**Note**: Auto-redemption currently supports only subscriptions and non-points-based rewards.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "auth",
+            "discounts",
+            "auto_select"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+            "key": "User-Agent",
+            "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+            "key": "x-pch-digest",
+            "value": "SIGNATURE_GOES_HERE"
+          },
+          {
+            "disabled": false,
+            "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. ",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"client\": \"<string>\",\n  \"receipt_datetime\": \"<dateTime>\",\n  \"subtotal_amount\": \"<float>\",\n  \"receipt_amount\": \"<float>\",\n  \"line_items\": [\n    {\n      \"item_name\": \"<string>\",\n      \"item_qty\": \"<integer>\",\n      \"amount\": \"<float>\",\n      \"item_type\": \"<string>\",\n      \"item_id\": \"<integer>\",\n      \"item_family\": \"<string>\",\n      \"item_group\": \"<string>\",\n      \"serial_number\": \"<float>\"\n    },\n    {\n      \"item_name\": \"<string>\",\n      \"item_qty\": \"<integer>\",\n      \"amount\": \"<float>\",\n      \"item_type\": \"<string>\",\n      \"item_id\": \"<integer>\",\n      \"item_family\": \"<string>\",\n      \"item_group\": \"<string>\",\n      \"serial_number\": \"<float>\"\n    }\n  ],\n  \"business_date\": \"<string>\",\n  \"transaction_no\": \"<string>\",\n  \"external_uid\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "61807219-dd3e-4797-9bb3-1ddf9ebf6721",
+          "name": "OK",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "discounts",
+                "auto_select"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"line_items\": [\n    {\n      \"item_name\": \"coffee\",\n      \"item_qty\": 1,\n      \"amount\": 10,\n      \"item_type\": \"M\",\n      \"item_id\": 330,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 1\n    },\n    {\n      \"item_name\": \"pizza\",\n      \"item_qty\": 1,\n      \"amount\": 20,\n      \"item_type\": \"M\",\n      \"item_id\": 331,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 2\n    }\n  ],\n  \"receipt_datetime\": \"2019-04-11T14:14:07+05:30\",\n  \"subtotal_amount\": 100,\n  \"receipt_amount\": 100,\n  \"business_date\": \"<store this information>\",\n  \"transaction_no\": \"11111111111\",\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"redemption_ref\": \"REDEMPTION_REF_GOES_HERE\",\n  \"locked\": true,\n  \"created_at\": null,\n  \"discount_basket_items\": [\n    {\n      \"discount_basket_item_id\": 4699,\n      \"discount_type\": \"reward\",\n      \"discount_id\": \"33703164\",\n      \"discount_value\": null,\n      \"created_at\": \"2022-08-25T10:03:48Z\",\n      \"discount_details\": {\n        \"item_id\": 777658,\n        \"name\": \"Flat $5 Off (Unlocks at 100 points)\",\n        \"campaign_name\": \"Mass Campaign Offer\",\n        \"image\": \"IMAGE_URL_GOES_HERE\",\n        \"points\": 100,\n        \"base_amount\": 5,\n        \"description\": \"\",\n        \"item_properties\": null,\n        \"meta_detail\": null,\n        \"start_date_tz\": null,\n        \"end_date_tz\": null,\n        \"created_at\": \"2022-09-08T18:41:16Z\",\n        \"auto_select\": true\n      }\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "522ec276-ef3b-4860-b893-af08399ef24c",
+          "name": "Bad Request - Example error responses:\n- Required parameter missing or the value is empty: receipt_amount\n- Required parameter missing or the value is empty: line_items",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "discounts",
+                "auto_select"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"line_items\": [\n    {\n      \"item_name\": \"coffee\",\n      \"item_qty\": 1,\n      \"amount\": 10,\n      \"item_type\": \"M\",\n      \"item_id\": 330,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 1\n    },\n    {\n      \"item_name\": \"pizza\",\n      \"item_qty\": 1,\n      \"amount\": 20,\n      \"item_type\": \"M\",\n      \"item_id\": 331,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 2\n    }\n  ],\n  \"receipt_datetime\": \"2019-04-11T14:14:07+05:30\",\n  \"subtotal_amount\": 100,\n  \"receipt_amount\": 100,\n  \"business_date\": \"<store this information>\",\n  \"transaction_no\": \"11111111111\",\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "87b10109-3828-4941-9823-44e411ef0126",
+          "name": "Not Found - User not found",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "discounts",
+                "auto_select"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"line_items\": [\n    {\n      \"item_name\": \"coffee\",\n      \"item_qty\": 1,\n      \"amount\": 10,\n      \"item_type\": \"M\",\n      \"item_id\": 330,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 1\n    },\n    {\n      \"item_name\": \"pizza\",\n      \"item_qty\": 1,\n      \"amount\": 20,\n      \"item_type\": \"M\",\n      \"item_id\": 331,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 2\n    }\n  ],\n  \"receipt_datetime\": \"2019-04-11T14:14:07+05:30\",\n  \"subtotal_amount\": 100,\n  \"receipt_amount\": 100,\n  \"business_date\": \"<store this information>\",\n  \"transaction_no\": \"11111111111\",\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "6cae7737-57ef-473f-9643-b45cac2e2da7",
+          "name": "Unprocessable Entity - Example error responses:\n- Guest is not allowed to select/unselect from basket as he/she is banned or deactivated from the Loyalty program\n- Invalid Receipt Amount\n- Your current loyalty program configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue.\n- Unable to access the user’s Discount Basket, the Basket is currently locked",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "discounts",
+                "auto_select"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"line_items\": [\n    {\n      \"item_name\": \"coffee\",\n      \"item_qty\": 1,\n      \"amount\": 10,\n      \"item_type\": \"M\",\n      \"item_id\": 330,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 1\n    },\n    {\n      \"item_name\": \"pizza\",\n      \"item_qty\": 1,\n      \"amount\": 20,\n      \"item_type\": \"M\",\n      \"item_id\": 331,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 2\n    }\n  ],\n  \"receipt_datetime\": \"2019-04-11T14:14:07+05:30\",\n  \"subtotal_amount\": 100,\n  \"receipt_amount\": 100,\n  \"business_date\": \"<store this information>\",\n  \"transaction_no\": \"11111111111\",\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "c6af5304-29e0-4fc8-b3a7-12a6675b6d2d",
+      "name": "Add Selection to Discount Basket (Redemptions 2.0)",
+      "request": {
+        "name": "Add Selection to Discount Basket (Redemptions 2.0)",
+        "description": {
+          "content": "- A single discount basket will be active at a time. If there is no active discount basket, the system will create a new active discount basket along with selected discounts passed in the request parameters.\n- The Punchh system will not have any validation based on points adjustments as discounts are added.\n- When a guest adds multiple discounts, and one is invalid for some reason, the entire request will fail with an error message. The guest will then be required to remove the invalid discount and resubmit. ",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "auth",
+            "discounts",
+            "select"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+            "key": "x-pch-digest",
+            "value": "SIGNATURE_GOES_HERE"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+            "key": "User-Agent",
+            "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+          },
+          {
+            "disabled": false,
+            "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. ",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"client\": \"<string>\",\n  \"discount_basket_items_attributes\": [\n    {\n      \"discount_type\": \"<string>\",\n      \"discount_id\": \"<integer>\",\n      \"discount_value\": \"<float>\"\n    },\n    {\n      \"discount_type\": \"<string>\",\n      \"discount_id\": \"<integer>\",\n      \"discount_value\": \"<float>\"\n    }\n  ],\n  \"external_uid\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "0774b79f-9c73-4200-9b61-4d021e489fe2",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "discounts",
+                "select"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discount_basket_items_attributes\": [\n    {\n      \"discount_id\": 131,\n      \"discount_type\": \"reward\"\n    },\n    {\n      \"discount_value\": 2,\n      \"discount_type\": \"discount_amount\"\n    }\n  ],\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"redemption_ref\": \"REDEMPTION_REF_GOES_HERE\",\n  \"locked\": false,\n  \"created_at\": \"2024-05-21T15:14:02Z\",\n  \"discount_basket_items\": [\n    {\n      \"discount_basket_item_id\": 469363,\n      \"discount_type\": \"reward\",\n      \"discount_id\": \"41049646877\",\n      \"discount_value\": null,\n      \"created_at\": \"2024-05-24T08:36:52Z\",\n      \"discount_details\": {\n        \"item_id\": 48188,\n        \"name\": \"Sandwich Test | AK\",\n        \"campaign_name\": \"Mass Campaign Offer\",\n        \"image\": \"IMAGE_URL_GOES_HERE\",\n        \"points\": null,\n        \"base_amount\": null,\n        \"description\": \"\",\n        \"item_properties\": \"\",\n        \"meta_detail\": null,\n        \"start_date_tz\": \"2024-05-24T08:34:24Z\",\n        \"end_date_tz\": \"2024-06-30T03:15:00Z\",\n        \"created_at\": \"2023-08-18T08:29:36Z\",\n        \"auto_select\": false\n      }\n    },\n    {\n      \"discount_basket_item_id\": 541689,\n      \"discount_type\": \"reward\",\n      \"discount_id\": \"41378920421\",\n      \"discount_value\": null,\n      \"created_at\": \"2024-06-11T12:56:33Z\",\n      \"discount_details\": {\n        \"item_id\": 48188,\n        \"name\": \"Sandwich Test | AK\",\n        \"campaign_name\": \"Mass Campaign Offer\",\n        \"image\": \"IMAGE_URL_GOES_HERE\",\n        \"points\": null,\n        \"base_amount\": null,\n        \"description\": \"\",\n        \"item_properties\": \"\",\n        \"meta_detail\": null,\n        \"start_date_tz\": \"2024-05-31T13:25:08Z\",\n        \"end_date_tz\": \"2024-06-30T03:15:00Z\",\n        \"created_at\": \"2023-08-18T08:29:36Z\",\n        \"auto_select\": false\n      }\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "6fecc9d5-ec1b-425b-a5b1-949419c49085",
+          "name": "Bad Request - Example error responses:\n- Required parameter missing or the value is empty: user_id\n- Required parameter missing or the value is empty: discount_basket_items_attributes\n- Required parameter missing or the value is empty: discount_type\n- Required parameter missing or the value is empty: external_uid",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "discounts",
+                "select"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discount_basket_items_attributes\": [\n    {\n      \"discount_id\": 131,\n      \"discount_type\": \"reward\"\n    },\n    {\n      \"discount_value\": 2,\n      \"discount_type\": \"discount_amount\"\n    }\n  ],\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "c735318f-4e78-4abc-9be3-0d1768f83990",
+          "name": "Not Found - User not found",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "discounts",
+                "select"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discount_basket_items_attributes\": [\n    {\n      \"discount_id\": 131,\n      \"discount_type\": \"reward\"\n    },\n    {\n      \"discount_value\": 2,\n      \"discount_type\": \"discount_amount\"\n    }\n  ],\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "8fab9a47-8a8d-44d4-a59d-22487b2b7a84",
+          "name": "Unprocessable Entity - Example error responses:\n- Discount basket items have already been taken for the user\n- Same parameters provided multiple times\n- Not enough cards\n- Processing limit for discounts of loyalty type has been reached\n- Invalid Code\n- Coupon/Promo code is not active\n- The code can not be added, as the campaign has exceeded its usage limit\n- This coupon can only be used 1 time(s) per day\n- Invalid Business Configuration. Please connect with your Customer Success representative for resolution of the issue.\n- Mobile Coupon/Promo cannot be added into basket\n- Balance is insufficient to process request\n- Max Redemption Amount has been reached\n- Invalid Discount Value\n- Unable to access the user’s Discount Basket, the Basket is currently locked\n- Interoperability validation failed\n- Invalid Subscription ID\n- Invalid Redeemable ID\n- Invalid Reward ID\n- Guest is not allowed to select/unselect from basket as he/she is banned or deactivated from the Loyalty program\n- Redemption limit reached\n- Discount type should be card_completion, discount_amount, redemption_code, reward, fuel_reward, redeemable, subscription\n- Another transaction is currently accessing the same code. Please try after some time.\n- Cannot add more than one subscription into basket",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "discounts",
+                "select"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discount_basket_items_attributes\": [\n    {\n      \"discount_id\": 131,\n      \"discount_type\": \"reward\"\n    },\n    {\n      \"discount_value\": 2,\n      \"discount_type\": \"discount_amount\"\n    }\n  ],\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "9face95b-a65f-4efc-9a46-591d66fbb425",
+      "name": "Remove Item From Discount Basket (Redemptions 2.0)",
+      "request": {
+        "name": "Remove Item From Discount Basket (Redemptions 2.0)",
+        "description": {
+          "content": "Delete one or more discounts from a discount basket.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "auth",
+            "discounts",
+            "unselect"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+            "key": "x-pch-digest",
+            "value": "SIGNATURE_GOES_HERE"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+            "key": "User-Agent",
+            "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+          },
+          {
+            "disabled": false,
+            "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. ",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "DELETE",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"client\": \"<string>\",\n  \"discount_basket_item_ids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"external_uid\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "e7d3531c-715c-47b6-9176-d530851a35a8",
+          "name": "OK",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "discounts",
+                "unselect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discount_basket_item_ids\": [\n    4690,\n    4691\n  ],\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"redemption_ref\": \"REDEMPTION_REF_GOES_HERE\",\n  \"locked\": false,\n  \"created_at\": \"2024-05-21T15:14:02Z\",\n  \"discount_basket_items\": [\n    {\n      \"discount_basket_item_id\": 469363,\n      \"discount_type\": \"reward\",\n      \"discount_id\": \"41049646877\",\n      \"discount_value\": null,\n      \"created_at\": \"2024-05-24T08:36:52Z\",\n      \"discount_details\": {\n        \"item_id\": 48188,\n        \"name\": \"Sandwich Test | AK\",\n        \"campaign_name\": \"Mass Campaign Offer\",\n        \"image\": \"IMAGE_URL_GOES_HERE\",\n        \"points\": null,\n        \"base_amount\": null,\n        \"description\": \"\",\n        \"item_properties\": \"\",\n        \"meta_detail\": null,\n        \"start_date_tz\": \"2024-05-24T08:34:24Z\",\n        \"end_date_tz\": \"2024-06-30T03:15:00Z\",\n        \"created_at\": \"2023-08-18T08:29:36Z\",\n        \"auto_select\": false\n      }\n    },\n    {\n      \"discount_basket_item_id\": 541689,\n      \"discount_type\": \"reward\",\n      \"discount_id\": \"41378920421\",\n      \"discount_value\": null,\n      \"created_at\": \"2024-06-11T12:56:33Z\",\n      \"discount_details\": {\n        \"item_id\": 48188,\n        \"name\": \"Sandwich Test | AK\",\n        \"campaign_name\": \"Mass Campaign Offer\",\n        \"image\": \"IMAGE_URL_GOES_HERE\",\n        \"points\": null,\n        \"base_amount\": null,\n        \"description\": \"\",\n        \"item_properties\": \"\",\n        \"meta_detail\": null,\n        \"start_date_tz\": \"2024-05-31T13:25:08Z\",\n        \"end_date_tz\": \"2024-06-30T03:15:00Z\",\n        \"created_at\": \"2023-08-18T08:29:36Z\",\n        \"auto_select\": false\n      }\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "a19e4b67-357d-46ae-81dc-0763a8699546",
+          "name": "Bad Request - Required parameter missing or the value is empty: discount_basket_item_ids",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "discounts",
+                "unselect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discount_basket_item_ids\": [\n    4690,\n    4691\n  ],\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "46289b5b-5bfa-4e67-b52a-7d9184755505",
+          "name": "Not Found - Example error responses:\n- User does not have an active basket\n- User not found",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "discounts",
+                "unselect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discount_basket_item_ids\": [\n    4690,\n    4691\n  ],\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "a25473d5-d81f-4200-8f7c-d32beced9dc2",
+          "name": "Unprocessable Entity - Example error responses:\n- Discount Items not found with any given ids\n- Guest is not allowed to select/unselect from basket as he/she is banned or deactivated from the Loyalty program\n- Unable to access the user’s Discount Basket, the Basket is currently locked",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "discounts",
+                "unselect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discount_basket_item_ids\": [\n    4690,\n    4691\n  ],\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "ffe5c5e3-46a3-4585-94d4-926ecbd09a0f",
+      "name": "Get Active Discount Basket (Redemptions 2.0)",
+      "request": {
+        "name": "Get Active Discount Basket (Redemptions 2.0)",
+        "description": {
+          "content": "- Get a list of discount details that have been selected by a guest. Only one active basket can exist in the system for a particular guest.\n- If a discount expires after being added to the discount basket, it is removed from the discount basket. When you make a call to the API, it validates the discounts added to the discount basket. If one or more discounts are found to be honored, expired, perished, or archived, the API returns an error message indicating that these discounts cannot be honored. The API lists the invalid discounts in the `discount_basket_items` object with a message stating that the discount is invalid and returns a null value in the `discount_details` object.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "auth",
+            "discounts",
+            "active"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+            "key": "User-Agent",
+            "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+            "key": "x-pch-digest",
+            "value": "SIGNATURE_GOES_HERE"
+          },
+          {
+            "disabled": false,
+            "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. ",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"client\": \"<string>\",\n  \"external_uid\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "2709e33a-6923-4207-87b1-d749c3d569fa",
+          "name": "OK",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "discounts",
+                "active"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"redemption_ref\": \"REDEMPTION_REF_GOES_HERE\",\n  \"locked\": true,\n  \"created_at\": null,\n  \"discount_basket_items\": [\n    {\n      \"discount_basket_item_id\": 4699,\n      \"discount_type\": \"reward\",\n      \"discount_id\": \"33703164\",\n      \"discount_value\": null,\n      \"created_at\": \"2022-08-25T10:03:48Z\",\n      \"discount_details\": {\n        \"item_id\": 777658,\n        \"name\": \"Flat $5 Off (Unlocks at 100 points)\",\n        \"campaign_name\": \"Mass Campaign Offer\",\n        \"image\": \"IMAGE_URL_GOES_HERE\",\n        \"points\": 100,\n        \"base_amount\": 5,\n        \"description\": \"\",\n        \"item_properties\": null,\n        \"meta_detail\": null,\n        \"start_date_tz\": null,\n        \"end_date_tz\": null,\n        \"created_at\": \"2022-09-08T18:41:16Z\",\n        \"auto_select\": true\n      }\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "175055e5-d6eb-4e62-b3be-516295976c7b",
+          "name": "Not Found - Example error responses:\n- User does not have an active basket\n- User not found",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "discounts",
+                "active"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "a70f7843-6cfd-4e82-82e7-873554c2c7a0",
+          "name": "Unprocessable Entity - Example error responses:\n- Your current loyalty program configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue.\n- Unable to access the user’s Discount Basket, the Basket is currently locked",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "discounts",
+                "active"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "300945f5-a6b9-425f-a881-6eabbc2456f2",
+      "name": "Batch Redemption Process (Redemptions 2.0)",
+      "request": {
+        "name": "Batch Redemption Process (Redemptions 2.0)",
+        "description": {
+          "content": "Evaluates the validity of all inputs and commits the redemption. \n\nPunchh evaluates eligibility during the Possible Redemptions call using the receipt details provided (item name, price, quantity, identifiers, etc.). During the Batch Redemption Process call, Punchh revalidates the same receipt to ensure the qualifying conditions are still met before honoring the redemption. \n\nIf any item attributes change between the two calls, Punchh may be unable to match the qualifying items, which can cause the Batch Redemption Process call to fail or return a different result—even if the Possible Redemptions call was successful.\n\n<b>NOTE: When processing a redemption, DO NOT include the `query` parameter in the API request.</b> Use this parameter only to check for possible redemptions.\n\nAdditional behavior:\n - For orders placed for a future date, the guest’s loyalty account balance is evaluated on the order commit date (sysdate), not on the scheduled pickup or delivery date.\n - Locks the user's discount basket using a unique identifier `external_uid` generated by your application for the transaction when reward locking is enabled in the Punchh platform for the business. Locking the discount basket prevents other channels from creating simultaneous transactions or modifying the discount basket. See [Discount Basket Locking Developer Guide](/docs/dev-portal-developer-resources/d7b83074c9f23-redemptions-2-0-discount-basket-locking). You must log in to the developer portal to access the developer guide.\n\nWhen the Batch Redemption Process API commits the redemption, one of the following actions may occur based on the discount type:\n - Loyalty points are deducted from the guest account when `discount_type` = \"redeemable\" or \"card_completion\"\n - The reward is debited from the guest account when `discount_type` = \"reward\"\n - Banked rewards / currency are deducted from the guest’s loyalty account when `discount_type` = \"discount_amount\"",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "auth",
+            "batch_redemptions"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+            "key": "x-pch-digest",
+            "value": "SIGNATURE_GOES_HERE"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+            "key": "User-Agent",
+            "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+          },
+          {
+            "disabled": false,
+            "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. ",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"store_number\": \"<integer>\",\n  \"client\": \"<string>\",\n  \"line_items\": [\n    {\n      \"item_name\": \"<string>\",\n      \"item_qty\": \"<integer>\",\n      \"amount\": \"<float>\",\n      \"item_type\": \"<string>\",\n      \"item_id\": \"<integer>\",\n      \"item_family\": \"<string>\",\n      \"item_group\": \"<string>\",\n      \"serial_number\": \"<float>\"\n    },\n    {\n      \"item_name\": \"<string>\",\n      \"item_qty\": \"<integer>\",\n      \"amount\": \"<float>\",\n      \"item_type\": \"<string>\",\n      \"item_id\": \"<integer>\",\n      \"item_family\": \"<string>\",\n      \"item_group\": \"<string>\",\n      \"serial_number\": \"<float>\"\n    }\n  ],\n  \"receipt_datetime\": \"<dateTime>\",\n  \"subtotal_amount\": \"<float>\",\n  \"receipt_amount\": \"<float>\",\n  \"query\": \"<boolean>\",\n  \"transaction_no\": \"<string>\",\n  \"external_uid\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "d182acac-0044-4b1b-9720-4634409c5f07",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "batch_redemptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": true,\n  \"store_number\": 900,\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"line_items\": [\n    {\n      \"item_name\": \"coffee\",\n      \"item_qty\": 1,\n      \"amount\": 10,\n      \"item_type\": \"M\",\n      \"item_id\": 330,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 1\n    },\n    {\n      \"item_name\": \"pizza\",\n      \"item_qty\": 1,\n      \"amount\": 20,\n      \"item_type\": \"M\",\n      \"item_id\": 331,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 2\n    }\n  ],\n  \"receipt_datetime\": \"2019-04-11T14:14:07+05:30\",\n  \"subtotal_amount\": 100,\n  \"receipt_amount\": 100,\n  \"transaction_no\": \"11111111111\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"redemption_ref\": \"REDEMPTION_REF_GOES_HERE\",\n  \"success\": [],\n  \"failures\": [\n    {\n      \"discount_basket_item_id\": 1,\n      \"discount_amount\": null,\n      \"redemption_id\": null,\n      \"redemption_type\": null,\n      \"discount_type\": \"reward\",\n      \"discount_id\": \"367778\",\n      \"discount_value\": null,\n      \"message\": [\n        \"Discount qualification on receipt failed for Shubham Gupta at Airway.\"\n      ],\n      \"qualified\": false,\n      \"remaining_balance\": null,\n      \"meta_data\": null,\n      \"qualifying_conditions\": {\n        \"name\": \"LIS QC 21 july 2025\",\n        \"external_id\": \"EXTERNAL_UID_GOES_HERE\",\n        \"amount_cap\": null,\n        \"rounding_rule\": \"\",\n        \"max_discount_units\": null,\n        \"target_price\": null,\n        \"effective_location\": [],\n        \"stack_discounting\": null,\n        \"reuse_qualifying_items\": null,\n        \"enable_menu_item_aggregator\": false,\n        \"min_post_rollback_rate\": null,\n        \"unit_discount\": null,\n        \"receipt_qualifiers\": [\n          {\n            \"attribute\": \"amount\",\n            \"operator\": \">=\",\n            \"value\": \"5\"\n          },\n          {\n            \"attribute\": \"subtotal_amount\",\n            \"operator\": \">=\",\n            \"value\": \"5\"\n          }\n        ],\n        \"percentage_of_processed_amount\": null,\n        \"qc_processing_function\": \"sum_amounts\",\n        \"line_item_filters\": [\n          {\n            \"quantity\": null,\n            \"processing_method\": \"\",\n            \"line_item_selector\": {\n              \"name\": \"LIS 17 july 2025\",\n              \"external_id\": \"EXTERNAL_UID_GOES_HERE\",\n              \"exclude_non_payable\": false,\n              \"filter_item_set\": \"base_and_modifiers\",\n              \"base_items\": {\n                \"clauses\": [\n                  {\n                    \"attribute\": \"item_id\",\n                    \"operator\": \"in\",\n                    \"value\": \"101,106,107\"\n                  },\n                  {\n                    \"attribute\": \"item_name\",\n                    \"operator\": \"like\",\n                    \"value\": \"Cookie\"\n                  }\n                ]\n              },\n              \"modifiers\": {\n                \"processing_method\": \"min_price\",\n                \"max_discount_units\": 2,\n                \"clauses\": [\n                  {\n                    \"attribute\": \"item_id\",\n                    \"operator\": \"in\",\n                    \"value\": \"1010\"\n                  }\n                ]\n              }\n            }\n          }\n        ],\n        \"item_qualifiers\": [\n          {\n            \"expression_type\": \"net_amount_greater_than_or_equal_to\",\n            \"net_value\": 6,\n            \"line_item_selector\": {\n              \"name\": \"LIS 2 17 july 2025\",\n              \"external_id\": \"EXTERNAL_UID_GOES_HERE\",\n              \"exclude_non_payable\": false,\n              \"filter_item_set\": \"base_only\",\n              \"base_items\": {\n                \"clauses\": [\n                  {\n                    \"attribute\": \"item_id\",\n                    \"operator\": \"in\",\n                    \"value\": \"102\"\n                  }\n                ]\n              },\n              \"modifiers\": {\n                \"processing_method\": \"\",\n                \"max_discount_units\": null,\n                \"clauses\": []\n              }\n            }\n          }\n        ],\n        \"aggregator_grouping_attributes\": {\n          \"item_name\": true,\n          \"item_id\": true,\n          \"item_major_group\": true,\n          \"item_family\": true,\n          \"item_type\": true\n        }\n      },\n      \"discount_details\": {\n        \"item_id\": 92,\n        \"name\": \"LIS QC 21 july 2025 redeemable\",\n        \"image\": \"IMAGE_URL_GOES_HERE\",\n        \"points\": null,\n        \"base_amount\": null,\n        \"description\": \"LIS QC 21 july 2025 redeemable\",\n        \"item_properties\": null,\n        \"meta_detail\": \"\",\n        \"start_date_tz\": \"2025-08-04T05:48:26Z\",\n        \"end_date_tz\": \"2025-08-31T18:29:59Z\",\n        \"created_at\": \"2025-07-21T12:34:09Z\",\n        \"max_applicable_quantity\": null,\n        \"prompt_text_short\": null,\n        \"prompt_text_long\": null\n      },\n      \"qualified_items\": []\n    },\n    {\n      \"discount_basket_item_id\": 2,\n      \"discount_amount\": null,\n      \"redemption_id\": null,\n      \"redemption_type\": null,\n      \"discount_type\": \"reward\",\n      \"discount_id\": \"367779\",\n      \"discount_value\": null,\n      \"message\": [\n        \"Discount qualification on receipt failed for Shubham Gupta at Airway.\"\n      ],\n      \"qualified\": false,\n      \"remaining_balance\": null,\n      \"meta_data\": null,\n      \"qualifying_conditions\": {\n        \"name\": \"LIS QC 21 july 2025\",\n        \"external_id\": \"EXTERNAL_UID_GOES_HERE\",\n        \"amount_cap\": null,\n        \"rounding_rule\": \"\",\n        \"max_discount_units\": null,\n        \"target_price\": null,\n        \"effective_location\": [],\n        \"stack_discounting\": null,\n        \"reuse_qualifying_items\": null,\n        \"enable_menu_item_aggregator\": false,\n        \"min_post_rollback_rate\": null,\n        \"unit_discount\": null,\n        \"receipt_qualifiers\": [\n          {\n            \"attribute\": \"amount\",\n            \"operator\": \">=\",\n            \"value\": \"5\"\n          },\n          {\n            \"attribute\": \"subtotal_amount\",\n            \"operator\": \">=\",\n            \"value\": \"5\"\n          }\n        ],\n        \"percentage_of_processed_amount\": null,\n        \"qc_processing_function\": \"sum_amounts\",\n        \"line_item_filters\": [\n          {\n            \"quantity\": null,\n            \"processing_method\": \"\",\n            \"line_item_selector\": {\n              \"name\": \"LIS 17 july 2025\",\n              \"external_id\": \"EXTERNAL_UID_GOES_HERE\",\n              \"exclude_non_payable\": false,\n              \"filter_item_set\": \"base_and_modifiers\",\n              \"base_items\": {\n                \"clauses\": [\n                  {\n                    \"attribute\": \"item_id\",\n                    \"operator\": \"in\",\n                    \"value\": \"101,106,107\"\n                  },\n                  {\n                    \"attribute\": \"item_name\",\n                    \"operator\": \"like\",\n                    \"value\": \"Cookie\"\n                  }\n                ]\n              },\n              \"modifiers\": {\n                \"processing_method\": \"min_price\",\n                \"max_discount_units\": 2,\n                \"clauses\": [\n                  {\n                    \"attribute\": \"item_id\",\n                    \"operator\": \"in\",\n                    \"value\": \"1010\"\n                  }\n                ]\n              }\n            }\n          }\n        ],\n        \"item_qualifiers\": [\n          {\n            \"expression_type\": \"net_amount_greater_than_or_equal_to\",\n            \"net_value\": 6,\n            \"line_item_selector\": {\n              \"name\": \"LIS 2 17 july 2025\",\n              \"external_id\": \"EXTERNAL_UID_GOES_HERE\",\n              \"exclude_non_payable\": false,\n              \"filter_item_set\": \"base_only\",\n              \"base_items\": {\n                \"clauses\": [\n                  {\n                    \"attribute\": \"item_id\",\n                    \"operator\": \"in\",\n                    \"value\": \"102\"\n                  }\n                ]\n              },\n              \"modifiers\": {\n                \"processing_method\": \"\",\n                \"max_discount_units\": null,\n                \"clauses\": []\n              }\n            }\n          }\n        ],\n        \"aggregator_grouping_attributes\": {\n          \"item_name\": true,\n          \"item_id\": true,\n          \"item_major_group\": true,\n          \"item_family\": true,\n          \"item_type\": true\n        }\n      },\n      \"discount_details\": {\n        \"item_id\": 92,\n        \"name\": \"LIS QC 21 july 2025 redeemable\",\n        \"image\": \"IMAGE_URL_GOES_HERE\",\n        \"points\": null,\n        \"base_amount\": null,\n        \"description\": \"LIS QC 21 july 2025 redeemable\",\n        \"item_properties\": null,\n        \"meta_detail\": \"\",\n        \"start_date_tz\": \"2025-08-04T05:53:04Z\",\n        \"end_date_tz\": \"2025-08-31T18:29:59Z\",\n        \"created_at\": \"2025-07-21T12:34:09Z\",\n        \"max_applicable_quantity\": null,\n        \"prompt_text_short\": null,\n        \"prompt_text_long\": null\n      },\n      \"qualified_items\": []\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "9edcc74e-9e85-4e14-867b-a6897caa6101",
+          "name": "Bad Request - Example error responses:\n- Required parameter missing or the value is empty: line_items\n- Required parameter missing or the value is empty: item_name_0\n- Required parameter missing or the value is empty: item_qty_0\n- Required parameter missing or the value is empty: receipt_amount\n- Required parameter missing or the value is empty: id",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "batch_redemptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": true,\n  \"store_number\": 900,\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"line_items\": [\n    {\n      \"item_name\": \"coffee\",\n      \"item_qty\": 1,\n      \"amount\": 10,\n      \"item_type\": \"M\",\n      \"item_id\": 330,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 1\n    },\n    {\n      \"item_name\": \"pizza\",\n      \"item_qty\": 1,\n      \"amount\": 20,\n      \"item_type\": \"M\",\n      \"item_id\": 331,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 2\n    }\n  ],\n  \"receipt_datetime\": \"2019-04-11T14:14:07+05:30\",\n  \"subtotal_amount\": 100,\n  \"receipt_amount\": 100,\n  \"transaction_no\": \"11111111111\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "484ab99f-2687-45be-a538-6d77bb8af9f9",
+          "name": "Not Found - User not found",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "batch_redemptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": true,\n  \"store_number\": 900,\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"line_items\": [\n    {\n      \"item_name\": \"coffee\",\n      \"item_qty\": 1,\n      \"amount\": 10,\n      \"item_type\": \"M\",\n      \"item_id\": 330,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 1\n    },\n    {\n      \"item_name\": \"pizza\",\n      \"item_qty\": 1,\n      \"amount\": 20,\n      \"item_type\": \"M\",\n      \"item_id\": 331,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 2\n    }\n  ],\n  \"receipt_datetime\": \"2019-04-11T14:14:07+05:30\",\n  \"subtotal_amount\": 100,\n  \"receipt_amount\": 100,\n  \"transaction_no\": \"11111111111\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "57e269e7-fa30-41a3-afc3-77d50c837ecc",
+          "name": "Unprocessable Entity - Example error responses:\n- Processing limit for discounts of loyalty type has been reached\n- Redemption limit reached\n- No Basket found\n- Points Balance is insufficient to process request\n- Your current loyalty program configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue.\n- Invalid Receipt Amount\n- Unable to access the user’s Discount Basket, the Basket is currently locked",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "batch_redemptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": true,\n  \"store_number\": 900,\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"line_items\": [\n    {\n      \"item_name\": \"coffee\",\n      \"item_qty\": 1,\n      \"amount\": 10,\n      \"item_type\": \"M\",\n      \"item_id\": 330,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 1\n    },\n    {\n      \"item_name\": \"pizza\",\n      \"item_qty\": 1,\n      \"amount\": 20,\n      \"item_type\": \"M\",\n      \"item_id\": 331,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 2\n    }\n  ],\n  \"receipt_datetime\": \"2019-04-11T14:14:07+05:30\",\n  \"subtotal_amount\": 100,\n  \"receipt_amount\": 100,\n  \"transaction_no\": \"11111111111\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "11a0bda8-8d0f-402c-9729-1be75d97ee2e",
+      "name": "Void Redemption (Redemptions 2.0)",
+      "request": {
+        "name": "Void Redemption (Redemptions 2.0)",
+        "description": {
+          "content": "Voids the complete discount basket. The value of `redemption_ref` must be appended to the URL path. You can get the `redemption_ref` value from the [Get Active Discount Basket](/docs/dev-portal-online-ordering/apis/oo-redemptions-2-0-new-api/paths/~1api~1auth~1discounts~1active/get) API response.\n\nExample:\n\n`DELETE https://{base}/api/auth/batch_redemptions/aBCDEfghIJkL-MN1opR`\n\nNote: It will not support partial voiding of a discount basket.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "auth",
+            "batch_redemptions",
+            ":redemption_ref"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "<string>",
+              "key": "redemption_ref",
+              "description": "(Required) Transaction level identifier for all discount selections<br>Example - aBCDEfghIJkL-MN1opR"
+            }
+          ]
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+            "key": "User-Agent",
+            "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+            "key": "x-pch-digest",
+            "value": "SIGNATURE_GOES_HERE"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "DELETE",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"client\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "23eafcba-7594-4447-93ba-4c51d664d5f1",
+          "name": "Accepted - Success Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "batch_redemptions",
+                ":redemption_ref"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "redemption_ref",
+                  "description": "(Required) Transaction level identifier for all discount selections<br>Example - aBCDEfghIJkL-MN1opR"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Accepted",
+          "code": 202,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        },
+        {
+          "id": "40487288-f44d-4390-a5e9-ec6a14069052",
+          "name": "Bad Request - Required parameter missing or the value is empty: id",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "batch_redemptions",
+                ":redemption_ref"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "redemption_ref",
+                  "description": "(Required) Transaction level identifier for all discount selections<br>Example - aBCDEfghIJkL-MN1opR"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "a9a5e87e-9f80-4bb4-a3d1-d77ba2391dd8",
+          "name": "Not Found - User not found",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "batch_redemptions",
+                ":redemption_ref"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "redemption_ref",
+                  "description": "(Required) Transaction level identifier for all discount selections<br>Example - aBCDEfghIJkL-MN1opR"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "0ccd4bc9-6500-4829-b52d-fb6648266c60",
+          "name": "The checkin associated with the external_uid has already been committed and cannot be voided.",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "batch_redemptions",
+                ":redemption_ref"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "redemption_ref",
+                  "description": "(Required) Transaction level identifier for all discount selections<br>Example - aBCDEfghIJkL-MN1opR"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Gone",
+          "code": 410,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": {\n    \"message\": \"Checkin associated with external_uid 9020-202-102252700 has been committed.\",\n    \"code\": \"commited\"\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "bc665832-ec1f-4161-a115-ede49cfeb0d2",
+          "name": "Unprocessable Entity - Example error responses:\n- Your current loyalty program configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue.\n- No Basket found",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "batch_redemptions",
+                ":redemption_ref"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "redemption_ref",
+                  "description": "(Required) Transaction level identifier for all discount selections<br>Example - aBCDEfghIJkL-MN1opR"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "fc6c7a9c-ad2f-4a7b-aa46-ca72d136f752",
+      "name": "Unlock Discount Basket (Redemptions 2.0)",
+      "request": {
+        "name": "Unlock Discount Basket (Redemptions 2.0)",
+        "description": {
+          "content": "When reward locking is enabled in the Punchh Platform, the guest's discount basket must be locked. An external ID will be required to lock the discount basket to prevent other channels from creating simultaneous transactions or modifying the discount basket. In this mode, the guest's discount basket must be locked when discounts are applied to a transaction, using a unique identifier `external_uid` specific to the transaction generated by your application.\n\nThe `external_uid` ensures that no modifications or updates are allowed by any channel (e.g., POS terminals/devices, mobile, etc.) except the application that initially locked the discount basket with the `external_uid`. Contact your Punchh representative to update this Punchh platform configuration setting.\n\nIn some scenarios, such as where a transaction is cancelled or when the guest modifies the order after the basket is locked, the guest's discount basket needs to be unlocked so that transactions can be processed for the guest via other channels (e.g., POS terminals/devices, mobile, etc.). To unlock the discount basket, the `external_uid` must be passed in the API request along with the user-level `access_token` of the guest.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "auth",
+            "discounts",
+            "unlock"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+            "key": "User-Agent",
+            "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+            "key": "x-pch-digest",
+            "value": "SIGNATURE_GOES_HERE"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "PUT",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"client\": \"<string>\",\n  \"external_uid\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "970790fc-c961-43ee-aac6-91d25b090333",
+          "name": "OK - Discount Basket is unlocked successfully.",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "discounts",
+                "unlock"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        },
+        {
+          "id": "bb2dae26-b36c-4f16-9262-b38e710b18d5",
+          "name": "Not Found - User not found",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "discounts",
+                "unlock"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "63f8ea4c-0fea-42fa-8e3f-73287dc93930",
+          "name": "Unprocessable Entity - Example error responses:\n\n- Unable to find valid discount basket\n- Invalid Business Configuration. Please connect with your Customer Success representative for resolution of the issue.\n- Your current loyalty program configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue.\n- User does not have an active basket",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "auth",
+                "discounts",
+                "unlock"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call",
+                "key": "x-pch-digest",
+                "value": "SIGNATURE_GOES_HERE"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://SERVER_NAME_GOES_HERE.punchh.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "5c3fe3c6-b435-4ad4-b735-100188869688",
+    "name": "Redemptions 2.0 (New) API - Online Ordering",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Redemptions 2.0 protocol has been designed to replace the legacy Redemptions 1.0 endpoints. The new protocol allows for the following features:\n\n- Single-scan flow support\n- Batching of redemptions to occur in a single API call\n- Stacked discounting\n- Proportional breakdown of discounted items\n- Item qualifier recycling\n- Enhance flexibility to redemption rules and processing orders\n\nThe Redemptions 2.0 protocol is not backward compatible with the [legacy Redemptions 1.0 endpoints](/docs/dev-portal-online-ordering/apis/oo-redemptions-1-0-legacy-api). Configurations within the Punchh platform are required, so please contact your Punchh representative for help before starting development.\n\nRedemptions 2.0 API endpoints - general workflow\n1. Guest adds discount if not already selected.\n2. Fetch active basket details.\n3. Update discount basket if required. Add/remove discount selection.\n4. After successful submission of order, the Batch Redemption API will be called to process the redemption of all selected discounts.\n\nFor more information, see [Online Ordering Module 5: Redemptions](/docs/dev-portal-online-ordering/tutorials/modules/5-redemptions/overview).\n\nContact Support:\n Name: Punchh Dev Support",
+      "type": "text/plain"
+    }
+  }
+}

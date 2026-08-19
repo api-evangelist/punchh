@@ -1,0 +1,1519 @@
+info:
+  title: Redemptions 1.0 (Legacy) API - POS
+  version: '1.0'
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+  description: For more information, see [POS Module 6 - Redemptions](/docs/dev-portal-pos/tutorials/modules/6-redemptions/overview).
+paths:
+  /api/pos/redemptions/possible:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  category:
+                    type: string
+                    description: 'Category returned for the redemption requested where values can be:
+                      `redeemable`, `processed`, `expired`, `invalid`, `unassigned`. Consider the redemption
+                      valid only when the category is returned as `redeemable`.'
+                  qualified_menu_items:
+                    $ref: '#/components/schemas/qualified_menu_items'
+                  discount_distribution_items:
+                    $ref: '#/components/schemas/discount_distribution_items'
+                  redemption_amount:
+                    type: number
+                    format: double
+                    description: Total redemption amount that can be applied on the order
+                  redemption_code:
+                    type: string
+                    description: Redemption code associated with the redemption
+                  redemption_id:
+                    type: integer
+                    format: int64
+                    description: 'Unique ID associated with the redemption. Save this in your system for
+                      future reference.
+
+                      Note: In case of coupons or promos, the redemption_id returned would be same as
+                      the redemption_code.'
+                  status:
+                    type: string
+                    description: Message that explains if the customer's redemption was successfully completed
+                      or not
+                  max_applicable_quantity:
+                    type: string
+                    description: 'Maximum quantity that can be discounted.
+
+                      Note: This key will be returned for offers related to Price Rollback.'
+                  campaign_name:
+                    type: string
+                    x-stoplight:
+                      id: nay0zr8svppfc
+                    description: Name of the campaign through which the guest received the offer
+                  qualifying_conditions:
+                    type: object
+                    x-stoplight:
+                      id: 2onqx9pg08p59
+                    description: The object lists all qualification criteria (both receipt-level and line-item)
+                      for submitted offers that failed while processing the redemption. This object is
+                      returned in the response only if the option to return the qualifying conditions
+                      for Redemption 1.0 APIs is enabled for the business in the Punchh platform. See
+                      the `data` object under [Get Qualification Criteria Response](https://developers.partech.com/docs/dev-portal-platform-functions/97ec083d6cf57-get-qualification-criteria-qc-list#response-body)
+                      in Platform Functions for descriptions of the parameters in `qualifying_conditions`.
+              examples:
+                default:
+                  value:
+                    status: Redeemed at February 23, 2026 13:02 by <user> at Punchh Demo. It can be honored.
+                    redemption_amount: 8
+                    category: redeemable
+                    qualified_menu_items:
+                    - item_name: Sandwich
+                      item_qty: 1
+                      item_amount: 5
+                      menu_item_type: M
+                      menu_item_id: '102000'
+                      menu_family: Sandwich
+                      menu_major_group: Sandwich
+                      serial_number: '1.0'
+                    - item_name: Coke
+                      item_qty: 1
+                      item_amount: 7
+                      menu_item_type: M
+                      menu_item_id: '102000'
+                      menu_family: Coke
+                      menu_major_group: Coke
+                      serial_number: '2.0'
+                    discount_distribution_items:
+                    - item_name: Sandwich DISCOUNT
+                      item_qty: 1
+                      item_amount: -3
+                      menu_item_type: R
+                      menu_item_id: '102000'
+                      menu_family: Sandwich
+                      menu_major_group: Sandwich
+                      serial_number: 1
+                    - item_name: Coke DISCOUNT
+                      item_qty: 1
+                      item_amount: -5
+                      menu_item_type: R
+                      menu_item_id: '102000'
+                      menu_family: Coke
+                      menu_major_group: Coke
+                      serial_number: 2
+                    max_applicable_quantity: 1
+                    campaign_name: Mass Campaign Offer
+                    redemption_id: 21762
+                    redemption_code: REDEMPTION_CODE_GOES_HERE
+        '422':
+          description: Unprocessable Entity - Unauthorized attempt to redeem a discount at a restricted
+            location
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+              examples:
+                Unauthorized attempt to redeem a discount at a restricted location:
+                  value:
+                  - The location (location name) has been disabled for redemption. Please alert a staff
+                    member if you think this is an error.
+      summary: Possible Redemptions (Redemptions 1.0)
+      description: "Use this API to verify that a redemption can be applied on a given check. \n\nNote:\
+        \ The API returns a 422 error message when a user attempts to redeem a loyalty/ non-loyalty discount\
+        \ at a location that is disabled for redemption by the business. This error message can be customized\
+        \ for the businesses in the Punchh platform to provide them greater flexibility and control over\
+        \ the user experience during redemption attempts at such locations. Contact your Punchh representative\
+        \ for more information about this Punchh platform configuration.\n\n## Rules To Select Discount\
+        \ Type\n\nFollowing are the rules to decide what `discount_type` to use in the Possible Redemptions\
+        \ and Create Redemption API requests:\n\n### `reward`\nIn the User Lookup and Fetch Balance API\
+        \ request, if any item in the `rewards` array has either `type` as `reward` or does not have a\
+        \ `type` key, use its `id` to pass in the `reward_id` parameter and use `discount_type` = `reward`\
+        \ in the Possible Redemptions and Create Redemption API requests.\n\n### `redeemable`\nIn the\
+        \ User Lookup and Fetch Balance API request, if any item in the `rewards` array has `type` as\
+        \ `redeemable`, use its `id` to pass in the `redeemable_id` parameter and use `discount_type`\
+        \ = `redeemable` in the Possible Redemptions and Create Redemption API requests.\n\n### `discount_amount`\n\
+        In the User Lookup and Fetch Balance API request, if the value of `banked_rewards` returned in\
+        \ the `balance` object is greater than 0, then pass a dollar amount in the `redeemed_points` parameter\
+        \ not exceeding the value of `banked_rewards` and use `discount_type` = `discount_amount` in the\
+        \ Possible Redemptions and Create Redemption API requests.\n\n### `card_completion`\nIn the User\
+        \ Lookup and Fetch Balance API request, if the value of `unredeemed_cards` returned in the `balance`\
+        \ object is greater than 0, then use `discount_type` = `card_completion` in the Possible Redemptions\
+        \ and Create Redemption API requests.\n\n### `redemption_code`\nWhen Redemption Code or Punchh\
+        \ Coupon Code is entered on the POS either by scanning it using the QR code scanner or by manually\
+        \ entering it, pass that code in the `redemption_code` parameter and use `discount_type` = `redemption_code`\
+        \ in the Possible Redemptions and Create Redemption API requests.\n\n### `fuel_reward`\nIt allows\
+        \ a user to use the fuel discount balance, and it can be redeemed when the user is identified\
+        \ on the check. Use `discount_type` as `fuel_reward` in API requests.\n\n### `subscription`\n\
+        It allows a user to redeem subscription related benefits. In the User Lookup and Fetch Balance\
+        \ API request, if the `subscriptions` object has `subscription_id`, use this ID to pass in the\
+        \ `subscription_id` parameter and use `discount_type` = `subscription` in the Possible Redemptions\
+        \ and Create Redemption API requests."
+      operationId: pos_redemption_possible
+      parameters:
+      - schema:
+          type: string
+          default: Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE
+        in: header
+        name: Authorization
+        description: This is a combination of unique API key as well as business key (UUID) as the Authorization
+          header.
+        required: true
+      - schema:
+          type: string
+          default: en
+        in: header
+        name: Accept-Language
+        description: Short code for locale variant (e.g., fr-ca, es-ES, en-EN, etc.)
+      x-stoplight:
+        id: 1531b3adec3c5
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                discount_type:
+                  type: string
+                  description: 'The type of discount. Choose from the following: reward, redeemable, discount_amount,
+                    card_completion, redemption_code, fuel_reward, subscription. See the top of this page
+                    for more information about each type. '
+                reward_id:
+                  type: integer
+                  format: int64
+                  description: Send this value when discount_type is reward. This is the ID of the reward
+                    the user wants to redeem.
+                redeemable_id:
+                  type: string
+                  description: Send this value when discount_type is redeemable. This is the ID of the
+                    redeemable the user wants to redeem.
+                redeemed_points:
+                  type: string
+                  description: Send this value when discount_type is discount_amount. This is the amount
+                    of the banked rewards the user wants to redeem.
+                redemption_code:
+                  type: string
+                  description: Send this value when discount_type is redemption_code. This is the Redemption
+                    Code or Punchh Coupon Code that is entered on the POS and is associated with redemption.
+                subscription_id:
+                  type: string
+                  description: Send this value when discount_type is subscription. This is a system-generated
+                    unique ID of the subscription that is issued to the guest.
+                cc_last4:
+                  type: integer
+                  description: Last 4 digits of the user's credit card number
+                employee_id:
+                  type: string
+                  description: 'The ID of the employee involved in the transaction. Used in reporting
+                    and Punchh Reviews module. '
+                employee_name:
+                  type: string
+                  description: 'The name of the employee involved in the transaction. Used in reporting
+                    and the Punchh Reviews module. '
+                menu_items:
+                  $ref: '#/components/schemas/menu_items'
+                receipt_amount:
+                  type: number
+                  format: double
+                  description: Order amount before taxes, calculated as the sum of all item amounts minus
+                    any discounts. This is the amount used to calculate loyalty points/visits. The value
+                    of this parameter should match `subtotal_amount`. For example, if the order amount
+                    is $10, both `receipt_amount` and `subtotal_amount` will be 10. If a $2 discount is
+                    applied, both will be 8.
+                subtotal_amount:
+                  type: number
+                  format: double
+                  description: Order amount before taxes (sum of all item amounts minus any discounts).
+                    Same as `receipt_amount`. For historical reasons, include this parameter along with
+                    `receipt_amount` in the API request.
+                receipt_datetime:
+                  type: string
+                  format: date-time
+                  description: Timestamp of the receipt per [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+                    format including TZ offset from UTC (e.g., YYYY-MM-DDThh:mm:ss-±hh:mm)
+                transaction_no:
+                  type: string
+                  description: The specific transaction from the POS
+                external_uid:
+                  type: string
+                punchh_key:
+                  type: string
+                  description: Punchh key (barcode without parity bit) of the receipt as generated by
+                    the POS. Should be 11 or 12, 20 digits
+                email:
+                  type: string
+                  description: The email address of the user. In the case of the single scan flow, email
+                    is not a required parameter.
+                single_scan_code:
+                  type: string
+                  description: Single scan code of the user is a required parameter when the user redeems
+                    a reward through the single scan flow. The code identifies the user requesting the
+                    redemption.
+                channel:
+                  type: string
+                  description: 'Channel through which the redemption was requested. Possible values are:
+                    online_order, pos, web, mobile, dashboard, chatbot, kiosk.'
+              required:
+              - discount_type
+              - reward_id
+              - redeemable_id
+              - redeemed_points
+              - redemption_code
+              - subscription_id
+              - menu_items
+              - receipt_amount
+              - subtotal_amount
+              - receipt_datetime
+              - transaction_no
+              - punchh_key
+              - email
+              - single_scan_code
+            examples:
+              Subscription:
+                value:
+                  discount_type: subscription
+                  subscription_id: '1111111'
+                  cc_last4: 1111
+                  employee_id: 7
+                  employee_name: EMPLOYEE_NAME_GOES_HERE
+                  menu_items:
+                  - item_name: Whiterice
+                    item_qty: 1
+                    item_amount: 2.86
+                    menu_item_type: M
+                    menu_item_id: '12'
+                    menu_family: '800'
+                    menu_major_group: '152'
+                    serial_number: '1.0'
+                  subtotal_amount: 10.72
+                  receipt_amount: 10.72
+                  receipt_datetime: '2023-02-18T18:05:01+05:30'
+                  transaction_no: 5678
+                  external_uid: EXTERNAL_UID_GOES_HERE
+                  punchh_key: PUNCHH_KEY_GOES_HERE
+                  email: test@example.com
+                  channel: pos
+              Reward:
+                value: "{\n  \"discount_type\": \"reward\",\n  \"reward_id\": 1399335,\n  \"cc_last4\"\
+                  : 4387,\n  \"employee_id\": 7,\n  \"employee_name\": \"EMPLOYEE_NAME_GOES_HERE\",\n\
+                  \  \"menu_items\": [\n    {\n      \"item_name\": \"Whiterice\",\n      \"item_qty\"\
+                  : 1,\n      \"item_amount\": 2.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\"\
+                  : \"12\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\",\n \
+                  \     \"serial_number\": \"1.0\"\n    },\n    {\n      \"item_name\": \"Brownrice\"\
+                  ,\n      \"item_qty\": 1,\n      \"item_amount\": 7.86,\n      \"menu_item_type\": \"\
+                  M\",\n      \"menu_item_id\": \"3418\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\"\
+                  : \"152\",\n      \"serial_number\": \"2.0\"\n    }\n  ],\n  \"subtotal_amount\": 10.72,\n\
+                  \  \"receipt_amount\": 10.72,\n  \"receipt_datetime\": \"2015-04-03T18:05:01+05:30\"\
+                  ,\n  \"transaction_no\": 5678,\n  \"external_uid\": \"a unique id\",\n  \"punchh_key\"\
+                  : \"PUNCHH_KEY_GOES_HERE\",\n  \"email\": \"test@example.com\",\n  \"channel\": \"pos\"\
+                  \n}"
+              Card Redemption:
+                value: "{\n  \"discount_type\": \"card_completion\",\n  \"receipt_amount\": 12.72,\n \
+                  \ \"cc_last4\": 4387,\n  \"employee_id\": 7,\n  \"employee_name\": \"EMPLOYEE_NAME_GOES_HERE\"\
+                  ,\n  \"menu_items\": [\n    {\n      \"item_name\": \"White rice\",\n      \"item_qty\"\
+                  : 1,\n      \"item_amount\": 2.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\"\
+                  : \"3419\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\",\n\
+                  \      \"serial_number\": \"1.0\"\n    },\n    {\n      \"item_name\": \"Brown rice\"\
+                  ,\n      \"item_qty\": 1,\n      \"item_amount\": 7.86,\n      \"menu_item_type\": \"\
+                  M\",\n      \"menu_item_id\": \"3418\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\"\
+                  : \"152\",\n      \"serial_number\": \"2.0\"\n    }\n  ],\n  \"subtotal_amount\": 12.72,\n\
+                  \  \"receipt_datetime\": \"2015-04-03T18:05:01+05:30\",\n  \"transaction_no\": 5678,\n\
+                  \  \"external_uid\": \"a unique id\",\n  \"punchh_key\": \"PUNCHH_KEY_GOES_HERE\",\n\
+                  \  \"process\": true,\n  \"email\": \"test@example.com\"\n}"
+              Discount Amount:
+                value: "{\n  \"discount_type\": \"discount_amount\",\n  \"redeemed_points\": \"REDEEMED_POINTS_GOES_HERE\"\
+                  ,\n  \"receipt_amount\": 12.72,\n  \"cc_last4\": 4387,\n  \"employee_id\": 7,\n  \"\
+                  employee_name\": \"EMPLOYEE_NAME_GOES_HERE\",\n  \"menu_items\": [\n    {\n      \"\
+                  item_name\": \"White rice\",\n      \"item_qty\": 1,\n      \"item_amount\": 2.86,\n\
+                  \      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"3419\",\n      \"menu_family\"\
+                  : \"800\",\n      \"menu_major_group\": \"152\",\n      \"serial_number\": \"1.0\"\n\
+                  \    },\n    {\n      \"item_name\": \"Brown rice\",\n      \"item_qty\": 1,\n     \
+                  \ \"item_amount\": 7.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\":\
+                  \ \"3418\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\",\n\
+                  \      \"serial_number\": \"2.0\"\n    }\n  ],\n  \"subtotal_amount\": 12.72,\n  \"\
+                  receipt_datetime\": \"2015-04-03T18:05:01+05:30\",\n  \"transaction_no\": 5678,\n  \"\
+                  external_uid\": \"a unique id\",\n  \"punchh_key\": \"PUNCHH_KEY_GOES_HERE\",\n  \"\
+                  process\": true,\n  \"email\": \"test@example.com\"\n}"
+              Redemption Code:
+                value: "{\n  \"discount_type\": \"redemption_code\",\n  \"receipt_amount\": 12.72,\n \
+                  \ \"cc_last4\": 4387,\n  \"employee_id\": 7,\n  \"employee_name\": \"EMPLOYEE_NAME_GOES_HERE\"\
+                  ,\n  \"menu_items\": [\n    {\n      \"item_name\": \"White rice\",\n      \"item_qty\"\
+                  : 1,\n      \"item_amount\": 2.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\"\
+                  : \"3419\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\",\n\
+                  \      \"serial_number\": \"1.0\"\n    },\n    {\n      \"item_name\": \"Brown rice\"\
+                  ,\n      \"item_qty\": 1,\n      \"item_amount\": 7.86,\n      \"menu_item_type\": \"\
+                  M\",\n      \"menu_item_id\": \"3418\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\"\
+                  : \"152\",\n      \"serial_number\": \"2.0\"\n    }\n  ],\n  \"subtotal_amount\": 12.72,\n\
+                  \  \"receipt_datetime\": \"2015-04-03T18:05:01+05:30\",\n  \"transaction_no\": 5678,\n\
+                  \  \"external_uid\": \"a unique id\",\n  \"punchh_key\": \"PUNCHH_KEY_GOES_HERE\",\n\
+                  \  \"process\": true,\n  \"redemption_code\": \"REDEMPTION_CODE_GOES_HERE\"\n}"
+              Fuel Reward:
+                value: "{\n  \"discount_type\": \"fuel_reward\",\n  \"payable\": \"112\",\n  \"employee_id\"\
+                  : \"2\",\n  \"employee_name\": \"EMPLOYEE_NAME_GOES_HERE\",\n  \"punchh_key\": \"PUNCHH_KEY_GOES_HERE\"\
+                  ,\n  \"email\": \"test@example.com\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\
+                  ,\n  \"subtotal_amount\": \"100\",\n  \"receipt_amount\": \"100\",\n  \"sequence_no\"\
+                  : \"2215\",\n  \"transaction_no\": \"00057647\",\n  \"process\": \"true\",\n  \"receipt_datetime\"\
+                  : \"2019-05-12T09:22:47-08:00\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"\
+                  Adult\",\n      \"item_qty\": \"1\",\n      \"item_amount\": \"100\",\n      \"menu_item_type\"\
+                  : \"M\",\n      \"menu_item_id\": \"10\",\n      \"menu_family\": \"10\",\n      \"\
+                  menu_major_group\": \"10\",\n      \"serial_number\": \"1.0\"\n    }\n  ]\n}"
+              Redeemable:
+                value: "{\n  \"discount_type\": \"redeemable\",\n  \"redeemable_id\": \"REDEEMABLE_ID_GOES_HERE\"\
+                  ,\n  \"cc_last4\": 4387,\n  \"employee_id\": 7,\n  \"employee_name\": \"EMPLOYEE_NAME_GOES_HERE\"\
+                  ,\n  \"menu_items\": [\n    {\n      \"item_name\": \"Whiterice\",\n      \"item_qty\"\
+                  : 1,\n      \"item_amount\": 2.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\"\
+                  : \"3419\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\",\n\
+                  \      \"serial_number\": \"1.0\"\n    },\n    {\n      \"item_name\": \"Brownrice\"\
+                  ,\n      \"item_qty\": 1,\n      \"item_amount\": 7.86,\n      \"menu_item_type\": \"\
+                  M\",\n      \"menu_item_id\": \"3418\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\"\
+                  : \"152\",\n      \"serial_number\": \"2.0\"\n    }\n  ],\n  \"subtotal_amount\": 10.72,\n\
+                  \  \"receipt_amount\": 10.72,\n  \"receipt_datetime\": \"2015-04-03T18:05:01+05:30\"\
+                  ,\n  \"transaction_no\": 5678,\n  \"external_uid\": \"a unique id\",\n  \"punchh_key\"\
+                  : \"PUNCHH_KEY_GOES_HERE\",\n  \"email\": \"test@example.com\"\n}"
+  /api/pos/redemptions:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  category:
+                    type: string
+                    description: 'Category returned for the redemption requested where values can be:
+                      `redeemable`, `processed`, `expired`, `invalid`, `unassigned`. Consider the redemption
+                      valid only when the category is returned as `redeemable`.'
+                  qualified_menu_items:
+                    $ref: '#/components/schemas/qualified_menu_items'
+                  discount_distribution_items:
+                    $ref: '#/components/schemas/discount_distribution_items'
+                  redemption_amount:
+                    type: number
+                    format: double
+                    description: Total redemption amount that can be applied on the order
+                  redemption_code:
+                    type: string
+                    description: Redemption code associated with the redemption
+                  redemption_id:
+                    type: integer
+                    format: int64
+                    description: 'Unique ID associated with the redemption. Save this in your system for
+                      future reference. Note: In case of coupons or promos, the redemption_id returned
+                      would be same as the redemption_code.'
+                  status:
+                    type: string
+                    description: Message that explains if the customer's redemption was successfully completed
+                      or not
+                  max_applicable_quantity:
+                    type: string
+                    description: 'Maximum quantity that can be discounted. Note: This key will be returned
+                      for offers related to Price Rollback.'
+                  qualifying_conditions:
+                    type: object
+                    x-stoplight:
+                      id: o93tke6pzpsv6
+                    description: The object lists all qualification criteria (both receipt-level and line-item)
+                      for submitted offers that failed while processing the redemption. This object is
+                      returned in the response only if the option to return the qualifying conditions
+                      for Redemption 1.0 APIs is enabled for the business in the Punchh platform. See
+                      the `data` object under [Get Qualification Criteria Response](https://developers.partech.com/docs/dev-portal-platform-functions/97ec083d6cf57-get-qualification-criteria-qc-list#response-body)
+                      in Platform Functions for descriptions of the parameters in `qualifying_conditions`.
+                  campaign_name:
+                    type: string
+                    x-stoplight:
+                      id: i48yporb101bg
+                    description: Name of the campaign through which the guest received the offer
+              examples:
+                default:
+                  value:
+                    status: Redeemed at February 23, 2026 13:02 by <user> at Punchh Demo. It can be honored.
+                    redemption_amount: 8
+                    category: redeemable
+                    qualified_menu_items:
+                    - item_name: Sandwich
+                      item_qty: 1
+                      item_amount: 5
+                      menu_item_type: M
+                      menu_item_id: '102000'
+                      menu_family: Sandwich
+                      menu_major_group: Sandwich
+                      serial_number: '1.0'
+                    - item_name: Coke
+                      item_qty: 1
+                      item_amount: 7
+                      menu_item_type: M
+                      menu_item_id: '102000'
+                      menu_family: Coke
+                      menu_major_group: Coke
+                      serial_number: '2.0'
+                    discount_distribution_items:
+                    - item_name: Sandwich DISCOUNT
+                      item_qty: 1
+                      item_amount: -3
+                      menu_item_type: R
+                      menu_item_id: '102000'
+                      menu_family: Sandwich
+                      menu_major_group: Sandwich
+                      serial_number: 1
+                    - item_name: Coke DISCOUNT
+                      item_qty: 1
+                      item_amount: -5
+                      menu_item_type: R
+                      menu_item_id: '102000'
+                      menu_family: Coke
+                      menu_major_group: Coke
+                      serial_number: 2
+                    max_applicable_quantity: 1
+                    campaign_name: Mass Campaign Offer
+                    redemption_id: 21762
+                    redemption_code: REDEMPTION_CODE_GOES_HERE
+        '422':
+          description: Unprocessable Entity - Unauthorized attempt to redeem a discount at a restricted
+            location
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+              examples:
+                Unauthorized attempt to redeem a discount at a restricted location:
+                  value:
+                  - The location (location name) has been disabled for redemption. Please alert a staff
+                    member if you think this is an error.
+      summary: Create Redemption (Redemptions 1.0)
+      description: "Redeems a card, reward, redeemable, or discount specified in the discount_type parameter\
+        \ against a receipt. Every request must have phone, email, card_number, or redemption_code as\
+        \ a parameter. \n\nPunchh evaluates eligibility during the Possible Redemptions call using the\
+        \ receipt details provided (item name, price, quantity, identifiers, etc.). During the Create\
+        \ Redemption call, Punchh revalidates the same receipt to ensure the qualifying conditions are\
+        \ still met before honoring the redemption. \n\nIf any item attributes change between the two\
+        \ calls, Punchh may be unable to match the qualifying items, which can cause the Create Redemption\
+        \ call to fail or return a different result—even if the Possible Redemptions call was successful.\n\
+        \nNote: The API returns a 422 error message when a user attempts to redeem a loyalty/ non-loyalty\
+        \ discount at a location that is disabled for redemption by the business. This error message can\
+        \ be customized for the businesses in the Punchh platform to provide them greater flexibility\
+        \ and control over the user experience during redemption attempts at such locations. Contact your\
+        \ Punchh representative for more information about this Punchh platform configuration.\n\n## Rules\
+        \ to Select Discount Type\n\nFollowing are the rules to decide what `discount_type` to use in\
+        \ the Possible Redemptions and Create Redemption API requests:\n\n### `reward`\nIn the User Lookup\
+        \ and Fetch Balance API request, if any item in the `rewards` array has either `type` as `reward`\
+        \ or does not have a `type` key, use its `id` to pass in the `reward_id` parameter and use `discount_type`\
+        \ = `reward` in the Possible Redemptions and Create Redemption API requests.\n\n### `redeemable`\n\
+        In the User Lookup and Fetch Balance API request, if any item in the `rewards` array has `type`\
+        \ as `redeemable`, use its `id` to pass in the `redeemable_id` parameter and use `discount_type`\
+        \ = `redeemable` in the Possible Redemptions and Create Redemption API requests.\n\n### `discount_amount`\n\
+        In the User Lookup and Fetch Balance API request, if the value of `banked_rewards` returned in\
+        \ the `balance` object is greater than 0, then pass a dollar amount in the `redeemed_points` parameter\
+        \ not exceeding the value of `banked_rewards` and use `discount_type` = `discount_amount` in the\
+        \ Possible Redemptions and Create Redemption API requests.\n\n### `card_completion`\nIn the User\
+        \ Lookup and Fetch Balance API request, if the value of `unredeemed_cards` returned in the `balance`\
+        \ object is greater than 0, then use `discount_type` = `card_completion` in the Possible Redemptions\
+        \ and Create Redemption API requests.\n\n### `redemption_code`\nWhen Redemption Code or Punchh\
+        \ Coupon Code is entered on the POS either by scanning it using the QR code scanner or by manually\
+        \ entering it, pass that code in the `redemption_code` parameter and use `discount_type` = `redemption_code`\
+        \ in the Possible Redemptions and Create Redemption API requests.\n\n### `fuel_reward`\nIt allows\
+        \ a user to use the fuel discount balance, and it can be redeemed when the user is identified\
+        \ on the check. Use `discount_type` as `fuel_reward` in API requests.\n\n### `subscription`\n\
+        It allows a user to redeem subscription related benefits. In the User Lookup and Fetch Balance\
+        \ API request, if the `subscriptions` object has `subscription_id`, use this ID to pass in the\
+        \ `subscription_id` parameter and use `discount_type` = `subscription` in the Possible Redemptions\
+        \ and Create Redemption API requests.\n"
+      operationId: pos_create_redemption
+      parameters:
+      - schema:
+          type: string
+          default: Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE
+        in: header
+        name: Authorization
+        required: true
+        description: This is a combination of unique API key as well as business key (UUID) as the Authorization
+          header.
+      - schema:
+          type: string
+          default: en
+        in: header
+        name: Accept-Language
+        description: Short code for locale variant (e.g., fr-ca, es-ES, en-EN, etc.)
+      x-stoplight:
+        id: 4aa6c9741c85d
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                discount_type:
+                  type: string
+                  description: 'The type of discount. Choose from the following: reward, redeemable, discount_amount,
+                    card_completion, redemption_code, fuel_reward, subscription. See the top of this page
+                    for more information about each type. '
+                reward_id:
+                  type: integer
+                  format: int64
+                  description: Send this value when discount_type is reward. This is the ID of the reward
+                    the user wants to redeem.
+                redeemable_id:
+                  type: string
+                  description: Send this value when discount_type is redeemable. This is the ID of the
+                    redeemable the user wants to redeem.
+                redeemed_points:
+                  type: string
+                  description: Send this value when discount_type is discount_amount. This is the amount
+                    of the banked rewards the user wants to redeem.
+                redemption_code:
+                  type: string
+                  description: Send this value when discount_type is redemption_code. This is the Redemption
+                    Code or Punchh Coupon Code that is entered on the POS and is associated with redemption.
+                subscription_id:
+                  type: string
+                  description: Send this value when discount_type is subscription. This is a system-generated
+                    unique ID of the subscription that is issued to the guest.
+                cc_last4:
+                  type: integer
+                  description: Last 4 digits of the user's credit card number
+                employee_id:
+                  type: string
+                  description: ID of the employee
+                employee_name:
+                  type: string
+                  description: Name of the employee
+                menu_items:
+                  $ref: '#/components/schemas/menu_items'
+                receipt_amount:
+                  type: number
+                  format: double
+                  description: Order amount before taxes, calculated as the sum of all item amounts minus
+                    any discounts. This is the amount used to calculate loyalty points/visits. The value
+                    of this parameter should match `subtotal_amount`. For example, if the order amount
+                    is $10, both `receipt_amount` and `subtotal_amount` will be 10. If a $2 discount is
+                    applied, both will be 8.
+                subtotal_amount:
+                  type: number
+                  format: double
+                  description: Order amount before taxes (sum of all item amounts minus any discounts).
+                    Same as `receipt_amount`. For historical reasons, include this parameter along with
+                    `receipt_amount` in the API request.
+                receipt_datetime:
+                  type: string
+                  format: date-time
+                  description: Timestamp of the receipt per ISO 8601 format including TZ offset from UTC
+                    (e.g., YYYY-MM-DDThh:mm:ss-±hh:mm)
+                transaction_no:
+                  type: string
+                  description: The specific transaction from the POS
+                external_uid:
+                  type: string
+                  description: 'Unique ID generated by your system. We use this to prevent duplicates
+                    in the case same transactions get triggered twice.
+
+                    '
+                punchh_key:
+                  type: string
+                  description: Unique Punchh key
+                email:
+                  type: string
+                  description: The email address of the user. In the case of the single scan flow, email
+                    is not a required parameter.
+                single_scan_code:
+                  type: string
+                  description: Single scan code of the user is a required parameter when the user redeems
+                    a reward through the single scan flow. The code identifies the user requesting the
+                    redemption.
+                channel:
+                  type: string
+                  description: 'Channel through which the redemption was requested. Possible values are:
+                    online_order, pos, web, mobile, dashboard, chatbot, kiosk.'
+              required:
+              - discount_type
+              - reward_id
+              - redeemable_id
+              - redeemed_points
+              - redemption_code
+              - subscription_id
+              - menu_items
+              - receipt_amount
+              - subtotal_amount
+              - receipt_datetime
+              - transaction_no
+              - punchh_key
+              - email
+              - single_scan_code
+            examples:
+              Subscription:
+                value:
+                  discount_type: subscription
+                  subscription_id: '1111111'
+                  cc_last4: 1111
+                  employee_id: 7
+                  employee_name: EMPLOYEE_NAME_GOES_HERE
+                  menu_items:
+                  - item_name: Whiterice
+                    item_qty: 1
+                    item_amount: 2.86
+                    menu_item_type: M
+                    menu_item_id: '12'
+                    menu_family: '800'
+                    menu_major_group: '152'
+                    serial_number: '1.0'
+                  subtotal_amount: 10.72
+                  receipt_amount: 10.72
+                  receipt_datetime: '2023-02-18T18:05:01+05:30'
+                  transaction_no: 5678
+                  external_uid: EXTERNAL_UID_GOES_HERE
+                  punchh_key: PUNCHH_KEY_GOES_HERE
+                  email: test@example.com
+                  channel: pos
+              Reward:
+                value: "{\n  \"discount_type\": \"reward\",\n  \"reward_id\": 1399335,\n  \"cc_last4\"\
+                  : 4387,\n  \"employee_id\": 7,\n  \"employee_name\": \"EMPLOYEE_NAME_GOES_HERE\",\n\
+                  \  \"menu_items\": [\n    {\n      \"item_name\": \"Whiterice\",\n      \"item_qty\"\
+                  : 1,\n      \"item_amount\": 2.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\"\
+                  : \"12\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\",\n \
+                  \     \"serial_number\": \"1.0\"\n    },\n    {\n      \"item_name\": \"Brownrice\"\
+                  ,\n      \"item_qty\": 1,\n      \"item_amount\": 7.86,\n      \"menu_item_type\": \"\
+                  M\",\n      \"menu_item_id\": \"3418\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\"\
+                  : \"152\",\n      \"serial_number\": \"2.0\"\n    }\n  ],\n  \"subtotal_amount\": 10.72,\n\
+                  \  \"receipt_amount\": 10.72,\n  \"receipt_datetime\": \"2015-04-03T18:05:01+05:30\"\
+                  ,\n  \"transaction_no\": 5678,\n  \"external_uid\": \"a unique id\",\n  \"punchh_key\"\
+                  : \"PUNCHH_KEY_GOES_HERE\",\n  \"email\": \"test@example.com\",\n  \"channel\": \"pos\"\
+                  \n\n}"
+              Redeemable:
+                value: "{\n  \"discount_type\": \"redeemable\",\n  \"redeemable_id\": \"REDEEMABLE_ID_GOES_HERE\"\
+                  ,\n  \"cc_last4\": 4387,\n  \"employee_id\": 7,\n  \"employee_name\": \"EMPLOYEE_NAME_GOES_HERE\"\
+                  ,\n  \"menu_items\": [\n    {\n      \"item_name\": \"Whiterice\",\n      \"item_qty\"\
+                  : 1,\n      \"item_amount\": 2.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\"\
+                  : \"3419\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\",\n\
+                  \      \"serial_number\": \"1.0\"\n    },\n    {\n      \"item_name\": \"Brownrice\"\
+                  ,\n      \"item_qty\": 1,\n      \"item_amount\": 7.86,\n      \"menu_item_type\": \"\
+                  M\",\n      \"menu_item_id\": \"3418\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\"\
+                  : \"152\",\n      \"serial_number\": \"2.0\"\n    }\n  ],\n  \"subtotal_amount\": 10.72,\n\
+                  \  \"receipt_amount\": 10.72,\n  \"receipt_datetime\": \"2015-04-03T18:05:01+05:30\"\
+                  ,\n  \"transaction_no\": 5678,\n  \"external_uid\": \"a unique id\",\n  \"punchh_key\"\
+                  : \"PUNCHH_KEY_GOES_HERE\",\n  \"email\": \"test@example.com\"\n}"
+              Card Based:
+                value: "{\n  \"discount_type\": \"card_completion\",\n  \"receipt_amount\": 12.72,\n \
+                  \ \"cc_last4\": 4387,\n  \"employee_id\": 7,\n  \"employee_name\": \"EMPLOYEE_NAME_GOES_HERE\"\
+                  ,\n  \"menu_items\": [\n    {\n      \"item_name\": \"White rice\",\n      \"item_qty\"\
+                  : 1,\n      \"item_amount\": 2.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\"\
+                  : \"3419\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\",\n\
+                  \      \"serial_number\": \"1.0\"\n    },\n    {\n      \"item_name\": \"Brown rice\"\
+                  ,\n      \"item_qty\": 1,\n      \"item_amount\": 7.86,\n      \"menu_item_type\": \"\
+                  M\",\n      \"menu_item_id\": \"3418\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\"\
+                  : \"152\",\n      \"serial_number\": \"2.0\"\n    }\n  ],\n  \"subtotal_amount\": 12.72,\n\
+                  \  \"receipt_datetime\": \"2015-04-03T18:05:01+05:30\",\n  \"transaction_no\": 5678,\n\
+                  \  \"external_uid\": \"a unique id\",\n  \"punchh_key\": \"PUNCHH_KEY_GOES_HERE\",\n\
+                  \  \"process\": true,\n  \"email\": \"test@example.com\"\n}"
+              Discount Amount:
+                value: "{\n  \"discount_type\": \"discount_amount\",\n  \"redeemed_points\": \"REDEEMED_POINTS_GOES_HERE\"\
+                  ,\n  \"receipt_amount\": 12.72,\n  \"cc_last4\": 4387,\n  \"employee_id\": 7,\n  \"\
+                  employee_name\": \"EMPLOYEE_NAME_GOES_HERE\",\n  \"menu_items\": [\n    {\n      \"\
+                  item_name\": \"White rice\",\n      \"item_qty\": 1,\n      \"item_amount\": 2.86,\n\
+                  \      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"3419\",\n      \"menu_family\"\
+                  : \"800\",\n      \"menu_major_group\": \"152\",\n      \"serial_number\": \"1.0\"\n\
+                  \    },\n    {\n      \"item_name\": \"Brown rice\",\n      \"item_qty\": 1,\n     \
+                  \ \"item_amount\": 7.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\":\
+                  \ \"3418\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\",\n\
+                  \      \"serial_number\": \"2.0\"\n    }\n  ],\n  \"subtotal_amount\": 12.72,\n  \"\
+                  receipt_datetime\": \"2015-04-03T18:05:01+05:30\",\n  \"transaction_no\": 5678,\n  \"\
+                  external_uid\": \"a unique id\",\n  \"punchh_key\": \"PUNCHH_KEY_GOES_HERE\",\n  \"\
+                  process\": true,\n  \"email\": \"test@example.com\"\n}"
+              Fuel Reward:
+                value: "{\n  \"discount_type\": \"fuel_reward\",\n  \"payable\": \"112\",\n  \"employee_id\"\
+                  : \"2\",\n  \"employee_name\": \"EMPLOYEE_NAME_GOES_HERE\",\n  \"punchh_key\": \"PUNCHH_KEY_GOES_HERE\"\
+                  ,\n  \"email\": \"test@example.com\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\
+                  ,\n  \"subtotal_amount\": \"100\",\n  \"receipt_amount\": \"100\",\n  \"sequence_no\"\
+                  : \"2215\",\n  \"transaction_no\": \"00057647\",\n  \"process\": \"true\",\n  \"receipt_datetime\"\
+                  : \"2019-05-12T09:22:47-08:00\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"\
+                  Adult\",\n      \"item_qty\": \"1\",\n      \"item_amount\": \"100\",\n      \"menu_item_type\"\
+                  : \"M\",\n      \"menu_item_id\": \"10\",\n      \"menu_family\": \"10\",\n      \"\
+                  menu_major_group\": \"10\",\n      \"serial_number\": \"1.0\"\n    }\n  ]\n}"
+              Redemption Code:
+                value: "{\n  \"discount_type\": \"redemption_code\",\n  \"receipt_amount\": 12.72,\n \
+                  \ \"cc_last4\": 4387,\n  \"employee_id\": 7,\n  \"employee_name\": \"EMPLOYEE_NAME_GOES_HERE\"\
+                  ,\n  \"menu_items\": [\n    {\n      \"item_name\": \"White rice\",\n      \"item_qty\"\
+                  : 1,\n      \"item_amount\": 2.86,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\"\
+                  : \"3419\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\": \"152\",\n\
+                  \      \"serial_number\": \"1.0\"\n    },\n    {\n      \"item_name\": \"Brown rice\"\
+                  ,\n      \"item_qty\": 1,\n      \"item_amount\": 7.86,\n      \"menu_item_type\": \"\
+                  M\",\n      \"menu_item_id\": \"3418\",\n      \"menu_family\": \"800\",\n      \"menu_major_group\"\
+                  : \"152\",\n      \"serial_number\": \"2.0\"\n    }\n  ],\n  \"subtotal_amount\": 12.72,\n\
+                  \  \"receipt_datetime\": \"2015-04-03T18:05:01+05:30\",\n  \"transaction_no\": 5678,\n\
+                  \  \"external_uid\": \"a unique id\",\n  \"punchh_key\": \"PUNCHH_KEY_GOES_HERE\",\n\
+                  \  \"process\": true,\n  \"redemption_code\": \"REDEMPTION_CODE_GOES_HERE\"\n}"
+    delete:
+      responses:
+        '202':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      summary: Void Redemption (Redemptions 1.0)
+      description: 'Voids a processed redemption. After a redemption is voided successfully, the offer
+        tied to the redemption is returned to the guest''s account.
+
+
+        <b>Note</b>: The Void Redemption API allows you to cancel a redemption without any time restrictions
+        for most types of redemptions. However, for coupons and promos, redemptions can only be voided
+        within 24 hours of the redemption process.
+
+
+        For information about voiding multiple redemptions, see [this page](/docs/dev-portal-pos/b3A6NTAyODM5MjM-void-multiple-redemptions).
+
+        '
+      operationId: pos_void_redemption
+      parameters:
+      - schema:
+          type: string
+          default: Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE
+        in: header
+        name: Authorization
+        description: This is a combination of unique API key as well as business key (UUID) as the Authorization
+          header.
+        required: true
+      x-stoplight:
+        id: 6a46fbaa33b28
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'Email address of the user acocunt from which you are voiding the redemption. '
+                single_scan_code:
+                  type: string
+                  description: Single scan code of the user is a required parameter when the user redeems
+                    a reward through the single scan flow. The code identifies the user requesting the
+                    redemption.
+                redemption_id:
+                  type: integer
+                  format: int64
+                  description: Redemption ID returned when the redemption is created.
+                card_number:
+                  type: string
+                  description: 'Loyalty debit card number used by some businesses to locate the guest
+                    account. '
+                phone:
+                  type: string
+                  description: 'Phone number of the user account from which you are voiding the redemption. '
+                redemption_code:
+                  type: string
+                  description: 'To be entered if the redemption ID is not being provided. If both redemption_id
+                    and redemption_code are provided, then only redemption_id will be processed. redemption_code
+                    must be used to void coupon and promo codes. '
+                transaction_no:
+                  type: string
+                  description: Transaction number sent at the time of redemption. Used only with promos
+                    and coupons.
+              required:
+              - email
+              - single_scan_code
+              - redemption_id
+              - redemption_code
+              - transaction_no
+            examples:
+              Void Redemption:
+                value: "{\n  \"email\": \"test@example.com\",\n  \"redemption_id\": 717344\n}"
+              Coupon/Promo Redemption:
+                value:
+                  location_key: LOCATION_KEY_GOES_HERE
+                  redemption_code: REDEMPTION_CODE_GOES_HERE
+                  transaction_no: '5312123'
+  /api/pos/redemptions/multiple_destroy:
+    delete:
+      responses:
+        '202':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      summary: Void Multiple Redemptions (Redemptions 1.0)
+      description: 'Deletes processed multiple redemptions at once and returns the reward to the user.
+
+        '
+      operationId: pos_void_multiple_redemptions
+      parameters:
+      - schema:
+          type: string
+          default: Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE
+        in: header
+        name: Authorization
+        description: This is a combination of unique API key as well as business key (UUID) as the Authorization
+          header.
+        required: true
+      x-stoplight:
+        id: 48f115d705249
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email address of the user acocunt from which you are voiding the redemptions.
+                single_scan_code:
+                  type: string
+                  description: Single scan code of the user is a required parameter when the user redeems
+                    a reward through the single scan flow. The code identifies the user requesting the
+                    redemption.
+                redemption_id:
+                  type: array
+                  description: Array of comma-separated redemption IDs (int64) returned when the redemptions
+                    are created.
+                  items:
+                    type: integer
+                    format: int64
+                phone:
+                  type: string
+                  description: Phone number of the user account from which you are voiding the redemptions.
+                redemption_code:
+                  type: string
+                  description: Array of comma-separated IDs to be entered if the redemption IDs are not
+                    provided. If both redemption_id and redemption_code are provided, then only redemption_id
+                    will be processed.  redemption_code must be used to void coupon and promo codes.
+                card_number:
+                  type: string
+                  description: Loyalty debit card number used by some businesses to locate the guest account.
+                transaction_no:
+                  type: string
+                  description: 'Used only with promos and coupons. Transaction number sent at the time
+                    of redemption. '
+              required:
+              - email
+              - single_scan_code
+              - redemption_id
+              - redemption_code
+              - transaction_no
+            examples:
+              Void redemption:
+                value:
+                  email: test@example.com
+                  redemption_id:
+                  - 577084
+                  - 577085
+  /api/pos/redemptions/applicable_offers:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    discount_amount:
+                      type: integer
+                      description: Discount amount associated with the reward
+                    menu_items:
+                      $ref: '#/components/schemas/qualified_menu_items'
+                    reward:
+                      type: object
+                      title: Rewards Object
+                      properties:
+                        rewards:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              created_at:
+                                type: string
+                                description: Date/time when the reward was created (in ISO 8601 format)
+                              description:
+                                type: string
+                                description: Description that explains rewards as configured in the Punchh
+                                  platform
+                              discount_amount:
+                                type: integer
+                                description: Discount amount associated with the current reward
+                              end_date_tz:
+                                type: string
+                                description: Expiry date of the reward in ISO 8601 format
+                              id:
+                                type: integer
+                                description: Reward ID
+                                format: int64
+                              image:
+                                type: string
+                                description: Image URL of the reward
+                              name:
+                                type: string
+                                description: Name of the reward
+                              points:
+                                type: integer
+                                description: Points associated with the current reward
+                              redeemable_properties:
+                                type: string
+                                description: Comma-separated values that provide additional details about
+                                  a redeemable. For example, a redeemable could be a "Food_Item" or "Merchandise",
+                                  etc. Can be configured for a business in the Punchh platform and attached
+                                  to a redeemable. If no value is attached to a redeemable, a blank field
+                                  will be returned.
+                              start_date_tz:
+                                type: string
+                                description: Start date of the reward in ISO 8601 format
+                              status:
+                                type: string
+                                description: The redemption status of a reward. Currently only the value
+                                  "Unredeemed" will be returned. This signifies that the reward has not
+                                  been redeemed by an end-user.
+                              updated_at:
+                                type: string
+                                description: Date/time when the reward was updated (in ISO 8601 format)
+                              type:
+                                type: string
+                                description: 'This will be either redeemable or reward. Possible Redemptions
+                                  and Create Redemption API requests depend on what is returned in this
+                                  field.
+
+
+                                  In cases where this field is not returned, assume that the type is reward.'
+                              meta_data:
+                                type: string
+                                description: Meta data that can be added to a redeemable. This will be
+                                  returned only if it is configured in the Punchh platform. The maximum
+                                  length is 255 characters.
+              examples:
+                Response:
+                  value:
+                  - discount_amount: 10
+                    menu_items: []
+                    reward:
+                      created_at: '2020-01-30T13:26:40Z'
+                      description: ''
+                      discount_amount: 0
+                      end_date_tz: null
+                      id: 1425570
+                      image: IMAGE_URL_GOES_HERE
+                      name: Test QC static discounrt
+                      points: 0
+                      redeemable_properties: null
+                      start_date_tz: '2020-01-30T13:26:40Z'
+                      status: unredeemed
+                      updated_at: '2020-01-30T13:26:40Z'
+                  - discount_amount: 10
+                    menu_items: []
+                    reward:
+                      created_at: '2020-01-30T13:41:40Z'
+                      description: ''
+                      discount_amount: 0
+                      end_date_tz: null
+                      id: 1425572
+                      image: IMAGE_URL_GOES_HERE
+                      name: Test QC static discounrt
+                      points: 0
+                      redeemable_properties: null
+                      start_date_tz: '2020-01-30T13:41:40Z'
+                      status: unredeemed
+                      updated_at: '2020-01-30T13:41:40Z'
+                  - discount_amount: 10
+                    menu_items: []
+                    reward:
+                      created_at: '2020-01-30T13:57:07Z'
+                      description: ''
+                      discount_amount: 0
+                      end_date_tz: null
+                      id: 1425574
+                      image: IMAGE_URL_GOES_HERE
+                      name: Test QC static discounrt
+                      points: 0
+                      redeemable_properties: null
+                      start_date_tz: '2020-01-30T13:57:07Z'
+                      status: unredeemed
+                      updated_at: '2020-01-30T13:57:07Z'
+      summary: Applicable Offers (Redemptions 1.0)
+      description: 'Returns applicable offers based on the check details.
+
+        '
+      operationId: pos_applicable_offers
+      parameters:
+      - schema:
+          type: string
+          default: Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE
+        in: header
+        name: Authorization
+        description: This is a combination of unique API key as well as business key (UUID) as the Authorization
+          header.
+        required: true
+      - schema:
+          type: string
+          default: en
+        in: header
+        name: Accept-Language
+        description: Short code for locale variant (e.g., fr-ca, es-ES, en-EN, etc.)
+      x-stoplight:
+        id: 9f7662dfb7f57
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email address of the user
+                menu_items:
+                  $ref: '#/components/schemas/menu_items'
+                receipt_amount:
+                  type: number
+                  format: double
+                  description: Order amount before taxes, calculated as the sum of all item amounts minus
+                    any discounts. This is the amount used to calculate loyalty points/visits. The value
+                    of this parameter should match `subtotal_amount`. For example, if the order amount
+                    is $10, both `receipt_amount` and `subtotal_amount` will be 10. If a $2 discount is
+                    applied, both will be 8.
+                subtotal_amount:
+                  type: number
+                  format: double
+                  description: Order amount before taxes (sum of all item amounts minus any discounts).
+                    Same as `receipt_amount`. For historical reasons, include this parameter along with
+                    `receipt_amount` in the API request.
+                amount:
+                  type: number
+                  format: double
+                  description: Order amount before any taxes (sum of all amounts minus any discounts).
+                    This is the amount upon which loyalty points/visits are granted. The value of this
+                    parameter should be the same as that of subtotal_amount. For example, if the order
+                    amount is $10, parameters receipt_amount and subtotal_amount will hold the value 10.
+                    Say if a $2 discount has been applied to the same order, subtotal_amount and receipt_amount
+                    will become $8.
+                receipt_datetime:
+                  type: string
+                  description: Timestamp of receipt per ISO 8601 format including TZ offset from UTC (YYYY-MM-DDThh:mm:ss-±hh:mm)
+                  x-stoplight:
+                    id: wcq1t60ezo6i8
+                channel:
+                  type: string
+                  x-stoplight:
+                    id: pttj0737be5h1
+                  enum:
+                  - pos
+                  - kiosk
+                  description: 'Channel through which the order was placed. If a channel is defined in
+                    the Receipt Qualifier condition under Offers > Qualification Criteria in the Punchh
+                    platform, the API returns the list of offers applicable to the transaction after evaluating
+                    the value set for the channel. Possible values: pos, kiosk.'
+              required:
+              - email
+              - menu_items
+              - receipt_amount
+              - subtotal_amount
+              - amount
+              - receipt_datetime
+              - channel
+            examples:
+              Request:
+                value:
+                  email: test@example.com
+                  receipt_amount: 300
+                  menu_items:
+                  - item_name: Whiterice
+                    item_qty: 1
+                    item_amount: 2.86
+                    menu_item_type: M
+                    menu_item_id: '3419'
+                    menu_family: '800'
+                    menu_major_group: '152'
+                    serial_number: '1.0'
+                  - item_name: Brownrice
+                    item_qty: 1
+                    item_amount: 7.86
+                    menu_item_type: M
+                    menu_item_id: '3418'
+                    menu_family: '800'
+                    menu_major_group: '152'
+                    serial_number: '2.0'
+                  amount: 300
+                  subtotal_amount: 300
+                  receipt_datetime: '2020-03-06T15:01:55.704Z'
+                  channel: pos
+  /api/pos/users/active_redemptions:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    internal_tracking_code:
+                      type: string
+                      description: Internal tracking code, which is generated on redemption.
+                    type_of_redemption:
+                      type: string
+                      description: Type of redemption.
+                    expiring_on:
+                      type: string
+                      description: Expiry date/time of redemption code.
+                    redeemable:
+                      type: object
+                      properties:
+                        redeemable_image_url:
+                          type: string
+                          description: URL of the image that has to be displayed in the app to depict
+                            the redeemable.
+                        redeemable_properties:
+                          description: Properties such as "Merchandise", "Food Item", etc. can be added
+                            to a particular redeemable.
+                          x-nullable: true
+                        redeemable_id:
+                          type: integer
+                          description: Unique ID to identify a redeemable in the system.
+                        name:
+                          type: string
+                          description: Name of the redeemable.
+                        description:
+                          type: string
+                          description: A description of the redeemable that appears in the app. It should
+                            lure the end-users into redeeming.
+                        points_required_to_redeem:
+                          type: integer
+                          description: Value of points required to redeem a particular redeemable.
+              examples:
+                default:
+                  value:
+                  - internal_tracking_code: '7738989'
+                    type_of_redemption: BankedRewardRedemption
+                    expiring_on: '2019-11-21T17:42:59Z'
+                  - internal_tracking_code: '8106394'
+                    type_of_redemption: RewardRedemption
+                    expiring_on: '2019-11-21T17:44:41Z'
+                    redeemable:
+                      redeemable_image_url: IMAGE_URL_GOES_HERE
+                      redeemable_properties: null
+                      redeemable_id: REDEEMABLE_ID_GOES_HERE
+                      name: Large Pizza
+                      description: test
+                      points_required_to_redeem: 100
+      summary: Get Active Redemptions (Redemptions 1.0)
+      description: 'This API returns all of the active redemptions of the user.
+
+        '
+      operationId: pos_get_active_redemptions
+      parameters:
+      - schema:
+          type: string
+          default: Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE
+        in: header
+        name: Authorization
+        description: This is a combination of unique API key as well as business key (UUID) as the Authorization
+          header.
+        required: true
+      - schema:
+          type: string
+          default: test@example.com
+        in: query
+        name: email
+        description: The email of the user. If you send this parameter, do not include the phone parameter.
+        required: true
+      - schema:
+          type: string
+          default: 1111111111
+        in: query
+        name: phone
+        description: The phone number of the user. If you send this parameter, do not include the email
+          parameter.
+        required: true
+      x-stoplight:
+        id: 218dc2f255a1a
+x-stoplight:
+  docs:
+    includeDownloadLink: true
+  id: 2c27d2a2a2340
+openapi: 3.1.1
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+components:
+  schemas:
+    discount_distribution_items:
+      type: array
+      title: Discount Distribution Items (Array Object)
+      description: 'An array containing details of how the applied discount is distributed across individual
+        menu items. Each object represents one line item that receives a portion of the discount.
+
+        '
+      items:
+        type: object
+        properties:
+          item_name:
+            type: string
+            description: Name of the discounted menu item as it displays in the POS catalog
+          menu_item_id:
+            type: string
+            description: Unique identifier that your POS system uses for the discounted menu item
+          item_qty:
+            type: number
+            description: Quantity associated with the discounted item.
+          item_amount:
+            type: number
+            description: A negative amount that indicates a reduction in price. The sum of all `item_amount`
+              values across the array equals the total discount applied.
+          menu_item_type:
+            type: string
+            description: 'The classification of the item.
+
+
+              R - Redemption Discount item (negative). The `menu_item_type` attribute will always be set
+              to "R" to indicate that it is a redemption-related discount. If a user redeemed a reward
+              giving $3 off, the response may include a line with `menu_item_type` as "R" and `item_amount`
+              as -3.'
+          menu_major_group:
+            type: string
+            description: The major group that the discounted item belongs to
+          menu_family:
+            type: string
+            description: The family that the discounted item belongs to
+          serial_number:
+            type: number
+            description: A serialized number that differentiates distinct items on the check. The value
+              in the field identifies which items on the check are base items and which items are modifiers
+              to the base items. For example, a main menu item (such as pizza) may have serial number
+              1.0, and the associated modifiers (such as "extra cheese", "olives", and "jalapenos") may
+              have serial numbers 1.1, 1.2, and 1.3 respectively.
+    menu_items:
+      type: array
+      title: Menu Items (Array Object)
+      description: This object contains one or more menu items added to an order. See [How To Send Menu
+        Items to Punchh](/docs/dev-portal-pos/5277d762b8c6d-how-to-send-menu-items-to-punchh)
+      x-examples: []
+      x-stoplight:
+        id: 9577f63ac492c
+      items:
+        x-stoplight:
+          id: d2wcrc5022zez
+        type: object
+        properties:
+          item_name:
+            type: string
+            x-stoplight:
+              id: fkconmtw6b4eq
+            description: Name of the menu item as it displays in the POS catalog
+          menu_item_id:
+            type: string
+            x-stoplight:
+              id: wk34fzkfu65ep
+            description: Unique identifier that your POS system uses for the item
+          item_qty:
+            type: number
+            x-stoplight:
+              id: xv5vwx8ys5r3u
+            description: Quantity ordered by the customer. If the item is a modifier (such as extra cheese
+              on a pizza base item), make sure the quantity reflects the total number of base items included.
+              For example, if you have a pizza base item with a certain item ID and a quantity of two,
+              and the pizzas each have an extra cheese modifier added to them, then the modifier quantity
+              should be two to account for the modifier across both pizzas. This applies only to base
+              items of the same ID. If different base items include the same modifier, you do not need
+              to sum the modifiers.
+          item_amount:
+            type: number
+            x-stoplight:
+              id: am9k9c14tfekn
+            description: The total price of the line item or the amount of the discount that you applied
+              to an item. In case of multiple quantities, this means the sum total of all item amounts.
+              Always represent this value as a positive number, even when the item is a discount.
+          menu_item_type:
+            type: string
+            x-stoplight:
+              id: kk109twugwy9d
+            description: '
+
+              The classification of the item. Choose from the following types based on the item:
+
+
+              M - Menu item ( + or - )
+
+
+              D - Discount (negative). Either internal or Punchh will always evaluate lines as ( - ) regardless
+              of the sign assigned in the API call. We do not recommend sending any line item types set
+              to D in any Redemptions 1.0 requests. Instead, send them in the [Create Loyalty Check-in](/docs/dev-portal-pos/52632fd1c0ab1-create-check-in)
+              and [Receipt Details](/docs/dev-portal-pos/a8dca5f5b047e-store-receipt-details-from-pos)
+              API calls.
+
+
+              If any items with line item type D are sent in these requests, the business will require
+              additional configuration for all offers to filter out the line item type D. See the [Qualification
+              Criteria](https://support.punchh.com/s/article/Qualification-Criteria) article on the Support
+              Portal. Note: To view the Punchh product documentation on the Punchh Support Portal, you
+              must log in to a Punchh platform production environment. If you already have access to a
+              production environment, follow the instructions here to access the Punchh Support Portal.
+
+
+              Any non-loyalty discounts should be reflected in reduced totals of the line items of type
+              M that the discounts apply to. For example, if a business offers a $2 discount on a $10
+              burger, send the burger as $8 ($10 - $2) in the API request.
+
+
+              Note: See [Multiple Redemptions Example](/docs/dev-portal-pos/5277d762b8c6d-how-to-send-menu-items-to-punchh#multiple-redemptions-example)
+              for processing multiple discounts.
+
+
+              S - Service item. Any item representing money received that is not a sale. For example,
+              service charges, delivery fees, tips, purchase of gift cards/certificates, etc. In the case
+              of a single scan flow, send a menu item with a service menu item type for the selected tip
+              amount.
+
+
+              T - Tax item. Taxes of all sorts
+
+
+              P - Payment item. Visa, MasterCard, cash, gift card/certificate (when used to pay for the
+              order).'
+          menu_major_group:
+            type: string
+            x-stoplight:
+              id: xm7pxc8bt0opy
+            description: The major group that the item belongs to. The major group is the parent category
+              for the item. Even though the parameter is required, you can pass it in the request with
+              a blank value. You can leave this blank if the item does not belong to a major group.
+          menu_family:
+            type: string
+            x-stoplight:
+              id: icvf9xp5e11jo
+            description: The family that the item belongs to. The family is the subcategory for the item.
+              Even though the parameter is required, you can pass it in the request with a blank value.
+              You can leave this blank if the item does not belong to a family.
+          serial_number:
+            type: string
+            x-stoplight:
+              id: nm5g9pe9zjsqw
+            description: A serialized number that differentiates distinct items on the check. The purpose
+              of this field is to identify which items on the check are base items and which items are
+              modifiers to the base items. For example, a main menu item (such as pizza) may have serial
+              number "1.0", and the associated modifiers (such as "extra cheese", "olives", and "jalapenos")
+              may have serial numbers "1.1", "1.2", and "1.3" respectively. Serialization is limited to
+              one decimal point, so you can only modify the base item. You cannot modify a modifier with
+              1.x.x, and so on.
+        required:
+        - item_name
+        - menu_item_id
+        - ' item_qty'
+        - item_amount
+        - menu_item_type
+        - menu_major_group
+        - menu_family
+        - serial_number
+    qualified_menu_items:
+      type: array
+      title: Qualified Menu Items (Array Object)
+      description: This object returns one or more menu items qualified for a discount.
+      x-examples: []
+      x-stoplight:
+        id: 5321db99857ae
+      items:
+        x-stoplight:
+          id: l1xykymczeamf
+        type: object
+        properties:
+          item_name:
+            type: string
+            x-stoplight:
+              id: zacqmcv3q7nwe
+            description: Name of the menu item as it displays in the POS catalog
+          menu_item_id:
+            type: string
+            x-stoplight:
+              id: 2dwa9nl08uk61
+            description: Unique identifier that your POS system uses for the item
+          item_qty:
+            type: number
+            x-stoplight:
+              id: x65h46ufy18kg
+            description: Quantity ordered by the customer. If the item is a modifier (such as extra cheese
+              on a pizza base item), the quantity reflects the total number of base items included. For
+              example, if you have a pizza base item with a certain item ID and a quantity of two, and
+              the pizzas each have an extra cheese modifier added to them, then the modifier quantity
+              should be two to account for the modifier across both pizzas. This applies only to base
+              items of the same ID. If different base items include the same modifier, the modifiers are
+              not added.
+          item_amount:
+            type: number
+            x-stoplight:
+              id: 3nc0pqyw74tx0
+            description: The total price of the line item or the amount of the discount that you applied
+              to an item. In case of multiple quantities, this means the sum total of all item amounts.
+              This value is always a positive number, even when the item is a discount.
+          menu_item_type:
+            type: string
+            x-stoplight:
+              id: 9rga2on21ieb4
+            description: 'The classification of the item. Displays one from the following types based
+              on the item:
+
+
+              M - Menu item ( + or - )
+
+
+              D - Discount (negative). Either internal or Punchh will always evaluate lines as ( - ) regardless
+              of the sign assigned in the API call
+
+
+              R - Redemption Discount item (negative). If a user redeemed a reward giving $3 off, the
+              response may include a line with menu_item_type: "R" and item_amount: -3.
+
+
+              S - Service item. Any item representing money received that is not a sale. For example,
+              service charges, delivery fees, tips, purchase of gift cards/certificates, etc. In the case
+              of single scan flow, send a menu item with service menu item type for the selected tip amount.
+
+
+              T - Tax item. Taxes of all sorts
+
+
+              P - Payment item. Visa, MasterCard, cash, gift card/certificate (when used to pay for the
+              order)'
+          menu_major_group:
+            type: string
+            x-stoplight:
+              id: ufz9uhzle8h7b
+            description: The major group that the item belongs to. The major group is the parent category
+              for the item. The parameter can be empty if no value is passed in the parameter in the request.
+          menu_family:
+            type: string
+            x-stoplight:
+              id: vdvynsceoe4hq
+            description: The family that the item belongs to. The family is the subcategory for the item.
+              The parameter can be empty if no value is passed in the parameter in the request.
+          serial_number:
+            type: string
+            x-stoplight:
+              id: a0swb24g3yl16
+            description: A serialized number that differentiates distinct items on the check. The value
+              in the field identifies which items on the check are base items and which items are modifiers
+              to the base items. For example, a main menu item (such as pizza) may have serial number
+              "1.0", and the associated modifiers (such as "extra cheese", "olives", and "jalapenos")
+              may have serial numbers "1.1", "1.2", and "1.3" respectively.
+  parameters:
+    Authorization:
+      schema:
+        type: string
+        default: Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE
+      name: Authorization
+      in: header
+      required: true
+      description: '**Token token** Location API key from the Punchh platform. **btoken** Business API
+        key from the Punchh platform.'
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      required: false
+      description: Set to **aplication/json**
+  securitySchemes: {}
+x-ext-urls: {}

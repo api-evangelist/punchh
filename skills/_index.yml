@@ -1,0 +1,56 @@
+generated: '2026-08-13'
+method: generated
+source: openapi/ (15 PAR Punchh OpenAPI 3.1.1 documents) + https://developers.partech.com/docs/
+provider: PAR Punchh
+providerId: punchh
+description: >-
+  Packaged Agent Skills for the PAR Punchh APIs. Each skill mirrors one of PAR's
+  own certification tracks and is grounded in operationIds verified present in
+  openapi/ — 275 distinct operationIds across 288 operations. No operationId in
+  these skills was invented.
+skill_count: 6
+skills:
+  - name: punchh-pos-checkin-and-redeem
+    file: skills/punchh-pos-checkin-and-redeem.md
+    api: Punchh POS API
+    spec: openapi/punchh-pos-api-openapi.yml
+    operations: 9
+    mirrors: POS API Certification Tutorial (modules 1-7, 10)
+  - name: punchh-online-ordering-loyalty-checkout
+    file: skills/punchh-online-ordering-loyalty-checkout.md
+    api: Punchh Online Ordering and SSO API
+    spec: openapi/punchh-online-ordering-sso-api-openapi.yml
+    operations: 15
+    mirrors: Online Ordering API Certification Tutorial (modules 1-7)
+  - name: punchh-mobile-enrollment-and-balance
+    file: skills/punchh-mobile-enrollment-and-balance.md
+    api: Punchh Mobile API
+    spec: openapi/punchh-mobile-api-openapi.yml
+    operations: 8
+    mirrors: Getting Started With Mobile API Integrations / Make Your First Mobile API Call
+  - name: punchh-mobile-passwordless-auth
+    file: skills/punchh-mobile-passwordless-auth.md
+    api: Punchh Mobile API
+    spec: openapi/punchh-mobile-api-openapi.yml
+    operations: 4
+    mirrors: Advanced Authentication Developer Guide
+  - name: punchh-consume-webhooks
+    file: skills/punchh-consume-webhooks.md
+    api: Punchh Webhooks Manager
+    spec: asyncapi/punchh-webhooks.yml
+    operations: 0
+    mirrors: Events Framework - Overview of Webhooks Manager
+  - name: punchh-offers-ingestion
+    file: skills/punchh-offers-ingestion.md
+    api: Punchh Platform Functions API
+    spec: openapi/punchh-platform-functions-api-openapi.yml
+    operations: 6
+    mirrors: Offers Ingestion Developer Guide / Punchh API Certification - Offers Ingestion
+notes:
+  - >-
+    Punchh publishes no AGENTS.md, no provider-authored skills and no MCP server,
+    so these are generated from the published contracts rather than saved verbatim.
+  - >-
+    Every skill states the header contract up front, because Punchh rejects far
+    more requests on headers (User-Agent, x-pch-digest, punchh-app-device-id,
+    x_true_client_ip) than on payloads.

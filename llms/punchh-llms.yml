@@ -1,0 +1,31 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.partech.com/llms.txt
+provider: PAR Punchh
+providerId: punchh
+http_status: 200
+content_type: text/plain; charset=utf-8
+bytes: 423
+file: llms/punchh-llms.txt
+note: >-
+  Saved verbatim from the PAR developer portal (developers.partech.com), which is
+  the documentation host for every Punchh API. The file is a PAR-wide index of
+  five product overviews rather than a Punchh-specific agent brief; the Punchh
+  entry is the single line "[PAR Punchh Overview]
+  (https://developers.partech.com/engagement-tools/par-punchh/index.md)". An
+  identical file is served at https://developers.punchh.com/llms.txt (200) and a
+  different, marketing-oriented one at https://partech.com/llms.txt (200).
+  A companion llms-full.txt is also served (5,729 bytes) but is not committed —
+  *-llms-full.txt is gitignored network-wide.
+also_served:
+  - url: https://developers.punchh.com/llms.txt
+    status: 200
+    note: Same content; developers.punchh.com is an alias of the PAR developer portal.
+  - url: https://partech.com/llms.txt
+    status: 200
+    note: PAR Technology corporate marketing index; not developer-facing.
+  - url: https://punchh.com/llms.txt
+    status: 404
+  - url: https://developers.partech.com/llms-full.txt
+    status: 200
+    committed: false

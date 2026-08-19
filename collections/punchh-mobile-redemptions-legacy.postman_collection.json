@@ -1,0 +1,1599 @@
+{
+  "item": [
+    {
+      "id": "e28d869b-163e-4a24-9875-783ca72aa24a",
+      "name": "Cancel Redemption (Redemptions 1.0)",
+      "request": {
+        "name": "Cancel Redemption (Redemptions 1.0)",
+        "description": {
+          "content": "Allows users to cancel their redemption if it has not been processed, enabling them to select a new one without waiting for the redemption code to expire. Once the redemption is processed, the user cannot cancel it.\n\nThe `cancel_redemption` response parameter in the [Program Meta](/docs/dev-portal-mobile/2617bed9b0e8e-program-meta) API indicates whether the user can revoke (cancel) the generated redemption code from the brand's app. This is controlled by hiding or displaying the cancel redemption button on the brand's app. Contact your Punchh representative to update this Punchh platform configuration.\n<!--Whitelabel > Mobile Configuration > Loyalty > Cancel Redemption-->\n\n<b> Cancel Redemption Failure Scenarios</b>\n\nThe API returns an error if the discount associated with the redemption you want to cancel is invalid, already redeemed/honored, cancelled, or expired. \n\n<b>View Cancelled Redemption Status </b>\n\nThe Punchh platform displays the cancelled redemption on the user’s timeline and in the Account History tab. \n\nIf you have a redemption code for the cancelled redemption, you can use the [Search Redemption Code](/docs/dev-portal-platform-functions/ac8e06639a62c-search-redemption-code) API to verify the status of the cancelled redemption. ",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api2",
+            "mobile",
+            "redemptions",
+            ":redemption_id"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "<long>",
+              "key": "redemption_id",
+              "description": "(Required) Redemption ID returned when the redemption is created"
+            }
+          ]
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+            "key": "User-Agent",
+            "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+            "key": "punchh-app-device-id",
+            "value": "APP_DEVICE_ID_GOES_HERE"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+            "key": "x-pch-digest",
+            "value": "{{$$.env.signature}}"
+          },
+          {
+            "disabled": false,
+            "description": "Preferred language",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "DELETE",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"client\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "e095d935-a0d0-498c-abd1-785e216876b7",
+          "name": "OK - Redemption successfully cancelled",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "redemptions",
+                ":redemption_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "redemption_id",
+                  "description": "(Required) Redemption ID returned when the redemption is created"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+                "key": "punchh-app-device-id",
+                "value": "APP_DEVICE_ID_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+                "key": "x-pch-digest",
+                "value": "{{$$.env.signature}}"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language",
+                "key": "Accept-Language",
+                "value": "en"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"redemption_id\": 490636366\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        },
+        {
+          "id": "8712c937-d01a-49a8-9521-11a5d8b9e7a7",
+          "name": "Not Found",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "redemptions",
+                ":redemption_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "redemption_id",
+                  "description": "(Required) Redemption ID returned when the redemption is created"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+                "key": "punchh-app-device-id",
+                "value": "APP_DEVICE_ID_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+                "key": "x-pch-digest",
+                "value": "{{$$.env.signature}}"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"redemption_id\": 490636366\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": \"This Redemption is an invalid redemption or It is not for this guest\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "48826048-b9ed-407c-8554-6d146aa36257",
+          "name": "Unprocessable Entity",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "redemptions",
+                ":redemption_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "redemption_id",
+                  "description": "(Required) Redemption ID returned when the redemption is created"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+                "key": "punchh-app-device-id",
+                "value": "APP_DEVICE_ID_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+                "key": "x-pch-digest",
+                "value": "{{$$.env.signature}}"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"redemption_id\": 490636366\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": \"This Redemption cannot be cancelled because the Redemption code has been expired\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "e7cad20f-268f-4325-a771-e7e3873f8333",
+      "name": "Create Redemption Using Banked Currency (Redemptions 1.0)",
+      "request": {
+        "name": "Create Redemption Using Banked Currency (Redemptions 1.0)",
+        "description": {
+          "content": "Creates a redemption using a currency amount. The amount is deducted from a user's available banked currency.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api2",
+            "mobile",
+            "redemptions",
+            "banked_currency"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+            "key": "x-pch-digest",
+            "value": "{{$$.env.signature}}"
+          },
+          {
+            "disabled": false,
+            "description": "Preferred language",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+            "key": "punchh-app-device-id",
+            "value": "APP_DEVICE_ID_GOES_HERE"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+            "key": "User-Agent",
+            "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"client\": \"<string>\",\n  \"banked_currency\": \"<double>\",\n  \"location_id\": \"<integer>\",\n  \"latitude\": \"<string>\",\n  \"longitude\": \"<string>\",\n  \"gps_accuracy\": \"<integer>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "a66306df-5fd2-417c-a534-ddf8017a3420",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "redemptions",
+                "banked_currency"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+                "key": "x-pch-digest",
+                "value": "{{$$.env.signature}}"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+                "key": "punchh-app-device-id",
+                "value": "APP_DEVICE_ID_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"banked_currency\": 10,\n  \"location_id\": 304155,\n  \"latitude\": \"26.9167509\",\n  \"longitude\": \"75.8136926\",\n  \"gps_accuracy\": 27\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"redemption_status\": \"redeemable\",\n  \"created_at\": \"2016-05-25T06:41:37-04:00\",\n  \"redeemable_id\": null,\n  \"location_id\": 304361,\n  \"redemption_image_url\": \"IMAGE_URL_GOES_HERE\",\n  \"redemption_message\": \"Message associated with the redemption.\",\n  \"updated_at\": \"2016-05-25T06:41:37-04:00\",\n  \"redeemable_description\": \"\",\n  \"redemption_id\": 1822896,\n  \"redemption_tracking_code\": \"7246338\",\n  \"expiring_at\": \"2016-05-25T08:41:37-04:00\",\n  \"redeemable_name\": null,\n  \"campaign_name\": \"Mass Campaign Offer\",\n  \"redeemed_value\": \"10\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "80b39ed2-31ac-4cca-af13-dc3fdc7f2a2a",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "redemptions",
+                "banked_currency"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+                "key": "x-pch-digest",
+                "value": "{{$$.env.signature}}"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+                "key": "punchh-app-device-id",
+                "value": "APP_DEVICE_ID_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"banked_currency\": 10,\n  \"location_id\": 304155,\n  \"latitude\": \"26.9167509\",\n  \"longitude\": \"75.8136926\",\n  \"gps_accuracy\": 27\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "d7dfc659-508c-4f9e-b4df-82340e6dd8c0",
+      "name": "Create Redemption Using Visits (Redemptions 1.0)",
+      "request": {
+        "name": "Create Redemption Using Visits (Redemptions 1.0)",
+        "description": {
+          "content": "Creates a redemption for an unredeemed card. This is for use with visit-based businesses.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api2",
+            "mobile",
+            "redemptions",
+            "visits"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+            "key": "x-pch-digest",
+            "value": "{{$$.env.signature}}"
+          },
+          {
+            "disabled": false,
+            "description": "Preferred language",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+            "key": "User-Agent",
+            "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+            "key": "punchh-app-device-id",
+            "value": "APP_DEVICE_ID_GOES_HERE"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"client\": \"<string>\",\n  \"location_id\": \"<integer>\",\n  \"latitude\": \"<string>\",\n  \"longitude\": \"<string>\",\n  \"gps_accuracy\": \"<integer>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "b9890137-92f5-484e-8ccc-63a881d972a3",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "redemptions",
+                "visits"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+                "key": "x-pch-digest",
+                "value": "{{$$.env.signature}}"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+                "key": "punchh-app-device-id",
+                "value": "APP_DEVICE_ID_GOES_HERE"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"location_id\": \"304155\",\n  \"latitude\": 26.9167509,\n  \"longitude\": 75.8136926,\n  \"gps_accuracy\": 27\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"redemption_status\": \"redeemable\",\n  \"created_at\": \"2016-05-25T06:41:37-04:00\",\n  \"redeemable_id\": null,\n  \"location_id\": 304361,\n  \"redemption_image_url\": \"IMAGE_URL_GOES_HERE\",\n  \"redemption_message\": \"Message associated with the redemption.\",\n  \"updated_at\": \"2016-05-25T06:41:37-04:00\",\n  \"redeemable_description\": \"\",\n  \"redemption_id\": 1822896,\n  \"redemption_tracking_code\": \"7246338\",\n  \"expiring_at\": \"2016-05-25T08:41:37-04:00\",\n  \"redeemable_name\": null,\n  \"campaign_name\": \"Mass Campaign Offer\",\n  \"redeemed_value\": \"10\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "8ab2ed31-21dd-491b-bff0-6ad95e02adb1",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "redemptions",
+                "visits"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+                "key": "x-pch-digest",
+                "value": "{{$$.env.signature}}"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+                "key": "punchh-app-device-id",
+                "value": "APP_DEVICE_ID_GOES_HERE"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"location_id\": \"304155\",\n  \"latitude\": 26.9167509,\n  \"longitude\": 75.8136926,\n  \"gps_accuracy\": 27\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "9f1f4031-b23c-4568-9afb-69b39e8319ad",
+      "name": "Create Redemption Using Redeemable (Redemptions 1.0)",
+      "request": {
+        "name": "Create Redemption Using Redeemable (Redemptions 1.0)",
+        "description": {
+          "content": "Creates a redemption for a redeemable based on a user's available loyalty points",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api2",
+            "mobile",
+            "redemptions",
+            "redeemable"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+            "key": "x-pch-digest",
+            "value": "{{$$.env.signature}}"
+          },
+          {
+            "disabled": false,
+            "description": "Preferred language",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+            "key": "User-Agent",
+            "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+            "key": "punchh-app-device-id",
+            "value": "APP_DEVICE_ID_GOES_HERE"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"client\": \"<string>\",\n  \"reedemable_id\": \"<double>\",\n  \"location_id\": \"<integer>\",\n  \"latitude\": \"<string>\",\n  \"longitude\": \"<string>\",\n  \"gps_accuracy\": \"<integer>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "8f4fe722-7418-469c-9e22-173fe0edf2c8",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "redemptions",
+                "redeemable"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+                "key": "x-pch-digest",
+                "value": "{{$$.env.signature}}"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+                "key": "punchh-app-device-id",
+                "value": "APP_DEVICE_ID_GOES_HERE"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"redeemable_id\": 1102,\n  \"location_id\": \"304155\",\n  \"latitude\": 26.9167509,\n  \"longitude\": 75.8136926,\n  \"gps_accuracy\": 27\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"redemption_status\": \"redeemable\",\n  \"created_at\": \"2016-05-25T06:50:02-05:00\",\n  \"redeemable_id\": 41,\n  \"location_id\": 304361,\n  \"redemption_image_url\": \"IMAGE_URL_GOES_HERE\",\n  \"redemption_message\": \"Redeem your free Sandwich, with purchase of chips and drink\",\n  \"updated_at\": \"2016-05-25T06:50:02-05:00\",\n  \"redeemable_description\": \"\",\n  \"redemption_id\": 1818919,\n  \"redemption_tracking_code\": \"8723640\",\n  \"expiring_at\": \"2016-05-25T08:50:02-05:00\",\n  \"redeemable_name\": \"The Sandwich\",\n  \"campaign_name\": \"Mass Campaign Offer\",\n  \"redeemed_value\": \"0\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "4a7996b3-edb7-40b7-91a9-b4be84210d22",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "redemptions",
+                "redeemable"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+                "key": "x-pch-digest",
+                "value": "{{$$.env.signature}}"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+                "key": "punchh-app-device-id",
+                "value": "APP_DEVICE_ID_GOES_HERE"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"redeemable_id\": 1102,\n  \"location_id\": \"304155\",\n  \"latitude\": 26.9167509,\n  \"longitude\": 75.8136926,\n  \"gps_accuracy\": 27\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "2e4b7745-9d95-4f5f-9619-f5fca6cdbe9f",
+      "name": "Create Redemption Using Reward ID (Redemptions 1.0)",
+      "request": {
+        "name": "Create Redemption Using Reward ID (Redemptions 1.0)",
+        "description": {
+          "content": "Creates a redemption for a reward that has been given to a user (e.g., through a campaign).",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api2",
+            "mobile",
+            "redemptions",
+            "reward"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+            "key": "x-pch-digest",
+            "value": "{{$$.env.signature}}"
+          },
+          {
+            "disabled": false,
+            "description": "Preferred language",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+            "key": "User-Agent",
+            "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+            "key": "punchh-app-device-id",
+            "value": "APP_DEVICE_ID_GOES_HERE"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"client\": \"<string>\",\n  \"reward_id\": \"<long>\",\n  \"location_id\": \"<integer>\",\n  \"latitude\": \"<string>\",\n  \"longitude\": \"<string>\",\n  \"gps_accuracy\": \"<integer>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "c40aaaf0-777f-4541-8acc-c89b76de9f7f",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "redemptions",
+                "reward"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+                "key": "x-pch-digest",
+                "value": "{{$$.env.signature}}"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+                "key": "punchh-app-device-id",
+                "value": "APP_DEVICE_ID_GOES_HERE"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"reward_id\": 5167827,\n  \"location_id\": \"304155\",\n  \"latitude\": 26.9167509,\n  \"longitude\": 75.8136926,\n  \"gps_accuracy\": 27\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"redemption_status\": \"redeemable\",\n  \"created_at\": \"2016-05-25T06:55:04-05:00\",\n  \"redeemable_id\": 75,\n  \"location_id\": 304361,\n  \"redemption_image_url\": \"IMAGE_URL_GOES_HERE\",\n  \"redemption_message\": \"Redeem your Free Bag of Chips\",\n  \"updated_at\": \"2016-05-25T06:55:04-05:00\",\n  \"redeemable_description\": \"\",\n  \"redemption_id\": 1818920,\n  \"redemption_tracking_code\": \"1809897\",\n  \"expiring_at\": \"2016-05-25T08:55:04-05:00\",\n  \"redeemable_name\": \"Bag of Chips\",\n  \"campaign_name\": \"Mass Campaign Offer\",\n  \"redeemed_value\": null\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "50d2604a-36c3-44fe-bac8-5f6314eea76c",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "redemptions",
+                "reward"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+                "key": "x-pch-digest",
+                "value": "{{$$.env.signature}}"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+                "key": "punchh-app-device-id",
+                "value": "APP_DEVICE_ID_GOES_HERE"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"reward_id\": 5167827,\n  \"location_id\": \"304155\",\n  \"latitude\": 26.9167509,\n  \"longitude\": 75.8136926,\n  \"gps_accuracy\": 27\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "5bb93435-1bed-4864-99e4-d9a4801fbfea",
+      "name": "List Applicable Offers (Redemptions 1.0)",
+      "request": {
+        "name": "List Applicable Offers (Redemptions 1.0)",
+        "description": {
+          "content": "Returns applicable offers based on the check details.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api2",
+            "mobile",
+            "redemptions",
+            "applicable_offers"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+            "key": "x-pch-digest",
+            "value": "{{$$.env.signature}}"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+            "key": "User-Agent",
+            "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+            "key": "punchh-app-device-id",
+            "value": "APP_DEVICE_ID_GOES_HERE"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"client\": \"<string>\",\n  \"channel\": \"<string>\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"<string>\",\n      \"item_qty\": \"<integer>\",\n      \"item_amount\": \"<integer>\",\n      \"menu_item_type\": \"<string>\",\n      \"menu_item_id\": \"<string>\",\n      \"menu_family\": \"<string>\",\n      \"menu_major_group\": \"<string>\",\n      \"serial_number\": \"<string>\"\n    },\n    {\n      \"item_name\": \"<string>\",\n      \"item_qty\": \"<integer>\",\n      \"item_amount\": \"<integer>\",\n      \"menu_item_type\": \"<string>\",\n      \"menu_item_id\": \"<string>\",\n      \"menu_family\": \"<string>\",\n      \"menu_major_group\": \"<string>\",\n      \"serial_number\": \"<string>\"\n    }\n  ],\n  \"amount\": \"<string>\",\n  \"location_id\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "62ed2dd6-8869-4906-ae81-911d9ebab3b3",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "redemptions",
+                "applicable_offers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+                "key": "x-pch-digest",
+                "value": "{{$$.env.signature}}"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+                "key": "punchh-app-device-id",
+                "value": "APP_DEVICE_ID_GOES_HERE"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"Adult\",\n      \"item_qty\": 1,\n      \"item_amount\": 100,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"1\",\n      \"menu_family\": \"1\",\n      \"menu_major_group\": \"1\",\n      \"serial_number\": \"1.1\"\n    }\n  ],\n  \"amount\": \"100\",\n  \"location_id\": \"LOCATION_GOES_HERE\",\n  \"channel\": \"mobile\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "[\n  {\n    \"menu_items\": [\n      {\n        \"item_name\": \"Adult\",\n        \"item_qty\": 1,\n        \"item_amount\": 100,\n        \"menu_item_type\": \"M\",\n        \"menu_item_id\": \"1\",\n        \"menu_family\": \"1\",\n        \"menu_major_group\": \"1\",\n        \"serial_number\": \"1.1\"\n      }\n    ],\n    \"discount_amount\": 2,\n    \"reward\": {\n      \"created_at\": \"2019-04-02T22:46:32-07:00\",\n      \"end_date_tz\": null,\n      \"start_date_tz\": \"2019-04-02T22:46:32-07:00\",\n      \"updated_at\": \"2019-04-02T22:46:32-07:00\",\n      \"id\": 2,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"status\": \"unredeemed\",\n      \"points\": 0,\n      \"discount_amount\": 0,\n      \"description\": \"\",\n      \"name\": \"2% off Subtotal Amount\",\n      \"redeemable_properties\": \"\"\n    }\n  },\n  {\n    \"menu_items\": [\n      {\n        \"item_name\": \"Adult\",\n        \"item_qty\": 1,\n        \"item_amount\": 100,\n        \"menu_item_type\": \"M\",\n        \"menu_item_id\": \"1\",\n        \"menu_family\": \"1\",\n        \"menu_major_group\": \"1\",\n        \"serial_number\": \"1.1\"\n      }\n    ],\n    \"discount_amount\": 2,\n    \"reward\": {\n      \"created_at\": \"2019-04-04T04:00:34-07:00\",\n      \"end_date_tz\": null,\n      \"start_date_tz\": \"2019-04-04T04:00:34-07:00\",\n      \"updated_at\": \"2019-04-04T04:00:34-07:00\",\n      \"id\": 3,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"status\": \"unredeemed\",\n      \"points\": 0,\n      \"discount_amount\": 2,\n      \"description\": \"$2 Off Your Order. Participating locations only.\",\n      \"name\": \"$2 Off Your Order\",\n      \"redeemable_properties\": \"\"\n    }\n  },\n  {\n    \"menu_items\": [\n      {\n        \"item_name\": \"Adult\",\n        \"item_qty\": 1,\n        \"item_amount\": 100,\n        \"menu_item_type\": \"M\",\n        \"menu_item_id\": \"1\",\n        \"menu_family\": \"1\",\n        \"menu_major_group\": \"1\",\n        \"serial_number\": \"1.1\"\n      }\n    ],\n    \"discount_amount\": 2,\n    \"reward\": {\n      \"created_at\": \"2019-04-04T04:01:03-07:00\",\n      \"end_date_tz\": null,\n      \"start_date_tz\": \"2019-04-04T04:01:03-07:00\",\n      \"updated_at\": \"2019-04-04T04:01:03-07:00\",\n      \"id\": 4,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"status\": \"unredeemed\",\n      \"points\": 0,\n      \"discount_amount\": 0,\n      \"description\": \"\",\n      \"name\": \"2% off Subtotal Amount\",\n      \"redeemable_properties\": \"\"\n    }\n  },\n  {\n    \"menu_items\": [\n      {\n        \"item_name\": \"Adult\",\n        \"item_qty\": 1,\n        \"item_amount\": 100,\n        \"menu_item_type\": \"M\",\n        \"menu_item_id\": \"1\",\n        \"menu_family\": \"1\",\n        \"menu_major_group\": \"1\",\n        \"serial_number\": \"1.1\"\n      }\n    ],\n    \"discount_amount\": 2,\n    \"reward\": {\n      \"created_at\": \"2019-04-15T10:48:40-07:00\",\n      \"end_date_tz\": null,\n      \"start_date_tz\": \"2019-04-15T10:48:40-07:00\",\n      \"updated_at\": \"2019-04-15T10:48:40-07:00\",\n      \"id\": 14,\n      \"image\": \"IMAGE_URL_GOES_HERE\",\n      \"status\": \"unredeemed\",\n      \"points\": 0,\n      \"discount_amount\": 0,\n      \"description\": \"\",\n      \"name\": \"2% off Subtotal Amount\",\n      \"redeemable_properties\": \"\"\n    }\n  }\n]",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "3b1a6eac-f2e5-415b-ab54-58a24dec54e8",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "redemptions",
+                "applicable_offers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+                "key": "x-pch-digest",
+                "value": "{{$$.env.signature}}"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+                "key": "punchh-app-device-id",
+                "value": "APP_DEVICE_ID_GOES_HERE"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"menu_items\": [\n    {\n      \"item_name\": \"Adult\",\n      \"item_qty\": 1,\n      \"item_amount\": 100,\n      \"menu_item_type\": \"M\",\n      \"menu_item_id\": \"1\",\n      \"menu_family\": \"1\",\n      \"menu_major_group\": \"1\",\n      \"serial_number\": \"1.1\"\n    }\n  ],\n  \"amount\": \"100\",\n  \"location_id\": \"LOCATION_GOES_HERE\",\n  \"channel\": \"mobile\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"location_id\": \"Required parameter missing or the value is empty.\"\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://SERVER_NAME_GOES_HERE.punchh.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "43390234-27f0-4d79-84b4-27de2b5f44b2",
+    "name": "Redemptions 1.0 (Legacy) API - Mobile",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "For more information, see [Online Ordering Module 5 - Redemptions](/docs/dev-portal-online-ordering/80afbc759ded2-online-ordering-api-certification-tutorial-module-5-redemptions-overview).\n\nContact Support:\n Name: Punchh Dev Support",
+      "type": "text/plain"
+    }
+  }
+}

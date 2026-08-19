@@ -1,67 +1,153 @@
 specification: API Commons Rate Limits
 specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+generated: '2026-08-13'
+method: searched
+source: https://developers.partech.com/docs/dev-portal-developer-resources/punchh-api-security-guidelines
 provider: PAR Punchh
 providerId: punchh
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-08-13'
 reconciled: false
+limit_count: 4
 tags:
   - Rate Limiting
   - Loyalty
   - Restaurant
 description: >-
-  PAR Punchh does not publish public per-second or per-minute rate-limit
-  numbers; the developer portal at developers.partech.com is partner-gated and
-  exact throttling thresholds are shared with certified partners against
-  sandbox and production environments. PAR states that integrated applications
-  make roughly a billion API calls to Punchh each week in aggregate, indicating
-  high-volume server-to-server usage, but this is a platform-wide figure, not a
-  per-key limit. Limits below are descriptive placeholders pending confirmation
-  from a certified-partner integration guide. Set reconciled to true only after
-  verifying against PAR partner documentation.
+  PAR Punchh publishes rate-limiting behaviour in prose in its API Security
+  Guidelines, not as per-endpoint quota tables and not as response headers. The
+  numbers below are the ones PAR actually states. Two things are published and
+  concrete — the authentication lockout thresholds partners are told to implement
+  and that Punchh itself enforces, and the outbound webhook retry ladder. Two
+  things are published but unquantified — the existence of separate direct-access
+  and partner (indirect-access) endpoint tiers with different thresholds, where
+  the partner tier is explicitly "a much higher threshold" gated behind IP
+  allowlisting. Per-key request quotas are shared during partner certification and
+  are not public.
+docs:
+  - https://developers.partech.com/docs/dev-portal-developer-resources/punchh-api-security-guidelines
 sources:
-  - https://developers.partech.com/
-  - https://developers.partech.com/docs/dev-portal-mobile/5f1a47e9bd79f-make-your-first-mobile-api-call
-  - https://developers.partech.com/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call
+  - https://developers.partech.com/docs/dev-portal-developer-resources/punchh-api-security-guidelines
+  - https://developers.partech.com/docs/dev-portal-webhooks-manager/webhook-delivery-error-handling-and-retry-logic
+  - https://developers.partech.com/docs/dev-portal-mobile/headers-and-caching
+
 responseCodes:
   throttled: 429
+  timeout: 408
+
+response_headers:
+  published: false
+  x_ratelimit: null
+  ratelimit: null
+  retry_after: null
+  note: >-
+    Punchh documents an unusually rich set of response headers (X-Request-Id,
+    X-Runtime, x-pch-env, Etag, Cache-Control, Expires, x-max-ios, x-max-android)
+    and NONE of them carry rate-limit state. An agent cannot read remaining quota
+    from a Punchh response; it can only observe a 429. This is the single largest
+    gap in an otherwise well-documented runtime contract.
+
 limits:
-  - name: Mobile API requests
-    scope: account/client
-    metric: varies
-    limit: 'partner-specific; not publicly documented'
-    notes: >-
-      Scoped to the business OAuth client. Exact thresholds provided during
-      partner certification.
-  - name: Online Ordering and SSO API requests
-    scope: account/client
-    metric: varies
-    limit: 'partner-specific; not publicly documented'
-  - name: POS and Kiosk API requests
-    scope: location/business token
-    metric: varies
-    limit: 'partner-specific; not publicly documented'
-    notes: Scoped to the location token / business token pair.
-  - name: Platform Functions API requests
-    scope: account
-    metric: varies
-    limit: 'partner-specific; not publicly documented'
+  - name: Failed authentication lockout
+    scope: per-IP
+    window: 10 minutes
+    limit: 10 failed authentications
+    action: IP blocked for 1 hour
+    published: true
+    quote: >-
+      "For authentication purposes, we look for 10 failed authentications in a 10
+      minute period and block the IP for one hour."
+    note: >-
+      Stated as the control Punchh applies and expects partners to mirror on their
+      own front door. Applies to web and mobile endpoints alike — "our mobile
+      endpoints are subject to the same rate limits as web endpoints."
+
+  - name: Password reset
+    scope: per-IP
+    window: 1 hour
+    limit: 10 resets
+    published: true
+    quote: >-
+      "A sensible limit should be imposed on password resets as these are often
+      abused also. We suggest a rate limit of 10 resets maximum per hour."
+
+  - name: Direct-access API endpoints
+    scope: per-client-IP
+    limit: 'not published'
+    published: false
+    note: >-
+      For partners whose mobile app talks straight to Punchh. Security controls and
+      rate limits "already assume direct client connections". Threshold not stated.
+
+  - name: Partner (indirect-access) API endpoints
+    scope: per-partner, keyed on the x_true_client_ip header
+    limit: 'not published — explicitly higher than the direct-access tier'
+    published: false
+    note: >-
+      For partners who proxy guest traffic. Punchh onboards these onto dedicated
+      partner endpoints with "a much higher threshold on rate limiting", protected
+      by an IP allowlist so attackers cannot benefit from the same threshold.
+      Critically, rate limiting on this tier is performed against the
+      x_true_client_ip header the partner supplies — NOT the connecting IP — so a
+      partner that omits or forges that header breaks Punchh's ability to rate
+      limit per guest. Requests without it are filtered and ignored.
+
+webhook_delivery_limits:
+  direction: outbound (Punchh to consumer)
+  timeout_seconds: 15
+  retries:
+    - trigger: 429 Too Many Requests
+      attempts: 3
+      intervals_seconds: [15, 45, 180]
+    - trigger: 408 Timeout
+      attempts: 3
+      intervals_seconds: [15, 45, 180]
+    - trigger: 5xx
+      attempts: 7
+      intervals_seconds: [60, 120, 300, 600, 1800, 3600, 7200]
+    - trigger: 3xx
+      attempts: 0
+      note: Treated as a failure; never retried.
+  circuit_breaker:
+    failure_threshold: 1000
+    suspended_behaviour: No new requests are sent for that event until re-verified by a successful ping.
+    deactivation: After 6 failed auto-pings (5 min, 10 min, then every 2 hours) the webhook is deactivated.
+  source: https://developers.partech.com/docs/dev-portal-webhooks-manager/webhook-delivery-error-handling-and-retry-logic
+
+request_size_limits:
+  total_request_headers_bytes: 32768
+  single_request_header_bytes: 16384
+  enforcement: >-
+    Messages exceeding these limits are rejected by the server and are not
+    processed. Punchh also instructs clients not to send any request header the
+    API specification did not ask for.
+  source: https://developers.partech.com/docs/dev-portal-mobile/headers-and-caching
+
+bot_mitigation:
+  vendors: [Cloudflare Bot Management, PerimeterX, Shape Security, AWS Shield]
+  note: >-
+    Punchh states it uses Cloudflare for firewall/WAF/rate limiting/captcha, licenses
+    Cloudflare Bot Management, and runs the PerimeterX SDK in its own mobile apps
+    with API endpoints configured to inspect that telemetry. Partners are told they
+    will in future be required to integrate the PerimeterX mobile SDK and pass
+    telemetry through. Rate limiting is therefore only one layer — a request under
+    the numeric threshold can still be challenged or blocked on reputation.
+  geographic_restrictions: >-
+    Incoming connections should be restricted to countries where the brand does
+    business; Punchh serves captcha to all other countries.
+
 policies:
-  - name: Authentication signing
+  - name: Raise limits via the partner program
     description: >-
-      All mobile and online-ordering calls must carry an HMAC-SHA256
-      x-pch-digest signature in addition to the bearer/client credential;
-      unsigned or mis-signed calls are rejected before rate accounting.
+      Higher throughput is negotiated through PAR partner certification and IP
+      allowlisting, not self-service. Changing a threshold requires contacting a
+      Punchh representative with a justification, assessed case by case.
   - name: Environment separation
     description: >-
-      Sandbox and production base URLs are issued separately by a PAR
-      representative; load testing should target the sandbox environment.
-  - name: Idempotency
+      Sandbox and production base URIs are issued separately by a Punchh
+      representative. Load and security testing should target the sandbox.
+  - name: Idempotency over retry
     description: >-
-      Online-ordering check-ins and redemptions accept an external_uid /
-      transaction identifier so retries do not double-count loyalty activity.
-  - name: Raise limits via partnership
-    description: >-
-      Higher throughput is negotiated through the PAR partner program rather
-      than self-service.
+      Check-ins and redemptions accept the partner's own external_uid so a retry
+      after a throttle does not double-count loyalty activity.

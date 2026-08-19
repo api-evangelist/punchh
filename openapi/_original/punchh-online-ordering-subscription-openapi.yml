@@ -1,0 +1,1652 @@
+info:
+  title: Subscription API - Online Ordering
+  version: '1.0'
+  description: 'Subscriptions is an add-on Punchh loyalty product that allows businesses to create subscription
+    plans to generate up-front revenue and offers benefits in addition to the standard benefits that unsubscribed
+    members of the loyalty program receive. The Subscription APIs are designed in a way that businesses
+    can programatically achieve the benefits of the subscription for their guest in a mobile app or website.
+    Also, there are aspects that require calling the API without any guest authentication (e.g., to control
+    the auto-renewal of the subscription on behalf of the guest). '
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+paths:
+  /api/auth/subscriptions:
+    parameters: []
+    get:
+      summary: Fetch Active Purchasable Subscription Plans
+      operationId: post-api-auth-subscriptions
+      responses:
+        '200':
+          description: Success response if the business supports subscriptions
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 1
+                uniqueItems: true
+                x-examples:
+                  example-1:
+                  - name: test v1
+                    description: ''
+                    miscellaneous: ''
+                    validity: 30
+                    start_time: '2021-04-28T13:59:47+05:30'
+                    end_time: '2021-05-28T13:59:47+05:30'
+                    signup_end_date: '2021-05-18T13:59:47+05:30'
+                    plan_id: 4
+                    purchase_price: 12
+                    image: test-image.png
+                  - name: Test3
+                    description: hello test 3
+                    miscellaneous: null
+                    validity: null
+                    start_time: '2021-04-28T13:59:47+05:30'
+                    end_time: '2021-05-28T13:59:47+05:30'
+                    signup_end_date: '2021-05-18T13:59:47+05:30'
+                    plan_id: 3
+                    purchase_price: 12
+                    image: null
+                  - name: Test2
+                    description: hello test 2
+                    miscellaneous: null
+                    validity: null
+                    start_time: '2021-04-28T13:59:47+05:30'
+                    end_time: '2021-05-28T13:59:47+05:30'
+                    signup_end_date: '2021-05-18T13:59:47+05:30'
+                    plan_id: 2
+                    purchase_price: 12
+                    image: null
+                  - name: Test1
+                    description: hello test
+                    miscellaneous: null
+                    validity: null
+                    start_time: '2021-04-28T13:59:47+05:30'
+                    end_time: '2021-05-28T13:59:47+05:30'
+                    signup_end_date: '2021-05-18T13:59:47+05:30'
+                    plan_id: 1
+                    purchase_price: 12
+                    image: null
+                description: Array of the active subscription plans
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      minLength: 1
+                      description: 'Name of the subscription plan as provided by an admin at the time
+                        of subscription plan creation
+
+
+                        Note: The subscription `name` is returned in the language specified in the Accept-Language
+                        request header, provided the name has been translated into the relevant language
+                        in the Punchh platform. If the translation is not available, then no value is
+                        returned for this parameter in the API response. For example, if the header specifies
+                        “fr” (French), the subscription name is returned in French only if a French translation
+                        for the name is configured in the Punchh platform.'
+                    description:
+                      type: string
+                      description: 'Text description of the subscription plan as configured by an admin
+                        on the subscription plan. This is used to explain the offerings of the subscription
+                        plan to guests.
+
+
+                        Note: The subscription `description` is returned in the language specified in
+                        the Accept-Language request header, provided the description has been translated
+                        into the relevant language in the Punchh platform. If the translation is not available,
+                        then no value is returned for this parameter in the API response. For example,
+                        if the header specifies “fr” (French), the subscription description is returned
+                        in French only if a French translation for the description is configured in the
+                        Punchh platform.'
+                    miscellaneous:
+                      type: string
+                      description: 'Free-form text field that can be used by businesses to enter additional
+                        information or a JSON code snippet for greater customization in the mobile app
+
+
+                        Note: The subscription `miscellaneous` information is returned in the language
+                        specified in the Accept-Language request header, provided it has been translated
+                        into the relevant language in the Punchh platform. If the translation is not available,
+                        then no value is returned for this parameter in the API response. For example,
+                        if the header specifies “fr” (French), the subscription miscellaneous information
+                        is returned in French only if a French translation for the miscellaneous is configured
+                        in the Punchh platform.'
+                    validity:
+                      type: integer
+                      format: int32
+                      description: Number of days for which one unit of the subscription plan remains
+                        valid after purchase
+                      examples:
+                      - 30
+                    start_time:
+                      type: string
+                      minLength: 1
+                      format: date-time
+                      description: Date and time (in ISO 8601 format) from which the subscription plan
+                        can be purchased by guests
+                      examples:
+                      - '2023-04-28T13:59:47+05:30'
+                    end_time:
+                      type: string
+                      minLength: 1
+                      format: date-time
+                      description: Date and time (in ISO 8601 format) until which the subscription plan
+                        can be purchased by guests
+                      examples:
+                      - '2023-04-28T13:59:47+05:30'
+                    signup_start_date:
+                      type: string
+                      description: Date and time (in ISO 8601 format) after which the subscription plan
+                        can be purchased by guests in advance. This can be used by businesses to make
+                        a plan available for purchase before it actually starts. Any subscriptions bought
+                        after this date and before the start date of the subscription plan will start
+                        from the `start_time` of the Subscription Plan.
+                      format: date-time
+                      examples:
+                      - '2023-04-28T13:59:47+05:30'
+                    signup_end_date:
+                      type: string
+                      minLength: 1
+                      format: date-time
+                      description: Date and time (in ISO 8601 format) after which the subscription plan
+                        cannot be purchased by guests. This is the purchase cut-off time, and a business
+                        can use it to nudge guests into purchasing a subscription.
+                      examples:
+                      - '2023-04-28T13:59:47+05:30'
+                    subscriber_capping:
+                      type: number
+                      description: Maximum number of unique active subscribers for a plan. If the number
+                        of active subscribers reaches this limit, fresh purchases in that plan will be
+                        stopped.
+                      examples:
+                      - 400
+                    external_plan_identifier:
+                      type: string
+                      description: UPC/SKU of the subscription plan as present on third-party applications
+                        of enterprise businesses and is configured on this subscription plan. This will
+                        be stored in the database, and the business can use it for analytics purposes.
+                    plan_id:
+                      type: integer
+                      description: System-generated unique ID of a subscription plan created in the Punchh
+                        platform
+                      format: int64
+                      examples:
+                      - 10
+                    purchase_price:
+                      type: number
+                      format: float
+                      description: Cost of purchase of one unit of a subscription plan
+                      examples:
+                      - 12.32
+                    image:
+                      type: string
+                      minLength: 1
+                      description: Cover image of a subscription plan uploaded at the time of subscription
+                        plan creation
+                      examples:
+                      - test-image.png
+                    time_zone:
+                      type: string
+                      description: Time zone configured for the subscription plan (e.g., "America/Los_Angeles”
+                        )
+                    plan_image_url:
+                      type: string
+                      description: URL of the image that is configured for a specific subscription plan
+                    active_subscribers:
+                      type: number
+                      description: Number of unique active subscribers of the plan
+                      examples:
+                      - 251
+                    enable_multibenefit:
+                      type: boolean
+                      description: "Indicates whether the subscription plan has multi-benefit enabled,\
+                        \ allowing up to 5 benefits to be configured on a single plan. Once enabled on\
+                        \ a plan, this setting cannot be disabled. \n\nThe <b>Enable multibenefit</b>\
+                        \ setting under Wallet and Passes > Passes > Subscription Plans > Plan Details\
+                        \ is only available when the multi-benefit subscription feature is enabled for\
+                        \ the business. Contact your Punchh representative to update this Punchh platform\
+                        \ configuration.\n"
+                    purchasable_location_ids:
+                      type: array
+                      items:
+                        type: integer
+                      description: "An array of location IDs where the subscription plan is available\
+                        \ for purchase. When configured, the plan will only appear as purchasable at these\
+                        \ specific locations. If empty or not set, the plan is purchasable at all locations.\
+                        \ \n\nReturned only when the multi-benefit subscription feature is enabled for\
+                        \ the business, and the subscription plan's <b>Enable multibenefit</b> setting\
+                        \ under Wallet and Passes > Passes > Subscription Plans > Plan Details is enabled\
+                        \ in the Punchh platform. Contact your Punchh representative to update this Punchh\
+                        \ platform configuration.\n"
+                    purchasable_tag_ids:
+                      type: array
+                      items:
+                        type: integer
+                      description: "An array of location group (tag) IDs where the subscription plan is\
+                        \ available for purchase. Location groups allow admins to scope purchasability\
+                        \ to a set of locations defined by a reusable group. Works in conjunction with\
+                        \ purchasable_location_ids — admins can select individual locations, location\
+                        \ groups, or both. \n\nReturned only when the multi-benefit subscription feature\
+                        \ is enabled for the business, and the subscription plan's <b>Enable multibenefit</b>\
+                        \ setting under Wallet and Passes > Passes > Subscription Plans > Plan Details\
+                        \ is enabled in the Punchh platform. Contact your Punchh representative to update\
+                        \ this Punchh platform configuration.\n"
+                    multiple_effective_locations_name:
+                      type: string
+                      description: "A human-readable display name summarizing the effective purchasable\
+                        \ locations configured for the plan (e.g., selected location names or location\
+                        \ group names). Useful for rendering location-scope information on guest-facing\
+                        \ surfaces. \n\nReturned only when the multi-benefit subscription feature is enabled\
+                        \ for the business, and the subscription plan's <b>Enable multibenefit</b> setting\
+                        \ under Wallet and Passes > Passes > Subscription Plans > Plan Details is enabled\
+                        \ in the Punchh platform. Contact your Punchh representative to update this Punchh\
+                        \ platform configuration.\n"
+              examples:
+                example:
+                  value:
+                  - name: SUBSCRIPTION_NAME_GOES_HERE
+                    description: DESCRIPTION_GOES_HERE
+                    miscellaneous: MISC_INFORMATION_GOES_HERE
+                    validity: 30
+                    start_time: '2023-05-28T13:59:47+05:30'
+                    end_time: '2023-09-28T13:59:47+05:30'
+                    signup_start_date: '2023-05-28T13:59:47+05:30'
+                    signup_end_date: '2023-09-28T13:59:47+05:30'
+                    subscriber_capping: 500
+                    external_plan_identifier: null
+                    plan_id: 10
+                    purchase_price: 100
+                    image: test-image.png
+                    time_zone: Asia/Kolkata
+                    plan_image_url: PLAN_IMAGE_URL_GOES_HERE
+                    active_subscribers: 250
+                    enable_multibenefit: true
+                    purchasable_location_ids:
+                    - 2
+                    - 11
+                    purchasable_tag_ids:
+                    - 1
+                    - 2
+                    multiple_effective_locations_name: location-name-1, location-name-10, PineCrossing,
+                      Eagle Creek
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    errors:
+                      client: Required parameter missing or the value is empty.
+                properties:
+                  errors:
+                    type: object
+                    required:
+                    - client
+                    properties:
+                      client:
+                        type: string
+                        minLength: 1
+                        examples:
+                        - Required parameter missing or the value is empty.
+                required:
+                - errors
+              examples:
+                example:
+                  value:
+                    errors:
+                      client: Required parameter missing or the value is empty.
+        '412':
+          description: Precondition Failed
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    errors:
+                      invalid_signature:
+                      - Signature doesn't match. Please see our documentation https://developers.punchh.com/docs/dev-portal-mobile/17c2f8eb39142-generating-x-pch-digest-header-for-mobile-ap-is
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      invalid_signature:
+                        type: array
+                        items:
+                          type: string
+                          examples:
+                          - Signature doesn't match. Please see our documentation https://developers.punchh.com/docs/dev-portal-mobile/17c2f8eb39142-generating-x-pch-digest-header-for-mobile-ap-is
+              examples:
+                example:
+                  value:
+                    errors:
+                      invalid_signature:
+                      - Signature doesn't match. For information about generating the x-pch-digest header,
+                        see https://developers.punchh.com.
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    errors:
+                      disabled_feature: Your current loyalty program configuration does not support this
+                        feature. Please connect with your Customer Success representative for resolution
+                        of the issue.
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      disabled_feature:
+                        type: string
+                        minLength: 1
+                        examples:
+                        - Your current loyalty program configuration does not support this feature. Please
+                          connect with your Customer Success representative for resolution of the issue.
+              examples:
+                example:
+                  value:
+                    errors:
+                      disabled_feature: Your current loyalty program configuration does not support this
+                        feature. Please connect with your Customer Success representative for resolution
+                        of the issue.
+      description: This API allows online ordering vendors to get a list of all subscription plans that
+        are available for purchase.
+      parameters:
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/x-pch-digest'
+      - $ref: '#/components/parameters/Content-Type'
+      x-stoplight:
+        id: 78c0011bde123
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                  default: CLIENT_GOES_HERE
+              required:
+              - client
+            examples:
+              application json:
+                value:
+                  client: CLIENT_GOES_HERE
+    post:
+      summary: Purchase Subscription
+      operationId: post-api-auth-subscriptions
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    subscription_id: '24'
+                    start_time: '2021-04-28T13:59:47+05:30'
+                    end_time: '2021-04-28T13:59:47+05:30'
+                properties:
+                  subscription_id:
+                    type: integer
+                    description: System-generated unique ID of the subscription plan that is issued for
+                      a guest
+                  start_time:
+                    type: string
+                    minLength: 1
+                    format: date-time
+                    description: Date and time (in ISO 8601 format) from which the subscription plan purchased
+                      for the guest will become active
+                    examples:
+                    - '2021-04-28T13:59:47+05:30'
+                  end_time:
+                    type: string
+                    minLength: 1
+                    format: date-time
+                    description: Date and time (in ISO 8601 format) until which the subscription plan
+                      purchased for the guest will remain active
+                    examples:
+                    - '2021-04-28T13:59:47+05:30'
+                  external_plan_identifier:
+                    type: string
+                    description: UPC/SKU of the subscription plan as present on third-party applications
+                      of enterprise businesses and is configured on this subscription plan. This will
+                      be stored in the database, and the business can use it for analytics purposes.
+                required:
+                - subscription_id
+                - start_time
+                - end_time
+              examples:
+                example:
+                  value:
+                    subscription_id: 23
+                    start_time: '2021-04-28T13:59:47+05:30'
+                    end_time: '2021-04-28T13:59:47+05:30'
+                    external_plan_identifier: EXTERNAL_PLAN_IDENTIFIER GOES HERE
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    errors:
+                      client: Required parameter missing or value empty.
+                properties:
+                  errors:
+                    type: object
+                    required:
+                    - client
+                    properties:
+                      client:
+                        type: string
+                        minLength: 1
+                        examples:
+                        - Required parameter missing or value empty.
+                required:
+                - errors
+              examples:
+                example:
+                  value:
+                    errors:
+                      client: Required parameter missing or value empty.
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    errors:
+                      unauthorized:
+                      - An active access token must be used to query information about the current user.
+                properties:
+                  errors:
+                    type: object
+                    required:
+                    - unauthorized
+                    properties:
+                      unauthorized:
+                        type: array
+                        items:
+                          type: string
+                          examples:
+                          - An active access token must be used to query information about the current
+                            user.
+                required:
+                - errors
+              examples:
+                example:
+                  value:
+                    errors:
+                      unauthorized:
+                      - An active access token must be used to query information about the current user.
+        '412':
+          description: Precondition Failed
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    errors:
+                      invalid_signature:
+                      - Signature doesn't match. Please see our documentation https://developers.punchh.com/docs/dev-portal-mobile/17c2f8eb39142-generating-x-pch-digest-header-for-mobile-ap-is
+                properties:
+                  errors:
+                    type: object
+                    required:
+                    - invalid_signature
+                    properties:
+                      invalid_signature:
+                        type: array
+                        items:
+                          type: string
+                          examples:
+                          - Signature doesn't match. Please see our documentation https://developers.punchh.com/docs/dev-portal-mobile/17c2f8eb39142-generating-x-pch-digest-header-for-mobile-ap-is
+                required:
+                - errors
+              examples:
+                example:
+                  value:
+                    errors:
+                      invalid_signature:
+                      - Signature doesn't match. Please see our documentation https://developers.punchh.com/docs/dev-portal-mobile/17c2f8eb39142-generating-x-pch-digest-header-for-mobile-ap-is
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    errors:
+                      disabled_feature: Your current loyalty program configuration does not support this
+                        feature. Please connect with your Customer Success representative for resolution
+                        of the issue.
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      disabled_feature:
+                        type: string
+                        minLength: 1
+                        examples:
+                        - Your current loyalty program configuration does not support this feature. Please
+                          connect with your Customer Success representative for resolution of the issue.
+                required:
+                - errors
+              examples:
+                Subscription Feature is not configured:
+                  value:
+                    errors:
+                      disabled_feature: Your current loyalty program configuration does not support this
+                        feature. Please connect with your Customer Success representative for resolution
+                        of the issue.
+                Invalid Plan ID:
+                  value:
+                    errors:
+                      invalid_request: Invalid Plan ID
+                Auto renewal is set as true for a single use subscription:
+                  value:
+                    errors:
+                      base:
+                      - This is a single use subscription and cannot be renewed automatically. Please
+                        check request to send 'auto_renewal' as 'false'.
+                Purchase price Null or Negative:
+                  value:
+                    errors:
+                      price: Price must be greater than or equal to 0
+                Start time Null:
+                  value:
+                    errors:
+                      start_time: Start time cannot be blank
+                End time is Null:
+                  value:
+                    errors:
+                      end_time: End time cannot be blank
+                Purchase call made is past the signup end time or end time of the plan:
+                  value:
+                    errors:
+                      plan_expired: Plan has expired
+                Recurring payments option is disabled:
+                  value:
+                    errors:
+                      recurring_payment_off_for_adapter:
+                      - Payment Service not available.
+      description: 'This API supports the purchase of a subscription plan created in the Punchh platform.
+
+
+        If the Single Use setting is enabled for the subscription plan, and if you send auto_renewal as
+        `true` in the Purchase Subscription API, then the API returns an error: This is a single use subscription
+        and cannot be renewed automatically. Please check the request to send auto_renewal as false.'
+      parameters:
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/x-pch-digest'
+      - schema:
+          type: string
+          default: en
+        in: header
+        name: Accept-Language
+        description: Language parameter
+      - $ref: '#/components/parameters/Authorization'
+      x-stoplight:
+        id: d135642ff639e
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                example-1:
+                  plan_id: 23
+                  start_time: '2021-04-28T13:59:47+05:30'
+                  end_time: '2021-05-28T13:59:47+05:30'
+                  purchase_price: '23.34'
+                  auto_renewal: 'true'
+              properties:
+                client:
+                  type: string
+                  description: Client key of the business
+                authentication_token:
+                  type: string
+                  description: 'The authentication token of the user, required if the `HTTP_AUTHORIZATION`
+                    header is not added. You can retrieve this from the response of a successful sign
+                    in API call or through the [SSO process](/docs/dev-portal-online-ordering/9a41534336c87-sso-flow-for-web-and-mobile). '
+                plan_id:
+                  type: integer
+                  description: System-generated unique ID of a subscription plan created in the Punchh
+                    platform. A subscription based on this plan ID will be issued to the guest when a
+                    purchase call is made.
+                  examples:
+                  - 23
+                start_time:
+                  type: string
+                  minLength: 1
+                  format: date-time
+                  description: 'Date and time (in ISO 8601 format) from which the subscription being issued
+                    will become active '
+                  examples:
+                  - '2021-04-28T13:59:47+05:30'
+                end_time:
+                  type: string
+                  minLength: 1
+                  format: date-time
+                  description: 'Date and time (in ISO 8601 format) until which the subscription being
+                    issued will remain active '
+                  examples:
+                  - '2021-04-28T13:59:47+05:30'
+                purchase_price:
+                  type: number
+                  format: float
+                  description: Price at which one unit of the subscription plan is purchased
+                  examples:
+                  - 23.45
+                auto_renewal:
+                  type: boolean
+                  default: false
+                  description: A guest’s preference of having a newly purchased subscription plan get
+                    automatically renewed per the plan's schedule. Third parties where auto renewal is
+                    considered default should send this value as "true".
+                payment_card_uuid:
+                  type: string
+                  description: Unique digital identifier/token of the user's credit card can be referred
+                    to as the uuid of the saved payment card, required if a saved payment card is used
+                    for payments. The transaction token is issued by a payment processor used by a business.
+              required:
+              - client
+              - authentication_token
+              - plan_id
+              - start_time
+              - end_time
+              - purchase_price
+              - auto_renewal
+            examples:
+              example:
+                value:
+                  client: CLIENT_GOES_HERE
+                  authentication_token: AUTH_TOKEN_GOES HERE
+                  plan_id: 23
+                  start_time: '2023-04-28T13:59:47+05:30'
+                  end_time: '2023-04-28T13:59:47+05:30'
+                  purchase_price: '23.09'
+                  auto_renewal: 'true'
+                  payment_card_uuid: PAYMENT_CARD_UUID_GOES_HERE
+        description: ''
+  /api/auth/subscriptions/cancel:
+    put:
+      summary: Cancel Subscription (Turn off Auto Renewal)
+      operationId: put-api-auth-subscriptions
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    message: Subscription auto renewal cancelled
+                properties:
+                  message:
+                    type: string
+                    minLength: 1
+                    default: Subscription auto renewal cancelled
+                required:
+                - message
+              examples:
+                example:
+                  value:
+                    message: Subscription auto renewal cancelled
+        '400':
+          description: 'Bad Request: Sending an invalid/blank cancellation reason ID'
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    errors:
+                      client: Required parameter missing or value empty.
+                properties:
+                  error:
+                    type: string
+              examples:
+                Sending an invalid/blank cancellation reason ID:
+                  value:
+                    error: 'Required parameter missing or the value is empty: cancellation_reason_id'
+        '401':
+          description: 'Unauthorized: Sending an invalid/empty access or authentication token '
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    errors:
+                      unauthorized:
+                      - An active access token must be used to query information about the current user.
+                properties:
+                  error:
+                    type: string
+              examples:
+                Sending invalid/empty access or authentication token:
+                  value:
+                    error: You need to sign in or sign up before continuing.
+        '412':
+          description: "Precondition Failed: Sending an invalid/empty client \n\nInvalid Signature means\
+            \ the signature generated at the Punchh Server for the API call does not match the signature\
+            \ generated by the client. See [Generating x-pch-digest Header for Online Ordering APIs](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1)"
+          content:
+            application/json:
+              schema:
+                type: array
+                x-examples:
+                  example-1:
+                    errors:
+                      invalid_signature:
+                      - Signature doesn't match. Please see our documentation https://developers.punchh.com/docs/dev-portal-mobile/17c2f8eb39142-generating-x-pch-digest-header-for-mobile-ap-is
+                items: {}
+              examples:
+                Invalid Signature:
+                  value:
+                  - Invalid Signature
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    errors:
+                      disabled_feature: Your current loyalty program configuration does not support this
+                        feature. Please connect with your Customer Success representative for resolution
+                        of the issue.
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      message:
+                        type: array
+                        items:
+                          type: string
+                        examples:
+                        - Your current loyalty program configuration does not support this feature. Please
+                          connect with your Customer Success representative for resolution of the issue.
+                      code:
+                        type: string
+              examples:
+                Cancelling an already renewed subscription:
+                  value:
+                    error:
+                      message:
+                      - This subscription is already renewed. You can cancel the newly issued Subscription
+                        which will remain valid till its end date.
+                      code: cancel_renewed_subscription
+                Subscription feature is not enabled:
+                  value:
+                    error:
+                      message:
+                      - Your current loyalty program configuration does not support this feature. Please
+                        connect with your Customer Success representative for resolution of the issue.
+                      code: disabled_feature
+                Sending an invalid/blank subscription ID:
+                  value:
+                    error:
+                      message:
+                      - Invalid User Subscription.
+                      code: invalid_subscription
+                Cancelling an already cancelled Subscription:
+                  value:
+                    error:
+                      message:
+                      - Subscription is already canceled.
+                      code: already_canceled
+      description: This API allows the end user to cancel an active subscription (turn off auto renewal
+        for the subscription). This is a soft cancellation wherein the benefits remain valid until the
+        end time of the subscription.
+      parameters:
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/x-pch-digest'
+      - schema:
+          type: string
+          default: en
+        in: header
+        name: Accept-Language
+        description: Language parameter
+      - $ref: '#/components/parameters/Authorization'
+      x-stoplight:
+        id: 68979e4953b9d
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                example-1:
+                  client: CLIENT_GOES_HERE
+                  subscription_id: 26
+                  cancellation_reason: Did not like the service
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business (per the OAuth app in the Punchh
+                    platform)
+                  minLength: 1
+                authentication_token:
+                  type: string
+                  x-stoplight:
+                    id: ihzprqch1t3j7
+                  description: The authentication token of the user. You can retrieve this from the response
+                    of a successful sign-in API call or through the [SSO process](/docs/dev-portal-online-ordering/9a41534336c87-sso-flow-for-web-and-mobile).
+                subscription_id:
+                  type: integer
+                  description: System-generated unique ID of the subscription of the guest that needs
+                    to be cancelled
+                  examples:
+                  - 26
+                cancellation_feedback:
+                  type: string
+                  minLength: 1
+                  description: Reason for cancelling the subscription as provided by the end user
+                  examples:
+                  - No longer needed
+                cancellation_type:
+                  type: string
+                  description: Type of cancellation -- either "hard_cancelled" or "soft_cancelled". If
+                    “soft_cancelled”, end users can enjoy the benefits until the “end_time” of the subscription.
+                    If “hard_cancelled”, subscription benefits are terminated immediately.
+                  enum:
+                  - 'hard_cancelled '
+                  - soft_cancelled
+                  minLength: 1
+                  examples:
+                  - soft_cancelled
+                cancellation_reason_id:
+                  type: string
+                  description: ID of the chosen cancellation reason. You can get this value from the `subscription_cancellation_reasons`
+                    object returned in the response of a successful [Subscription Meta API](/docs/dev-portal-online-ordering/apis/oo-subscription-api/paths/~1api~1auth~1subscription_meta/get)
+                    call.
+              required:
+              - client
+              - subscription_id
+              - cancellation_feedback
+              - cancellation_type
+              - cancellation_reason_id
+            examples:
+              example:
+                value:
+                  client: CLIENT_GOES_HERE
+                  subscription_id: 24
+                  cancellation_feedback: Price too High.
+                  cancellation_reason_id: '1'
+                  cancellation_type: soft_cancelled
+  /api/auth/user_subscriptions:
+    get:
+      summary: Fetch Subscription Plans for a User
+      operationId: post-api-auth-user-subscriptions
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    subscriptions:
+                    - subscription_id: 19
+                      start_time: '2021-05-18T21:09:38+05:30'
+                      end_time: '2021-06-03T21:09:38+05:30'
+                      plan_id: 9
+                      image: test-image.png
+                      name: fuel_price
+                      description: ''
+                      miscellaneous: ''
+                      status: Active
+                      benefits:
+                      - benefit_id: 3
+                        discounts:
+                        - discount_id: 7
+                          threshold: 40
+                          discounted_value: 80
+                          discounted_quantity: 40
+                        - discount_id: 8
+                          threshold: 1000
+                          discounted_value: 1000
+                          discounted_quantity: 1000
+                properties:
+                  has_any_subscriptions:
+                    type: boolean
+                    x-stoplight:
+                      id: 0n8ymiyjzstq7
+                    description: 'Indicates whether or not a user''s account currently has an active subscription
+                      or has ever had an active subscription. This parameter can be used by developers
+                      to customize the app experience as per the needs of the business. Possible values:
+                      true, false'
+                  subscriptions:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    description: Array object containing different subscriptions issued to the guest
+                    items:
+                      type: object
+                      properties:
+                        subscription_id:
+                          type: number
+                          description: System-generated unique ID of the subscription that is issued to
+                            the guest
+                        start_time:
+                          type: string
+                          minLength: 1
+                          description: Date and time (in ISO 8601 format) from which this current subscription
+                            becomes active for a guest
+                        end_time:
+                          type: string
+                          minLength: 1
+                          description: Date and time (in ISO 8601 format) until which this current subscription
+                            remains active for a guest
+                        plan_id:
+                          type: number
+                          description: System-generated unique ID of the plan against which this subscription
+                            is issued for the guest
+                        image:
+                          type: string
+                          minLength: 1
+                          description: Cover image of a subscription plan uploaded at the time of subscription
+                            plan creation
+                        cancellation_reason:
+                          type: string
+                          description: Reason for cancellation as sent to Punchh at the time of cancellation
+                        cancelled_at:
+                          type: string
+                          format: date-time
+                          description: Date and time (in ISO 8601 format) when the subscription is cancelled
+                        name:
+                          type: string
+                          minLength: 1
+                          description: 'Name of the subscription plan as provided by the admin at the
+                            time of subscription plan creation.
+
+
+                            Note: The subscription `name` is returned in the language specified in the
+                            Accept-Language request header, provided the name has been translated into
+                            the relevant language in the Punchh platform. If the translation is not available,
+                            then no value is returned for this parameter in the API response. For example,
+                            if the header specifies “fr” (French), the subscription name is returned in
+                            French only if a French translation for the name is configured in the Punchh
+                            platform.
+
+                            '
+                        description:
+                          type: string
+                          description: 'Text description of the subscription plan as configured by the
+                            admin on the subscription plan. This is used to explain the offerings of the
+                            subscription plan to guests.
+
+
+                            Note: The subscription `description` is returned in the language specified
+                            in the Accept-Language request header, provided the description has been translated
+                            into the relevant language in the Punchh platform. If the translation is not
+                            available, then no value is returned for this parameter in the API response.
+                            For example, if the header specifies “fr” (French), the subscription description
+                            is returned in French only if a French translation for the description is
+                            configured in the Punchh platform.
+
+                            '
+                        miscellaneous:
+                          type: string
+                          description: 'Free-form text field that can be used by businesses to enter additional
+                            information or a JSON code snippet for greater customization in the mobile
+                            app.
+
+
+                            Note: The subscription `miscellaneous` information is returned in the language
+                            specified in the Accept-Language request header, provided it has been translated
+                            into the relevant language in the Punchh platform. If the translation is not
+                            available, then no value is returned for this parameter in the API response.
+                            For example, if the header specifies “fr” (French), the subscription miscellaneous
+                            information is returned in French only if a French translation for the miscellaneous
+                            is configured in the Punchh platform.
+
+                            '
+                        status:
+                          type: string
+                          minLength: 1
+                          description: "Subscriptions issued to a guest can have multiple statuses. Currently\
+                            \ supported statuses are:\n1. active: The subscription is active and the guest\
+                            \ can enjoy the benefits until its end_time.\n2. expired: The subscription\
+                            \ is not renewed and expired. The end_time of the subscription is in the past,\
+                            \ and it was not cancelled before its expiration.\n3. soft_cancelled: The\
+                            \ subscription is cancelled either by the guest or by an admin. The benefits\
+                            \ remain valid until the end_time. \n4. hard_cancelled: The subscription is\
+                            \ cancelled by an admin and the benefits become invalid immediately from the\
+                            \ time of cancellation.\n5. renewed: The subscription is renewed.\n"
+                        benefits:
+                          type: array
+                          uniqueItems: true
+                          minItems: 1
+                          maxItems: 5
+                          description: 'A subscription plan may contain multiple benefits. This object
+                            includes the details of benefits available to the guest for this subscription
+                            ID. '
+                          items:
+                            type: object
+                            properties:
+                              benefit_id:
+                                type: number
+                                description: System-generated unique ID of the benefit that is configured
+                                  on the subscription plan and is issued to the guest for this subscription
+                              benefit_name:
+                                type: string
+                                description: Name of the individual benefit, set in Benefits & Rules (Wallet
+                                  and Passes > Subscription Plans) in the Punchh platform. Up to 5 benefits
+                                  per plan. This parameter is returned when enabled for the business.
+                                  Contact your Punchh representative to update this platform configuration.
+                              benefit_description:
+                                type: string
+                                description: Description of the individual benefit, set in Benefits &
+                                  Rules (Wallet and Passes > Subscription Plans) in the Punchh platform.
+                                  This parameter is returned when enabled for the business. Contact your
+                                  Punchh representative to update this platform configuration.
+                              benefit_priority:
+                                type: integer
+                                description: 'Sets the order in which benefits are applied to a transaction
+                                  and displayed in the web app within a multi-benefit subscription plan.
+                                  Lower value = higher priority (starts at 1 and goes up to the number
+                                  of benefits in the plan). Priority ordering matters when benefits can
+                                  affect each other''s eligibility — for example, applying a free item
+                                  first might drop the bill below a threshold needed for a percentage
+                                  discount. The benefit priority order is locked once the plan becomes
+                                  visible to customers. Note: This parameter is returned when enabled
+                                  for the business. Contact your Punchh representative to update this
+                                  platform configuration.'
+                              benefit_type:
+                                type: string
+                                description: Type of the benefit
+                                examples:
+                                - sku_discounting
+                              discounts:
+                                type: array
+                                uniqueItems: true
+                                minItems: 1
+                                description: A benefit may contain multiple discounts. This object contains
+                                  the details of different discounts issued to the guest for this subscription.
+                                items:
+                                  type: object
+                                  properties:
+                                    discount_id:
+                                      type: number
+                                      description: System-generated unique ID of the discounting rule
+                                        configured under the benefit.
+                                    occurrence:
+                                      type: number
+                                      x-nullable: true
+                                      description: 'The number of times this discount can be applied.
+                                        A null value means no specific occurrence limit is set. Note:
+                                        This parameter is returned when enabled for the business. Contact
+                                        your Punchh representative to update this platform configuration.'
+                                    gap_units:
+                                      type: number
+                                      x-nullable: true
+                                      description: 'The number of time units (defined by gap_unit_type)
+                                        that must elapse between consecutive uses of this discount. A
+                                        null value means no gap restriction. Note: This parameter is returned
+                                        when enabled for the business. Contact your Punchh representative
+                                        to update this platform configuration.'
+                                    gap_unit_type:
+                                      type: string
+                                      description: 'The unit of time for the gap_units value (e.g., "hours").
+                                        Defines the cooldown period type between discount usages. Note:
+                                        This parameter is returned when enabled for the business. Contact
+                                        your Punchh representative to update this platform configuration.'
+                                    start_time:
+                                      type: string
+                                      format: date-time
+                                      x-nullable: true
+                                      description: 'The start date/time from which this discount becomes
+                                        active. A null value means no specific start time constraint —
+                                        the discount is available from the subscription''s start. Note:
+                                        This parameter is returned when enabled for the business. Contact
+                                        your Punchh representative to update this platform configuration.'
+                                    end_time:
+                                      type: string
+                                      format: date-time
+                                      x-nullable: true
+                                      description: 'The end date/time after which this discount expires.
+                                        A null value means no specific end time constraint — the discount
+                                        remains valid until the subscription ends. Note: This parameter
+                                        is returned when enabled for the business. Contact your Punchh
+                                        representative to update this platform configuration.'
+                                    threshold:
+                                      type: number
+                                      description: 'Maximum number of units that can be discounted for
+                                        this particular discounting rule. '
+                                    threshold_discount:
+                                      type: number
+                                      description: 'The maximum discount value that can be applied per
+                                        use of this discounting rule (e.g., 100.0 means up to 100 units
+                                        of % or $, depending on discount_type). Note: This parameter is
+                                        returned when enabled for the business. Contact your Punchh representative
+                                        to update this platform configuration.'
+                                    discount_type:
+                                      type: string
+                                      description: 'The type of discounting rule configured under the
+                                        benefit. Common values include "%_or_$_off" (percentage or dollar
+                                        amount off), "sku_discounting" (item-level discount), "target_price_bundle_advanced"
+                                        (bundle pricing), and "receipt_level_discount" (order-level discount).
+                                        Note: This parameter is returned when enabled for the business.
+                                        Contact your Punchh representative to update this platform configuration.'
+                                    discounted_value:
+                                      type: number
+                                      description: Value of discounts given as per this discounting rule.
+                                    discounted_quantity:
+                                      type: number
+                                      description: Number of units discounted as per this discounting
+                                        rule.
+                        external_plan_identifier:
+                          type: string
+                          description: UPC/SKU of the subscription plan as present on third-party applications
+                            of enterprise businesses and is configured on this subscription plan. This
+                            will be stored in the database, and the business can use it for analytics
+                            purposes. This value can be used to make the purchase of the subscription
+                            plan instead of using the “plan_id”.
+                        plan_image_url:
+                          type: string
+                          description: URL of the image that is configured for a specific subscription
+                            plan
+                        renewed_on:
+                          type: string
+                          description: Date and time when the subscription was renewed on
+                          format: date-time
+                        upcoming_renewal:
+                          type: string
+                          description: Date and time of next renewal of the subscription
+                          format: date-time
+                          examples:
+                          - '2023-05-11T05:00:00+05:30'
+                        purchase_price:
+                          type: integer
+                          description: amount paid for the subscription
+                        auto_renewal:
+                          type: boolean
+                          description: A guest’s preference of having a newly purchased subscription plan
+                            get automatically renewed per the plan's schedule. Third parties where auto
+                            renewal is considered default should send this value as "true".
+                          default: true
+                        payment_card:
+                          type: object
+                          description: The object shows payment card settings
+                          properties:
+                            uuid:
+                              type: string
+                              description: Saved payment card UUID
+                            nickname:
+                              type: string
+                              description: Payment card nickname as set by the user
+                            preferred:
+                              type: boolean
+                              description: Whether this card will be selected as the default card or not
+                                when the user makes a payment through the mobile app. If the value is
+                                set to true, this card will be selected as the default card for payments.
+                            card_details:
+                              type: object
+                              description: The object shows payment card details
+                              properties:
+                                name_on_card:
+                                  type: string
+                                  description: Cardholder name
+                                ' card_type':
+                                  type: string
+                                  description: Card type like VISA, Mastercard, Amex, etc
+                                cc_4:
+                                  type: string
+                                  description: Last 4 digits of the card
+                                expiry_month:
+                                  type: string
+                                  description: Expiry month of the card
+                                expiry_year:
+                                  type: string
+                                  description: Expiry year of the card
+                        cancellation_feedback:
+                          type: string
+                          description: Subjective feedback that a guest provides when cancelling a subscription
+                            from the mobile application, or the feedback that an administrator provides
+                            when cancelling a subscription from the Punchh platform.
+              examples:
+                Success:
+                  value:
+                    has_any_subscriptions: true
+                    subscriptions:
+                    - subscription_id: 19
+                      start_time: '2023-05-18T21:09:38+05:30'
+                      end_time: '2023-06-03T21:09:38+05:30'
+                      plan_id: 9
+                      image: test-image.png
+                      cancellation_reason: Found better alternative
+                      cancelled_at: null
+                      name: fuel_price
+                      description: ''
+                      miscellaneous: ''
+                      status: Active
+                      external_plan_identifier: EXTERNAL_PLAN_IDENTIFIER_GOES_HERE
+                      plan_image_url: PLAN_IMAGE_URL_GOES_HERE
+                      renewed_on: '2023-04-10T05:00:00+05:30'
+                      upcoming_renewal: '2023-05-11T05:00:00+05:30'
+                      purchase_price: 100
+                      auto_renewal: true
+                      benefits:
+                      - benefit_id: 3
+                        benefit_type: sku_discounting
+                        benefit_name: Free Coffee
+                        benefit_description: Get a free coffee on your next visit
+                        benefit_priority: 1
+                        discounts:
+                        - discount_id: 7
+                          occurrence: 5
+                          gap_units: 24
+                          gap_unit_type: hours
+                          start_time: '2023-05-18T00:00:00+05:30'
+                          end_time: '2023-06-03T23:59:59+05:30'
+                          threshold: 40
+                          threshold_discount: 100
+                          discount_type: sku_discounting
+                          discounted_value: 80
+                          discounted_quantity: 40
+                        - discount_id: 8
+                          occurrence: null
+                          gap_units: null
+                          gap_unit_type: hours
+                          start_time: null
+                          end_time: null
+                          threshold: 1000
+                          threshold_discount: 100
+                          discount_type: sku_discounting
+                          discounted_value: 1000
+                          discounted_quantity: 1000
+                      - benefit_id: 4
+                        benefit_type: sku_discounting
+                        benefit_name: Fuel Discount
+                        benefit_description: Get 10% off on fuel purchases
+                        benefit_priority: 2
+                        discounts:
+                        - discount_id: 7
+                          occurrence: 10
+                          gap_units: null
+                          gap_unit_type: hours
+                          start_time: null
+                          end_time: null
+                          threshold: 40
+                          threshold_discount: 50
+                          discount_type: '%_or_$_off'
+                          discounted_value: 80
+                          discounted_quantity: 40
+                        - discount_id: 8
+                          occurrence: null
+                          gap_units: null
+                          gap_unit_type: hours
+                          start_time: null
+                          end_time: null
+                          threshold: 1000
+                          threshold_discount: 100
+                          discount_type: receipt_level_discount
+                          discounted_value: 1000
+                          discounted_quantity: 1000
+                      payment_card:
+                        uuid: SAVED_CARD_UUID
+                        nickname: My card
+                        preferred: true
+                        card_details:
+                          name_on_card: CARDHOLDER_NAME_GOES_HERE
+                          cc_4: '1111'
+                          card_type: Visa
+                          expiry_month: 09
+                          expiry_year: '23'
+                      cancellation_feedback: Found better alternative
+        '401':
+          description: 'Unauthorized: Sending an invalid/empty access or authentication token'
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    errors:
+                      client: Required parameter missing or the value is empty.
+                properties:
+                  error:
+                    type: string
+              examples:
+                Sending an invalid/empty access or authentication token:
+                  value:
+                    error: You need to sign in or sign up before continuing.
+        '412':
+          description: "Precondition Failed: Sending an invalid/empty client \n\nInvalid Signature means\
+            \ the signature generated at the Punchh Server for the API call does not match the signature\
+            \ generated by the client. See [Generating x-pch-digest Header for Online Ordering APIs](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1)"
+          content:
+            application/json:
+              schema:
+                type: array
+                x-examples:
+                  example-1:
+                    errors:
+                      invalid_signature:
+                      - Signature doesn't match. Please see our documentation https://developers.punchh.com/docs/dev-portal-mobile/17c2f8eb39142-generating-x-pch-digest-header-for-mobile-ap-is
+                items: {}
+              examples:
+                Sending invalid/empty client:
+                  value:
+                  - Invalid Signature
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    errors:
+                      disabled_feature: Your current loyalty program configuration does not support this
+                        feature. Please connect with your Customer Success representative for resolution
+                        of the issue.
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      message:
+                        type: array
+                        items:
+                          type: string
+                          examples:
+                          - Your current loyalty program configuration does not support this feature.
+                            Please connect with your Customer Success representative for resolution of
+                            the issue.
+                        examples:
+                        - Your current loyalty program configuration does not support this feature. Please
+                          connect with your Customer Success representative for resolution of the issue.
+                      code:
+                        type: string
+              examples:
+                Sending invalid value in the status filter:
+                  value:
+                    error:
+                      message:
+                      - Possible values are active, expired, cancelled.
+                      code: invalid_status
+                Subscription Feature is not configured:
+                  value:
+                    error:
+                      message:
+                      - Your current loyalty program configuration does not support this feature. Please
+                        connect with your Customer Success representative for resolution of the issue.
+                      code: disabled_feature
+      description: "This API returns the subscriptions attached to a guest's profile. While the response\
+        \ can be filtered based on \"status\" and \"past_subscriptions\", the default response will include\
+        \ subscriptions that are either \"active\" or \"soft_cancelled\" and have their end time in the\
+        \ future.\n  "
+      parameters:
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/x-pch-digest'
+      - $ref: '#/components/parameters/Authorization'
+      - schema:
+          type: string
+        in: query
+        name: filter
+        description: '''Filter subscription by status and past_subscriptions.<br><br> If the status is
+          not sent, the API returns subscriptions that are `active`, `soft_cancelled`, and have an end_time
+          that is not in the past. Supported "filter” values are ''''active'''', ''''expired'''', and
+          ''''cancelled''''. <br><br>When the API call is made using the past_subscriptions filter, the
+          response returns only such subscriptions that have their end date/time in the past. The status
+          against each subscription can have the following possible values: ‘expired’, ‘renewed’, ‘soft_cancelled’,
+          and ‘hard_cancelled’.''
+
+          '
+      - $ref: '#/components/parameters/Content-Type'
+      x-stoplight:
+        id: 649a7bc739ad1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: Oauth client ID provided by the business
+                authentication_token:
+                  type: string
+                  x-stoplight:
+                    id: 3uvpozny7zpso
+                  description: The authentication token of the user. You can retrieve this from the response
+                    of a successful sign-in API call or through the [SSO process](/docs/dev-portal-online-ordering/9a41534336c87-sso-flow-for-web-and-mobile).
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+        description: ''
+  /api/auth/subscription_meta:
+    get:
+      summary: Subscription Meta
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  enable_cancellation_feedback:
+                    type: boolean
+                    description: Whether feedback is to be collected at the time when guests cancel a
+                      subscription or not.
+                  cancellation_feedback_placeholder:
+                    type: string
+                    description: This is the cancellation feedback placeholder which can be used by app
+                      developers as the title/label/placeholder text while capturing subjective feedback
+                      from guests when they cancel a subscription.
+                  subscription_cancellation_reasons:
+                    $ref: '#/components/schemas/Subscription-Cancellation-Reasons'
+              examples:
+                default:
+                  value:
+                    enable_cancellation_feedback: false
+                    cancellation_feedback_placeholder: Test
+                    subscription_cancellation_reasons:
+                    - cancellation_reason_id: 1
+                      cancellation_reason: Overvalued for me.
+                      component_code: price
+                    - cancellation_reason_id: 2
+                      cancellation_reason: Service not up to the mark.
+                      component_code: service
+                    - cancellation_reason_id: 3
+                      cancellation_reason: Switching to other plan.
+                      component_code: other plan
+        '422':
+          description: ' Unprocessable Entity: The feature is turned off for the business.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      message:
+                        type: array
+                        items: {}
+                      code:
+                        type: string
+              examples:
+                Feature is turned off for the business:
+                  value:
+                    error:
+                      message:
+                      - Your current loyalty program configuration does not support this feature. Please
+                        connect with your Customer Success representative for resolution of the issue.
+                      code: disabled_feature
+      operationId: get-api-auth-subscription_meta
+      parameters:
+      - schema:
+          type: string
+          default: application/json
+        in: header
+        description: Advertises which content types the client is able to understand
+        name: Accept
+        required: true
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Content-Type'
+      - schema:
+          type: string
+        in: header
+        description: Signature generated using the request path, body, and OAuth secret provided by the
+          business
+        required: true
+        name: x-pch-digest
+      description: 'Returns subscription cancellation reasons, which are configured in the Punchh platform
+        under Wallet and Passes > Subscription Cancellation Reasons.
+
+
+        Note: If the option to enable meta cache update on request is not enabled in the Punchh platform,
+        then the API won''t return any subscription cancellation reasons in the Subscription Meta API
+        response.
+
+
+        <!-- Cockpit > Dashboard Miscellaneous Config > Enable meta cache update on request -->
+
+
+        Contact your Punchh representative to update this configuration.'
+      x-stoplight:
+        id: 0482957e6918f
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ' client':
+                  type: string
+                  description: OAuth client ID provided by the business
+              required:
+              - ' client'
+            examples:
+              default:
+                value:
+                  ' client': CLIENT_GOES_HERE
+x-stoplight:
+  id: 07e110e1097d2
+openapi: 3.1.1
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+components:
+  schemas:
+    Subscription-Cancellation-Reasons:
+      title: Subscription Cancellation Reasons
+      x-stoplight:
+        id: c28miitm20q4q
+      type: array
+      x-examples:
+        application/json:
+          subscription_cancellation_reasons:
+          - cancellation_reason_id: 1
+            cancellation_reason: Overvalued for me.
+            component_code: price
+          - cancellation_reason_id: 2
+            cancellation_reason: Service not up to the mark.
+            component_code: service
+          - cancellation_reason_id: 3
+            cancellation_reason: Switching to other plan.
+            component_code: other plan
+      description: 'Different cancellation reasons that the business has configured and guests can select
+        from within the mobile app while cancelling a subscription.
+
+        '
+      items:
+        type: object
+        properties:
+          component_code:
+            type: string
+            description: This is the business-defined component code. The component code reflects the
+              category of a cancellation reason. This may/may not be shown on the mobile app at the brand’s
+              discretion.
+          cancellation_reason_id:
+            type: integer
+            description: System generated unique ID of the business-defined cancellation reason.
+          cancellation_reason:
+            type: string
+            description: Cancellation reason as configured by the business.
+  parameters:
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      required: true
+      description: Advertises which content types the client can understand
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      required: false
+      description: 'Preferred language. Punchh supports multiple languages for the subscription plan `name`,
+        `description`, and `miscellaneous` parameters in the API response as per the locale specified
+        in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for
+        French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.
+        The locales for a business are configured in the Punchh platform under <b>Administration > Business
+        Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description,
+        and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform
+        under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh
+        in the language specified in the Accept-Language request header, then the API response will include
+        the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. '
+    x-pch-digest:
+      schema:
+        type: string
+      name: x-pch-digest
+      in: header
+      required: true
+      description: Signature generated using the request path, body, and OAuth secret provided by the
+        business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      required: true
+      description: You may pass the access_token instead of the authentication_token in Online Ordering
+        endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+    Content-Type:
+      schema:
+        type: string
+      name: Content-Type
+      in: header
+      required: true
+      description: Set this header to <b>application/json</b>
+x-ext-urls: {}

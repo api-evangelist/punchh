@@ -1,0 +1,158 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Redemptions 1.0 (Legacy) API - Online Ordering",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Create Online Redemption (Redemptions 1.0)",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/redemptions/online_order",
+        "headers": [
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "User-Agent",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Redeems a card, reward, redeemable, or discount specified in the `discount_type` parameter against a receipt.\n\nPunchh evaluates eligibility during the Possible Redemptions call using the receipt details provided (item name, price, quantity, identifiers, etc.). During the Create Online Redemption API call, Punchh revalidates the same receipt to ensure the qualifying conditions are still met before honoring the redemption. \n\nIf any item attributes change between the two calls, Punchh may be unable"
+    },
+    {
+      "info": {
+        "name": "Fetch Redemption Code (Redemptions 1.0)",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/redemptions",
+        "headers": [
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "User-Agent",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "This endpoint generates an internal tracking code, which can be used to [look up a user on the POS system](/docs/dev-portal-pos/b3A6NTAyODM5MTc-user-lookup-and-fetch-balance) and [redeem the selected reward or banked currency at the POS](/docs/dev-portal-pos/4aa6c9741c85d-create-redemption-redemptions-1-0). To generate an internal tracking code via this endpoint, you must supply either a reward ID in the **reward_id** parameter or a value for the banked currency to redeem in the **redeemed_point"
+    },
+    {
+      "info": {
+        "name": "Void Processed Redemption (Redemptions 1.0)",
+        "type": "http"
+      },
+      "http": {
+        "method": "DELETE",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/redemptions",
+        "headers": [
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "User-Agent",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Voids a processed redemption. After a redemption is voided successfully, the offer tied to the redemption is returned to the guest's account.\n\n<b>Note</b>: The Void Redemption API allows you to cancel a redemption without any time restrictions for most types of redemptions. However, for coupons and promos, redemptions can only be voided within 24 hours of the redemption process."
+    },
+    {
+      "info": {
+        "name": "Applicable Offers (Redemptions 1.0)",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api/auth/redemptions/applicable_offers",
+        "headers": [
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "User-Agent",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Returns all applicable rewards available to the user per the items added to the check"
+    }
+  ],
+  "bundled": true
+}

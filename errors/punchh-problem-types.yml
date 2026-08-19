@@ -1,0 +1,214 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/ (15 PAR Punchh OpenAPI 3.1.1 documents harvested from https://developers.partech.com/docs/) + https://developers.partech.com/docs/dev-portal-mobile/headers-and-caching
+provider: PAR Punchh
+providerId: punchh
+format: vendor-json
+rfc9457: false
+notes:
+- Punchh does NOT use RFC 9457 application/problem+json. Every documented 4xx/5xx response is application/json (346
+  of 347 documented failure responses; one is text/plain).
+- 'The dominant error envelope is a flat {"errors": "<human readable message>"} object; some operations return {"errors":
+  [ ... ]} or {"error": "..."}. There is no machine-readable error code field.'
+- Errors are documented as per-operation response examples in the OpenAPI, not as a central error-code registry;
+  there is no published error-code reference page on the developer portal.
+envelope:
+  field: errors
+  type: string or array of strings
+  code_field: null
+  note: No stable machine-readable code is published; clients must match on HTTP status plus message text.
+problem_types:
+- status: 400
+  title: Bad Request
+  occurrences: 111
+  documented_in:
+  - punchh-mobile-api-openapi.yml
+  - punchh-mobile-redemptions-legacy-openapi.yml
+  - punchh-mobile-redemptions-v2-openapi.yml
+  - punchh-mobile-subscription-openapi.yml
+  - punchh-online-ordering-redemptions-v2-openapi.yml
+  - punchh-online-ordering-sso-api-openapi.yml
+  - punchh-online-ordering-subscription-openapi.yml
+  - punchh-platform-functions-api-openapi.yml
+  - punchh-platform-functions-headless-offers-openapi.yml
+  - punchh-platform-functions-offers-ingestion-openapi.yml
+  - punchh-platform-functions-subscription-openapi.yml
+  - punchh-pos-api-openapi.yml
+  - punchh-pos-redemptions-v2-openapi.yml
+  common_descriptions:
+  - Bad Request
+  - Bad Request (missing or blank required parameter)
+  - 'Bad Request - Example error responses:
+
+    - Required parameter missing or the value is empty: user_id
+
+    - Required parameter '
+  - 'Bad Request - Required parameter missing or the value is empty: discount_basket_item_ids'
+  example_messages:
+  - 'Required parameter missing or the value is empty: user_id'
+  - data was not valid JSON
+  - 'Required parameter missing or the value is empty: location'
+  - 'Required parameter missing or the value is empty: points_to_transfer'
+  - 'Required parameter missing or the value is empty: amount_to_transfer'
+- status: 401
+  title: Unauthorized
+  occurrences: 134
+  documented_in:
+  - punchh-mobile-api-openapi.yml
+  - punchh-mobile-subscription-openapi.yml
+  - punchh-online-ordering-redemptions-legacy-openapi.yml
+  - punchh-online-ordering-sso-api-openapi.yml
+  - punchh-online-ordering-subscription-openapi.yml
+  - punchh-platform-functions-api-openapi.yml
+  - punchh-platform-functions-headless-offers-openapi.yml
+  - punchh-platform-functions-offers-ingestion-openapi.yml
+  - punchh-platform-functions-subscription-openapi.yml
+  - punchh-pos-api-openapi.yml
+  common_descriptions:
+  - Unauthorized
+  - Sending invalid credentials
+  - Unauthorized Request (incorrect client value)
+  - 'Unauthorized
+
+    - Missing or invalid access token — "An active access token must be used to query information about the cur'
+  example_messages:
+  - You need to sign in or sign up before continuing.
+  - Invalid Location Key
+  - INVALID_CLIENT
+  - Incorrect information submitted. Please retry.
+  - invalid_grant
+- status: 403
+  title: Forbidden
+  occurrences: 22
+  documented_in:
+  - punchh-mobile-api-openapi.yml
+  - punchh-platform-functions-api-openapi.yml
+  - punchh-platform-functions-offers-ingestion-openapi.yml
+  common_descriptions:
+  - You do not have acccess to this feature.
+  - Forbidden — Insufficient permissions
+  - Forbidden - Functionality not available
+  example_messages:
+  - Sorry, this functionality is not available. Please contact support@punchh.com to enable this.
+- status: 404
+  title: Not Found
+  occurrences: 46
+  documented_in:
+  - punchh-mobile-api-openapi.yml
+  - punchh-mobile-redemptions-legacy-openapi.yml
+  - punchh-mobile-redemptions-v2-openapi.yml
+  - punchh-online-ordering-redemptions-v2-openapi.yml
+  - punchh-platform-functions-api-openapi.yml
+  - punchh-platform-functions-headless-offers-openapi.yml
+  - punchh-pos-api-openapi.yml
+  - punchh-pos-redemptions-v2-openapi.yml
+  common_descriptions:
+  - Not Found - User not found
+  - Not Found
+  - 'Not Found - Example error responses:
+
+    - User does not have an active basket
+
+    - User not found'
+  - 'Not Found: Sending incorrect values in search parameters or missing/invalid search parameters'
+  example_messages:
+  - User not found
+  - User Relation Not Found
+  - Not Found
+  - You did not opt in for this challenge campaign yet.
+  - Collectible not found.
+- status: 406
+  title: Not Acceptable
+  occurrences: 3
+  documented_in:
+  - punchh-platform-functions-subscription-openapi.yml
+  common_descriptions:
+  - Not Acceptable
+  example_messages: []
+- status: 409
+  title: Conflict
+  occurrences: 2
+  documented_in:
+  - punchh-mobile-api-openapi.yml
+  common_descriptions:
+  - 'Conflict: If an opt-in request is sent again for the same user and campaign, the API returns a 409 error with
+    the messag'
+  - Conflict
+  example_messages:
+  - You have already opted out of this challenge campaign.
+- status: 410
+  title: Gone
+  occurrences: 2
+  documented_in:
+  - punchh-online-ordering-redemptions-v2-openapi.yml
+  - punchh-pos-redemptions-v2-openapi.yml
+  common_descriptions:
+  - The checkin associated with the external_uid has already been committed and cannot be voided.
+  example_messages: []
+- status: 412
+  title: Precondition Failed
+  occurrences: 35
+  documented_in:
+  - punchh-mobile-api-openapi.yml
+  - punchh-mobile-subscription-openapi.yml
+  - punchh-online-ordering-redemptions-legacy-openapi.yml
+  - punchh-online-ordering-sso-api-openapi.yml
+  - punchh-online-ordering-subscription-openapi.yml
+  common_descriptions:
+  - Sending invalid Signature
+  - Precondition Failed
+  - 'Precondition Failed: Invalid Signature'
+  - "Precondition Failed: Sending an invalid/empty client \n\nInvalid Signature means the signature generated at\
+    \ the Punchh Ser"
+  example_messages:
+  - Sending invalid Signature
+- status: 417
+  title: Expectation Failed
+  occurrences: 2
+  documented_in:
+  - punchh-mobile-api-openapi.yml
+  - punchh-online-ordering-sso-api-openapi.yml
+  common_descriptions: []
+  example_messages: []
+- status: 422
+  title: Unprocessable Entity
+  occurrences: 123
+  documented_in:
+  - punchh-mobile-api-openapi.yml
+  - punchh-mobile-redemptions-legacy-openapi.yml
+  - punchh-mobile-redemptions-v2-openapi.yml
+  - punchh-mobile-subscription-openapi.yml
+  - punchh-online-ordering-redemptions-legacy-openapi.yml
+  - punchh-online-ordering-redemptions-v2-openapi.yml
+  - punchh-online-ordering-sso-api-openapi.yml
+  - punchh-online-ordering-subscription-openapi.yml
+  - punchh-platform-functions-api-openapi.yml
+  - punchh-platform-functions-headless-offers-openapi.yml
+  - punchh-platform-functions-offers-ingestion-openapi.yml
+  - punchh-platform-functions-subscription-openapi.yml
+  - punchh-pos-api-openapi.yml
+  - punchh-pos-redemptions-legacy-openapi.yml
+  - punchh-pos-redemptions-v2-openapi.yml
+  common_descriptions:
+  - Unprocessable Entity
+  - Sending invalid Entity
+  - 'Unprocessable Entity - Example error responses:
+
+    - Your current loyalty program configuration does not support this featu'
+  - 'Unprocessable Entity
+
+    - Save Points for Swag feature disabled — "Your current configuration does not support this feature'
+  example_messages:
+  - Invalid Customer Key
+  - Unauthenticated User
+  - Your current configuration does not support this feature. Please connect with your Customer Success representative
+    for resolution of the issue.
+  - Invalid Passcode
+  - Incorrect information submitted. Please retry.
+- status: 500
+  title: Internal Server Error
+  occurrences: 1
+  documented_in:
+  - punchh-online-ordering-sso-api-openapi.yml
+  common_descriptions: []
+  example_messages: []

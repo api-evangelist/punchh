@@ -1,10 +1,15 @@
 specification: API Commons Plans
 specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+generated: '2026-08-13'
+method: searched
+source: https://punchh.com/ + https://developers.partech.com/docs/dev-portal-developer-resources
+plan_count: 1
+public_pricing_page: false
 provider: PAR Punchh
 providerId: punchh
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-08-13'
 reconciled: false
 tags:
   - Loyalty

@@ -1,0 +1,38 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Platform Functions API
+  version: 1.0.0
+extends: ./../openapi/punchh-platform-functions-api-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: apis.yml + developers.partech.com developer portal
+x-note: Captures the enhancements API Evangelist adds on top of the document PAR Punchh publishes. The underlying
+  OpenAPI in openapi/ is never mutated.
+actions:
+- target: $.info
+  update:
+    contact:
+      name: Punchh Dev Support
+      url: https://developers.punchh.com
+    x-provider: PAR Punchh
+    x-providerId: punchh
+    x-docs: https://developers.partech.com/docs/dev-portal-platform-functions
+    x-certification-required: true
+- target: $
+  update:
+    externalDocs:
+      description: PAR Punchh developer portal
+      url: https://developers.partech.com/docs/dev-portal-platform-functions
+    x-status-page: https://status.punchh.com
+    x-artifacts:
+      authentication: authentication/punchh-authentication.yml
+      conventions: conventions/punchh-conventions.yml
+      errors: errors/punchh-problem-types.yml
+      lifecycle: lifecycle/punchh-lifecycle.yml
+      rate_limits: rate-limits/punchh-rate-limits.yml
+      webhooks: asyncapi/punchh-webhooks.yml
+      data_model: data-model/punchh-data-model.yml
+- target: $.servers[0]
+  update:
+    description: Environment-specific Punchh host. The server_name value is issued per brand and per environment
+      (sandbox / integration / production) by a Punchh representative and is not published.

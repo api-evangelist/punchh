@@ -1,0 +1,219 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Subscription API - Mobile",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Fetch Active Purchasable Subscription Plans",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/mobile/subscriptions",
+        "headers": [
+          {
+            "name": "Accept-Language",
+            "value": ""
+          },
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          },
+          {
+            "name": "User-Agent",
+            "value": ""
+          },
+          {
+            "name": "Accept",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "This API returns all of the active subscription plans that are purchasable using the mobile app and have their end time in the future."
+    },
+    {
+      "info": {
+        "name": "Purchase Subscription",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/mobile/subscriptions",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "Accept-Language",
+            "value": ""
+          },
+          {
+            "name": "User-Agent",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "This API supports the purchase of a subscription plan created in the Punchh platform.\n\nIf the Single Use setting is enabled for the subscription plan, and if you send auto_renewal as `true` in the Purchase Subscription API, then the API returns an error: This is a single use subscription and cannot be renewed automatically. Please check the request to send auto_renewal as false."
+    },
+    {
+      "info": {
+        "name": "Fetch Subscription Plans for a User",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/mobile/user_subscriptions",
+        "headers": [
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "User-Agent",
+            "value": ""
+          },
+          {
+            "name": "Accept-Language",
+            "value": ""
+          },
+          {
+            "name": "Accept",
+            "value": ""
+          }
+        ],
+        "params": [
+          {
+            "name": "filter",
+            "value": "",
+            "type": "query",
+            "description": "Filter subscription by status and past_subscriptions. <br> <br> If the status is not sent, the API returns subscriptions that are `active`, `soft_cancelled`, and have an end_time that is not in the past. Supported \"filter” values are ''active'', ''expired'', and ''cancelled''. <br> <br>When the API call is made using the past_subscriptions filter, the response returns only such subscriptions that have their end date/time in the past. The status against each subscription can have these values: ‘expired’, ‘renewed’, ‘soft_cancelled’, and ‘hard_cancelled’.'"
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "This API returns the subscriptions attached to a guest's profile. While the response can be filtered based on \"status\" and \"past_subscriptions\", the default response will include subscriptions that are either \"active\" or \"soft_cancelled\" and have their end time in the future.\n  "
+    },
+    {
+      "info": {
+        "name": "Generate a Redemption Code for Subscription Redemption",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/mobile/redemptions/subscription",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "Accept-Timezone",
+            "value": ""
+          },
+          {
+            "name": "User-Agent",
+            "value": ""
+          },
+          {
+            "name": "Accept-Language",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "This API generates a subscription-related redemption code within the mobile application. Using this API, guests can generate the subscription-related redemption code from the mobile application and use it at the POS or in the online ordering app to redeem subscription-related benefits."
+    },
+    {
+      "info": {
+        "name": "Cancel Subscription (Turn off Auto Renewal)",
+        "type": "http"
+      },
+      "http": {
+        "method": "PUT",
+        "url": "https://SERVER_NAME_GOES_HERE.punchh.com/api2/mobile/subscriptions/cancel",
+        "headers": [
+          {
+            "name": "User-Agent",
+            "value": ""
+          },
+          {
+            "name": "Accept",
+            "value": ""
+          },
+          {
+            "name": "Accept-Language",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          },
+          {
+            "name": "Authorization",
+            "value": ""
+          },
+          {
+            "name": "x-pch-digest",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "This API allows the user to cancel an active subscription (turn off auto renewal for the subscription). This is a soft cancellation wherein the benefits remain valid until the end time of the subscription."
+    }
+  ],
+  "bundled": true
+}

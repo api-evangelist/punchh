@@ -1,0 +1,3116 @@
+{
+  "item": [
+    {
+      "id": "bf038709-d161-4760-860e-7df0f261c3a0",
+      "name": "Find User (Redemptions 2.0)",
+      "request": {
+        "name": "Find User (Redemptions 2.0)",
+        "description": {
+          "content": "This API endpoint is used for guest user identification. Both `lookup_field` and `lookup_value` are passed as request parameters to look up the user account. The response includes user profile information in addition to the user ID.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "pos",
+            "users",
+            "find"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+            "key": "User-Agent",
+            "value": "IntegratorName/IntegrationType/VersionNumber"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"lookup_field\": \"<string>\",\n  \"lookup_value\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "5074b664-17e8-4c73-ac44-2d51f7cf951f",
+          "name": "OK",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "users",
+                "find"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lookup_field\": \"phone/otp/none/\",\n  \"lookup_value\": \"<phone_number>/<single_scan_code>/anonymous/\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"user_id\": 11111111,\n  \"business_id\": 27,\n  \"phone\": \"1111111111\",\n  \"email\": \"test@example.com\",\n  \"first_name\": \"FIRST_NAME_GOES_HERE\",\n  \"last_name\": \"LAST_NAME_GOES_HERE\",\n  \"payment_mode\": \"GiftCard\",\n  \"selected_card_number\": \"CARD_NUMBER_GOES_HERE\",\n  \"loyalty_cards\": [\n    null\n  ],\n  \"selected_tip_amount\": 1,\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\",\n  \"locked\": false\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "c5495239-b787-46a8-908c-664321f061df",
+          "name": "Bad Request - Example error responses:\n- Required parameter missing or the value is empty: lookup_field \n- Required parameter missing or the value is empty: lookup_value ",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "users",
+                "find"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lookup_field\": \"phone/otp/none/\",\n  \"lookup_value\": \"<phone_number>/<single_scan_code>/anonymous/\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "b2abe27b-f11a-45e3-8cb0-124a4fe07dc8",
+          "name": "Not Found - Example error responses:\n\n- Invalid or Expired Single Scan Code \n- User not found ",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "users",
+                "find"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lookup_field\": \"phone/otp/none/\",\n  \"lookup_value\": \"<phone_number>/<single_scan_code>/anonymous/\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "31035db8-87e9-4fe0-855e-c0f8822808dd",
+          "name": "Unprocessable Entity - Guest is not allowed to earn/redeem as he/she is banned or deactivated from the Loyalty program",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "users",
+                "find"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lookup_field\": \"phone/otp/none/\",\n  \"lookup_value\": \"<phone_number>/<single_scan_code>/anonymous/\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "15ef9814-219d-4ca7-af13-bebbc2790e2b",
+      "name": "Auto Redemption (Redemptions 2.0)",
+      "request": {
+        "name": "Auto Redemption (Redemptions 2.0)",
+        "description": {
+          "content": "- A discount should be automatically queued up in the discount basket if the auto-redemption feature is enabled for the business.\n- The business can configure the auto-redemption strategy.\n- If a discount expires after being added to the discount basket, it is removed from the discount basket. When you make a call to the API, it validates the offers added to the discount basket. If one or more discounts are found to be honored, expired, perished, or archived, the API returns an error message indicating that these discounts cannot be honored. The API lists the invalid discounts in the `discount_basket_items` object with a message stating that the discount is invalid and returns a null value in the `discount_details` object.\n\n **Note**: Auto-redemption currently supports only subscriptions and non-points-based rewards.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "pos",
+            "discounts",
+            "auto_select"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+            "key": "User-Agent",
+            "value": "IntegratorName/IntegrationType/VersionNumber"
+          },
+          {
+            "disabled": false,
+            "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"receipt_datetime\": \"<dateTime>\",\n  \"subtotal_amount\": \"<float>\",\n  \"receipt_amount\": \"<float>\",\n  \"user_id\": \"<integer>\",\n  \"line_items\": [\n    {\n      \"item_name\": \"<string>\",\n      \"item_qty\": \"<integer>\",\n      \"amount\": \"<float>\",\n      \"item_type\": \"<string>\",\n      \"item_id\": \"<integer>\",\n      \"item_family\": \"<string>\",\n      \"item_group\": \"<string>\",\n      \"serial_number\": \"<float>\"\n    },\n    {\n      \"item_name\": \"<string>\",\n      \"item_qty\": \"<integer>\",\n      \"amount\": \"<float>\",\n      \"item_type\": \"<string>\",\n      \"item_id\": \"<integer>\",\n      \"item_family\": \"<string>\",\n      \"item_group\": \"<string>\",\n      \"serial_number\": \"<float>\"\n    }\n  ],\n  \"business_date\": \"<string>\",\n  \"punchh_key\": \"<string>\",\n  \"transaction_no\": \"<string>\",\n  \"external_uid\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "51e43b24-3c3c-4f92-87e5-a96ade2d4e07",
+          "name": "OK",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "discounts",
+                "auto_select"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"line_items\": [\n    {\n      \"item_name\": \"coffee\",\n      \"item_qty\": 1,\n      \"amount\": 10,\n      \"item_type\": \"M\",\n      \"item_id\": 330,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 1\n    },\n    {\n      \"item_name\": \"pizza\",\n      \"item_qty\": 1,\n      \"amount\": 20,\n      \"item_type\": \"M\",\n      \"item_id\": 331,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 2\n    }\n  ],\n  \"receipt_datetime\": \"2019-04-11T14:14:07+05:30\",\n  \"subtotal_amount\": 100,\n  \"receipt_amount\": 100,\n  \"business_date\": \"<store this information>\",\n  \"punchh_key\": \"1111111111111\",\n  \"transaction_no\": \"11111111111\",\n  \"user_id\": 11111111,\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"redemption_ref\": \"REDEMPTION_REF_GOES_HERE\",\n  \"locked\": true,\n  \"created_at\": null,\n  \"discount_basket_items\": [\n    {\n      \"discount_basket_item_id\": 4699,\n      \"discount_type\": \"reward\",\n      \"discount_id\": \"33703164\",\n      \"discount_value\": null,\n      \"created_at\": \"2022-08-25T10:03:48Z\",\n      \"discount_details\": {\n        \"item_id\": 777658,\n        \"name\": \"Flat $5 Off (Unlocks at 100 points)\",\n        \"campaign_name\": \"Mass Campaign Offer\",\n        \"image\": \"IMAGE_URL_GOES_HERE\",\n        \"points\": 100,\n        \"base_amount\": 5,\n        \"description\": \"\",\n        \"item_properties\": null,\n        \"meta_detail\": null,\n        \"start_date_tz\": null,\n        \"end_date_tz\": null,\n        \"created_at\": \"2022-09-08T18:41:16Z\",\n        \"auto_select\": true\n      }\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "aa439758-36c2-4a80-8c12-a91d19226e8c",
+          "name": "Bad Request - Example error responses:\n- Required parameter missing or the value is empty: receipt_amount\n- Required parameter missing or the value is empty: line_items ",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "discounts",
+                "auto_select"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"line_items\": [\n    {\n      \"item_name\": \"coffee\",\n      \"item_qty\": 1,\n      \"amount\": 10,\n      \"item_type\": \"M\",\n      \"item_id\": 330,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 1\n    },\n    {\n      \"item_name\": \"pizza\",\n      \"item_qty\": 1,\n      \"amount\": 20,\n      \"item_type\": \"M\",\n      \"item_id\": 331,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 2\n    }\n  ],\n  \"receipt_datetime\": \"2019-04-11T14:14:07+05:30\",\n  \"subtotal_amount\": 100,\n  \"receipt_amount\": 100,\n  \"business_date\": \"<store this information>\",\n  \"punchh_key\": \"1111111111111\",\n  \"transaction_no\": \"11111111111\",\n  \"user_id\": 11111111,\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "afcc4e58-02a1-4fa4-b745-d348c168ce54",
+          "name": "Not Found - User not found",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "discounts",
+                "auto_select"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"line_items\": [\n    {\n      \"item_name\": \"coffee\",\n      \"item_qty\": 1,\n      \"amount\": 10,\n      \"item_type\": \"M\",\n      \"item_id\": 330,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 1\n    },\n    {\n      \"item_name\": \"pizza\",\n      \"item_qty\": 1,\n      \"amount\": 20,\n      \"item_type\": \"M\",\n      \"item_id\": 331,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 2\n    }\n  ],\n  \"receipt_datetime\": \"2019-04-11T14:14:07+05:30\",\n  \"subtotal_amount\": 100,\n  \"receipt_amount\": 100,\n  \"business_date\": \"<store this information>\",\n  \"punchh_key\": \"1111111111111\",\n  \"transaction_no\": \"11111111111\",\n  \"user_id\": 11111111,\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "76929904-1873-4d0c-8238-6b8aa44c3e7c",
+          "name": "Unprocessable Entity - Example error responses:\n- Guest is not allowed to select/unselect from basket as he/she is banned or deactivated from the Loyalty program\n- Invalid Receipt Amount\n- Your current loyalty program configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue.\n- Unable to access the user’s Discount Basket, the Basket is currently locked",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "discounts",
+                "auto_select"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"line_items\": [\n    {\n      \"item_name\": \"coffee\",\n      \"item_qty\": 1,\n      \"amount\": 10,\n      \"item_type\": \"M\",\n      \"item_id\": 330,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 1\n    },\n    {\n      \"item_name\": \"pizza\",\n      \"item_qty\": 1,\n      \"amount\": 20,\n      \"item_type\": \"M\",\n      \"item_id\": 331,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 2\n    }\n  ],\n  \"receipt_datetime\": \"2019-04-11T14:14:07+05:30\",\n  \"subtotal_amount\": 100,\n  \"receipt_amount\": 100,\n  \"business_date\": \"<store this information>\",\n  \"punchh_key\": \"1111111111111\",\n  \"transaction_no\": \"11111111111\",\n  \"user_id\": 11111111,\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "1bbd3a33-9971-4e14-9bfd-b25bef6f7d37",
+      "name": "Discount Look-up (Redemptions 2.0)",
+      "request": {
+        "name": "Discount Look-up (Redemptions 2.0)",
+        "description": {
+          "content": "You can use this API endpoint to:\n- Look up a guest's available discount in the loyalty account, per the guest’s user ID.\n- Evaluate the guest’s discount basket against the receipt to verify the applicability of discounts if needed.\n- Locks the user's discount basket using a unique identifier, `external_uid`, generated by your application for the transaction when reward locking is enabled in the Punchh platform for the business. Locking the discount basket prevents other channels from creating simultaneous transactions or modifying the discount basket. See [Discount Basket Locking Developer Guide](/docs/dev-portal-developer-resources/d7b83074c9f23-redemptions-2-0-discount-basket-locking). You must log in to the developer portal to access the developer guide.\n\nThe API returns the following:\n- Selected discounts in the `selected_discounts` array object, which contains any pre-selected discount items selected using the mobile app and [Add Selection to Discount Basket](/docs/dev-portal-pos/apis/redemptions-2-0-new-api/paths/~1api~1pos~1discounts~1select/post) API. If the business is configured for auto-redemption, the `selected_discounts` object will contain all available discounts for the user. If no discount items are pre-selected, the API returns an empty `selected_discounts` object.\n- Unselected discounts in the `unselected_discounts` array object, which contains any discount items that are available in the user account but not yet added to the discount basket\n- Discount basket in the API response indicating which discounts in the basket are applicable and which do not apply to the check items",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "pos",
+            "discounts",
+            "lookup"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+            "key": "User-Agent",
+            "value": "IntegratorName/IntegrationType/VersionNumber"
+          },
+          {
+            "disabled": false,
+            "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"receipt_datetime\": \"<dateTime>\",\n  \"subtotal_amount\": \"<float>\",\n  \"receipt_amount\": \"<float>\",\n  \"user_id\": \"<integer>\",\n  \"line_items\": [\n    {\n      \"item_name\": \"<string>\",\n      \"item_qty\": \"<integer>\",\n      \"amount\": \"<float>\",\n      \"item_type\": \"<string>\",\n      \"item_id\": \"<integer>\",\n      \"item_family\": \"<string>\",\n      \"item_group\": \"<string>\",\n      \"serial_number\": \"<float>\"\n    },\n    {\n      \"item_name\": \"<string>\",\n      \"item_qty\": \"<integer>\",\n      \"amount\": \"<float>\",\n      \"item_type\": \"<string>\",\n      \"item_id\": \"<integer>\",\n      \"item_family\": \"<string>\",\n      \"item_group\": \"<string>\",\n      \"serial_number\": \"<float>\"\n    }\n  ],\n  \"business_date\": \"<string>\",\n  \"punchh_key\": \"<string>\",\n  \"transaction_no\": \"<string>\",\n  \"external_uid\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "401c9c0b-802f-4eb7-8fbc-f6d5596e636b",
+          "name": "OK",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "discounts",
+                "lookup"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"line_items\": [\n    {\n      \"item_name\": \"coffee\",\n      \"item_qty\": 1,\n      \"amount\": 10,\n      \"item_type\": \"M\",\n      \"item_id\": 330,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 1\n    },\n    {\n      \"item_name\": \"pizza\",\n      \"item_qty\": 1,\n      \"amount\": 20,\n      \"item_type\": \"M\",\n      \"item_id\": 331,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 2\n    }\n  ],\n  \"receipt_datetime\": \"2019-04-11T14:14:07+05:30\",\n  \"subtotal_amount\": 100,\n  \"receipt_amount\": 100,\n  \"business_date\": \"<store this information>\",\n  \"punchh_key\": \"1111111111111\",\n  \"transaction_no\": \"11111111111\",\n  \"user_id\": 11111111,\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"selected_discounts\": [\n    {\n      \"discount_basket_item_id\": 2710,\n      \"discount_amount\": 1,\n      \"redemption_id\": 78244965,\n      \"redemption_type\": \"Redemption\",\n      \"discount_type\": \"reward\",\n      \"discount_id\": 773861859,\n      \"discount_value\": null,\n      \"message\": null,\n      \"qualified\": true,\n      \"remaining_balance\": null,\n      \"meta_data\": null,\n      \"discount_details\": {\n        \"item_id\": 777658,\n        \"name\": \"Flat $5 Off (Unlocks at 100 points)\",\n        \"campaign_name\": \"Mass Campaign Offer\",\n        \"image\": \"IMAGE_URL_GOES_HERE\",\n        \"points\": 100,\n        \"base_amount\": 5,\n        \"description\": \"\",\n        \"item_properties\": null,\n        \"meta_detail\": null,\n        \"start_date_tz\": null,\n        \"end_date_tz\": null,\n        \"created_at\": \"2022-09-08T18:41:16Z\",\n        \"auto_select\": true\n      },\n      \"qualified_items\": []\n    }\n  ],\n  \"unselected_discounts\": [\n    {\n      \"discount_type\": \"reward\",\n      \"discount_id\": 63,\n      \"discount_amount\": 2,\n      \"qualified_items\": [],\n      \"discount_details\": [],\n      \"qualified\": true\n    },\n    {\n      \"discount_type\": \"redemption_code\",\n      \"discount_id\": \"<coupon_code>\",\n      \"discount_amount\": 3,\n      \"qualified_items\": [],\n      \"qualified\": false\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "95e60a72-02f3-4da5-87cd-f17e673893c5",
+          "name": "Bad Request - Example error responses:\n- Required parameter missing or the value is empty: receipt_amount\n- Required parameter missing or the value is empty: external_uid ",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "discounts",
+                "lookup"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"line_items\": [\n    {\n      \"item_name\": \"coffee\",\n      \"item_qty\": 1,\n      \"amount\": 10,\n      \"item_type\": \"M\",\n      \"item_id\": 330,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 1\n    },\n    {\n      \"item_name\": \"pizza\",\n      \"item_qty\": 1,\n      \"amount\": 20,\n      \"item_type\": \"M\",\n      \"item_id\": 331,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 2\n    }\n  ],\n  \"receipt_datetime\": \"2019-04-11T14:14:07+05:30\",\n  \"subtotal_amount\": 100,\n  \"receipt_amount\": 100,\n  \"business_date\": \"<store this information>\",\n  \"punchh_key\": \"1111111111111\",\n  \"transaction_no\": \"11111111111\",\n  \"user_id\": 11111111,\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "d664eb04-7a78-45c7-becd-886f460539be",
+          "name": "Unprocessable Entity - Example error responses:\n- Unable to access the user’s Discount Basket, the Basket is currently locked\n- Your current loyalty program configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue\n- Invalid Receipt Amount\n- Invalid Business Configuration. Please connect with your Customer Success representative for resolution of the issue",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "discounts",
+                "lookup"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"line_items\": [\n    {\n      \"item_name\": \"coffee\",\n      \"item_qty\": 1,\n      \"amount\": 10,\n      \"item_type\": \"M\",\n      \"item_id\": 330,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 1\n    },\n    {\n      \"item_name\": \"pizza\",\n      \"item_qty\": 1,\n      \"amount\": 20,\n      \"item_type\": \"M\",\n      \"item_id\": 331,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 2\n    }\n  ],\n  \"receipt_datetime\": \"2019-04-11T14:14:07+05:30\",\n  \"subtotal_amount\": 100,\n  \"receipt_amount\": 100,\n  \"business_date\": \"<store this information>\",\n  \"punchh_key\": \"1111111111111\",\n  \"transaction_no\": \"11111111111\",\n  \"user_id\": 11111111,\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "feeb0c76-a8fb-4fa5-b50f-27f01e72fb81",
+      "name": "Add Selection to Discount Basket (Redemptions 2.0)",
+      "request": {
+        "name": "Add Selection to Discount Basket (Redemptions 2.0)",
+        "description": {
+          "content": "- A single discount basket will be active at a time. If there is no active discount basket, the system will create a new active discount basket along with selected discounts passed in the request parameters.\n- The Punchh system will not have any validation based on points adjustments as discounts are added.\n- When a guest adds multiple discounts, and one is invalid for some reason, the entire request will fail with an error message. The guest will then be required to remove the invalid discount and resubmit.\n- If a discount expires after being added to the discount basket, it is removed from the discount basket. When you make a call to the API, it validates the offers added to the discount basket. If one or more discounts are found to be honored, expired, perished, or archived, the API returns an error message indicating that these discounts cannot be honored. The API lists the invalid discounts in the `discount_basket_items` object with a message stating that the discount is invalid and returns a null value in the `discount_details` object.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "pos",
+            "discounts",
+            "select"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+            "key": "User-Agent",
+            "value": "IntegratorName/IntegrationType/VersionNumber"
+          },
+          {
+            "disabled": false,
+            "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"user_id\": \"<integer>\",\n  \"discount_basket_items_attributes\": [\n    {\n      \"discount_type\": \"<string>\",\n      \"discount_id\": \"<string>\",\n      \"discount_value\": \"<float>\"\n    },\n    {\n      \"discount_type\": \"<string>\",\n      \"discount_id\": \"<string>\",\n      \"discount_value\": \"<float>\"\n    }\n  ],\n  \"external_uid\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "c3c14d53-84a4-4a3c-8526-0ed684625732",
+          "name": "OK",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "discounts",
+                "select"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discount_basket_items_attributes\": [\n    {\n      \"discount_id\": \"41049646877\",\n      \"discount_type\": \"reward\"\n    },\n    {\n      \"discount_id\": \"41378920421\",\n      \"discount_type\": \"reward\"\n    },\n    {\n      \"discount_id\": \"41049646856\",\n      \"discount_type\": \"reward\"\n    }\n  ],\n  \"user_id\": 11111111,\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"redemption_ref\": \"REDEMPTION_REF_GOES_HERE\",\n  \"locked\": false,\n  \"location_id\": 20,\n  \"created_at\": \"2024-05-21T15:14:02Z\",\n  \"discount_basket_items\": [\n    {\n      \"discount_basket_item_id\": 469363,\n      \"discount_type\": \"reward\",\n      \"discount_id\": \"41049646877\",\n      \"discount_value\": null,\n      \"created_at\": \"2024-05-24T08:36:52Z\",\n      \"discount_details\": {\n        \"item_id\": 41049646877,\n        \"name\": \"Sandwich Test | AK\",\n        \"campaign_name\": \"Mass Campaign Offer\",\n        \"image\": \"IMAGE_URL_GOES_HERE\",\n        \"points\": null,\n        \"base_amount\": null,\n        \"description\": \"\",\n        \"item_properties\": \"\",\n        \"meta_detail\": null,\n        \"start_date_tz\": \"2024-05-24T08:34:24Z\",\n        \"end_date_tz\": \"2024-06-30T03:15:00Z\",\n        \"created_at\": \"2023-08-18T08:29:36Z\",\n        \"auto_select\": false\n      }\n    },\n    {\n      \"discount_basket_item_id\": 541689,\n      \"discount_type\": \"reward\",\n      \"discount_id\": \"41378920421\",\n      \"discount_value\": null,\n      \"created_at\": \"2024-06-11T12:56:33Z\",\n      \"discount_details\": {\n        \"item_id\": 48188,\n        \"name\": \"Sandwich Test | AK\",\n        \"campaign_name\": \"Mass Campaign Offer\",\n        \"image\": \"IMAGE_URL_GOES_HERE\",\n        \"points\": null,\n        \"base_amount\": null,\n        \"description\": \"\",\n        \"item_properties\": \"\",\n        \"meta_detail\": null,\n        \"start_date_tz\": \"2024-05-31T13:25:08Z\",\n        \"end_date_tz\": \"2024-06-30T03:15:00Z\",\n        \"created_at\": \"2023-08-18T08:29:36Z\",\n        \"auto_select\": false\n      }\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "a118939c-9e4d-4417-9ebd-4234612ca9c7",
+          "name": "Bad Request - Example error responses:\n- Required parameter missing or the value is empty: user_id\n- Required parameter missing or the value is empty: discount_basket_items_attributes\n- Required parameter missing or the value is empty: discount_type \n- Required parameter missing or the value is empty: external_uid ",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "discounts",
+                "select"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discount_basket_items_attributes\": [\n    {\n      \"discount_id\": \"41049646877\",\n      \"discount_type\": \"reward\"\n    },\n    {\n      \"discount_id\": \"41378920421\",\n      \"discount_type\": \"reward\"\n    },\n    {\n      \"discount_id\": \"41049646856\",\n      \"discount_type\": \"reward\"\n    }\n  ],\n  \"user_id\": 11111111,\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "e6bf6807-5899-4a79-857d-f1a8d87f6be1",
+          "name": "Not Found - User not found",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "discounts",
+                "select"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discount_basket_items_attributes\": [\n    {\n      \"discount_id\": \"41049646877\",\n      \"discount_type\": \"reward\"\n    },\n    {\n      \"discount_id\": \"41378920421\",\n      \"discount_type\": \"reward\"\n    },\n    {\n      \"discount_id\": \"41049646856\",\n      \"discount_type\": \"reward\"\n    }\n  ],\n  \"user_id\": 11111111,\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "af40ee22-1367-42f8-b76c-99673db1879b",
+          "name": "Unprocessable Entity - Example error responses:\n- Discount basket items have already been taken for the user\n- Same parameters provided multiple times\n- Not enough cards\n- Processing limit for discounts of loyalty type has been reached\n-  Invalid Code\n- Coupon/Promo code is not active \n- The code can not be added, as the campaign has exceeded its usage limit\n- This coupon can only be used 1 time(s) per day.\n- Invalid Business Configuration. Please connect with your Customer Success representative for resolution of the issue.\n- Mobile Coupon/Promo cannot be added into basket\n- Balance is insufficient to process request \n- Max Redemption Amount has been reached\n- Invalid Discount Value\n- Unable to access the user’s Discount Basket, the Basket is currently locked\n- Interoperability validation failed\n- Invalid Subscription ID\n- Invalid Redeemable ID\n- Invalid Reward ID\n- Guest is not allowed to select/unselect from basket as he/she is banned or deactivated from the Loyalty program \n- Redemption limit reached\n- Discount type should be card_completion, discount_amount, redemption_code, reward, fuel_reward, redeemable, subscription \n- Another transaction is currently accessing the same code. Please try after some time.\n- Cannot add more than one subscription into basket",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "discounts",
+                "select"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discount_basket_items_attributes\": [\n    {\n      \"discount_id\": \"41049646877\",\n      \"discount_type\": \"reward\"\n    },\n    {\n      \"discount_id\": \"41378920421\",\n      \"discount_type\": \"reward\"\n    },\n    {\n      \"discount_id\": \"41049646856\",\n      \"discount_type\": \"reward\"\n    }\n  ],\n  \"user_id\": 11111111,\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "39eccc92-1bbf-4926-8d02-25e17ddddcb7",
+      "name": "Remove Item From Discount Basket (Redemptions 2.0)",
+      "request": {
+        "name": "Remove Item From Discount Basket (Redemptions 2.0)",
+        "description": {
+          "content": "- Delete one or more discounts from a discount basket.\n- The Punchh system will not have any validation based on points adjustments as discounts are added.\n- If a discount expires after being added to the discount basket, it is removed from the discount basket. When you make a call to the API, it validates the offers added to the discount basket. If one or more discounts are found to be honored, expired, perished, or archived, the API returns an error message indicating that these discounts cannot be honored. The API lists the invalid discounts in the `discount_basket_items` object with a message stating that the discount is invalid and returns a null value in the `discount_details` object.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "pos",
+            "discounts",
+            "unselect"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+            "key": "User-Agent",
+            "value": "IntegratorName/IntegrationType/VersionNumber"
+          },
+          {
+            "disabled": false,
+            "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "DELETE",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"user_id\": \"<integer>\",\n  \"discount_basket_item_ids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"external_uid\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "9eb9f600-566b-42e9-850b-464b2b6d7b5f",
+          "name": "OK",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "discounts",
+                "unselect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 11111111,\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\",\n  \"discount_basket_item_ids\": [\n    469363,\n    541689,\n    489056\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"redemption_ref\": \"REDEMPTION_REF_GOES_HERE\",\n  \"locked\": false,\n  \"location_id\": 20,\n  \"created_at\": \"2024-05-21T15:14:02Z\",\n  \"discount_basket_items\": [\n    {\n      \"discount_basket_item_id\": 469363,\n      \"discount_type\": \"reward\",\n      \"discount_id\": \"41049646877\",\n      \"discount_value\": null,\n      \"created_at\": \"2024-05-24T08:36:52Z\",\n      \"discount_details\": {\n        \"item_id\": 48188,\n        \"name\": \"Sandwich Test | AK\",\n        \"campaign_name\": \"Mass Campaign Offer\",\n        \"image\": \"IMAGE_URL_GOES_HERE\",\n        \"points\": null,\n        \"base_amount\": null,\n        \"description\": \"\",\n        \"item_properties\": \"\",\n        \"meta_detail\": null,\n        \"start_date_tz\": \"2024-05-24T08:34:24Z\",\n        \"end_date_tz\": \"2024-06-30T03:15:00Z\",\n        \"created_at\": \"2023-08-18T08:29:36Z\",\n        \"auto_select\": false\n      }\n    },\n    {\n      \"discount_basket_item_id\": 541689,\n      \"discount_type\": \"reward\",\n      \"discount_id\": \"41378920421\",\n      \"discount_value\": null,\n      \"created_at\": \"2024-06-11T12:56:33Z\",\n      \"discount_details\": {\n        \"item_id\": 48188,\n        \"name\": \"Sandwich Test | AK\",\n        \"campaign_name\": \"Mass Campaign Offer\",\n        \"image\": \"IMAGE_URL_GOES_HERE\",\n        \"points\": null,\n        \"base_amount\": null,\n        \"description\": \"\",\n        \"item_properties\": \"\",\n        \"meta_detail\": null,\n        \"start_date_tz\": \"2024-05-31T13:25:08Z\",\n        \"end_date_tz\": \"2024-06-30T03:15:00Z\",\n        \"created_at\": \"2023-08-18T08:29:36Z\",\n        \"auto_select\": false\n      }\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "4209f8e8-fb40-493b-b685-0323557a4a37",
+          "name": "Bad Request - Required parameter missing or the value is empty: discount_basket_item_ids",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "discounts",
+                "unselect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 11111111,\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\",\n  \"discount_basket_item_ids\": [\n    469363,\n    541689,\n    489056\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "ef86cb3f-1608-41da-825a-13a3d4804f64",
+          "name": "Not Found - Example error responses:\n- User does not have an active basket\n- User not found",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "discounts",
+                "unselect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 11111111,\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\",\n  \"discount_basket_item_ids\": [\n    469363,\n    541689,\n    489056\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "be49e7ee-3bad-428e-8987-4db6b70caae6",
+          "name": "Unprocessable Entity - Example error responses:\n- Discount Items not found with any given ids\n- Guest is not allowed to select/unselect from basket as he/she is banned or deactivated from the Loyalty program\n- Unable to access the user’s Discount Basket, the Basket is currently locked",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "discounts",
+                "unselect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 11111111,\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\",\n  \"discount_basket_item_ids\": [\n    469363,\n    541689,\n    489056\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "f2df7688-8cd9-49c6-92d5-adb9d25a032e",
+      "name": "Batch Redemption Process (Redemptions 2.0)",
+      "request": {
+        "name": "Batch Redemption Process (Redemptions 2.0)",
+        "description": {
+          "content": "Evaluates the validity of all inputs and commits the redemption. \n\nPunchh evaluates eligibility during the Possible Redemptions call using the receipt details provided (item name, price, quantity, identifiers, etc.). During the Batch Redemption Process call, Punchh revalidates the same receipt to ensure the qualifying conditions are still met before honoring the redemption. \n\nIf any item attributes change between the two calls, Punchh may be unable to match the qualifying items, which can cause the Batch Redemption Process call to fail or return a different result—even if the Possible Redemptions call was successful.\n\n<b>NOTE: When processing a redemption, DO NOT include the `query` parameter in the API request.</b> Use this parameter only to check for possible redemptions.\n\nAdditional behavior:\n - For orders placed for a future date, the guest’s loyalty account balance is evaluated on the order commit date (sysdate), not on the scheduled pickup or delivery date.\n - Locks the user's discount basket using a unique identifier `external_uid` generated by your application for the transaction when reward locking is enabled in the Punchh platform for the business. Locking the discount basket prevents other channels from creating simultaneous transactions or modifying the discount basket. See [Discount Basket Locking Developer Guide](/docs/dev-portal-developer-resources/d7b83074c9f23-redemptions-2-0-discount-basket-locking). You must log in to the developer portal to access the developer guide.\n\nWhen the Batch Redemption Process API commits the redemption, one of the following actions may occur based on the discount type:\n - Loyalty points are deducted from the guest account when `discount_type` = \"redeemable\" or \"card_completion\"\n - The reward is debited from the guest account when `discount_type` = \"reward\"\n - Banked rewards / currency are deducted from the guest’s loyalty account when `discount_type` = \"discount_amount\"",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "pos",
+            "batch_redemptions"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+            "key": "User-Agent",
+            "value": "IntegratorName/IntegrationType/VersionNumber"
+          },
+          {
+            "disabled": false,
+            "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"user_id\": \"<integer>\",\n  \"line_items\": [\n    {\n      \"item_name\": \"<string>\",\n      \"item_qty\": \"<integer>\",\n      \"amount\": \"<float>\",\n      \"item_type\": \"<string>\",\n      \"item_id\": \"<integer>\",\n      \"item_family\": \"<string>\",\n      \"item_group\": \"<string>\",\n      \"serial_number\": \"<float>\"\n    },\n    {\n      \"item_name\": \"<string>\",\n      \"item_qty\": \"<integer>\",\n      \"amount\": \"<float>\",\n      \"item_type\": \"<string>\",\n      \"item_id\": \"<integer>\",\n      \"item_family\": \"<string>\",\n      \"item_group\": \"<string>\",\n      \"serial_number\": \"<float>\"\n    }\n  ],\n  \"receipt_datetime\": \"<dateTime>\",\n  \"subtotal_amount\": \"<float>\",\n  \"receipt_amount\": \"<float>\",\n  \"query\": \"<boolean>\",\n  \"punchh_key\": \"<string>\",\n  \"transaction_no\": \"<string>\",\n  \"external_uid\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "e3a07308-a419-4daf-875a-b166ef15686c",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "batch_redemptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": true,\n  \"user_id\": 11111111,\n  \"line_items\": [\n    {\n      \"item_name\": \"coffee\",\n      \"item_qty\": 1,\n      \"amount\": 10,\n      \"item_type\": \"M\",\n      \"item_id\": 330,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 1\n    },\n    {\n      \"item_name\": \"pizza\",\n      \"item_qty\": 1,\n      \"amount\": 20,\n      \"item_type\": \"M\",\n      \"item_id\": 331,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 2\n    }\n  ],\n  \"receipt_datetime\": \"2019-04-11T14:14:07+05:30\",\n  \"subtotal_amount\": 100,\n  \"receipt_amount\": 100,\n  \"punchh_key\": \"1111111111111\",\n  \"transaction_no\": \"11111111111\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"redemption_ref\": \"REDEMPTION_REF_GOES_HERE\",\n  \"success\": [\n    {\n      \"discount_basket_item_id\": 266118,\n      \"discount_amount\": 5,\n      \"redemption_id\": 130097719,\n      \"redemption_type\": \"Redemption\",\n      \"discount_type\": \"redeemable\",\n      \"discount_id\": 777658,\n      \"discount_value\": null,\n      \"message\": null,\n      \"qualified\": true,\n      \"remaining_balance\": null,\n      \"meta_data\": null,\n      \"discount_details\": {\n        \"item_id\": 777658,\n        \"name\": \"Flat $5 Off (Unlocks at 100 points)\",\n        \"image\": \"IMAGE_URL_GOES_HERE\",\n        \"points\": 100,\n        \"base_amount\": 5,\n        \"description\": \"\",\n        \"item_properties\": null,\n        \"meta_detail\": null,\n        \"start_date_tz\": null,\n        \"end_date_tz\": null,\n        \"created_at\": \"2022-09-08T18:41:16Z\",\n        \"auto_select\": true\n      },\n      \"qualified_items\": [\n        {\n          \"item_name\": \"Pizza1 DISCOUNT\",\n          \"item_qty\": 1,\n          \"amount\": 5,\n          \"item_type\": \"R\",\n          \"item_id\": 331,\n          \"item_family\": \"10\",\n          \"item_group\": \"gp\",\n          \"serial_number\": \"1.0\"\n        }\n      ]\n    }\n  ],\n  \"failures\": []\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "59c51a89-9b37-4b67-a319-9fb78ee7f025",
+          "name": "Bad Request - Example error responses:\n- Required parameter missing or the value is empty: line_items \n- Required parameter missing or the value is empty: item_name_0 \n- Required parameter missing or the value is empty: item_qty_0 \n- Required parameter missing or the value is empty: receipt_amount \n- Required parameter missing or the value is empty: id",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "batch_redemptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": true,\n  \"user_id\": 11111111,\n  \"line_items\": [\n    {\n      \"item_name\": \"coffee\",\n      \"item_qty\": 1,\n      \"amount\": 10,\n      \"item_type\": \"M\",\n      \"item_id\": 330,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 1\n    },\n    {\n      \"item_name\": \"pizza\",\n      \"item_qty\": 1,\n      \"amount\": 20,\n      \"item_type\": \"M\",\n      \"item_id\": 331,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 2\n    }\n  ],\n  \"receipt_datetime\": \"2019-04-11T14:14:07+05:30\",\n  \"subtotal_amount\": 100,\n  \"receipt_amount\": 100,\n  \"punchh_key\": \"1111111111111\",\n  \"transaction_no\": \"11111111111\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "cc565f3d-5edf-4684-b018-9fb301d854a8",
+          "name": "Not Found - User not found",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "batch_redemptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": true,\n  \"user_id\": 11111111,\n  \"line_items\": [\n    {\n      \"item_name\": \"coffee\",\n      \"item_qty\": 1,\n      \"amount\": 10,\n      \"item_type\": \"M\",\n      \"item_id\": 330,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 1\n    },\n    {\n      \"item_name\": \"pizza\",\n      \"item_qty\": 1,\n      \"amount\": 20,\n      \"item_type\": \"M\",\n      \"item_id\": 331,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 2\n    }\n  ],\n  \"receipt_datetime\": \"2019-04-11T14:14:07+05:30\",\n  \"subtotal_amount\": 100,\n  \"receipt_amount\": 100,\n  \"punchh_key\": \"1111111111111\",\n  \"transaction_no\": \"11111111111\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "8520e8f9-ad3a-423b-a047-960a1619a8f5",
+          "name": "Unprocessable Entity - Example error responses:\n- Processing limit for discounts of loyalty type has been reached\n- Redemption limit reached\n- No Basket found\n- Points Balance is insufficient to process request\n- Your current loyalty program configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue. \n- Invalid Receipt Amount\n- Unable to access the user’s Discount Basket, the Basket is currently locked",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "batch_redemptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": true,\n  \"user_id\": 11111111,\n  \"line_items\": [\n    {\n      \"item_name\": \"coffee\",\n      \"item_qty\": 1,\n      \"amount\": 10,\n      \"item_type\": \"M\",\n      \"item_id\": 330,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 1\n    },\n    {\n      \"item_name\": \"pizza\",\n      \"item_qty\": 1,\n      \"amount\": 20,\n      \"item_type\": \"M\",\n      \"item_id\": 331,\n      \"item_family\": \"10\",\n      \"item_group\": \"gp\",\n      \"serial_number\": 2\n    }\n  ],\n  \"receipt_datetime\": \"2019-04-11T14:14:07+05:30\",\n  \"subtotal_amount\": 100,\n  \"receipt_amount\": 100,\n  \"punchh_key\": \"1111111111111\",\n  \"transaction_no\": \"11111111111\",\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "38d4e4f4-25dc-409c-b794-b347fbb0fb21",
+      "name": "Void Redemption (Redemptions 2.0)",
+      "request": {
+        "name": "Void Redemption (Redemptions 2.0)",
+        "description": {
+          "content": "Voids the complete discount basket. The value of `redemption_ref` must be appended to the URL path. You can get the `redemption_ref` value from the [Get Active Discount Basket](/docs/dev-portal-pos/apis/redemptions-2-0-new-api/paths/~1api~1pos~1discounts~1active/get) API response.\n\nExample:\n\n`DELETE https://{base}/api/auth/batch_redemptions/aBCDEfghIJkL-MN1opR`\n\nNote: It will not support partial voiding of a discount basket.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "pos",
+            "batch_redemptions",
+            ":redemption_ref"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "<string>",
+              "key": "redemption_ref",
+              "description": "(Required) Transaction level identifier for all discount selections<br>Example - aBCDEfghIJkL-MN1opR"
+            }
+          ]
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+            "key": "User-Agent",
+            "value": "IntegratorName/IntegrationType/VersionNumber"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "DELETE",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"user_id\": \"<integer>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "7120f2cb-bb47-4b51-a4d1-8559e19e2c56",
+          "name": "Accepted - Success Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "batch_redemptions",
+                ":redemption_ref"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "redemption_ref",
+                  "description": "(Required) Transaction level identifier for all discount selections<br>Example - aBCDEfghIJkL-MN1opR"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 11111111\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Accepted",
+          "code": 202,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        },
+        {
+          "id": "8c6fb85c-f375-4018-9409-c6c14be27245",
+          "name": "Bad Request - Required parameter missing or the value is empty: id ",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "batch_redemptions",
+                ":redemption_ref"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "redemption_ref",
+                  "description": "(Required) Transaction level identifier for all discount selections<br>Example - aBCDEfghIJkL-MN1opR"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 11111111\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "61184ed3-5c74-4235-9cf9-7cb8a3ae7b4f",
+          "name": "Not Found - User not found",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "batch_redemptions",
+                ":redemption_ref"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "redemption_ref",
+                  "description": "(Required) Transaction level identifier for all discount selections<br>Example - aBCDEfghIJkL-MN1opR"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 11111111\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "9eda98a5-9623-4eb9-9890-acc3d8875ec1",
+          "name": "The checkin associated with the external_uid has already been committed and cannot be voided.",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "batch_redemptions",
+                ":redemption_ref"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "redemption_ref",
+                  "description": "(Required) Transaction level identifier for all discount selections<br>Example - aBCDEfghIJkL-MN1opR"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 11111111\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Gone",
+          "code": 410,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": {\n    \"message\": \"Checkin associated with external_uid 9020-202-102252700 has been committed.\",\n    \"code\": \"commited\"\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "d053e5b1-46e6-4e55-a8a3-4bc7da0fcce8",
+          "name": "Unprocessable Entity - Example error responses:\n- Your current loyalty program configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue.  \n- No Basket found\n",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "batch_redemptions",
+                ":redemption_ref"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "redemption_ref",
+                  "description": "(Required) Transaction level identifier for all discount selections<br>Example - aBCDEfghIJkL-MN1opR"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 11111111\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "13e1b911-fe08-4647-8fa1-44e5b274ad40",
+      "name": "Get Active Discount Basket (Redemptions 2.0)",
+      "request": {
+        "name": "Get Active Discount Basket (Redemptions 2.0)",
+        "description": {
+          "content": "- Get a list of discount details that have been selected by a guest. \n- Only one active basket can exist in the system for a particular guest.\n- If a discount expires after being added to the discount basket, it is removed from the discount basket. When you make a call to the API, it validates the discounts added to the discount basket. If one or more discounts are found to be honored, expired, perished, or archived, the API returns an error message indicating that these discounts cannot be honored. The API lists the invalid discounts in the `discount_basket_items` object with a message stating that the discount is invalid and returns a null value in the `discount_details` object.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "pos",
+            "discounts",
+            "active"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+            "key": "User-Agent",
+            "value": "IntegratorName/IntegrationType/VersionNumber"
+          },
+          {
+            "disabled": false,
+            "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"user_id\": \"<integer>\",\n  \"external_uid\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "9b7c689b-3983-43fc-8849-a2ec3cc60248",
+          "name": "OK",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "discounts",
+                "active"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 11111111,\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"redemption_ref\": \"REDEMPTION_REF_GOES_HERE\",\n  \"locked\": true,\n  \"created_at\": null,\n  \"discount_basket_items\": [\n    {\n      \"discount_basket_item_id\": 4699,\n      \"discount_type\": \"reward\",\n      \"discount_id\": \"33703164\",\n      \"discount_value\": null,\n      \"created_at\": \"2022-08-25T10:03:48Z\",\n      \"discount_details\": {\n        \"item_id\": 777658,\n        \"name\": \"Flat $5 Off (Unlocks at 100 points)\",\n        \"campaign_name\": \"Mass Campaign Offer\",\n        \"image\": \"IMAGE_URL_GOES_HERE\",\n        \"points\": 100,\n        \"base_amount\": 5,\n        \"description\": \"\",\n        \"item_properties\": null,\n        \"meta_detail\": null,\n        \"start_date_tz\": null,\n        \"end_date_tz\": null,\n        \"created_at\": \"2022-09-08T18:41:16Z\",\n        \"auto_select\": true\n      }\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "0e8e2b07-8814-43eb-abdd-c951e1fff098",
+          "name": "Not Found - Example error responses:\n- User does not have an active basket\n- User not found",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "discounts",
+                "active"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 11111111,\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "6ada4b8b-e2c3-4d0a-a929-563159668aa5",
+          "name": "Unprocessable Entity - Example error responses:\n- Your current loyalty program configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue.\n- Unable to access the user’s Discount Basket, the Basket is currently locked",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "discounts",
+                "active"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 11111111,\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "869e9c86-94a9-44c6-9830-bc9b35e9c804",
+      "name": "Unlock Discount Basket (Redemptions 2.0)",
+      "request": {
+        "name": "Unlock Discount Basket (Redemptions 2.0)",
+        "description": {
+          "content": "When reward locking is enabled in the Punchh Platform, the guest's discount basket must be locked. An external ID will be required to lock the discount basket to prevent other channels from creating simultaneous transactions or modifying the discount basket. In this mode, the guest's discount basket must be locked when discounts are applied to a transaction, using a unique identifier `external_uid` specific to the transaction generated by your application.\n\nThe `external_uid` ensures that no modifications or updates are allowed by any other channel (e.g., web, mobile, etc.) except the application that initially locked the discount basket with the `external_uid`. Contact your Punchh representative to update this Punchh platform configuration setting.\n<!-- Cockpit > Redemptions > Multiple Redemptions > Enable Reward Locking --> \n\nIn some scenarios where a transaction is cancelled or when the guest modifies the order after the basket is locked, the guest's discount basket needs to be unlocked so that transactions can be processed for the guest via other channels (e.g., web, online ordering, etc.). To unlock the discount basket, the `external_uid` must be passed in the API request along with the guest's `user_id`.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api",
+            "pos",
+            "discounts",
+            "unlock"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+            "key": "User-Agent",
+            "value": "IntegratorName/IntegrationType/VersionNumber"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "PUT",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"user_id\": \"<integer>\",\n  \"external_uid\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "efc53849-3542-4210-affb-d8598e4964aa",
+          "name": "Discount Basket is unlocked successfully.",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "discounts",
+                "unlock"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 11111111,\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        },
+        {
+          "id": "e200f61c-3e3a-4fa3-ae86-7b76afe0d793",
+          "name": "Not Found - User not found",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "discounts",
+                "unlock"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 11111111,\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "9ea81913-4d35-42a9-9fe5-843699643793",
+          "name": "Unprocessable Entity - Example error responses:\n- Unable to find valid discount basket\n- Invalid Business Configuration. Please connect with your Customer Success representative for resolution of the issue. \n- Your current loyalty program configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue. \n- User does not have an active basket\n",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "pos",
+                "discounts",
+                "unlock"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) This is a combination of unique API location key as well as business key (UUID) as the Authorization header.",
+                "key": "Authorization",
+                "value": "Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to **application/json**.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).",
+                "key": "User-Agent",
+                "value": "IntegratorName/IntegrationType/VersionNumber"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 11111111,\n  \"external_uid\": \"EXTERNAL_UID_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://SERVER_NAME_GOES_HERE.punchh.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "54bdedb0-1bf6-453f-b887-64e574640db1",
+    "name": "Redemptions 2.0 (New) API - POS",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Redemptions 2.0 protocol has been designed to replace the legacy Redemptions 1.0 endpoints. The new protocol allows for the following features:\n\n- Single-scan flow support\n- Batching of redemptions to occur in a single API call\n- Stacked discounting\n- Proportional breakdown of discounted items\n- Item qualifier recycling\n- Enhance flexibility to redemption rules and processing orders\n\nThe Redemptions 2.0 protocol is not backward compatible with the [legacy Redemptions 1.0 endpoints](/docs/dev-portal-pos/apis/redemptions-1-0-legacy-api). Configurations within the Punchh platform are required, so please contact your Punchh representative for help before starting development.\n\nRedemptions 2.0 API endpoints\n- Based on the client-side interface on the POS side, add/remove discount and selection APIs in the `api/pos` namespace are available for the discount basket.    \n- The `api/pos/batch_redemptions` API endpoint allows multiple redemptions in a single API request based on Multiple Redemption configuration rules set for a particular business.\n\nFor more information, see [POS Module 6: Redemptions](/docs/dev-portal-pos/tutorials/modules/6-redemptions/overview).\n\nContact Support:\n Name: Punchh Dev Support",
+      "type": "text/plain"
+    }
+  }
+}

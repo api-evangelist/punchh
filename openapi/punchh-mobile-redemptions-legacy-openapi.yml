@@ -1,0 +1,1492 @@
+info:
+  title: Redemptions 1.0 (Legacy) API - Mobile
+  version: '1.0'
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+  description: For more information, see [Online Ordering Module 5 - Redemptions](/docs/dev-portal-online-ordering/80afbc759ded2-online-ordering-api-certification-tutorial-module-5-redemptions-overview).
+paths:
+  /api2/mobile/redemptions/{redemption_id}:
+    delete:
+      summary: Cancel Redemption (Redemptions 1.0)
+      operationId: delete-api2-mobile-redemptions
+      responses:
+        '200':
+          description: OK - Redemption successfully cancelled
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: string
+                    x-stoplight:
+                      id: m5t0iepx0dqg5
+              examples:
+                Sending an invalid redemption ID:
+                  value:
+                    errors: This Redemption is an invalid redemption or It is not for this guest
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: string
+                    x-stoplight:
+                      id: p3shfxdabejn2
+              examples:
+                ' Cancelling an expired redemption':
+                  value:
+                    errors: This Redemption cannot be cancelled because the Redemption code has been expired
+                Cancelling a cancelled redemption:
+                  value:
+                    errors: Redemption cancellation failed. This redemption has already been cancelled.
+                Cancelling an honored redemption:
+                  value:
+                    errors: This Redemption cannot be cancelled because the Redemption code has been honoured
+                      / redeemed
+      description: "Allows users to cancel their redemption if it has not been processed, enabling them\
+        \ to select a new one without waiting for the redemption code to expire. Once the redemption is\
+        \ processed, the user cannot cancel it.\n\nThe `cancel_redemption` response parameter in the [Program\
+        \ Meta](/docs/dev-portal-mobile/2617bed9b0e8e-program-meta) API indicates whether the user can\
+        \ revoke (cancel) the generated redemption code from the brand's app. This is controlled by hiding\
+        \ or displaying the cancel redemption button on the brand's app. Contact your Punchh representative\
+        \ to update this Punchh platform configuration.\n<!--Whitelabel > Mobile Configuration > Loyalty\
+        \ > Cancel Redemption-->\n\n<b> Cancel Redemption Failure Scenarios</b>\n\nThe API returns an\
+        \ error if the discount associated with the redemption you want to cancel is invalid, already\
+        \ redeemed/honored, cancelled, or expired. \n\n<b>View Cancelled Redemption Status </b>\n\nThe\
+        \ Punchh platform displays the cancelled redemption on the user’s timeline and in the Account\
+        \ History tab. \n\nIf you have a redemption code for the cancelled redemption, you can use the\
+        \ [Search Redemption Code](/docs/dev-portal-platform-functions/ac8e06639a62c-search-redemption-code)\
+        \ API to verify the status of the cancelled redemption. "
+      parameters:
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/punchh-app-device-id'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Accept-Language'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  x-stoplight:
+                    id: htkodzobkpi6f
+                  description: OAuth client ID provided by the business
+              required:
+              - client
+            examples:
+              Example:
+                value:
+                  client: CLIENT_GOES_HERE
+                  redemption_id: 490636366
+        description: ''
+    parameters:
+    - schema:
+        type: integer
+        format: int64
+      name: redemption_id
+      in: path
+      required: true
+      description: Redemption ID returned when the redemption is created
+      x-stoplight:
+        id: 90fd89b67ddc1
+  /api2/mobile/redemptions/banked_currency:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/redemption_details'
+              examples:
+                default:
+                  value:
+                    redemption_status: redeemable
+                    created_at: '2016-05-25T06:41:37-04:00'
+                    redeemable_id: null
+                    location_id: 304361
+                    redemption_image_url: IMAGE_URL_GOES_HERE
+                    redemption_message: Message associated with the redemption.
+                    updated_at: '2016-05-25T06:41:37-04:00'
+                    redeemable_description: ''
+                    redemption_id: 1822896
+                    redemption_tracking_code: '7246338'
+                    expiring_at: '2016-05-25T08:41:37-04:00'
+                    redeemable_name: null
+                    campaign_name: Mass Campaign Offer
+                    redeemed_value: '10'
+        '400':
+          description: ''
+      summary: Create Redemption Using Banked Currency (Redemptions 1.0)
+      description: Creates a redemption using a currency amount. The amount is deducted from a user's
+        available banked currency.
+      operationId: mobile_create_redemption_using_banked_currency
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/punchh-app-device-id'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: a7be5bbb2906d
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                banked_currency:
+                  type: number
+                  format: double
+                  description: The amount of banked currency with which a redemption code has to be created
+                location_id:
+                  type: integer
+                  description: Location ID at which the redemption code is generated. If no location ID
+                    is provided, then it returns the ID of the default location.
+                latitude:
+                  type: string
+                  description: Latitude coordinate of the redemption location
+                longitude:
+                  type: string
+                  description: Longitude coordinate of the redemption location
+                gps_accuracy:
+                  type: integer
+                  description: Accuracy of a user's device GPS
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  banked_currency: 10
+                  location_id: 304155
+                  latitude: '26.9167509'
+                  longitude: '75.8136926'
+                  gps_accuracy: 27
+  /api2/mobile/redemptions/visits:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/redemption_details'
+              examples:
+                default:
+                  value:
+                    redemption_status: redeemable
+                    created_at: '2016-05-25T06:41:37-04:00'
+                    redeemable_id: null
+                    location_id: 304361
+                    redemption_image_url: IMAGE_URL_GOES_HERE
+                    redemption_message: Message associated with the redemption.
+                    updated_at: '2016-05-25T06:41:37-04:00'
+                    redeemable_description: ''
+                    redemption_id: 1822896
+                    redemption_tracking_code: '7246338'
+                    expiring_at: '2016-05-25T08:41:37-04:00'
+                    redeemable_name: null
+                    campaign_name: Mass Campaign Offer
+                    redeemed_value: '10'
+        '400':
+          description: ''
+      summary: Create Redemption Using Visits (Redemptions 1.0)
+      description: Creates a redemption for an unredeemed card. This is for use with visit-based businesses.
+      operationId: mobile_create_redemption_using_visits
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/punchh-app-device-id'
+      x-stoplight:
+        id: 1ae3d27ce6a88
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                location_id:
+                  type: integer
+                  description: Location ID at which a user wants to do the redemption. If a particular
+                    location ID is provided in the request, the redemption will be valid only at that
+                    location and will not be possible at any other.
+                latitude:
+                  type: string
+                  description: Latitude coordinate of the redemption location. Must be provided if location_id
+                    is not passed as a parameter.
+                longitude:
+                  type: string
+                  description: Longitude coordinate of the redemption location. Must be provided if location_id
+                    is not passed as a parameter.
+                gps_accuracy:
+                  type: integer
+                  description: Accuracy of a user's device GPS
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  location_id: '304155'
+                  latitude: 26.9167509
+                  longitude: 75.8136926
+                  gps_accuracy: 27
+  /api2/mobile/redemptions/redeemable:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/redemption_details'
+              examples:
+                default:
+                  value:
+                    redemption_status: redeemable
+                    created_at: '2016-05-25T06:50:02-05:00'
+                    redeemable_id: 41
+                    location_id: 304361
+                    redemption_image_url: IMAGE_URL_GOES_HERE
+                    redemption_message: Redeem your free Sandwich, with purchase of chips and drink
+                    updated_at: '2016-05-25T06:50:02-05:00'
+                    redeemable_description: ''
+                    redemption_id: 1818919
+                    redemption_tracking_code: '8723640'
+                    expiring_at: '2016-05-25T08:50:02-05:00'
+                    redeemable_name: The Sandwich
+                    campaign_name: Mass Campaign Offer
+                    redeemed_value: '0'
+        '400':
+          description: ''
+      summary: Create Redemption Using Redeemable (Redemptions 1.0)
+      description: Creates a redemption for a redeemable based on a user's available loyalty points
+      operationId: mobile_create_redemption_using_redeemable
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/punchh-app-device-id'
+      x-stoplight:
+        id: d491967b73fc7
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                reedemable_id:
+                  type: number
+                  format: double
+                  description: ID of the redeemable used to create a redemption code
+                location_id:
+                  type: integer
+                  description: Location ID at which a user wants to do the redemption. If a particular
+                    location ID is provided in the request, the redemption will be valid only at that
+                    location and will not be possible at any other.
+                latitude:
+                  type: string
+                  description: Latitude coordinate of the redemption location. Must be provided if location_id
+                    is not passed as a parameter.
+                longitude:
+                  type: string
+                  description: Longitude coordinate of the redemption location. Must be provided if location_id
+                    is not passed as a parameter.
+                gps_accuracy:
+                  type: integer
+                  description: Accuracy of a user's device GPS
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  redeemable_id: 1102
+                  location_id: '304155'
+                  latitude: 26.9167509
+                  longitude: 75.8136926
+                  gps_accuracy: 27
+  /api2/mobile/redemptions/reward:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/redemption_details'
+              examples:
+                default:
+                  value:
+                    redemption_status: redeemable
+                    created_at: '2016-05-25T06:55:04-05:00'
+                    redeemable_id: 75
+                    location_id: 304361
+                    redemption_image_url: IMAGE_URL_GOES_HERE
+                    redemption_message: Redeem your Free Bag of Chips
+                    updated_at: '2016-05-25T06:55:04-05:00'
+                    redeemable_description: ''
+                    redemption_id: 1818920
+                    redemption_tracking_code: '1809897'
+                    expiring_at: '2016-05-25T08:55:04-05:00'
+                    redeemable_name: Bag of Chips
+                    campaign_name: Mass Campaign Offer
+                    redeemed_value: null
+        '400':
+          description: ''
+      summary: Create Redemption Using Reward ID (Redemptions 1.0)
+      description: Creates a redemption for a reward that has been given to a user (e.g., through a campaign).
+      operationId: mobile_create_redemption_using_reward_id
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/punchh-app-device-id'
+      x-stoplight:
+        id: 2969c78154a17
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                reward_id:
+                  type: integer
+                  description: 'The ID of the reward for which the redemption code has to be created
+
+                    '
+                  format: int64
+                location_id:
+                  type: integer
+                  description: Location ID at which a user wants to do the redemption. If a particular
+                    location ID is provided in the request, the redemption will be valid only at that
+                    location and will not be possible at any other.
+                latitude:
+                  type: string
+                  description: Latitude coordinate of the redemption location. Must be provided if a location_id
+                    is not passed as a parameter.
+                longitude:
+                  type: string
+                  description: Longitude coordinate of the redemption location. Must be provided if a
+                    location_id is not passed as a parameter.
+                gps_accuracy:
+                  type: integer
+                  description: Accuracy of a user's device GPS
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  reward_id: 5167827
+                  location_id: '304155'
+                  latitude: 26.9167509
+                  longitude: 75.8136926
+                  gps_accuracy: 27
+  /api2/mobile/redemptions/applicable_offers:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    menu_items:
+                      $ref: '#/components/schemas/Menu-items'
+                    discount_amount:
+                      type: integer
+                      description: Discount amount associated with the reward
+                    reward:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          enum:
+                          - YYYY-MM-DDThh:mm:ssZ
+                          format: date-time
+                          description: Date/time when the reward was created for a user in the system
+                        end_date_tz:
+                          type: string
+                          enum:
+                          - YYYY-MM-DDThh:mm:ssZ
+                          format: date-time
+                          description: Date/time when the reward offer ends
+                        start_date_tz:
+                          type: string
+                          enum:
+                          - YYYY-MM-DDThh:mm:ssZ
+                          format: date-time
+                          description: Date/time when the reward offer starts
+                        updated_at:
+                          type: string
+                          enum:
+                          - YYYY-MM-DDThh:mm:ssZ
+                          format: date-time
+                          description: Date/time when the reward offer was udpated
+                        id:
+                          type: integer
+                          format: int64
+                          description: Unique ID of the reward
+                        image:
+                          type: string
+                          description: URL of the image depicting the reward
+                        status:
+                          type: string
+                          description: Status of the reward (e.g., "unredeemed", "honoured", "expired")
+                        points:
+                          type: integer
+                          description: Points needed for the reward
+                        discount_amount:
+                          type: integer
+                          description: Discount amount associated with the reward
+                        description:
+                          type: string
+                          description: Description of the reward
+                        name:
+                          type: string
+                          description: Name of the reward
+                        redeemable_properties:
+                          type: string
+                          description: Properties of the redeemable
+                      required:
+                      - name
+              examples:
+                default:
+                  value:
+                  - menu_items:
+                    - item_name: Adult
+                      item_qty: 1
+                      item_amount: 100
+                      menu_item_type: M
+                      menu_item_id: '1'
+                      menu_family: '1'
+                      menu_major_group: '1'
+                      serial_number: '1.1'
+                    discount_amount: 2
+                    reward:
+                      created_at: '2019-04-02T22:46:32-07:00'
+                      end_date_tz: null
+                      start_date_tz: '2019-04-02T22:46:32-07:00'
+                      updated_at: '2019-04-02T22:46:32-07:00'
+                      id: 2
+                      image: IMAGE_URL_GOES_HERE
+                      status: unredeemed
+                      points: 0
+                      discount_amount: 0
+                      description: ''
+                      name: 2% off Subtotal Amount
+                      redeemable_properties: ''
+                  - menu_items:
+                    - item_name: Adult
+                      item_qty: 1
+                      item_amount: 100
+                      menu_item_type: M
+                      menu_item_id: '1'
+                      menu_family: '1'
+                      menu_major_group: '1'
+                      serial_number: '1.1'
+                    discount_amount: 2
+                    reward:
+                      created_at: '2019-04-04T04:00:34-07:00'
+                      end_date_tz: null
+                      start_date_tz: '2019-04-04T04:00:34-07:00'
+                      updated_at: '2019-04-04T04:00:34-07:00'
+                      id: 3
+                      image: IMAGE_URL_GOES_HERE
+                      status: unredeemed
+                      points: 0
+                      discount_amount: 2
+                      description: $2 Off Your Order. Participating locations only.
+                      name: $2 Off Your Order
+                      redeemable_properties: ''
+                  - menu_items:
+                    - item_name: Adult
+                      item_qty: 1
+                      item_amount: 100
+                      menu_item_type: M
+                      menu_item_id: '1'
+                      menu_family: '1'
+                      menu_major_group: '1'
+                      serial_number: '1.1'
+                    discount_amount: 2
+                    reward:
+                      created_at: '2019-04-04T04:01:03-07:00'
+                      end_date_tz: null
+                      start_date_tz: '2019-04-04T04:01:03-07:00'
+                      updated_at: '2019-04-04T04:01:03-07:00'
+                      id: 4
+                      image: IMAGE_URL_GOES_HERE
+                      status: unredeemed
+                      points: 0
+                      discount_amount: 0
+                      description: ''
+                      name: 2% off Subtotal Amount
+                      redeemable_properties: ''
+                  - menu_items:
+                    - item_name: Adult
+                      item_qty: 1
+                      item_amount: 100
+                      menu_item_type: M
+                      menu_item_id: '1'
+                      menu_family: '1'
+                      menu_major_group: '1'
+                      serial_number: '1.1'
+                    discount_amount: 2
+                    reward:
+                      created_at: '2019-04-15T10:48:40-07:00'
+                      end_date_tz: null
+                      start_date_tz: '2019-04-15T10:48:40-07:00'
+                      updated_at: '2019-04-15T10:48:40-07:00'
+                      id: 14
+                      image: IMAGE_URL_GOES_HERE
+                      status: unredeemed
+                      points: 0
+                      discount_amount: 0
+                      description: ''
+                      name: 2% off Subtotal Amount
+                      redeemable_properties: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      location_id:
+                        type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      location_id: Required parameter missing or the value is empty.
+      summary: List Applicable Offers (Redemptions 1.0)
+      description: Returns applicable offers based on the check details.
+      operationId: mobile_list_applicable_offers
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/punchh-app-device-id'
+      x-stoplight:
+        id: f09cf9b1e970a
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                menu_items:
+                  $ref: '#/components/schemas/menu-items'
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                amount:
+                  type: string
+                  description: Order amount based on items added to the cart
+                location_id:
+                  type: string
+                  description: Location ID of the store
+                channel:
+                  type: string
+                  x-stoplight:
+                    id: zazefztzioqd5
+                  description: 'Channel through which the order was placed. If a channel is defined in
+                    the Receipt Qualifier condition under Offers > Qualification Criteria in the Punchh
+                    platform, the API returns the list of offers applicable to the transaction after evaluating
+                    the value set for the channel. Possible values: mobile, chatbot.'
+                  enum:
+                  - ' mobile'
+                  - ' chatbot'
+              required:
+              - client
+              - channel
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  menu_items:
+                  - item_name: Adult
+                    item_qty: 1
+                    item_amount: 100
+                    menu_item_type: M
+                    menu_item_id: '1'
+                    menu_family: '1'
+                    menu_major_group: '1'
+                    serial_number: '1.1'
+                  amount: '100'
+                  location_id: LOCATION_GOES_HERE
+                  channel: mobile
+        description: ''
+x-stoplight:
+  id: 09d60f8827030
+openapi: 3.1.1
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+components:
+  schemas:
+    menu-items:
+      type: array
+      title: Menu Items (Array Object)
+      x-stoplight:
+        id: 9.481325062e+24
+      description: This object used in the API request contains one or more menu items added to an order.
+        It is mandatory to provide an array of menu items. See [How To Send Menu Items to Punchh](/docs/dev-portal-pos/5277d762b8c6d-how-to-send-menu-items-to-punchh)
+      items:
+        x-stoplight:
+          id: nm03po2b4r93z
+        type: object
+        properties:
+          item_name:
+            type: string
+            x-stoplight:
+              id: jmflbednli6v9
+            description: Name of the menu item
+          item_qty:
+            type: integer
+            x-stoplight:
+              id: 408cfdtcyc797
+            description: Quantity ordered by the customer. If the item is a modifier (such as extra cheese
+              on a pizza base item), make sure the quantity reflects the total number of base items included.
+              For example, if you have a pizza base item with a certain item ID and a quantity of two,
+              and the pizzas each have an extra cheese modifier added to them, then the modifier quantity
+              should be two to account for the modifier across both pizzas. This applies only to base
+              items of the same ID. If different base items include the same modifier, you do not need
+              to sum the modifiers.
+          item_amount:
+            type: integer
+            x-stoplight:
+              id: m45aidhdgirx2
+            description: The total price of the line item or the amount of the discount that you applied
+              to an item. In case of multiple quantities, this means the sum total of all item amounts.
+              Always represent this value as a positive number, even when the item is a discount.
+          menu_item_type:
+            type: string
+            x-stoplight:
+              id: jcukxr2staydg
+            description: 'The classification of the item. Choose from the following types based on the
+              item:
+
+
+              M - Menu item ( + or - )
+
+
+              D - Discount (negative). Either internal or Punchh will always evaluate lines as ( - ) regardless
+              of the sign assigned in the API call
+
+
+              S - Service item. Any item representing money received that is not a sale. For example,
+              service charges, delivery fees, tips, purchase of gift cards/certificates, etc.
+
+
+              T - Tax item. Taxes of all sorts
+
+
+              P - Payment item. Visa, MasterCard, cash, gift card/certificate (when used to pay for the
+              order)'
+          menu_item_id:
+            type: string
+            x-stoplight:
+              id: u2a3mb0k3cdkd
+            description: Unique identifier for the item
+          menu_family:
+            type: string
+            x-stoplight:
+              id: fkaavtr3h7fh0
+            description: The family that the item belongs to. The family is the subcategory for the item.
+              Even though the parameter is required, you can pass it in the request with a blank value.
+              You can leave this blank if the item does not belong to a family.
+          menu_major_group:
+            type: string
+            x-stoplight:
+              id: y8u5yhex6g0my
+            description: The major group that the item belongs to. The major group is the parent category
+              for the item. Even though the parameter is required, you can pass it in the request with
+              a blank value. You can leave this blank if the item does not belong to a major group.
+          serial_number:
+            type: string
+            x-stoplight:
+              id: zjbamqkfait4d
+            description: A serialized number that differentiates distinct menu items on a receipt. The
+              purpose of this field is to identify which items on the receipt are base items and which
+              items are modifiers to the base items. For example, a main menu item (such as pizza) may
+              have serial number "1.0", and the associated modifiers (such as "extra cheese", "olives",
+              and "jalapenos") may have serial numbers "1.1", "1.2", and "1.3" respectively. Serialization
+              is limited to one decimal point, so you can only modify the base item. You cannot modify
+              a modifier with 1.x.x, and so on
+        required:
+        - item_name
+        - item_qty
+        - item_amount
+        - menu_item_type
+        - menu_item_id
+        - menu_family
+        - menu_major_group
+        - serial_number
+    Menu-items:
+      title: Menu Items (Array Object)
+      x-stoplight:
+        id: gye960zwy1da1
+      type: array
+      description: Returns a list of menu items in the API response
+      items:
+        x-stoplight:
+          id: s3frha7eqpgt6
+        type: object
+        properties:
+          item_name:
+            type: string
+            x-stoplight:
+              id: 2lmr1qb7qc0c6
+            description: Name of the menu item
+          item_qty:
+            type: string
+            x-stoplight:
+              id: 6hu133eoce1d8
+            description: Quantity ordered by the customer. If the item is a modifier (such as extra cheese
+              on a pizza base item), the quantity reflects the total number of base items included. For
+              example, if you have a pizza base item with a certain item ID and a quantity of two, and
+              the pizzas each have an extra cheese modifier added to them, then the modifier quantity
+              should be two to account for the modifier across both pizzas. This applies only to base
+              items of the same ID. If different base items include the same modifier, you do not need
+              to sum the modifiers.
+          item_amount:
+            type: number
+            x-stoplight:
+              id: aw4eeoh573sz7
+            format: float
+            description: The total price of the line item or the amount of the discount that you applied
+              to an item. In case of multiple quantities, this means the sum total of all item amounts.
+              This value is always represented as a positive number, even when the item is a discount.
+          menu_item_type:
+            type: string
+            x-stoplight:
+              id: enunk8akfoxzy
+            description: 'The classification based on the item type:
+
+
+              M - Menu item ( + or - )
+
+
+              D - Discount (negative). Either internal or Punchh will always evaluate lines as ( - ) regardless
+              of the sign assigned in the API call
+
+
+              S - Service item. Any item representing money received that is not a sale. For example,
+              service charges, delivery fees, tips, purchase of gift cards/certificates, etc.
+
+
+              T - Tax item. Taxes of all sorts
+
+
+              P - Payment item. Visa, MasterCard, cash, gift card/certificate (when used to pay for the
+              order)'
+          menu_item_id:
+            type: integer
+            x-stoplight:
+              id: ov46iodowb7or
+            description: Unique identifier for the item
+          menu_family:
+            type: string
+            x-stoplight:
+              id: jzo0cf5gze9mr
+            description: The family that the item belongs to. The family is the subcategory for the item.
+              A blank value means the item does not belong to a family.
+          menu_major_group:
+            type: string
+            x-stoplight:
+              id: 2aareglzw7uxl
+            description: The major group that the item belongs to. The major group is the parent category
+              for the item. A blank value means the item does not belong to a major group.
+          serial_number:
+            type: string
+            x-stoplight:
+              id: tcmpew6cokyuv
+            description: A serialized number that differentiates distinct menu items on a receipt. The
+              value identifies which items on the receipt are base items and which items are modifiers
+              to the base items. For example, a main menu item (such as pizza) may have serial number
+              "1.0", and the associated modifiers (such as "extra cheese", "olives", and "jalapenos")
+              may have serial numbers "1.1", "1.2", and "1.3" respectively. Serialization is limited to
+              one decimal point, so you can only modify the base item. You cannot modify a modifier with
+              1.x.x, and so on.
+    redemption_details:
+      type: object
+      description: 'The `redemption_details` object returns information about a redemption done by a user.
+
+        '
+      title: Redemption Details (Object)
+      x-stoplight:
+        id: 95eb8fd9df0bf
+      properties:
+        redemption_status:
+          type: string
+          description: 'Status of the redemption. The values returned can be:
+
+
+            - redeemable: The redemption can be redeemed at the POS.
+
+
+            - expired: The redemption has expired and becomes unusable for the user.
+
+
+            - honoured: The redemption has already been processed successfully and redeemed by the user
+            at the POS.
+
+
+            - cancelled: The redemption can be voided by a user at the POS in case a redemption is done
+            by mistake and the user wants to cancel it.'
+        created_at:
+          type: string
+          description: 'Date/time when the redemption was created in the system
+
+            '
+        redeemable_id:
+          type: integer
+          description: 'Unique ID of the redeemable
+
+            '
+        redeemable_name:
+          type: string
+          description: 'Name of the redeemable
+
+            '
+        redeemed_value:
+          type: string
+          description: 'In case of a business with banked_currency, a currency value will be returned.
+            For example, a value of 10 would mean $10.
+
+
+            In case of a business without banked_currency, points will be returned. For example, a value
+            of 10 would mean 10 points.'
+        redemption_image_url:
+          type: string
+          description: 'URL of the image depicting the redeemable. It can be displayed in the app.
+
+            '
+        redemption_message:
+          type: string
+          description: 'A descriptive message that tells the user what has been redeemed
+
+            '
+        redeemable_description:
+          type: string
+          description: 'Description of the redeemable
+
+            '
+        updated_at:
+          type: string
+          description: 'Date/time at which the redemption was updated in the system
+
+            '
+        redemption_id:
+          type: integer
+          format: int64
+          description: 'Unique ID of the redemption
+
+            '
+        redemption_tracking_code:
+          type: string
+          description: 'Code that a user must submit at the POS to receive the redeemed reward
+
+            '
+        expiring_at:
+          type: string
+          description: Date/time when the redemption_tracking_code expires and the user cannot use it
+            at the POS
+        location_id:
+          type: integer
+          description: Location ID at which the redemption code is generated. If no location ID is provided,
+            then it returns the ID of the default location.
+        campaign_name:
+          type: string
+          x-stoplight:
+            id: ewheg639gdb0y
+          description: Name of the campaign through which the guest received the offer
+  parameters:
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the
+        API call
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    client:
+      schema:
+        type: string
+      name: client
+      in: query
+      description: OAuth client ID provided by the business.
+    Accept-Timezone:
+      schema:
+        type: string
+        default: Etc/UTC
+      name: new
+      in: header
+    punchh-app-device-id:
+      schema:
+        type: string
+        default: APP_DEVICE_ID_GOES_HERE
+      name: punchh-app-device-id
+      in: header
+      required: true
+      description: The app device ID helps Punchh identify each device so that certain rewards can be
+        awarded individually to each device instead of per user. For example, the sign-up reward is given
+        to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from
+        a single device to get rewards. It should not change even if the user resets a device. See the
+        [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header)
+        to generate the punchh-app-device-id header.
+    User-Agent:
+      schema:
+        type: string
+        default: AppIdentifier/VersionNumber/BuildNumber(OS_Type)
+      name: User-Agent
+      in: header
+      required: true
+      description: Used to Identify the software, device, and application initiating the request, providing
+        information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+  responses:
+    Gift_card_object:
+      description: '# "gift_card" Object
+
+
+
+        |Attribute|Data Type|Description
+
+        |----------|---------|----------
+
+        |`card_background_image`|String|URL of the image which is displayed as the Gift Card Background
+        in the business'' app.
+
+        |`card_number`|String|Unique Gift Card number as issued by the Gift Card Processor (e.g. Aloha,
+        Vantiv, Valutec etc.) used by the business.
+
+        |`epin`|String|Security Pin associated with Gift Card. A ''NULL'' value signifies there is no
+        `epin` is associated with the Gift Card.
+
+        |`usb_scannable_card_number`|String|Easily scannable form of a gift card''s number by adding ~
+        and ^ as prefix and suffix respectively to the gift card number. This is done to avoid trouble
+        at certain POS systems while scanning the QR code.
+
+        |`created_at`|Timestamp|Datetime when the gift card was created in the system in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+        format.
+
+        |`design_id`|Integer|Design ID is the identification of  a particular gift card design selected
+        by the user while purchasing a gift card.
+
+        |`preferred`|Boolean|A "true" value for a gift card indicates that a user has selected it to be
+        the preferred gift card for payment.
+
+        |`name`|String|Name of the card that has been assigned by the user. In case of purchase of a gift
+        card from app, users cannot add name to that card. A "null" value signifies that a name has not
+        been added to the card. Name can be added later by using [Update Gift Card API](https://developers.punchh.com/v2/docs/update-gift-card).
+
+        |`last_fetched_amount`|Float |The balance amount of a gift card last fetched from the Gift Card
+        Processor.
+
+        |`last_fetched_at`|Timestamp|The last time when the balance amount of a gift card was fetched
+        from the Gift Card Processor. This indicates when it was cached.
+
+        |`status`|String|The status of a gift card. The only value exposed to a gift card in the app is
+        "active." Other statuses are maintained for internal tracking.
+
+        |`updated_at`|Timestamp|Datetime when the gift card was updated in the system in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+        format.
+
+        |[users](http://developers.punchh.com/v2/page/users-gift-card) |Object|An object which contains
+        a gift card user''s details such as user''s `user_id`, `first_name` etc. This returns details
+        of all the users who are associated with a gift card.
+
+        |`uuid`|String|Unique ID of the gift card issued by and maintained in the Punchh system.
+
+        |`gift_card_id`|Integer|This is also a unique ID assigned to each gift card by the Punchh system.
+        This ID will be passed in the Push Notification payload to app clients in the key `gc`. By mapping
+        this, app client can fetch the updated balance of a particular gift card.'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              card_background_image:
+                type: string
+              card_number:
+                type: string
+              epin:
+                type: string
+              usb_scannable_card_number:
+                type: string
+              created_at:
+                type: string
+                enum:
+                - YYYY-MM-DDThh:mm:ssZ
+                format: date-time
+              design_id:
+                type: integer
+              preferred:
+                type: boolean
+              name:
+                type: string
+              last_fetched_amount:
+                type: number
+                format: float
+              last_fetched_at:
+                type: string
+                enum:
+                - YYYY-MM-DDThh:mm:ssZ
+                format: date-time
+              status:
+                type: string
+              updated_at:
+                type: string
+                enum:
+                - YYYY-MM-DDThh:mm:ssZ
+                format: date-time
+              users:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    user_id:
+                      type: integer
+                    email:
+                      type: string
+                    first_name:
+                      type: string
+                    last_name:
+                      type: string
+                    fb_uid:
+                      type: string
+                    avatar_remote_url:
+                      type: string
+                    state:
+                      type: string
+              uuid:
+                type: string
+              gift_card_id:
+                type: integer
+          examples:
+            default:
+              value:
+                card_background_image: IMAGE_URL_GOES_HERE
+                card_number: CARD_NUMBER_GOES_HERE
+                epin: EPIN_GOES_HERE
+                usb_scannable_card_number: CARD_NUMBER_GOES_HERE
+                created_at: '2016-05-12T03:54:45-06:00'
+                design_id: 1
+                preferred: false
+                name: null
+                last_fetched_amount: 10
+                last_fetched_at: '2016-05-12T03:54:45-06:00'
+                status: active
+                updated_at: '2016-05-12T03:54:45-06:00'
+                users:
+                - user_id: 111111111
+                  email: test@example.com
+                  first_name: FIRST_NAME_GOES_HERE
+                  last_name: LAST_NAME_GOES_HERE
+                  fb_uid: null
+                  avatar_remote_url: null
+                  state: owner
+                uuid: ID_GOES_HERE
+                gift_card_id: ID_GOES_HERE
+    Social_cause_response:
+      description: '|Name|Type|Description
+
+        |-----|-----|--------
+
+        |social_cause_id|Integer|Unique ID assigned to a Social Cause Campaign. This ID is generated by
+        Punchh when the Social Cause campaign is created in the Punchh platform.
+
+        |name|String|Name of a Social Cause Campaign as defined by the Business'' Admin while creating
+        the social cause campaign in the Punchh platform.
+
+        |description|String|Description of a Social Cause campaign as given by the Business'' Admin.
+
+        |image_url|String|URL of the image that is attached to the Social Cause Campaign by the Business''
+        Admin.
+
+        |tags|Object|Tags configured in the platform.
+
+        |miscellaneous|String|Returns misc response string as per configured in the Punchh platform
+
+        |city|String|City
+
+        |state|String|State
+
+        |street|String|Street
+
+        |zip|String|Zipcode
+
+        |phone|String|Phone
+
+        |email|String|email address
+
+        |address|String|Address'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                social_cause_id:
+                  type: integer
+                name:
+                  type: string
+                description:
+                  type: string
+                image_url:
+                  type: string
+                tags:
+                  type: object
+                miscellaneous:
+                  type: string
+                city:
+                  type: string
+                state:
+                  type: string
+                street:
+                  type: string
+                zip:
+                  type: string
+                phone:
+                  type: string
+                email:
+                  type: string
+                address:
+                  type: string
+          examples:
+            default:
+              value:
+              - social_cause_id: 1
+                name: Test Campaign
+                description: Test
+                image_url: IMAGE_URL_GOES_HERE
+                tags: []
+                miscellaneous: ''
+                city: San Mateo
+                state: CA
+                street: ADDRESS_GOES_HERE
+                zip: '94402'
+                phone: ''
+                email: ''
+                address: ADDRESS_GOES_HERE
+    redemption object:
+      description: '# Redemption Detail Response
+
+
+        |Name|Type|Description
+
+        |-----|------|--------
+
+        |`redemption_status`|String|Status of the redemption. The values returned can be:1. redeemable:
+        the redemption can be redeemed at the POS.2. expired: the redemption has expired and becomes unusable
+        for the user.3. processed: the redemption has already been processed successfully and redeemed
+        by the user at a POS.4. cancelled: the redemption can be voided by a user by approaching the POS
+        in case a redemption is done by mistake and the user wants to cancel it.
+
+        |`created_at`|DateTime|Date and Time when the redemption was created in the system in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+        format.
+
+        |`redeemable_id`|Integer|Unique ID of the redeemable.
+
+        |`redemption_image_url`|String|URL of the image depicting the redeemable. It can be displayed
+        in the app.
+
+        |`redemption_message`|String|A descriptive message which tells the user what they have redeemed.
+
+        |`updated_at`|DateTime|Date and Time at which the redemption was updated in the system
+
+        |`redemption_id`|Integer|Unique ID of the redemption that has been created.
+
+        |`redemption_tracking_code`|String|Code which a user has to submit at the POS in order to receive
+        the redeemed reward.
+
+        |`expiring_at`|DateTime|Date and Time in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format,
+        when the redemption_tracking_code expires and the user cannot use it at the POS.
+
+        |`redeemable_name`|String|Name of the redeemable.
+
+        |`redeemed_value`|Float||In case of a business with banked_currency, the value indicates currency
+        amount redeemed by a user. E.g. a value 10 indicates a discount of $10. In case of a points based
+        business, the value returned indicates the number of points redeemed by a user. E.g. a value 20
+        indicates 20 points.
+
+        |`user`|Object|This object returns the information of the user who used the redemption code.Response
+        includes:`first_name`, `last_name`, `email` and `avatar_remote_url`(URL of user''s profile image
+        uploaded on an Online File Storage System. This will be used for users signed up using email. '
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              redemption_status:
+                type: string
+              created_at:
+                type: string
+                enum:
+                - YYYY-MM-DDThh:mm:ssZ
+                format: date-time
+              redeemable_id:
+                type: integer
+              redeemable_name:
+                type: string
+              redeemed_value:
+                type: number
+                format: float
+              redemption_image_url:
+                type: string
+              redemption_message:
+                type: string
+              redeemable_description:
+                type: string
+              updated_at:
+                type: string
+                enum:
+                - YYYY-MM-DDThh:mm:ssZ
+                format: date-time
+              redemption_id:
+                type: integer
+              redemption_tracking_code:
+                type: string
+              expiring_at:
+                type: string
+                enum:
+                - YYYY-MM-DDThh:mm:ssZ
+                format: date-time
+          examples:
+            default:
+              value:
+                redemption_status: redeemable
+                created_at: '2016-05-25T06:41:37-04:00'
+                redeemable_id: null
+                redemption_image_url: IMAGE_URL_GOES_HERE
+                redemption_message: Message associated with the redemption.
+                updated_at: '2016-05-25T06:41:37-04:00'
+                redeemable_description: ''
+                redemption_id: 1822896
+                redemption_tracking_code: '7246338'
+                expiring_at: '2016-05-25T08:41:37-04:00'
+                redeemable_name: null
+                redeemed_value: 10
+    Checkin Object:
+      description: '#checkin attributes
+
+
+        |Name|Type|Description
+
+        |--------|----------|---------
+
+        |checkin_id|Integer|ID of the loyalty checkin made by the user.
+
+        |created_at|Timestamp|Datetime when the checkin was created in the system in ISO 8601 format.
+
+        |current_membership_level|String|Membership Level of the user.
+
+        |first_checkin|Boolean|Whether it is the First Checkin at Business or not?
+
+        |location_id|Integer|ID of the location associated with the loyalty checkin.
+
+        |pending_refresh|Boolean|Whether checkin is pending refresh or not?
+
+        |points_earned|Integer|Number of points earned in the loyalty checkin.
+
+        |store_number|String|The store number where the checkin occurred.
+
+        |survey_url|String|URL of the survey presented to a user after they have done a checkin.
+
+        |expiring_on|Date|Date on which the checkin will expire.'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              created_at:
+                type: string
+                enum:
+                - YYYY-MM-DDThh:mm:ssZ
+                format: date-time
+                description: Datetime when the checkin was created in the system in ISO 8601 format.
+              current_membership_level:
+                type: string
+                description: Membership Level of the user.
+              location_id:
+                type: integer
+                description: ID of the location associated with the loyalty checkin.
+              pending_refresh:
+                type: boolean
+                description: Whether checkin is pending refresh or not?
+              points_earned:
+                type: integer
+                description: Number of points earned in the loyalty checkin.
+              store_number:
+                type: string
+                description: The store number where the checkin occurred.
+              survey_url:
+                type: string
+                description: URL of the survey presented to a user after they have done a checkin.
+              checkin_id:
+                type: integer
+                description: ID of the loyalty checkin made by the user.
+              first_checkin:
+                type: boolean
+                description: Boolean Value indicating whether the checkin is user's first checkin or not
+              expiring_on:
+                type: string
+                enum:
+                - YYYY-MM-DD
+                format: date
+                description: Date on which the checkin will expire.
+          examples:
+            default:
+              value:
+                created_at: '2016-05-16T08:22:25-04:00'
+                current_membership_level: Club Lite - Level 1 (0-400)
+                location_id: 304252
+                pending_refresh: false
+                points_earned: 72
+                store_number: ''
+                survey_url: URL_GOES_HERE
+                checkin_id: 11140692
+                first_checkin: false
+                expiring_on: null
+    400 Bad Request (Invalid Language):
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: object
+                properties:
+                  invalid_language:
+                    type: array
+                    items:
+                      type: string
+          examples:
+            default:
+              value:
+                errors:
+                  invalid_language:
+                  - Unknown/Invalid locale in Accept-Language Header. Supported locales are en-GB, es-CR,
+                    en, es.
+    400 Bad Request (Client):
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: object
+                properties:
+                  missing_required_param:
+                    type: array
+                    items:
+                      type: string
+          examples:
+            default:
+              value:
+                errors:
+                  missing_required_param:
+                  - 'Required parameter missing or the value is empty: client'
+    412 Precondition Failed:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: object
+                properties:
+                  invalid_signature:
+                    type: array
+                    items:
+                      type: string
+          examples:
+            default:
+              value:
+                errors:
+                  invalid_signature:
+                  - Signature doesn't match. See [this topic](/docs/dev-portal-mobile/17c2f8eb39142-generating-x-pch-digest-header-for-mobile-ap-is)
+  securitySchemes: {}
+x-ext-urls: {}

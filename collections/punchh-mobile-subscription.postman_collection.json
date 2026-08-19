@@ -1,0 +1,2337 @@
+{
+  "item": [
+    {
+      "id": "88f0e3ab-dc85-4728-ad1b-b7ff9b7848a7",
+      "name": "Fetch Active Purchasable Subscription Plans",
+      "request": {
+        "name": "Fetch Active Purchasable Subscription Plans",
+        "description": {
+          "content": "This API returns all of the active subscription plans that are purchasable using the mobile app and have their end time in the future.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api2",
+            "mobile",
+            "subscriptions"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. ",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+            "key": "x-pch-digest",
+            "value": "<string>"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+            "key": "User-Agent",
+            "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"client\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "4e50f063-7f1b-4b6d-a7e1-48fd43475bee",
+          "name": "Success response if the business supports subscriptions",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "[\n  {\n    \"name\": \"SUBSCRIPTION_NAME_GOES_HERE\",\n    \"description\": \"DESCRIPTION_GOES_HERE\",\n    \"miscellaneous\": \"MISC_INFORMATION_GOES_HERE\",\n    \"validity\": 30,\n    \"start_time\": \"2021-04-28T13:59:47+05:30\",\n    \"end_time\": \"2021-04-28T13:59:47+05:30\",\n    \"signup_start_date\": \"2023-05-28T13:59:47+05:30\",\n    \"signup_end_date\": \"2021-04-28T13:59:47+05:30\",\n    \"external_plan_identifier\": null,\n    \"plan_id\": 10,\n    \"plan_image_url\": \"PLAN_IMAGE_URL_GOES_HERE\",\n    \"purchase_price\": 12.32,\n    \"image\": \"test-image.png\",\n    \"subscriber_capping\": 500,\n    \"active_subscribers\": 251,\n    \"timezone\": \"Asia/Kolkata\",\n    \"auto_renewing\": true,\n    \"enable_multibenefit\": true,\n    \"purchasable_location_ids\": [\n      2,\n      11\n    ],\n    \"purchasable_tag_ids\": [\n      1,\n      2\n    ],\n    \"multiple_effective_locations_name\": \"location-name-1, location-name-10, PineCrossing, Eagle Creek\"\n  }\n]",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "a5ae23ff-048f-4af9-82b2-928b010d24ba",
+          "name": "Bad Request",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"client\": \"Required parameter missing or the value is empty.\"\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "85dcb95c-9e9b-439d-9e7d-253bd3e488fa",
+          "name": "Precondition Failed",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Precondition Failed",
+          "code": 412,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"invalid_signature\": [\n      \"Signature doesn't match. Please see our documentation https://developers.punchh.com/docs/dev-portal-mobile/17c2f8eb39142-generating-x-pch-digest-header-for-mobile-ap-is\"\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "911e3a7b-4501-444a-bf18-659dd04f1109",
+          "name": "Unprocessable Entity",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"disabled_feature\": \"Your current loyalty program configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue.\"\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "51694ae0-7137-416a-ab0c-3cbe14c80a8b",
+      "name": "Purchase Subscription",
+      "request": {
+        "name": "Purchase Subscription",
+        "description": {
+          "content": "This API supports the purchase of a subscription plan created in the Punchh platform.\n\nIf the Single Use setting is enabled for the subscription plan, and if you send auto_renewal as `true` in the Purchase Subscription API, then the API returns an error: This is a single use subscription and cannot be renewed automatically. Please check the request to send auto_renewal as false.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api2",
+            "mobile",
+            "subscriptions"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+            "key": "x-pch-digest",
+            "value": "<string>"
+          },
+          {
+            "disabled": false,
+            "description": "Preferred language",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+            "key": "User-Agent",
+            "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"client\": \"<string>\",\n  \"plan_id\": \"<integer>\",\n  \"start_time\": \"<dateTime>\",\n  \"end_time\": \"<dateTime>\",\n  \"purchase_price\": \"<float>\",\n  \"auto_renewal\": false,\n  \"location_id\": \"<integer>\",\n  \"external_plan_identifier\": \"<string>\",\n  \"payment_card_uuid\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "4a929132-be7c-419e-a7a0-32640be653ca",
+          "name": "OK",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"plan_id\": 23,\n  \"start_time\": \"2021-04-28T13:59:47+05:30\",\n  \"end_time\": \"2021-04-28T13:59:47+05:30\",\n  \"purchase_price\": \"23.09\",\n  \"auto_renewal\": true,\n  \"payment_card_uuid\": \"PAYMENT_CARD_UUID_GOES_HERE\",\n  \"external_plan_identifier\": \"EXTERNAL_PLAN_IDENTIFIER_GOES_HERE\",\n  \"location_id\": 12345\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"subscription_id\": 23,\n  \"start_time\": \"2021-04-28T13:59:47+05:30\",\n  \"end_time\": \"2021-04-28T13:59:47+05:30\",\n  \"external_plan_identifier\": \"EXTERNAL_PLAN_IDENTIFIER_GOES_HERE\",\n  \"location_id\": 12345\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "363d9603-01b0-48dc-9b45-efa1854d1e07",
+          "name": "Bad Request\n\n- Invalid or missing location_id",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"plan_id\": 23,\n  \"start_time\": \"2021-04-28T13:59:47+05:30\",\n  \"end_time\": \"2021-04-28T13:59:47+05:30\",\n  \"purchase_price\": \"23.09\",\n  \"auto_renewal\": true,\n  \"payment_card_uuid\": \"PAYMENT_CARD_UUID_GOES_HERE\",\n  \"external_plan_identifier\": \"EXTERNAL_PLAN_IDENTIFIER_GOES_HERE\",\n  \"location_id\": 12345\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"client\": \"Required parameter missing or value empty.\"\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "c8bb2c35-a648-4ae1-b1ed-6d9de36f53b0",
+          "name": "Unauthorized",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"plan_id\": 23,\n  \"start_time\": \"2021-04-28T13:59:47+05:30\",\n  \"end_time\": \"2021-04-28T13:59:47+05:30\",\n  \"purchase_price\": \"23.09\",\n  \"auto_renewal\": true,\n  \"payment_card_uuid\": \"PAYMENT_CARD_UUID_GOES_HERE\",\n  \"external_plan_identifier\": \"EXTERNAL_PLAN_IDENTIFIER_GOES_HERE\",\n  \"location_id\": 12345\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"unauthorized\": [\n      \"An active access token must be used to query information about the current user.\"\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "6de9d74f-4605-4194-a7af-d3b3aa8fb84f",
+          "name": "Precondition Failed",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"plan_id\": 23,\n  \"start_time\": \"2021-04-28T13:59:47+05:30\",\n  \"end_time\": \"2021-04-28T13:59:47+05:30\",\n  \"purchase_price\": \"23.09\",\n  \"auto_renewal\": true,\n  \"payment_card_uuid\": \"PAYMENT_CARD_UUID_GOES_HERE\",\n  \"external_plan_identifier\": \"EXTERNAL_PLAN_IDENTIFIER_GOES_HERE\",\n  \"location_id\": 12345\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Precondition Failed",
+          "code": 412,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"invalid_signature\": [\n      \"Signature doesn't match. Please see our documentation https://developers.punchh.com/docs/dev-portal-mobile/17c2f8eb39142-generating-x-pch-digest-header-for-mobile-ap-is\"\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "00b4a160-7db8-4495-9220-1bc07180a782",
+          "name": "Unprocessable Entity",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"plan_id\": 23,\n  \"start_time\": \"2021-04-28T13:59:47+05:30\",\n  \"end_time\": \"2021-04-28T13:59:47+05:30\",\n  \"purchase_price\": \"23.09\",\n  \"auto_renewal\": true,\n  \"payment_card_uuid\": \"PAYMENT_CARD_UUID_GOES_HERE\",\n  \"external_plan_identifier\": \"EXTERNAL_PLAN_IDENTIFIER_GOES_HERE\",\n  \"location_id\": 12345\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"disabled_feature\": \"Your current loyalty program configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue.\"\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "debc9699-d03f-4578-b1e1-41b35f13be65",
+      "name": "Fetch Subscription Plans for a User",
+      "request": {
+        "name": "Fetch Subscription Plans for a User",
+        "description": {
+          "content": "This API returns the subscriptions attached to a guest's profile. While the response can be filtered based on \"status\" and \"past_subscriptions\", the default response will include subscriptions that are either \"active\" or \"soft_cancelled\" and have their end time in the future.\n  ",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api2",
+            "mobile",
+            "user_subscriptions"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [
+            {
+              "disabled": false,
+              "key": "filter",
+              "value": "<string>",
+              "description": "Filter subscription by status and past_subscriptions. <br> <br> If the status is not sent, the API returns subscriptions that are `active`, `soft_cancelled`, and have an end_time that is not in the past. Supported \"filter” values are ''active'', ''expired'', and ''cancelled''. <br> <br>When the API call is made using the past_subscriptions filter, the response returns only such subscriptions that have their end date/time in the past. The status against each subscription can have these values: ‘expired’, ‘renewed’, ‘soft_cancelled’, and ‘hard_cancelled’.'"
+            }
+          ],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+            "key": "x-pch-digest",
+            "value": "<string>"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+            "key": "User-Agent",
+            "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+          },
+          {
+            "disabled": false,
+            "description": "Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. ",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"client\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "470d4a1a-6ebc-4e77-8b85-dad25b3f13b0",
+          "name": "OK",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "user_subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "filter",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"has_any_subscriptions\": true,\n  \"subscriptions\": [\n    {\n      \"subscription_id\": 19,\n      \"start_time\": \"2021-05-18T21:09:38+05:30\",\n      \"end_time\": \"2021-06-03T21:09:38+05:30\",\n      \"plan_id\": 9,\n      \"image\": \"test-image.png\",\n      \"cancellation_reason\": \"Found better alternative\",\n      \"cancelled_at\": null,\n      \"name\": \"fuel_price\",\n      \"description\": \"\",\n      \"miscellaneous\": \"\",\n      \"status\": \"Active\",\n      \"external_plan_identifier\": \"EXTERNAL_PLAN_IDENTIFIER_GOES_HERE\",\n      \"plan_image_url\": \"PLAN_IMAGE_URL_GOES_HERE\",\n      \"renewed_on\": \"2023-04-10T05:00:00+05:30\",\n      \"upcoming_renewal\": \"2023-05-11T05:00:00+05:30\",\n      \"purchase_price\": 100,\n      \"auto_renewal\": true,\n      \"benefits\": [\n        {\n          \"benefit_id\": 3,\n          \"benefit_type\": \"sku_discounting\",\n          \"benefit_name\": \"Free Coffee\",\n          \"benefit_description\": \"Get a free coffee on your next visit\",\n          \"benefit_priority\": 1,\n          \"discounts\": [\n            {\n              \"discount_id\": 7,\n              \"occurrence\": 5,\n              \"gap_units\": 24,\n              \"gap_unit_type\": \"hours\",\n              \"start_time\": \"2023-05-18T00:00:00+05:30\",\n              \"end_time\": \"2023-06-03T23:59:59+05:30\",\n              \"threshold\": 40,\n              \"threshold_discount\": 100,\n              \"discount_type\": \"sku_discounting\",\n              \"discounted_value\": 80,\n              \"discounted_quantity\": 40\n            },\n            {\n              \"discount_id\": 8,\n              \"occurrence\": null,\n              \"gap_units\": null,\n              \"gap_unit_type\": \"hours\",\n              \"start_time\": null,\n              \"end_time\": null,\n              \"threshold\": 1000,\n              \"threshold_discount\": 100,\n              \"discount_type\": \"sku_discounting\",\n              \"discounted_value\": 1000,\n              \"discounted_quantity\": 1000\n            }\n          ]\n        },\n        {\n          \"benefit_id\": 4,\n          \"benefit_type\": \"sku_discounting\",\n          \"benefit_name\": \"Fuel Discount\",\n          \"benefit_description\": \"Get 10% off on fuel purchases\",\n          \"benefit_priority\": 2,\n          \"discounts\": [\n            {\n              \"discount_id\": 7,\n              \"occurrence\": 10,\n              \"gap_units\": null,\n              \"gap_unit_type\": \"hours\",\n              \"start_time\": null,\n              \"end_time\": null,\n              \"threshold\": 40,\n              \"threshold_discount\": 50,\n              \"discount_type\": \"%_or_$_off\",\n              \"discounted_value\": 80,\n              \"discounted_quantity\": 40\n            },\n            {\n              \"discount_id\": 8,\n              \"occurrence\": null,\n              \"gap_units\": null,\n              \"gap_unit_type\": \"hours\",\n              \"start_time\": null,\n              \"end_time\": null,\n              \"threshold\": 1000,\n              \"threshold_discount\": 100,\n              \"discount_type\": \"receipt_level_discount\",\n              \"discounted_value\": 1000,\n              \"discounted_quantity\": 1000\n            }\n          ]\n        }\n      ],\n      \"payment_card\": {\n        \"uuid\": \"SAVED_CARD_UUID\",\n        \"nickname\": \"My card\",\n        \"card_details\": {\n          \"name_on_card\": \"CARDHOLDER_NAME_GOES_HERE\",\n          \"cc_4\": \"1111\",\n          \"card_type\": \"Visa\",\n          \"expiry_month\": 9,\n          \"expiry_year\": \"23\"\n        },\n        \"cancellation_feedback\": \"Found better alternative\"\n      }\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "b5522b62-fa44-419f-b27f-79cac74433ef",
+          "name": "Bad Request: Sending an invalid/empty client",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "user_subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "filter",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"client\": \"Required parameter missing or the value is empty.\"\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "fb5b5745-18cf-4d05-92dd-8b5c31e64d46",
+          "name": "Unauthorized: Sending an invalid/empty access token",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "user_subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "filter",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"unauthorized\": [\n      \"An active access token must be used to query information about the current user.\"\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "013df9ba-0822-4ed8-aa4a-aaf59ae7f418",
+          "name": "Precondition Failed: Invalid Signature",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "user_subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "filter",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Precondition Failed",
+          "code": 412,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"invalid_signature\": [\n      \"Signature doesn't match. Please see our documentation https://developers.punchh.com/docs/dev-portal-mobile/17c2f8eb39142-generating-x-pch-digest-header-for-mobile-ap-is\"\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "2af67fbb-69f5-4512-9203-1b67b2ab6d19",
+          "name": "Unprocessable Entity",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "user_subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "filter",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"disabled_feature\": \"Your current loyalty program configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue.\"\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "0cb1c1a3-10f2-4d12-8930-ca87e365b9ce",
+      "name": "Generate a Redemption Code for Subscription Redemption",
+      "request": {
+        "name": "Generate a Redemption Code for Subscription Redemption",
+        "description": {
+          "content": "This API generates a subscription-related redemption code within the mobile application. Using this API, guests can generate the subscription-related redemption code from the mobile application and use it at the POS or in the online ordering app to redeem subscription-related benefits.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api2",
+            "mobile",
+            "redemptions",
+            "subscription"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+            "key": "x-pch-digest",
+            "value": "<string>"
+          },
+          {
+            "disabled": false,
+            "description": "Used to indicate the time zone in which you would like the date and time information in the response to be formatted",
+            "key": "Accept-Timezone",
+            "value": "Etc/UTC"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+            "key": "User-Agent",
+            "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+          },
+          {
+            "disabled": false,
+            "description": "Preferred language",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"client\": \"<string>\",\n  \"subscription_id\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "2bb2457b-c476-4952-9d7c-be54b966a943",
+          "name": "Success response if a redemption code is generated for the subscription redemption",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "redemptions",
+                "subscription"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Used to indicate the time zone in which you would like the date and time information in the response to be formatted",
+                "key": "Accept-Timezone",
+                "value": "Etc/UTC"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"subscription_id\": \"23\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"redemption_status\": \"redeemable\",\n  \"created_at\": \"2023-05-09T07:44:38Z\",\n  \"redeemable_id\": null,\n  \"location_id\": 304252,\n  \"redemption_image_url\": \"REDEMPTION_IMAGE_URL_GOES_HERE\",\n  \"redemption_message\": \"\",\n  \"updated_at\": \"2023-05-09T07:44:38Z\",\n  \"redeemable_description\": null,\n  \"redeemable_image_url\": \"REDEEMABLE_IMAGE_URL_GOES_HERE\",\n  \"subscription_id\": \"498699\",\n  \"subscription_plan_id\": 44,\n  \"subscription_plan_name\": \"Super Value Subscription\",\n  \"subscription_plan_description\": \"10% discount on entire receipt amount (capped at $20) | Redeemable Once Per Day\",\n  \"subscription_plan_image_url\": \"SUBSCRIPTION_PLAN_IMAGE_URL_GOES_HERE\",\n  \"redemption_type\": \"SubscriptionRedemption\",\n  \"redemption_id\": 515404156,\n  \"redemption_tracking_code\": \"8066490\",\n  \"expiring_at\": \"2023-05-09T07:54:38Z\",\n  \"redeemable_name\": \"REDEEMABLE_NAME_GOES_HERE\",\n  \"redeemed_value\": null\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "ee20bfaf-a8d8-4a1a-8b4c-a3b969ea4001",
+          "name": "Bad Request",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "redemptions",
+                "subscription"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Used to indicate the time zone in which you would like the date and time information in the response to be formatted",
+                "key": "Accept-Timezone",
+                "value": "Etc/UTC"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"subscription_id\": \"23\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"client\": \"Required parameter missing or value empty.\"\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "9af4207b-83b9-43fa-89f9-bb6072655d72",
+          "name": "Unauthorized",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "redemptions",
+                "subscription"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Used to indicate the time zone in which you would like the date and time information in the response to be formatted",
+                "key": "Accept-Timezone",
+                "value": "Etc/UTC"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"subscription_id\": \"23\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"unauthorized\": [\n      \"An active access token must be used to query information about the current user.\"\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "b93d6215-59d2-4e77-9fba-6d8fd97b8c01",
+          "name": "Precondition Failed",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "redemptions",
+                "subscription"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Used to indicate the time zone in which you would like the date and time information in the response to be formatted",
+                "key": "Accept-Timezone",
+                "value": "Etc/UTC"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"subscription_id\": \"23\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Precondition Failed",
+          "code": 412,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"invalid_signature\": [\n      \"Signature doesn't match. For information about generating the x-pch-digest header, see https://developers.punchh.com.\"\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "c469b71f-58e1-4b7c-b0d8-6f4c4cecf691",
+          "name": "Unprocessable Entity: Invalid Subscription ID",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "redemptions",
+                "subscription"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "Used to indicate the time zone in which you would like the date and time information in the response to be formatted",
+                "key": "Accept-Timezone",
+                "value": "Etc/UTC"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\",\n  \"subscription_id\": \"23\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"error\": \"Invalid User Subscription\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "e0501d84-8a7c-4ff1-97a3-f9847e8abb2d",
+      "name": "Cancel Subscription (Turn off Auto Renewal)",
+      "request": {
+        "name": "Cancel Subscription (Turn off Auto Renewal)",
+        "description": {
+          "content": "This API allows the user to cancel an active subscription (turn off auto renewal for the subscription). This is a soft cancellation wherein the benefits remain valid until the end time of the subscription.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api2",
+            "mobile",
+            "subscriptions",
+            "cancel"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+            "key": "User-Agent",
+            "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+          },
+          {
+            "disabled": false,
+            "description": "Preferred language",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+            "key": "x-pch-digest",
+            "value": "<string>"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "PUT",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"client\": \"<string>\",\n  \"subscription_id\": \"<string>\",\n  \"cancellation_reason_id\": \"<integer>\",\n  \"cancellation_feedback\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "7d7eb976-2ce0-490b-a746-17e56d2e2dd0",
+          "name": "Successful Response | 200 OK",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "subscriptions",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subscription_id\": \"1\",\n  \"cancellation_feedback\": \"\",\n  \"cancellation_reason_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "[\n  \"Subscription auto renewal canceled.\"\n]",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "9e656066-1972-4298-a34f-575c3026e467",
+          "name": "Bad Request",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "subscriptions",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subscription_id\": \"1\",\n  \"cancellation_feedback\": \"\",\n  \"cancellation_reason_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"client\": \"Required parameter missing or the value is empty.\"\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "fedade54-19a5-4c14-aac6-fc40e02a35a2",
+          "name": "Unauthorized: Sending an invalid/empty access token",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "subscriptions",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subscription_id\": \"1\",\n  \"cancellation_feedback\": \"\",\n  \"cancellation_reason_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"unauthorized\": [\n      \"An active access token must be used to query information about the current user.\"\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "23a4dcbc-2457-4991-93da-9baecc82fda0",
+          "name": "Precondition Failed: Invalid Signature",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "subscriptions",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subscription_id\": \"1\",\n  \"cancellation_feedback\": \"\",\n  \"cancellation_reason_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Precondition Failed",
+          "code": 412,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"invalid_signature\": [\n      \"Signature doesn't match. For information about generating the x-pch-digest header, see https://developers.punchh.com.\"\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "0d877edb-78b0-4d58-ba4f-c73e2e95f91e",
+          "name": "Unprocessable Entity",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "subscriptions",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client can understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256).",
+                "key": "x-pch-digest",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subscription_id\": \"1\",\n  \"cancellation_feedback\": \"\",\n  \"cancellation_reason_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"errors\": {\n    \"cancel_renewed_subscription\": [\n      \"This subscription is already renewed. You can cancel the newly issued Subscription which will remain valid till its end date.\"\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://SERVER_NAME_GOES_HERE.punchh.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "1361de1b-72d1-44d7-a450-75053bbec03a",
+    "name": "Subscription API - Mobile",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Subscriptions is an add-on Punchh loyalty product that allows businesses to create subscription plans to generate up-front revenue and offers benefits in addition to the standard benefits that unsubscribed members of the loyalty program receive. The Subscription APIs are designed in a way that businesses can programatically achieve the benefits of the subscription for their guest in a mobile app or website. Also, there are aspects that require calling the API without any guest authentication (e.g., to control the auto-renewal of the subscription on behalf of the guest).\n\nContact Support:\n Name: Punchh Dev Support",
+      "type": "text/plain"
+    }
+  }
+}

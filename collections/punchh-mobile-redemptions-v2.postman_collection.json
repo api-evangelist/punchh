@@ -1,0 +1,1524 @@
+{
+  "item": [
+    {
+      "id": "def8f9f3-3db8-4524-b982-608cf9223476",
+      "name": "Add Selection to Discount Basket (Redemptions 2.0)",
+      "request": {
+        "name": "Add Selection to Discount Basket (Redemptions 2.0)",
+        "description": {
+          "content": "- A single discount basket will be active at a time. If there is no active discount basket, the system will create a new active discount basket along with selected discounts passed in the request parameters.\n- The Punchh system will not have any validation based on points adjustments as discounts are added.\n- When a guest adds multiple discounts, and one is invalid for some reason, the entire request will fail with an error message. The guest will then be required to remove the invalid discount and resubmit. ",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api2",
+            "mobile",
+            "discounts",
+            "select"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+            "key": "punchh-app-device-id",
+            "value": "APP_DEVICE_ID_GOES_HERE"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+            "key": "User-Agent",
+            "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+            "key": "x-pch-digest",
+            "value": "{{$$.env.signature}}"
+          },
+          {
+            "disabled": false,
+            "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>.",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"discount_basket_items_attributes\": [\n    {\n      \"discount_type\": \"<string>\",\n      \"discount_id\": \"<integer>\",\n      \"discount_value\": \"<float>\"\n    },\n    {\n      \"discount_type\": \"<string>\",\n      \"discount_id\": \"<integer>\",\n      \"discount_value\": \"<float>\"\n    }\n  ],\n  \"client\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "7463d898-b679-437e-b643-9191ede6e846",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "discounts",
+                "select"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+                "key": "punchh-app-device-id",
+                "value": "APP_DEVICE_ID_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+                "key": "x-pch-digest",
+                "value": "{{$$.env.signature}}"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discount_basket_items_attributes\": [\n    {\n      \"discount_id\": 131,\n      \"discount_type\": \"reward\"\n    },\n    {\n      \"discount_value\": 132,\n      \"discount_type\": \"reward\"\n    }\n  ],\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"redemption_ref\": \"REDEMPTION_REF_GOES_HERE\",\n  \"created_at\": \"2024-05-21T15:14:02Z\",\n  \"discount_basket_items\": [\n    {\n      \"discount_basket_item_id\": 469363,\n      \"discount_type\": \"reward\",\n      \"discount_id\": \"41049646877\",\n      \"discount_value\": null,\n      \"created_at\": \"2024-05-24T08:36:52Z\",\n      \"discount_details\": {\n        \"item_id\": 48188,\n        \"name\": \"Sandwich Test | AK\",\n        \"campaign_name\": \"Mass Campaign Offer\",\n        \"image\": \"IMAGE_URL_GOES_HERE\",\n        \"points\": null,\n        \"base_amount\": null,\n        \"description\": \"\",\n        \"item_properties\": \"\",\n        \"meta_detail\": null,\n        \"start_date_tz\": \"2024-05-24T08:34:24Z\",\n        \"end_date_tz\": \"2024-06-30T03:15:00Z\",\n        \"created_at\": \"2023-08-18T08:29:36Z\",\n        \"auto_select\": false\n      }\n    },\n    {\n      \"discount_basket_item_id\": 541689,\n      \"discount_type\": \"reward\",\n      \"discount_id\": \"41378920421\",\n      \"discount_value\": null,\n      \"created_at\": \"2024-06-11T12:56:33Z\",\n      \"discount_details\": {\n        \"item_id\": 48188,\n        \"name\": \"Sandwich Test | AK\",\n        \"campaign_name\": \"Mass Campaign Offer\",\n        \"image\": \"IMAGE_URL_GOES_HERE\",\n        \"points\": null,\n        \"base_amount\": null,\n        \"description\": \"\",\n        \"item_properties\": \"\",\n        \"meta_detail\": null,\n        \"start_date_tz\": \"2024-05-31T13:25:08Z\",\n        \"end_date_tz\": \"2024-06-30T03:15:00Z\",\n        \"created_at\": \"2023-08-18T08:29:36Z\",\n        \"auto_select\": false\n      }\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "b76a4d4e-bad6-4e33-9047-c7c6880b9a5d",
+          "name": "Bad Request - Example error responses:\n- Required parameter missing or the value is empty: user_id\n- Required parameter missing or the value is empty: discount_basket_items_attributes\n- Required parameter missing or the value is empty: discount_type\n- Required parameter missing or the value is empty: external_uid",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "discounts",
+                "select"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+                "key": "punchh-app-device-id",
+                "value": "APP_DEVICE_ID_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+                "key": "x-pch-digest",
+                "value": "{{$$.env.signature}}"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discount_basket_items_attributes\": [\n    {\n      \"discount_id\": 131,\n      \"discount_type\": \"reward\"\n    },\n    {\n      \"discount_value\": 132,\n      \"discount_type\": \"reward\"\n    }\n  ],\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "45023027-c1a0-4da6-a03b-7ccbc7c807c1",
+          "name": "Not Found - User not found",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "discounts",
+                "select"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+                "key": "punchh-app-device-id",
+                "value": "APP_DEVICE_ID_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+                "key": "x-pch-digest",
+                "value": "{{$$.env.signature}}"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discount_basket_items_attributes\": [\n    {\n      \"discount_id\": 131,\n      \"discount_type\": \"reward\"\n    },\n    {\n      \"discount_value\": 132,\n      \"discount_type\": \"reward\"\n    }\n  ],\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "c9853e60-d648-4506-bf29-00b430ae8fca",
+          "name": "Unprocessable Entity - Example error responses:\n- Discount basket items have already been taken for the user\n- Same parameters provided multiple times\n- Not enough cards\n- Processing limit for discounts of loyalty type has been reached\n- Invalid Code\n- Coupon/Promo code is not active\n- The code can not be added, as the campaign has exceeded its usage limit\n- This coupon can only be used 1 time(s) per day.\n- Invalid Business Configuration. Please connect with your Customer Success representative for resolution of the issue.\n- Mobile Coupon/Promo cannot be added into basket\n- Balance is insufficient to process request\n- Max Redemption Amount has been reached\n- Invalid Discount Value\n- Unable to access the user’s Discount Basket, the Basket is currently locked\n- Interoperability validation failed\n- Invalid Subscription ID\n- Invalid Redeemable ID\n- Invalid Reward ID\n- Guest is not allowed to select/unselect from basket as he/she is banned or deactivated from the Loyalty program\n- Redemption limit reached\n- Discount type should be card_completion, discount_amount, redemption_code, reward, fuel_reward, redeemable, subscription\n- Another transaction is currently accessing the same code. Please try after some time.\n- Cannot add more than one subscription into basket",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "discounts",
+                "select"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+                "key": "punchh-app-device-id",
+                "value": "APP_DEVICE_ID_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+                "key": "x-pch-digest",
+                "value": "{{$$.env.signature}}"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discount_basket_items_attributes\": [\n    {\n      \"discount_id\": 131,\n      \"discount_type\": \"reward\"\n    },\n    {\n      \"discount_value\": 132,\n      \"discount_type\": \"reward\"\n    }\n  ],\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "4fe00268-3c43-400a-acd8-d48e9e7b6b57",
+      "name": "Remove Item From Discount Basket (Redemptions 2.0)",
+      "request": {
+        "name": "Remove Item From Discount Basket (Redemptions 2.0)",
+        "description": {
+          "content": "Delete one or more discounts from a discount basket.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api2",
+            "mobile",
+            "discounts",
+            "unselect"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+            "key": "punchh-app-device-id",
+            "value": "APP_DEVICE_ID_GOES_HERE"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+            "key": "User-Agent",
+            "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+            "key": "x-pch-digest",
+            "value": "{{$$.env.signature}}"
+          },
+          {
+            "disabled": false,
+            "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>.",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "DELETE",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"discount_basket_item_ids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"client\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "42c91f08-4ed8-454e-9ae2-a817ddce25bc",
+          "name": "OK",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "discounts",
+                "unselect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+                "key": "punchh-app-device-id",
+                "value": "APP_DEVICE_ID_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+                "key": "x-pch-digest",
+                "value": "{{$$.env.signature}}"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discount_basket_item_ids\": [\n    61,\n    62\n  ],\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"redemption_ref\": \"REDEMPTION_REF_GOES_HERE\",\n  \"created_at\": \"2024-05-21T15:14:02Z\",\n  \"discount_basket_items\": [\n    {\n      \"discount_basket_item_id\": 469363,\n      \"discount_type\": \"reward\",\n      \"discount_id\": \"41049646877\",\n      \"discount_value\": null,\n      \"created_at\": \"2024-05-24T08:36:52Z\",\n      \"discount_details\": {\n        \"item_id\": 48188,\n        \"name\": \"Sandwich Test | AK\",\n        \"campaign_name\": \"Mass Campaign Offer\",\n        \"image\": \"IMAGE_URL_GOES_HERE\",\n        \"points\": null,\n        \"base_amount\": null,\n        \"description\": \"\",\n        \"item_properties\": \"\",\n        \"meta_detail\": null,\n        \"start_date_tz\": \"2024-05-24T08:34:24Z\",\n        \"end_date_tz\": \"2024-06-30T03:15:00Z\",\n        \"created_at\": \"2023-08-18T08:29:36Z\",\n        \"auto_select\": false\n      }\n    },\n    {\n      \"discount_basket_item_id\": 541689,\n      \"discount_type\": \"reward\",\n      \"discount_id\": \"41378920421\",\n      \"discount_value\": null,\n      \"created_at\": \"2024-06-11T12:56:33Z\",\n      \"discount_details\": {\n        \"item_id\": 48188,\n        \"name\": \"Sandwich Test | AK\",\n        \"campaign_name\": \"Mass Campaign Offer\",\n        \"image\": \"IMAGE_URL_GOES_HERE\",\n        \"points\": null,\n        \"base_amount\": null,\n        \"description\": \"\",\n        \"item_properties\": \"\",\n        \"meta_detail\": null,\n        \"start_date_tz\": \"2024-05-31T13:25:08Z\",\n        \"end_date_tz\": \"2024-06-30T03:15:00Z\",\n        \"created_at\": \"2023-08-18T08:29:36Z\",\n        \"auto_select\": false\n      }\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "3d9ee11e-9c0c-48f5-aaee-66a29db233e1",
+          "name": "Bad Request - Required parameter missing or the value is empty: discount_basket_item_ids",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "discounts",
+                "unselect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+                "key": "punchh-app-device-id",
+                "value": "APP_DEVICE_ID_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+                "key": "x-pch-digest",
+                "value": "{{$$.env.signature}}"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discount_basket_item_ids\": [\n    61,\n    62\n  ],\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "5ed4ec74-ca77-4e17-87c4-2622f628390c",
+          "name": "Not Found - Example error responses:\n- User does not have an active basket\n- User not found",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "discounts",
+                "unselect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+                "key": "punchh-app-device-id",
+                "value": "APP_DEVICE_ID_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+                "key": "x-pch-digest",
+                "value": "{{$$.env.signature}}"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discount_basket_item_ids\": [\n    61,\n    62\n  ],\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "b92035c2-e56e-4586-9723-fb42930b90bd",
+          "name": "Unprocessable Entity - Example error responses:\n- Discount Items not found with any given ids\n- Guest is not allowed to select/unselect from basket as he/she is banned or deactivated from the Loyalty program\n- Unable to access the user’s Discount Basket, the Basket is currently locked",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "discounts",
+                "unselect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+                "key": "punchh-app-device-id",
+                "value": "APP_DEVICE_ID_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+                "key": "x-pch-digest",
+                "value": "{{$$.env.signature}}"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discount_basket_item_ids\": [\n    61,\n    62\n  ],\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "188aca86-8e1a-48fc-a6bc-da72eb24f0bc",
+      "name": "Get Active Discount Basket (Redemptions 2.0)",
+      "request": {
+        "name": "Get Active Discount Basket (Redemptions 2.0)",
+        "description": {
+          "content": "- Get a list of discount details that have been selected by a guest. Only one active basket can exist in the system for a particular guest.\n- If a discount expires after being added to the discount basket, it is removed from the discount basket. When you make a call to the API, it validates the discounts added to the discount basket. If one or more discounts are found to be honored, expired, perished, or archived, the API returns an error message indicating that these discounts cannot be honored. The API lists the invalid discounts in the `discount_basket_items` object with a message stating that the discount is invalid and returns a null value in the `discount_details` object.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api2",
+            "mobile",
+            "discounts",
+            "active"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+            "key": "User-Agent",
+            "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+            "key": "punchh-app-device-id",
+            "value": "APP_DEVICE_ID_GOES_HERE"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+            "key": "x-pch-digest",
+            "value": "{{$$.env.signature}}"
+          },
+          {
+            "disabled": false,
+            "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>.",
+            "key": "Accept-Language",
+            "value": "en"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"client\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "e47bc73f-1327-4966-86ed-8882a7308abf",
+          "name": "OK",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "discounts",
+                "active"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+                "key": "punchh-app-device-id",
+                "value": "APP_DEVICE_ID_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+                "key": "x-pch-digest",
+                "value": "{{$$.env.signature}}"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"redemption_ref\": \"REDEMPTION_REF_GOES_HERE\",\n  \"created_at\": null,\n  \"discount_basket_items\": [\n    {\n      \"discount_basket_item_id\": 4699,\n      \"discount_type\": \"reward\",\n      \"discount_id\": \"33703164\",\n      \"discount_value\": null,\n      \"created_at\": \"2022-08-25T10:03:48Z\",\n      \"discount_details\": {\n        \"item_id\": 777658,\n        \"name\": \"Flat $5 Off (Unlocks at 100 points)\",\n        \"campaign_name\": \"Mass Campaign Offer\",\n        \"image\": \"IMAGE_URL_GOES_HERE\",\n        \"points\": 100,\n        \"base_amount\": 5,\n        \"description\": \"\",\n        \"item_properties\": null,\n        \"meta_detail\": null,\n        \"start_date_tz\": null,\n        \"end_date_tz\": null,\n        \"created_at\": \"2022-09-08T18:41:16Z\",\n        \"auto_select\": false\n      }\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "7088da73-3fe0-4e5c-a0f6-c4192ad036a4",
+          "name": "Not Found - Example error responses:\n- User does not have an active basket\n- User not found",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "discounts",
+                "active"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+                "key": "punchh-app-device-id",
+                "value": "APP_DEVICE_ID_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+                "key": "x-pch-digest",
+                "value": "{{$$.env.signature}}"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "378fb846-7743-4c2b-b477-2cf701d940ec",
+          "name": "Unprocessable Entity - Example error responses:\n- Your current loyalty program configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue.\n- Unable to access the user’s Discount Basket, the Basket is currently locked",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "discounts",
+                "active"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+                "key": "punchh-app-device-id",
+                "value": "APP_DEVICE_ID_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+                "key": "x-pch-digest",
+                "value": "{{$$.env.signature}}"
+              },
+              {
+                "disabled": false,
+                "description": "Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>.",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "978f25fa-031a-4596-8c91-65efd02fa621",
+      "name": "Get Access Code (Redemptions 2.0)",
+      "request": {
+        "name": "Get Access Code (Redemptions 2.0)",
+        "description": {
+          "content": "This API returns the single-scan code containing a UUID string in the API response. The loyalty user can use the single-scan code to pay, earn, and redeem a reward/offer with a single scan at the POS store. The value of the `single_scan_code` parameter returned in the API response can then be passed as the `otp` (one-time passcode) with the `lookup_field` parameter in the request of the [Find User](/docs/dev-portal-pos/ce2bc2798ed8f-find-user-redemptions-2-0) POS API. The OTP is a short-lived token generated via mobile app to securely identify guest users at the POS. The token expiration can be configured in the Punchh platform (contact your Punchh representative for more information). A user can generate only one token at a time. Each token is 6-34 alphanumeric characters.\n\n**Note**: This mobile API endpoint (`POST {server-name}/api2/mobile/single_scan_tokens`) used for Redemptions 2.0 is the same as the [Generate a Single Scan Code](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1single_scan_tokens/post) mobile API endpoint. When using this API with Redemptions 2.0, the following offers parameters must NOT be included with the request body:\n- `reward_id`\n- `redeemable_id`\n- `banked_reward_amount`\n- `coupon`\n- `redeemable_card_count`\n",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "api2",
+            "mobile",
+            "single_scan_tokens"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+            "key": "User-Agent",
+            "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+            "key": "punchh-app-device-id",
+            "value": "APP_DEVICE_ID_GOES_HERE"
+          },
+          {
+            "disabled": false,
+            "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+            "key": "x-pch-digest",
+            "value": "{{$$.env.signature}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"client\": \"<string>\",\n  \"payment_type\": \"<string>\",\n  \"gift_card_uuid\": \"<string>\",\n  \"tip\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "f9fe59ad-52f7-47d6-8c9c-b2a75c664cd3",
+          "name": "OK",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "single_scan_tokens"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+                "key": "punchh-app-device-id",
+                "value": "APP_DEVICE_ID_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+                "key": "x-pch-digest",
+                "value": "{{$$.env.signature}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payment_type\": \"GiftCard\",\n  \"gift_card_uuid\": \"UUID_GOES_HERE\",\n  \"tip\": \"1\",\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"expires_in\": \"2022-06-08T09:59:10Z\",\n  \"created_at\": \"2022-06-08T09:54:10Z\",\n  \"single_scan_code\": \"4E43DB\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "f806d50c-c980-4959-a04f-1a781f3e462e",
+          "name": "Bad Request - Example error responses:\n- Required parameter missing or the value is empty: transaction_token\n- Required parameter missing or the value is empty: gift_card_uuid\n- Required parameter missing or the value is empty: transaction_token ",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "single_scan_tokens"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+                "key": "punchh-app-device-id",
+                "value": "APP_DEVICE_ID_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+                "key": "x-pch-digest",
+                "value": "{{$$.env.signature}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payment_type\": \"GiftCard\",\n  \"gift_card_uuid\": \"UUID_GOES_HERE\",\n  \"tip\": \"1\",\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "355fcdf1-752f-4491-961b-05b966b7a301",
+          "name": "Unprocessable Entity - Example error responses:\n- This guest has been banned or deactivated from the loyalty program\n- Not valid coupon code \n- Not valid gift card \n- Not valid redeemable\n- Not valid redemption code \n- Not valid reward ",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api2",
+                "mobile",
+                "single_scan_tokens"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Advertises which content types the client is able to understand",
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.",
+                "key": "Authorization",
+                "value": "Bearer ACCESS_TOKEN_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Used to Identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).",
+                "key": "User-Agent",
+                "value": "AppIdentifier/VersionNumber/BuildNumber(OS_Type)"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.",
+                "key": "punchh-app-device-id",
+                "value": "APP_DEVICE_ID_GOES_HERE"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Set this header to <b>application/json</b>.",
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call",
+                "key": "x-pch-digest",
+                "value": "{{$$.env.signature}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payment_type\": \"GiftCard\",\n  \"gift_card_uuid\": \"UUID_GOES_HERE\",\n  \"tip\": \"1\",\n  \"client\": \"CLIENT_GOES_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+          "code": 422,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://SERVER_NAME_GOES_HERE.punchh.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4b351c46-5b71-4e10-82df-7cffd3d9429c",
+    "name": "Redemptions 2.0 (New) API - Mobile",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Redemptions 2.0 protocol has been designed to replace the legacy Redemptions 1.0 endpoints. The new protocol allows for the following features:\n\n- Single-scan flow support\n- Batching of redemptions to occur in a single API call\n- Stacked discounting\n- Proportional breakdown of discounted items\n- Item qualifier recycling\n- Enhance flexibility to redemption rules and processing orders\n\nThe Redemptions 2.0 protocol is not backward compatible with the [legacy Redemptions 1.0 endpoints](/docs/dev-portal-mobile/apis/mobile-redemptions-1-0-legacy-api). Configurations within the Punchh platform are required, so please contact your Punchh representative for help before starting development.\n\nRedemptions 2.0 API endpoints\n\nAll mobile endpoints are related to CRUD operations to a guest's discount basket. The discount basket is a persistent object that will be created by mobile/web for which available discounts can be selected to redeem in an upcoming transaction. The following endpoints enable different discount basket operations.\n\nFor more information, see [Online Ordering Module 5: Redemptions](/docs/dev-portal-online-ordering/80afbc759ded2-online-ordering-api-certification-tutorial-module-5-redemptions-overview).\n\nContact Support:\n Name: Punchh Dev Support",
+      "type": "text/plain"
+    }
+  }
+}
