@@ -34,6 +34,19 @@ tags:
 - Offers
 - Online Ordering
 - PAR Technology
+- Point-of-Sale
+- Restaurant
+- Restaurant Technology
+- Webhook
+tags_raw:
+- Gift Cards
+- Guest Engagement
+- Loyalty
+- Marketing
+- Mobile
+- Offers
+- Online Ordering
+- PAR Technology
 - Point Of Sale
 - Restaurant
 - Restaurant Technology
@@ -338,6 +351,19 @@ apis:
   - Redemptions
   - Social Cause Campaigns
   - Swag
+  - User
+  tags_raw:
+  - Business Admin Users
+  - Business Migration Users
+  - Check-in
+  - Custom Segments
+  - Feedback
+  - Franchisee
+  - Locations
+  - Meta
+  - Redemptions
+  - Social Cause Campaigns
+  - Swag
   - Users
   properties:
   - type: OpenAPI
@@ -434,6 +460,9 @@ apis:
   baseURL: https://{server_name}.punchh.com
   tags:
   - Payments
+  - Point-of-Sale
+  tags_raw:
+  - Payments
   - Point Of Sale
   properties:
   - type: OpenAPI
@@ -471,6 +500,8 @@ apis:
   humanURL: https://developers.partech.com/docs/dev-portal-pos
   baseURL: https://{server_name}.punchh.com
   tags:
+  - Point-of-Sale
+  tags_raw:
   - Pos
   properties:
   - type: OpenAPI
@@ -494,6 +525,8 @@ apis:
   humanURL: https://developers.partech.com/docs/dev-portal-pos
   baseURL: https://{server_name}.punchh.com
   tags:
+  - Point-of-Sale
+  tags_raw:
   - Pos
   properties:
   - type: OpenAPI
