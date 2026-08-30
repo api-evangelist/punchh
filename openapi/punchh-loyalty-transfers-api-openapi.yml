@@ -1,0 +1,515 @@
+openapi: 3.2.0
+info:
+  title: Mobile Loyalty Transfers API
+  version: '1.0'
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+  description: 'Punchh provides a robust platform for offering loyalty programs to customers. When a business integrates its back-end with the Punchh server, the Punchh APIs become instrumental in executing loyalty programs for enrolled customers, primarily via business-branded mobile apps and websites tailored by Punchh.
+
+
+    To establish integration with the Punchh APIs, you need to understand how they are invoked and what responses are returned by the Punchh server. You can call APIs using any suitable API test client, such as Postman. Thus, the response to every API call made in Postman under a chosen environment (in app and/or platform) is reflected in the app and/or platform.'
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: Loyalty Transfers
+paths:
+  /api2/mobile/loyalty_transfers/points:
+    post:
+      summary: Transfer Loyalty Points
+      description: 'Enables a user to transfer loyalty points from their account to another user''s account by specifying the recipient''s email address or phone number and the number of points to transfer.
+
+
+        The recipient must be an existing member in the loyalty system. The transfer is subject to the business''s configured transfer limits, including maximum transfer limits per account and daily receiving limits for the recipient.
+
+
+        **Prerequisite**<br>
+
+        Peer-to-peer points transfers must be enabled for the business. Contact your Punchh representative to update this Punchh platform configuration.
+
+        <!--Cockpit > Earnings > Transferred Loyalty Expiry > Enable Peer-to-Peer Points Transfers-->'
+      operationId: mobile_loyalty_transfer_points
+      tags:
+      - Loyalty Transfers
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/Authorization'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              examples:
+                default:
+                  value:
+                  - 1 transferred to Recipient Name
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                Missing required parameter:
+                  value:
+                    error: 'Required parameter missing or the value is empty: points_to_transfer'
+                Missing recipient email or identifier:
+                  value: "{\n    \"errors\": {\n        \"recipient_email\": \"Required parameter missing or the value is empty.\",\n        \"recipient_email_or_recipient_identifier\": \"Required parameter missing or the value is empty\"\n    }\n}"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                Unauthorized:
+                  value:
+                    error: You need to sign in or sign up before continuing.
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              examples:
+                Insufficient balance:
+                  value:
+                  - Not enough reward balance available to redeem. Current Balance of 96 is less than 100 requested
+                No user found for the provided email or phone number:
+                  value:
+                  - Recipient not found
+                Receiver limit exceeded:
+                  value:
+                  - Receiver limit exceeded for points (max 5 in 30h)
+                Duplicate phone numbers:
+                  value:
+                  - Something went wrong with the transfer. Please check your input and try again.
+                Daily receiving limit reached:
+                  value:
+                  - This transfer cannot be completed because the receiving member has reached the daily receiving limit.
+                Maximum transfer limit exceeded:
+                  value:
+                  - Your transfer cannot be completed because it exceeds the maximum transfer limit set for your account.
+                Invalid password:
+                  value:
+                  - Invalid password. Please try again.
+                Service unavailable:
+                  value:
+                  - This service is currently unavailable for your account. Please contact support.
+                Password required:
+                  value:
+                  - Password is required for peer-to-peer transfer.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                access_token:
+                  type: string
+                  description: Token issued to the user after logging into the app of the business
+                recipient_email:
+                  type: string
+                  description: Email address of the recipient to whom the loyalty points will be transferred. <br><br><b>Note:</b> Either `recipient_email` or `recipient_identifier` is required. When both `recipient_identifier` and `recipient_email` are provided, `recipient_identifier` takes precedence.
+                recipient_identifier:
+                  type: string
+                  description: 'Accepts either an email address or a phone number to identify the recipient of the points transfer. `recipient_identifier` is the primary parameter used to identify the recipient. The system automatically detects whether the provided value is an email address or a phone number. <br><br><b>Note:</b> Either `recipient_email` or `recipient_identifier` is required. When both `recipient_identifier` and `recipient_email` are provided, `recipient_identifier` takes precedence.
+
+                    * If a valid phone number or email matches a single guest account, the transfer proceeds.
+
+                    * If a phone number matches multiple guest accounts, the transfer is blocked, and an error is returned. To prevent duplicate phone number error, we recommend enabling phone number uniqueness for the business. Contact your Punchh representative to update this Punchh platform configuration.
+
+                    * If no matching guest is found for the provided email or phone number, a "recipient not found" error is returned.'
+                points_to_transfer:
+                  type: number
+                  description: Number of loyalty points to transfer to the recipient
+                password:
+                  type: string
+                  description: Password of the user initiating the transfer. Required for peer-to-peer transfer.
+              required:
+              - client
+              - access_token
+              - points_to_transfer
+              - password
+            examples:
+              Using email:
+                value:
+                  client: CLIENT_GOES_HERE
+                  access_token: ACCESS_TOKEN_GOES_HERE
+                  recipient_email: recipient@example.com
+                  recipient_identifier: recipient@example.com
+                  points_to_transfer: '1'
+                  password: PASSWORD_GOES_HERE
+              Using phone number:
+                value:
+                  client: CLIENT_GOES_HERE
+                  access_token: ACCESS_TOKEN_GOES_HERE
+                  recipient_identifier: '1111111111'
+                  points_to_transfer: '1'
+                  password: PASSWORD_GOES_HERE
+  /api2/mobile/loyalty_transfers/currency:
+    post:
+      summary: Transfer Loyalty Currency
+      description: 'Enables a user to transfer loyalty currency (banked reward balance) from their account to another user''s account by specifying the recipient''s email address or phone number and the amount to transfer.
+
+
+        The recipient must be an existing member in the loyalty system. The transfer is subject to the business''s configured transfer limits, including maximum transfer limits per account and daily receiving limits for the recipient.
+
+
+        **Prerequisite**<br>
+
+        Peer-to-peer currency transfers must be enabled for the business. Contact your Punchh representative to update this Punchh platform configuration.
+
+        <!--Cockpit > Earnings > Transferred Loyalty Expiry > Enable Peer-to-Peer Currency Transfers-->'
+      operationId: mobile_loyalty_transfer_currency
+      tags:
+      - Loyalty Transfers
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/Authorization'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              examples:
+                default:
+                  value:
+                  - $1.00 transferred to Recipient Name
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                Missing required parameter:
+                  value:
+                    error: 'Required parameter missing or the value is empty: amount_to_transfer'
+                Missing recipient email or identifier:
+                  value: "{\n    \"errors\": {\n        \"recipient_email\": \"Required parameter missing or the value is empty.\",\n        \"recipient_email_or_recipient_identifier\": \"Required parameter missing or the value is empty\"\n    }\n}"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                Unauthorized:
+                  value:
+                    error: You need to sign in or sign up before continuing.
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              examples:
+                Insufficient balance:
+                  value:
+                  - Not enough reward balance available to redeem. Current Balance of $96.00 is less than $100.00 requested
+                No user found for the provided email or phone number:
+                  value:
+                  - Recipient not found
+                Receiver limit exceeded:
+                  value:
+                  - Receiver limit exceeded for currency (max 5 in 30h)
+                Duplicate phone numbers:
+                  value:
+                  - Something went wrong with the transfer. Please check your input and try again.
+                Daily receiving limit reached:
+                  value:
+                  - This transfer cannot be completed because the receiving member has reached the daily receiving limit.
+                Maximum transfer limit exceeded:
+                  value:
+                  - Your transfer cannot be completed because it exceeds the maximum transfer limit set for your account.
+                Invalid password:
+                  value:
+                  - Invalid password. Please try again.
+                Service unavailable:
+                  value:
+                  - This service is currently unavailable for your account. Please contact support.
+                Password required:
+                  value:
+                  - Password is required for peer-to-peer transfer.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                access_token:
+                  type: string
+                  description: Token issued to the user after logging into the app of the business
+                recipient_email:
+                  type: string
+                  description: Email address of the recipient to whom the loyalty currency will be transferred. <br><br><b>Note:</b> Either `recipient_email` or `recipient_identifier` is required. When both `recipient_identifier` and `recipient_email` are provided, `recipient_identifier` takes precedence.
+                recipient_identifier:
+                  type: string
+                  description: 'Accepts either an email address or a phone number to identify the recipient of the currency transfer. `recipient_identifier` is the primary parameter used to identify the recipient. The system automatically detects whether the provided value is an email address or a phone number. <br><br><b>Note:</b> Either `recipient_email` or `recipient_identifier` is required. When both `recipient_identifier` and `recipient_email` are provided, `recipient_identifier` takes precedence.
+
+                    * If a valid phone number or email matches a single guest account, the transfer proceeds.
+
+                    * If a phone number matches multiple guest accounts, the transfer is blocked, and an error is returned. To prevent duplicate phone number error, we recommend enabling phone number uniqueness for the business. Contact your Punchh representative to update this Punchh platform configuration.
+
+                    * If no matching guest is found for the provided email or phone number, a "recipient not found" error is returned.'
+                amount_to_transfer:
+                  type: number
+                  description: Amount of loyalty currency to transfer to the recipient
+                password:
+                  type: string
+                  description: Password of the user initiating the transfer. Required for peer-to-peer transfer.
+              required:
+              - client
+              - access_token
+              - amount_to_transfer
+              - password
+            examples:
+              Using email:
+                value:
+                  client: CLIENT_GOES_HERE
+                  access_token: ACCESS_TOKEN_GOES_HERE
+                  recipient_email: recipient@example.com
+                  recipient_identifier: recipient@example.com
+                  amount_to_transfer: '1'
+                  password: PASSWORD_GOES_HERE
+              Using phone number:
+                value:
+                  client: CLIENT_GOES_HERE
+                  access_token: ACCESS_TOKEN_GOES_HERE
+                  recipient_identifier: '1111111111'
+                  amount_to_transfer: '1'
+                  password: PASSWORD_GOES_HERE
+  /api2/mobile/loyalty_transfers/reward:
+    post:
+      summary: Transfer Loyalty Reward
+      description: 'Enables a user to transfer a loyalty reward from their account to another user''s account by specifying the recipient''s email address or phone number and the reward ID to transfer.
+
+
+        The recipient must be an existing member in the loyalty system. The transfer is subject to the business''s configured transfer limits, including maximum transfer limits per account and daily receiving limits for the recipient.
+
+
+        **Prerequisite**<br>
+
+        Peer-to-peer rewards transfers must be enabled for the business. Contact your Punchh representative to update this Punchh platform configuration.
+
+        <!--Cockpit > Earnings > Transferred Loyalty Expiry > Enable Peer-to-Peer Rewards Transfers-->'
+      operationId: mobile_loyalty_transfer_reward
+      tags:
+      - Loyalty Transfers
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/Authorization'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              examples:
+                default:
+                  value:
+                  - Base Redeemable transferred to Recipient Name
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                Missing required parameter:
+                  value:
+                    error: 'Required parameter missing or the value is empty: reward_to_transfer'
+                Missing recipient email or identifier:
+                  value: "{\n    \"errors\": {\n        \"recipient_email\": \"Required parameter missing or the value is empty.\",\n        \"recipient_email_or_recipient_identifier\": \"Required parameter missing or the value is empty\"\n    }\n}"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                Unauthorized:
+                  value:
+                    error: You need to sign in or sign up before continuing.
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              examples:
+                Reward does not exist:
+                  value:
+                  - Reward doesn't exist or has already been redeemed.
+                No user found for the provided email or phone number:
+                  value:
+                  - Recipient not found
+                Receiver limit exceeded:
+                  value:
+                  - Receiver limit exceeded for rewards (max 5 in 30h)
+                Duplicate phone numbers:
+                  value:
+                  - Something went wrong with the transfer. Please check your input and try again.
+                Daily receiving limit reached:
+                  value:
+                  - This transfer cannot be completed because the receiving member has reached the daily receiving limit.
+                Maximum transfer limit exceeded:
+                  value:
+                  - Your transfer cannot be completed because it exceeds the maximum transfer limit set for your account.
+                Invalid password:
+                  value:
+                  - Invalid password. Please try again.
+                Service unavailable:
+                  value:
+                  - This service is currently unavailable for your account. Please contact support.
+                Password required:
+                  value:
+                  - Password is required for peer-to-peer transfer.
+      x-stoplight:
+        id: loyalty-transfers-reward
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                access_token:
+                  type: string
+                  description: Token issued to the user after logging into the app of the business
+                recipient_email:
+                  type: string
+                  description: Email address of the recipient to whom the loyalty reward will be transferred. <br><br><b>Note:</b> Either `recipient_email` or `recipient_identifier` is required. When both `recipient_identifier` and `recipient_email` are provided, `recipient_identifier` takes precedence.
+                recipient_identifier:
+                  type: string
+                  description: 'Accepts either an email address or a phone number to identify the recipient of the reward transfer. `recipient_identifier` is the primary parameter used to identify the recipient. The system automatically detects whether the provided value is an email address or a phone number. <br><br><b>Note:</b> Either `recipient_email` or `recipient_identifier` is required. When both `recipient_identifier` and `recipient_email` are provided, `recipient_identifier` takes precedence.
+
+                    * If a valid phone number or email matches a single guest account, the transfer proceeds.
+
+                    * If a phone number matches multiple guest accounts, the transfer is blocked, and an error is returned. To prevent duplicate phone number error, we recommend enabling phone number uniqueness for the business. Contact your Punchh representative to update this Punchh platform configuration.
+
+                    * If no matching guest is found for the provided email or phone number, a "recipient not found" error is returned.'
+                reward_to_transfer:
+                  type: number
+                  description: ID of the reward to transfer to the recipient
+                password:
+                  type: string
+                  description: Password of the user initiating the transfer. Required for peer-to-peer transfer.
+              required:
+              - client
+              - access_token
+              - reward_to_transfer
+              - password
+            examples:
+              Using email:
+                value:
+                  client: CLIENT_GOES_HERE
+                  access_token: ACCESS_TOKEN_GOES_HERE
+                  recipient_email: recipient@example.com
+                  recipient_identifier: recipient@example.com
+                  reward_to_transfer: '73786533580'
+                  password: PASSWORD_GOES_HERE
+              Using phone number:
+                value:
+                  client: CLIENT_GOES_HERE
+                  access_token: ACCESS_TOKEN_GOES_HERE
+                  recipient_identifier: '1111111111'
+                  reward_to_transfer: '73786533580'
+                  password: PASSWORD_GOES_HERE
+components:
+  parameters:
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
+x-stoplight:
+  id: bf6eddb435209
+x-ext-urls: {}

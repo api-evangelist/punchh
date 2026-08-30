@@ -1,0 +1,176 @@
+openapi: 3.2.0
+info:
+  title: Mobile Coupons API
+  version: '1.0'
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+  description: 'Punchh provides a robust platform for offering loyalty programs to customers. When a business integrates its back-end with the Punchh server, the Punchh APIs become instrumental in executing loyalty programs for enrolled customers, primarily via business-branded mobile apps and websites tailored by Punchh.
+
+
+    To establish integration with the Punchh APIs, you need to understand how they are invoked and what responses are returned by the Punchh server. You can call APIs using any suitable API test client, such as Postman. Thus, the response to every API call made in Postman under a chosen environment (in app and/or platform) is reflected in the app and/or platform.'
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: Coupons
+paths:
+  /api2/mobile/coupons:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: array
+                    items:
+                      type: string
+              examples:
+                default:
+                  value:
+                    code:
+                    - Congratulations, Promo Code Applied Successfully.
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      invalid_language:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                Bad Request (invalid language):
+                  value:
+                    errors:
+                      invalid_language:
+                      - Unknown/Invalid locale in Accept-Language Header. Supported locales are en-GB, es-CR, en, es.
+                Bad Request (missing parameter):
+                  value: "{\n    \"errors\": {\n        \"code\": \"Required parameter missing or the value is empty.\"\n    }\n}"
+                Bad Request (missing email fields):
+                  value: "{  \n   \"errors\":{  \n      \"missing_required_param\":[  \n         \"Required parameter missing or the value is empty: email\"\n      ]\n   }\n}"
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      unknown_client:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                Invalid client ID:
+                  value:
+                    errors:
+                      unknown_client:
+                      - Client ID is incorrect. Please check client param or contact us.
+        '422':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      invalid_email_password:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                Invalid email or password:
+                  value:
+                    errors:
+                      invalid_email_password:
+                      - Sorry, Invalid Email/Password.
+      summary: Apply Coupons
+      description: Applies a coupon or promo code from the mobile app to gift a user the associated reward. The response from this API endpoint does not return the associated reward; however, you can use the [User Account History](/docs/dev-portal-mobile/b3A6NDQ5NTQ4MTY-user-account-history) API to view the reward gifted to the user.
+      operationId: mobile_apply_coupons
+      tags:
+      - Coupons
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: dd3f9900f0b5b
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                code:
+                  type: string
+                  description: Coupon or promo code
+              required:
+              - client
+              - code
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  code: ABCD123
+components:
+  parameters:
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
+x-stoplight:
+  id: bf6eddb435209
+x-ext-urls: {}

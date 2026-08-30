@@ -1,0 +1,952 @@
+openapi: 3.2.0
+info:
+  title: Punchh Swag API
+  version: '1.0'
+  description: 'Operations tagged Swag across 2 of this provider''s published API definitions: punchh-mobile-api-openapi.yml, punchh-platform-functions-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: Swag
+paths:
+  /api2/mobile/user_banking_preferences:
+    put:
+      responses:
+        '200':
+          description: 200 OK — Successful Update
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  save_points_for_swag_enabled:
+                    type: boolean
+                    description: Indicates whether the guest has enabled saving points for swag redemption
+                  saved_swag_points_threshold:
+                    type: integer
+                    minimum: 0
+                    maximum: 999999
+                    description: The number of points the guest has configured to reserve for swag redemption
+                  swag_balance:
+                    type: integer
+                    minimum: 0
+                    description: "The number of points currently accumulated in the swag balance. Calculated as the smaller of the user's available points balance and the configured `saved_swag_points_threshold`. \n\nFor example, if the guest has 100 points and the threshold is 200, the swag balance is 100. If the guest has 300 points and the threshold is 200, the swag balance is 200.\n\nReturns 0 when `save_points_for_swag_enabled` is false or `saved_swag_points_threshold` is 0.\n"
+              examples:
+                Save Points Disabled:
+                  value:
+                    save_points_for_swag_enabled: false
+                    saved_swag_points_threshold: 0
+                    swag_balance: 0
+                Save Points Enabled — Available Points Below Threshold (100 points):
+                  value:
+                    save_points_for_swag_enabled: true
+                    saved_swag_points_threshold: 200
+                    swag_balance: 100
+                Save Points Enabled — Active Swag Balance:
+                  value:
+                    save_points_for_swag_enabled: true
+                    saved_swag_points_threshold: 200
+                    swag_balance: 200
+        '400':
+          description: 'Bad Request
+
+            - Missing required parameters — "Provide at least one of save_points_for_swag_enabled or saved_swag_points_threshold."
+
+            '
+        '401':
+          description: 'Unauthorized
+
+            - Missing or invalid access token — "An active access token must be used to query information about the current user."
+
+            '
+        '422':
+          description: 'Unprocessable Entity
+
+            - Save Points for Swag feature disabled — "Your current configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue."
+
+            - Threshold not a number — "Saved swag points threshold is not a number"
+
+            - Threshold exceeds maximum — "Saved swag points threshold must be less than or equal to 999999"
+
+            '
+      summary: Save Points for Swag
+      description: "In Points Convert to Currency or Points Convert to Rewards loyalty programs, loyalty users earn points on every purchase. By default, these points are automatically converted (\"banked\") into rewards or currency. However, some loyalty users may prefer to accumulate their points and redeem them for swag instead.\n\nThis API lets loyalty users manage their \"Save Points for Swag\" preference from the mobile app. When the \"Save Points for Swag\" feature is enabled for the brand, loyalty users can opt in or out of the feature and set a points threshold. Points accumulated up to this threshold are reserved for swag redemption, while points earned above the threshold are automatically converted into rewards or currency. This gives loyalty users flexibility in how they use their points. If a loyalty user no longer wants to save points for swag, they can update their preference to opt out.\n\n## Prerequisite\n\nBefore processing the request, the API verifies that the \"Save Points for Swag\" feature is enabled for the brand on the Punchh platform. If the feature is not enabled, the API returns an appropriate error code and message. \n\n**Note**: Contact your Punchh representative to update this Punchh platform configuration.\n\nOn success, the API responds with a **200 OK** status.\n<!--Cockpit > Redemptions > Redemptions Properties > Allow members to save points for swag redemption-->\n\nSee [Get User Save Points for Swag](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1user_banking_preferences/get), [Fetch Available User Swag](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1user_merch/get), [Redeem Swag](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1swag_redemptions/post), and [Get Swag Shipping Details](https://developers.partech.com/docs/dev-portal-platform-functions/apis/platform-functions-api/tag/swag/get/api2/dashboard/swag_shipping_details).\n"
+      operationId: mobile_update_user_banking_preferences
+      tags:
+      - Swag
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/punchh-app-device-id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                save_points_for_swag_enabled:
+                  type: boolean
+                  x-nullable: true
+                  description: "Enables (true) or disables (false) the \"Save Points for Swag\" preference. The \"Save Points for Swag\" feature must be enabled for the brand. \n\nWhen enabled, the user's points are accumulated and saved for swag redemption up to the `saved_swag_points_threshold`. \n\nWhen disabled, no points are saved for swag, and all points are automatically converted into rewards/currency per the program rules. A null value (or omitting the parameter) is treated as 'false', which disables saving mode and resets `saved_swag_points_threshold` to 0. \n\n<b>Note</b>: Both `save_points_for_swag_enabled` and `saved_swag_points_threshold` parameters can be provided together or independently in a single request. At least one parameter must be provided; omitting both returns a 400 Bad Request error.\n"
+                saved_swag_points_threshold:
+                  type: integer
+                  minimum: 0
+                  maximum: 999999
+                  x-nullable: true
+                  description: 'The member-defined points threshold. Points accumulated up to this limit are reserved for swag and excluded from automated banking conversion. Points above this threshold are automatically converted into rewards or currency.
+
+
+                    Must be a non-negative integer. Invalid values (for example, "abc") return a 422 Unprocessable Entity error. The maximum allowed value is 999999; values exceeding this limit also return a 422 Unprocessable Entity error.
+
+
+                    If `save_points_for_swag_enabled` is ''false'' or null, this threshold is ignored and treated as 0. If `save_points_for_swag_enabled` is ''true'' and this parameter is omitted, it defaults to 0, meaning no points are reserved for swag, and all points are eligible for automated banking conversion.
+
+
+                    <b>Note</b>: Both `save_points_for_swag_enabled` and `saved_swag_points_threshold` parameters can be provided together or independently in a single request. At least one parameter must be provided; omitting both returns a 400 Bad Request error.
+
+                    '
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_KEY_GOES_HERE
+                  save_points_for_swag_enabled: true
+                  saved_swag_points_threshold: 500
+    get:
+      summary: Get User Save Points for Swag
+      description: 'Retrieves a loyalty user''s "Save Points for Swag" banking preferences, including the save-points opt-in status, configured threshold, and the number of points currently accumulated toward swag redemption.
+
+
+        ## Prerequisites
+
+
+        - The business must have the "Save Points for Swag" feature enabled in the Punchh platform.
+
+
+        - The business must support banked point debit.
+
+        <!--Cockpit > Redemptions > Redemptions Properties > Allow members to save points for swag redemption-->
+
+
+        If either condition is not met, the endpoint returns a 422 Unprocessable Entity error.
+
+
+        **Note**: Contact your Punchh representative to update this Punchh platform configuration.
+
+
+        See [Save Points for Swag](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1user_banking_preferences/put), [Fetch Available User Swag](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1user_merch/get), [Redeem Swag](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1swag_redemptions/post), and [Get Swag Shipping Details](https://developers.partech.com/docs/dev-portal-platform-functions/apis/platform-functions-api/tag/swag/get/api2/dashboard/swag_shipping_details).'
+      operationId: mobile_get_user_banking_preferences
+      tags:
+      - Swag
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/punchh-app-device-id'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  save_points_for_swag_enabled:
+                    type: boolean
+                    description: Indicates whether the guest has enabled saving points for swag redemption
+                  saved_swag_points_threshold:
+                    type: integer
+                    minimum: 0
+                    maximum: 999999
+                    description: The number of points the guest has configured to reserve for swag redemption
+                  swag_balance:
+                    type: integer
+                    minimum: 0
+                    description: "The number of points currently accumulated in the swag balance. Calculated as the smaller of the user's available points balance and the configured `saved_swag_points_threshold`. \n\nFor example, if the guest has 100 points and the threshold is 200, the swag balance is 100. If the guest has 300 points and the threshold is 200, the swag balance is 200.\n\nReturns 0 when `save_points_for_swag_enabled` is false or `saved_swag_points_threshold` is 0.\n"
+              examples:
+                Save Points Disabled:
+                  value:
+                    save_points_for_swag_enabled: false
+                    saved_swag_points_threshold: 0
+                    swag_balance: 0
+                Save Points Enabled — Available Points Below Threshold (100 points):
+                  value:
+                    save_points_for_swag_enabled: true
+                    saved_swag_points_threshold: 200
+                    swag_balance: 100
+                Save Points Enabled — Active Swag Balance:
+                  value:
+                    save_points_for_swag_enabled: true
+                    saved_swag_points_threshold: 200
+                    swag_balance: 200
+        '400':
+          description: 'Bad Request
+
+            - Missing `client` parameter — "Required parameter missing or the value is empty."
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+              examples:
+                Missing client parameter:
+                  value:
+                    errors:
+                      client: Required parameter missing or the value is empty.
+        '401':
+          description: 'Unauthorized
+
+            - Missing or invalid access token — "An active access token must be used to query information about the current user."
+
+            - Invalid client ID — "Unknown client."
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+              examples:
+                Invalid or missing access token:
+                  value:
+                    errors:
+                      unauthorized: An active access token must be used to query information about the current user.
+                Invalid client ID:
+                  value:
+                    errors:
+                      unknown_client: Unknown client.
+        '404':
+          description: 'Not Found
+
+            - Incorrect endpoint URL
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  error:
+                    type: string
+              examples:
+                Incorrect endpoint:
+                  value:
+                    status: 404
+                    error: Not Found
+        '422':
+          description: 'Unprocessable Entity
+
+            - Save Points for Swag feature disabled or banked point debit not supported — "Your current configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue."
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: string
+              examples:
+                Feature disabled:
+                  value:
+                    errors: Your current configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_KEY_GOES_HERE
+    servers:
+    - url: https://SERVER_NAME_GOES_HERE.punchh.com
+  /api2/mobile/swag_redemptions:
+    post:
+      summary: Redeem Swag
+      description: 'The Swag Redemption API allows an authenticated loyalty member to redeem saved loyalty points for a branded swag item. The API handles the full redemption flow end-to-end — including eligibility checks, point deduction, inventory decrement, reward creation, and optional shipping detail capture.
+
+
+        See [Get User Save Points for Swag](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1user_banking_preferences/get), [Fetch Available User Swag](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1user_merch/get), [Save Points for Swag](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1user_banking_preferences/put), and [Get Swag Shipping Details](https://developers.partech.com/docs/dev-portal-platform-functions/apis/platform-functions-api/tag/swag/get/api2/dashboard/swag_shipping_details).'
+      operationId: mobile_create_swag_redemption
+      tags:
+      - Swag
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Accept-Language'
+      responses:
+        '200':
+          description: Swag redeemed successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              examples:
+                default:
+                  value:
+                    message: Swag redeemed successfully.
+        '400':
+          description: 'Bad Request
+
+            - Missing `location_id` — "Required parameter missing or the value is empty: location_id"
+
+            '
+        '401':
+          description: 'Unauthorized
+
+            - Missing or invalid access token — "You need to sign in or sign up before continuing."
+
+            '
+        '404':
+          description: 'Not Found
+
+            - Item not available as swag (redeemable ID passed) — "Swag item not found."
+
+            - Invalid/Deactivated swag ID — "Swag item not found."
+
+            - Unknown or cross-business `location_id` — "Location not found."
+
+            '
+        '422':
+          description: 'Unprocessable Entity
+
+            - Save Points for Swag feature disabled — "Your current configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue."
+
+            - Per-member redemption limit exceeded — "Redemption limit reached for the member."
+
+            - Insufficient saved points — "Insufficient points to redeem this SWAG."
+
+            - Item out of stock (quantity = 0 or NULL) — "Item is currently out of stock."
+
+            - Invalid fulfillment method value — "Invalid fulfilment type specified."
+
+            - Missing required field(s) — "Missing required field(s): {field_name}."
+
+            '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - client
+              - swag_id
+              - fulfillment_method
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID assigned to the business
+                swag_id:
+                  type: integer
+                  description: ID of the swag item to redeem
+                location_id:
+                  type: string
+                  description: ID of the store location. If not provided, the business's primary location is used.
+                fulfillment_method:
+                  type: string
+                  description: 'Delivery method. Possible values: STORE_PICKUP or HOME_DELIVERY (case-insensitive)'
+                  enum:
+                  - STORE_PICKUP
+                  - HOME_DELIVERY
+                shipping_info:
+                  type: object
+                  description: Required when `fulfillment_method` is HOME_DELIVERY. Ignored when `fulfillment_method` is STORE_PICKUP.
+                  required:
+                  - full_name
+                  - email
+                  - phone_number
+                  - address_line_1
+                  - city
+                  - state
+                  - zipcode
+                  properties:
+                    full_name:
+                      type: string
+                      description: Full name of the shipping recipient
+                    email:
+                      type: string
+                      description: Contact email for the shipment
+                    phone_number:
+                      type: string
+                      description: Contact phone number. Must be a valid phone number. Current validation does not enforce a minimum length of 10 digits.
+                    address_line_1:
+                      type: string
+                      description: First line of the shipping address
+                    address_line_2:
+                      type: string
+                      description: Second line of the shipping address (apartment, suite, etc.)
+                    city:
+                      type: string
+                      description: City of the shipping address
+                    state:
+                      type: string
+                      description: State or region of the shipping address
+                    zipcode:
+                      type: string
+                      description: Postal / ZIP code of the shipping address
+                    delivery_instructions:
+                      type: string
+                      description: Special delivery instructions. No character limit currently enforced
+            examples:
+              default:
+                value:
+                  swag_id: 73072
+                  location_id: '353291'
+                  fulfillment_method: HOME_DELIVERY
+                  shipping_info:
+                    full_name: NAME_GOES_HERE
+                    email: test@example.com
+                    phone_number: '1111111111'
+                    address_line_1: Street 1
+                    address_line_2: Street 2
+                    delivery_instructions: please deliver it asap
+                    city: New York
+                    state: USA
+                    zipcode: '12344'
+    servers:
+    - url: https://SERVER_NAME_GOES_HERE.punchh.com
+  /api2/mobile/user_merch:
+    get:
+      summary: Fetch Available User Swag
+      description: 'Retrieves all available swag items that the authenticated user can view or redeem using their loyalty points. The response includes item details such as name, image, point cost, availability window, and fulfilment method. Results are paginated. Only items available in inventory are returned in the response.
+
+
+        See [Get User Save Points for Swag](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1user_banking_preferences/get), [Save Points for Swag](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1user_banking_preferences/put), [Redeem Swag](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1swag_redemptions/post), and [Get Swag Shipping Details](https://developers.partech.com/docs/dev-portal-platform-functions/apis/platform-functions-api/tag/swag/get/api2/dashboard/swag_shipping_details).'
+      operationId: mobile_fetch_available_user_merch
+      tags:
+      - Swag
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/punchh-app-device-id'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: Unique identifier for the swag item.
+                        name:
+                          type: string
+                          description: Display name of the swag item.
+                        image_url:
+                          type: string
+                          description: URL of the swag item image.
+                        points:
+                          type: integer
+                          description: Number of loyalty points required to redeem this item.
+                        start_time:
+                          type: string
+                          format: date-time
+                          description: Start date/time when the item becomes available for redemption in ISO 8601 format.
+                        end_time:
+                          type: string
+                          format: date-time
+                          description: End date/time after which the item is no longer available in ISO 8601 format.
+                        timezone:
+                          type: string
+                          description: Timezone for the availability window (IANA format).
+                        available_to_redeem:
+                          type: boolean
+                          description: Whether the item is currently available for the user to redeem. Set to 'true' when the user's points balance allocated for the swag is greater than or equal to the item's `points` value; otherwise, it is set to 'false'.
+                        fulfilment_method:
+                          type: string
+                          description: 'How the item is fulfilled. Possible values: store_pickup, home_delivery.'
+                  meta:
+                    type: object
+                    description: Pagination metadata.
+                    properties:
+                      current_page:
+                        type: integer
+                        description: The current page number.
+                      next_page:
+                        type: integer
+                        x-nullable: true
+                        description: The next page number, or null if on the last page.
+                      prev_page:
+                        type: integer
+                        x-nullable: true
+                        description: The previous page number, or null if on the first page.
+                      total_pages:
+                        type: integer
+                        description: Total number of pages available.
+                      total_count:
+                        type: integer
+                        description: Total number of merchandise items across all pages.
+              examples:
+                default:
+                  value:
+                    data:
+                    - id: 1
+                      name: Merch Name1
+                      image_url: IMAGE_URL_GOES_HERE
+                      points: 10
+                      start_time: '2026-05-06T08:01:42Z'
+                      end_time: '2026-06-07T08:01:42Z'
+                      timezone: America/New_York
+                      available_to_redeem: true
+                      fulfilment_method: store_pickup
+                    - id: 2
+                      name: Merch Name2
+                      image_url: IMAGE_URL_GOES_HERE
+                      points: 15
+                      start_time: '2026-05-16T08:01:42Z'
+                      end_time: '2026-06-17T08:01:42Z'
+                      timezone: America/New_York
+                      available_to_redeem: false
+                      fulfilment_method: home_delivery
+                    meta:
+                      current_page: 1
+                      next_page: 2
+                      prev_page: null
+                      total_pages: 2
+                      total_count: 2
+        '401':
+          description: 'Unauthorized
+
+            - Missing or invalid access token — "You need to sign in or sign up before continuing."
+
+            '
+        '422':
+          description: 'Unprocessable Entity
+
+            - Save Points for Swag feature disabled — "Your current configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue."
+
+            '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_KEY_GOES_HERE
+    servers:
+    - url: https://SERVER_NAME_GOES_HERE.punchh.com
+  /api2/dashboard/swag_shipping_details:
+    get:
+      summary: Get Swag Shipping Details
+      description: 'Returns shipping details for swag redemptions fulfilled through home delivery within the specified date range. Swag redemptions fulfilled through store pick-up (which do not include shipping details) are excluded.
+
+
+        **Authentication Note**: This is a Dashboard API endpoint. It uses a business admin API key (not a mobile guest access token) and does not require `client` or `x-pch-digest` headers.
+
+
+        **Notes**:
+
+        - Pagination applies only when `response_format=JSON`.
+
+        - When `response_format=CSV`, pagination parameters are ignored and an async export is queued.
+
+        - `from_date` must be on or before `to_date`.
+
+        - `from_date` cannot be older than 90 days from the current date.
+
+        - Only swag redemptions with shipping details are returned.
+
+
+        See [Get User Save Points for Swag](https://developers.partech.com/docs/dev-portal-mobile/apis/mobile-api/tag/swag/get/api2/mobile/user_banking_preferences), [Save Points for Swag](https://developers.partech.com/docs/dev-portal-mobile/apis/mobile-api/tag/swag/put/api2/mobile/user_banking_preferences), [Fetch Available User Swag](https://developers.partech.com/docs/dev-portal-mobile/apis/mobile-api/tag/swag/get/api2/mobile/user_merch), and [Redeem Swag](https://developers.partech.com/docs/dev-portal-mobile/apis/mobile-api/tag/swag/post/api2/mobile/swag_redemptions)'
+      operationId: dashboard_get_swag_shipping_details
+      tags:
+      - Swag
+      parameters:
+      - $ref: '#/components/parameters/authorization-header'
+      - $ref: '#/components/parameters/accept'
+      - $ref: '#/components/parameters/content-type'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    description: List of shipping detail records for swag redemptions
+                    items:
+                      type: object
+                      properties:
+                        redemption_id:
+                          type: integer
+                          description: Unique ID of the swag redemption
+                        swag_id:
+                          type: integer
+                          description: Unique ID of the redeemed swag item
+                        swag_name:
+                          type: string
+                          description: Name of the redeemed swag item
+                        redemption_time:
+                          type: string
+                          format: date-time
+                          description: UTC timestamp when the swag was redeemed, in ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ)
+                        guest_id:
+                          type: integer
+                          description: Unique ID of the guest who redeemed the swag
+                        guest_name:
+                          type: string
+                          description: Full name of the guest
+                        guest_email:
+                          type: string
+                          description: Email address of the guest
+                        guest_phone:
+                          type: string
+                          description: Phone number of the guest. May be null
+                        shipping_address:
+                          type: object
+                          description: Shipping address details associated with the swag redemption
+                          properties:
+                            address_line_1:
+                              type: string
+                              description: Primary street address line
+                            address_line_2:
+                              type: string
+                              description: Secondary street address line. May be null.
+                            city:
+                              type: string
+                              description: City of the shipping address
+                            state:
+                              type: string
+                              description: State or province of the shipping address
+                            postal_code:
+                              type: string
+                              description: Postal or ZIP code of the shipping address
+                            delivery_instructions:
+                              type: string
+                              description: Delivery instructions provided for the shipment. May be null.
+                        status:
+                          type: string
+                          description: Current status of the swag redemption (for example, redeemed)
+                  meta:
+                    type: object
+                    description: Pagination metadata. Returned only when response_format is JSON.
+                    properties:
+                      current_page:
+                        type: integer
+                        description: Current page number
+                      next_page:
+                        type: integer
+                        x-nullable: true
+                        description: Next page number. Returns null if there is no next page.
+                      prev_page:
+                        type: integer
+                        x-nullable: true
+                        description: Previous page number. Returns null if there is no previous page.
+                      total_pages:
+                        type: integer
+                        description: Total number of available pages
+                      total_count:
+                        type: integer
+                        description: Total number of records matching the request criteria
+                  message:
+                    type: string
+                    description: Returned when `response_format`=CSV, indicating that the CSV export request has been queued for processing.
+              examples:
+                JSON — Paginated shipping details:
+                  value:
+                    data:
+                    - redemption_id: REDEMPTION_ID_GOES_HERE
+                      swag_id: 1111
+                      swag_name: Merch test 2
+                      redemption_time: '2026-05-18T04:13:17Z'
+                      guest_id: 11111111
+                      guest_name: GUEST_NAME_GOES_HERE
+                      guest_email: test@example.com
+                      guest_phone: '1111111111'
+                      shipping_address:
+                        address_line_1: ADDRESS_LINE_1_GOES_HERE
+                        address_line_2: null
+                        city: CITY_GOES_HERE
+                        state: STATE_GOES_HERE
+                        postal_code: '111111'
+                        delivery_instructions: null
+                      status: redeemed
+                    - redemption_id: REDEMPTION_ID_GOES_HERE
+                      swag_id: SWAG_ID_GOES_HERE
+                      swag_name: Merch test 2
+                      redemption_time: '2026-05-18T03:54:48Z'
+                      guest_id: GUEST_ID_GOES_HERE
+                      guest_name: GUEST_NAME_GOES_HERE
+                      guest_email: test@example.com
+                      guest_phone: '1111111111'
+                      shipping_address:
+                        address_line_1: ADDRESS_LINE_1_GOES_HERE
+                        address_line_2: null
+                        city: CITY_GOES_HERE
+                        state: STATE_GOES_HERE
+                        postal_code: '111111'
+                        delivery_instructions: null
+                      status: redeemed
+                    meta:
+                      current_page: 3
+                      next_page: 4
+                      prev_page: 2
+                      total_pages: 5
+                      total_count: 10
+                JSON — No matching records:
+                  value:
+                    data: []
+                    meta:
+                      current_page: 1
+                      next_page: null
+                      prev_page: null
+                      total_pages: 0
+                      total_count: 0
+                CSV — Export queued:
+                  value:
+                    message: Your swag shipping details export is being prepared and will be emailed to admin@example.com.
+        '400':
+          description: Bad Request — Missing required parameter
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                default:
+                  value:
+                    error: 'Required parameter missing or the value is empty: from_date'
+        '401':
+          description: Unauthorized — Invalid or missing access token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                default:
+                  value:
+                    error: You need to sign in or sign up before continuing.
+        '403':
+          description: Forbidden — Insufficient permissions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  no_permission_error:
+                    type: string
+              examples:
+                default:
+                  value:
+                    no_permission_error: <permission error message>
+        '404':
+          description: Not Found — Swag feature not enabled
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                    - Swag feature not enabled.
+        '422':
+          description: Unprocessable Entity — Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      from_date:
+                        type: string
+                      date_range:
+                        type: string
+                      response_format:
+                        type: string
+              examples:
+                Invalid date format:
+                  value:
+                    errors:
+                      from_date: Invalid date format. Use YYYY-MM-DD.
+                Invalid date range:
+                  value:
+                    errors:
+                      date_range: from_date must be on or before to_date.
+                Date range exceeds lookback limit:
+                  value:
+                    errors:
+                      date_range: Data cannot be fetched older than 90 days from the current date.
+                Invalid response format:
+                  value:
+                    errors:
+                      response_format: response_format must be JSON or CSV.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - from_date
+              - to_date
+              - response_format
+              properties:
+                from_date:
+                  type: string
+                  format: date
+                  description: 'Start date of the redemption date range. Format: YYYY-MM-DD. `from_date` cannot be older than 90 days from the current date.'
+                to_date:
+                  type: string
+                  format: date
+                  description: 'End date of the redemption date range. Format: YYYY-MM-DD'
+                response_format:
+                  type: string
+                  description: 'Output format. Possible values: JSON or CSV (case-insensitive).'
+                  enum:
+                  - JSON
+                  - CSV
+                page:
+                  type: integer
+                  description: Page number for pagination. Applicable only when response_format is JSON. Defaults to 1 if omitted or set to 0.
+                per_page:
+                  type: integer
+                  description: Number of records to return per page. Applicable only when response_format is JSON. Defaults to 20 if omitted or set to 0.
+        required: true
+    servers:
+    - url: https://SERVER_NAME_GOES_HERE.punchh.com
+components:
+  parameters:
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
+    punchh-app-device-id:
+      schema:
+        type: string
+        default: APP_DEVICE_ID_GOES_HERE
+      name: punchh-app-device-id
+      in: header
+      required: true
+      description: The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.
+    accept:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Accept
+      description: Advertises which content types the client is able to understand
+      required: true
+    authorization-header:
+      schema:
+        type: string
+        default: Bearer BUSINESS_ADMIN_KEY_GOES_HERE
+      name: Authorization
+      in: header
+      description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
+      required: true
+    content-type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+x-refined-from:
+- punchh-mobile-api-openapi.yml
+- punchh-platform-functions-api-openapi.yml
+x-stoplight:
+  id: bf6eddb435209
+x-ext-urls: {}

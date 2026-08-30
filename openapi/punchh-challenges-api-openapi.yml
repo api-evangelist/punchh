@@ -1,0 +1,1085 @@
+openapi: 3.2.0
+info:
+  title: Mobile Challenges API
+  version: '1.0'
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+  description: 'Punchh provides a robust platform for offering loyalty programs to customers. When a business integrates its back-end with the Punchh server, the Punchh APIs become instrumental in executing loyalty programs for enrolled customers, primarily via business-branded mobile apps and websites tailored by Punchh.
+
+
+    To establish integration with the Punchh APIs, you need to understand how they are invoked and what responses are returned by the Punchh server. You can call APIs using any suitable API test client, such as Postman. Thus, the response to every API call made in Postman under a chosen environment (in app and/or platform) is reflected in the app and/or platform.'
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: Challenges
+paths:
+  /api2/mobile/challenges:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  challenges:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        gift_reason:
+                          type: string
+                          description: Reason to give gifts to a user
+                        id:
+                          type: integer
+                          description: Challenge ID
+                        icon:
+                          type: string
+                          description: Image icon of the challenge
+                        icon_completed:
+                          type: string
+                          description: Image icon that represents completion of the challenge
+                        name:
+                          type: string
+                          description: Name of the challenge. The name is returned in the language specified in the Accept-Language request header, provided the challenge name has been translated into the relevant language by the business admin in the Punchh platform when creating or editing a challenge campaign under <b>Marketing Automation > Campaign Management</b>. If the translation is unavailable, the response returns the value for this parameter in the default English language. For example, if the header specifies “fr” (French), the name is returned in French if a French translation is configured for the name in the Punchh platform; otherwise the value is returned in the default English language.
+                        start_date:
+                          type: string
+                          enum:
+                          - YYYY-MM-DD
+                          format: date
+                          description: Start date of the campaign
+                        end_date:
+                          type: string
+                          enum:
+                          - YYYY-MM-DD
+                          format: date
+                          description: End date of the campaign
+                        image_url:
+                          type: string
+                          description: URL of the image
+                        description:
+                          type: string
+                          description: Description of the challenge. The description is returned in the language specified in the Accept-Language request header, provided the challenge description has been translated into the relevant language by the business admin in the Punchh platform when creating or editing a challenge campaign under <b>Marketing Automation > Campaign Management</b>. If the translation is unavailable, the response returns the value for this parameter in the default English language. For example, if the header specifies “fr” (French), the description is returned in French if a French translation is configured for the description in the Punchh platform; otherwise the value is returned in the default English language.
+                        tasks:
+                          type: array
+                          description: Information about the name and steps involved
+                          items:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                              number_of_steps:
+                                type: integer
+                        miscellaneous:
+                          type: string
+                          description: Returns miscellaneous response string as configured in the Punchh platform
+                        challenge_reach:
+                          type: string
+                          x-nullable: true
+                          description: 'Returns the type of challenge reach strategy defined on the challenge campaign. Possible values are:
+
+                            - universal_auto_enrolment
+
+                            - segment_auto_enrolment
+
+                            - null (when no reach strategy is defined)'
+                        challenge_type:
+                          type: string
+                          description: 'Returns the type of challenge that is configured in the Punchh platform. Supported values are:
+
+                            - receipt_qualification
+
+                            - every_x_points
+
+                            - segment'
+                        occurrence:
+                          type: string
+                          description: 'Possibel values are:
+
+                            - **single** - Shows when restarting the challenge button is OFF in the campaign
+
+                            - **multiple** - Shows when restarting the challenge button is ON in the campaign'
+              examples:
+                default:
+                  value:
+                    challenges:
+                    - gift_reason: Punchh product qa test currency
+                      id: 124872
+                      icon: IMAGE_URL_GOES_HERE
+                      icon_completed: IMAGE_URL_GOES_HERE
+                      name: Punchh product qa test currency
+                      start_date: null
+                      end_date: null
+                      image_url: IMAGE_URL_GOES_HERE
+                      description: ''
+                      tasks:
+                      - name: Punchh product qa test currency
+                        number_of_steps: 10
+                      miscellaneous: ''
+                      challenge_reach: segment_auto_enrolment
+                      challenge_type: every_x_points
+                      occurrence: single
+                    - gift_reason: Punchh product qa test redeemable
+                      id: 124873
+                      icon: IMAGE_URL_GOES_HERE
+                      icon_completed: IMAGE_URL_GOES_HERE
+                      name: Punchh product qa test redeemable
+                      start_date: null
+                      end_date: null
+                      image_url: IMAGE_URL_GOES_HERE
+                      description: ''
+                      tasks:
+                      - name: Punchh product qa test redeemable
+                        number_of_steps: 1
+                      miscellaneous: ''
+                      challenge_reach: null
+                      challenge_type: segment
+                      occurrence: single
+                    - gift_reason: Buy 5 Cheese Breadsticks
+                      id: 124875
+                      icon: IMAGE_URL_GOES_HERE
+                      icon_completed: IMAGE_URL_GOES_HERE
+                      name: Buy 5 Cheese Breadsticks
+                      start_date: '2020-11-30'
+                      end_date: '2021-03-31'
+                      image_url: IMAGE_URL_GOES_HERE
+                      description: Buy 5 Cheese Breadsticks
+                      tasks:
+                      - name: Buy 5 Cheese Breadsticks
+                        number_of_steps: 5
+                      miscellaneous: '{"detailedDescription":"Earn 50 bonus points after you purchase five breadsticks. Your points will automatically be added to your account after completion. Terms & Conditions may apply. Complete by 12/31/2020.", "GiftType":"fuel", "GiftPoints":"0.55", "challengeType":"Personal", "nounDescription" : "fuel"}'
+                      challenge_reach: segment_auto_enrolment
+                      challenge_type: receipt_qualification
+                      occurrence: single
+                    - gift_reason: Get your 4th Breadstick free
+                      id: 124876
+                      icon: IMAGE_URL_GOES_HERE
+                      icon_completed: IMAGE_URL_GOES_HERE
+                      name: Buy 4 Breadsticks!
+                      start_date: '2020-11-30'
+                      end_date: '2021-02-10'
+                      image_url: IMAGE_URL_GOES_HERE
+                      description: Get your 4th Breadstick free
+                      tasks:
+                      - name: Buy 4 Breadsticks!
+                        number_of_steps: 3
+                      miscellaneous: '{"detailedDescription":"Get your next cheese breadstick free after you purchase three breadsticks.  . Terms & Conditions may apply. Complete by 12/31/2020.", "GiftType":"offer", "GiftPoints":"50% off , Breadstick", "challengeType":"Personal","nounDescription" : "breadsticks"}'
+                      challenge_reach: segment_auto_enrolment
+                      challenge_type: receipt_qualification
+                      occurrence: multiple
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  unauthorized:
+                    type: array
+                    items:
+                      type: string
+              examples:
+                Invalid or missing access token:
+                  value:
+                    unauthorized:
+                    - An active access token must be used to query information about the current user.
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      disabled_feature:
+                        type: string
+              examples:
+                Challenges not enabled:
+                  value:
+                    errors:
+                      disabled_feature: Business does not have challenges enabled.
+      summary: List Challenges
+      description: 'Lists challenges available for a business. The Challenges feature must be enabled for the business in the Punchh platform. If not enabled, the API will return a 422 Unprocessable Entity error. Contact your Punchh representative to update this Punchh platform configuration.
+
+        <!-- Cockpit > Dashboard > Major Features > Enable Challenges? -->
+
+        '
+      operationId: mobile_list_challenges
+      tags:
+      - Challenges
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/User-Agent'
+      - schema:
+          type: string
+        in: header
+        name: Accept-Language
+        description: 'Preferred language. Punchh supports multiple languages for the challenge name and description in the API response as per the locale specified in the Accept-Language request header for the campaign type challenge. Possible values: ar-kw for Arabic Kuwait, az for Azerbaijani, ca-ES for Catalan, en for English, en-CY for English-Cyprus, en-GB for English British, en-NZ for English-New Zealand, en-TT for English-Trinidad and Tobago, en-ca for English-Canada, es for Spanish, es-CR for Spanish Costa Rica, es-MX for Spanish Mexico, es-US for Spanish United States, fr for French, fr-ca for French-Canada, ro for Romania, vi for Vietnamese<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address</b>. Click the <b>Alternate Languages</b> drop-down field to choose a language. In the Punchh platform, the admin of a business has to configure in the relevant language(s) the challenge name and description when creating or editing a campaign under <b>Marketing Automation > Campaign Management</b>.'
+      x-stoplight:
+        id: 26fb9c55960f8
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  x-stoplight:
+                    id: ng9tn0hdkmtqy
+                  description: OAuth client ID provided by the business
+              required:
+              - client
+  /api2/mobile/challenges/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  progress:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        completed_steps:
+                          type: integer
+                          description: Number of steps a user has completed for a challenge
+                        total_steps:
+                          type: integer
+                          description: Number of total steps set for a challenge
+                  name:
+                    type: string
+                    description: Name of the challenge. The name is returned in the language specified in the Accept-Language request header, provided the challenge name has been translated into the relevant language by the business admin in the Punchh platform when creating or editing a challenge campaign under <b>Marketing Automation > Campaign Management</b>. If the translation is unavailable, the response returns the value for this parameter in the default English language. For example, if the header specifies “fr” (French), the name is returned in French if a French translation is configured for the name in the Punchh platform; otherwise the value is returned in the default English language.
+                  description:
+                    type: string
+                    description: Description of the challenge. The description is returned in the language specified in the Accept-Language request header, provided the challenge description has been translated into the relevant language by the business admin in the Punchh platform when creating or editing a challenge campaign under <b>Marketing Automation > Campaign Management</b>. If the translation is unavailable, the response returns the value for this parameter in the default English language. For example, if the header specifies “fr” (French), the description is returned in French if a French translation is configured for the description in the Punchh platform; otherwise the value is returned in the default English language.
+                  image_url:
+                    type: string
+                    description: URL of the main banner image associated with the challenge campaign
+                  icon_url:
+                    type: string
+                    description: URL of the default icon image for the challenge
+                  icon_completed_url:
+                    type: string
+                    description: URL of the image icon that represents completion of the challenge
+                  start_date:
+                    type: string
+                    enum:
+                    - YYYY-MM-DD
+                    format: date
+                    description: Start date
+                  end_date:
+                    type: string
+                    enum:
+                    - YYYY-MM-DD
+                    format: date
+                    description: End date
+                  gift_reason:
+                    type: string
+                    description: Reason to give gifts to a user
+                  miscellaneous:
+                    type: string
+                    description: Returns miscellaneous response string as configured in the Punchh platform
+                  challenge_id:
+                    type: integer
+                    description: Challenge ID
+                  challenge_reach:
+                    type: string
+                    x-nullable: true
+                    description: 'Returns the type of challenge reach strategy defined on the challenge campaign. Possible values are:
+
+                      - universal_auto_enrolment
+
+                      - segment_auto_enrolment
+
+                      - null (when no reach strategy is defined)'
+                  challenge_status:
+                    type: string
+                    x-nullable: true
+                    description: 'Returns the details of availability of and enrollment of a guest into a specific challenge. Possible values are:
+
+                      * unavailable: This status will be returned for "segment_auto_enrolment" when a guest is NOT added to the "user_feature_enrolment" table.
+
+                      * enrolled: This status will be returned for:<br>
+
+                      a) "universal_auto_enrolment" in all cases since all signed-up guests are automatically enrolled for the challenge.<br>
+
+                      b) "segment_auto_enrolment" in cases when guests from the attached segment (to the challenge campaign) get added to the user_feature_enrolment table and are automatically enrolled for the challenge.<br>
+
+                      * null: For older default "Segment" type challenges, the status will always be null.'
+                  challenge_type:
+                    type: string
+                    description: 'Returns the type of challenge that is configured in the Punchh platform. Supported values are:
+
+                      - receipt_qualification
+
+                      - every_x_points
+
+                      - segment'
+                  occurrence:
+                    type: string
+                    description: 'Possible values are:
+
+                      - **single** - Shows when restarting the challenge button is OFF in the campaign
+
+                      - **multiple** - Shows when restarting the challenge button is ON in the campaign'
+                  past_completions:
+                    type: integer
+                    description: The number of times the user has previously completed the challenge campaign.
+                  enrollment_status:
+                    type: string
+                    x-stoplight:
+                      id: rllwa7oi3kkzk
+                    description: 'Indicates the user''s enrollment status in a challenge. Possible values:
+
+                      * active - The user is currently enrolled in the challenge.
+
+                      * expired - The user''s enrollment in the challenge has expired.'
+                  enrolled_on:
+                    type: string
+                    x-stoplight:
+                      id: cjcebn39q1977
+                    format: date-time
+                    description: Date and time (in ISO 8601 format) when the user enrolled in the challenge
+                  enrollment_expires:
+                    type: string
+                    x-stoplight:
+                      id: 69ktllcf2cv1a
+                    description: Date and time (in ISO 8601 format) when the user's enrollment in the challenge expires
+                    format: date-time
+                  opted_in:
+                    type: boolean
+                    x-stoplight:
+                      id: pilkx64h3cv1y
+                    description: "Indicates whether the user has opted in to a challenge. Possible values:\n* true - The user has opted in. The mobile app should show the opt-out button on the challenge card if the opt-out feature is enabled for the business in the Punchh platform. \n* false - The user has not opted in. The mobile app should show the opt-in button on the challenge card if the opt-in feature is enabled for the business in the Punchh platform.\nContact your Punchh representative to update this configuration setting."
+              examples:
+                default:
+                  value:
+                    progress:
+                    - completed_steps: 0
+                      total_steps: 15
+                    name: Potato Cheese Bites Club
+                    description: Buy 10 get 1 free
+                    image_url: IMAGE_URL_GOES_HERE
+                    icon_url: IMAGE_URL_GOES_HERE
+                    icon_completed_url: IMAGE_URL_GOES_HERE
+                    start_date: '2019-06-24'
+                    end_date: '2022-12-31'
+                    gift_reason: New Challenge
+                    miscellaneous: '{"detailedDescription": "Welcome to Potato Cheese ites club - Buy 10 get 1 free", "challengeType":"Clubs","nounDescription" : "Potato Cheese Bites"}'
+                    challenge_reach: universal_auto_enrolment
+                    challenge_status: enrolled
+                    challenge_type: receipt_qualification
+                    occurrence: multiple
+                    past_completions: 0
+                    challenge_id: 34
+                    enrollment_status: active
+                    enrolled_on: '2025-01-10T05:00:00+05:30'
+                    enrollment_expires: '2025-04-10T05:00:00+05:30'
+                    opted_in: true
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  unauthorized:
+                    type: array
+                    items:
+                      type: string
+              examples:
+                Invalid or missing access token:
+                  value:
+                    unauthorized:
+                    - An active access token must be used to query information about the current user.
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      disabled_feature:
+                        type: string
+              examples:
+                Challenges not enabled:
+                  value:
+                    errors:
+                      disabled_feature: Business does not have challenges enabled.
+      summary: Fetch Challenge Details
+      description: Lists specific challenge details available for a business. The Challenges feature must be enabled for the business in the Punchh platform. If not enabled, the API will return a 422 Unprocessable Entity error. Contact your Punchh representative to update this Punchh platform configuration. <!-- Cockpit > Dashboard > Major Features > Enable Challenges? -->
+      operationId: mobile_Fetch_challenge_details
+      tags:
+      - Challenges
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - schema:
+          type: integer
+        in: path
+        name: id
+        required: true
+        description: Challenge ID
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/User-Agent'
+      - schema:
+          type: string
+        in: header
+        name: Accept-Language
+        description: 'Preferred language. Punchh supports multiple languages for the challenge name and description in the API response as per the locale specified in the Accept-Language request header for the campaign type challenge. Possible values: ar-kw for Arabic Kuwait, az for Azerbaijani, ca-ES for Catalan, en for English, en-CY for English-Cyprus, en-GB for English British, en-NZ for English-New Zealand, en-TT for English-Trinidad and Tobago, en-ca for English-Canada, es for Spanish, es-CR for Spanish Costa Rica, es-MX for Spanish Mexico, es-US for Spanish United States, fr for French, fr-ca for French-Canada, ro for Romania, vi for Vietnamese<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address</b>. Click the <b>Alternate Languages</b> drop-down field to choose a language. In the Punchh platform, the admin of a business has to configure in the relevant language(s) the challenge name and description when creating or editing a campaign under <b>Marketing Automation > Campaign Management</b>.'
+      - $ref: '#/components/parameters/Authorization'
+      x-stoplight:
+        id: 71d1550be0f48
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  x-stoplight:
+                    id: vw31qt20pos98
+                  description: OAuth client ID provided by the business
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  access_token: ACCESS_TOKEN_GOES_HERE
+  /api2/mobile/users/challenges_listing:
+    get:
+      summary: List User Challenges
+      operationId: mobile_list_user_challenges
+      description: 'Returns all challenges associated with the logged-in user. Challenges are grouped into Available, Active, and Past categories, and include user-specific details such as enrollment status, progress, and relevant metadata required to render the challenges listing screen.
+
+
+        This API supports pagination for efficient data handling.
+
+
+        **Prerequisite**<br>
+
+        The Challenges feature must be enabled for the business in the Punchh platform. If not enabled, the API will return a 422 Unprocessable Entity error. Contact your Punchh representative to update this Punchh platform configuration.
+
+        <!-- Cockpit > Dashboard > Major Features > Enable Challenges? -->
+
+
+        **Challenge Categories**
+
+
+        **Available Challenges:**
+
+        All challenges available for opt-in when the opt-in feature is enabled. When the opt-in feature is disabled, all challenges are returned in the Active category.
+
+
+        **Active Challenges:**
+
+        All active challenges that the user has opted into, along with all challenges that do not require opt-in. When the opt-in feature is disabled, all challenges appear in this category.
+
+        Note: All segment-based challenges are also included in this category.
+
+
+        **Past Challenges:**
+
+        All challenges whose end date has already passed, deactivated challenges, as well as challenges for which the user has already earned a badge.'
+      tags:
+      - Challenges
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/punchh-app-device-id'
+      - schema:
+          type: string
+        in: header
+        name: Accept-Language
+        description: 'Preferred language. Punchh supports multiple languages for the challenge name and description in the API response as per the locale specified in the Accept-Language request header for the campaign type challenge. Possible values: ar-kw for Arabic Kuwait, az for Azerbaijani, ca-ES for Catalan, en for English, en-CY for English-Cyprus, en-GB for English British, en-NZ for English-New Zealand, en-TT for English-Trinidad and Tobago, en-ca for English-Canada, es for Spanish, es-CR for Spanish Costa Rica, es-MX for Spanish Mexico, es-US for Spanish United States, fr for French, fr-ca for French-Canada, ro for Romania, vi for Vietnamese<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address</b>. Click the <b>Alternate Languages</b> drop-down field to choose a language. In the Punchh platform, the admin of a business has to configure in the relevant language(s) the challenge name and description when creating or editing a campaign under <b>Marketing Automation > Campaign Management</b>.'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: object
+                    description: Object containing the count of challenges for the selected filter category. For example, if `filter`= active, the `count` object returns the count of active challenges. If no filter is specified, the counts for all challenge categories (`active_challenges`, `available_challenges`, `past_challenges`) are returned.
+                    properties:
+                      active_challenges:
+                        type: integer
+                        description: Total number of active challenges for the user. Returned when filter is "active" or when no filter is specified. The number of active challenges returned is determined by the per_page value.
+                      available_challenges:
+                        type: integer
+                        description: Total number of available challenges for the user. Returned when filter is "available" or when no filter is specified. The number of available challenges returned is determined by the per_page value.
+                      past_challenges:
+                        type: integer
+                        description: Total number of past challenges for the user. Returned when filter is "past" or when no filter is specified. The number of past challenges returned is determined by the per_page value.
+                  available_challenges:
+                    type: array
+                    description: All challenges available for opt-in when the opt-in feature is enabled. When the opt-in feature is disabled, this array is empty as all challenges are returned in the active_challenges array.
+                    items:
+                      $ref: '#/components/schemas/ChallengeListingItem'
+                  active_challenges:
+                    type: array
+                    description: 'All active challenges that the user has opted into, along with all challenges that do not require opt-in. When the opt-in feature is disabled, all challenges appear in this array. Note: All segment-based challenges are also included in this array.'
+                    items:
+                      $ref: '#/components/schemas/ChallengeListingItem'
+                  past_challenges:
+                    type: array
+                    description: All challenges whose end date has already passed, as well as non-global challenges for which the user has already earned a badge.
+                    items:
+                      $ref: '#/components/schemas/ChallengeListingItem'
+              examples:
+                Response Example:
+                  value:
+                    count:
+                      active_challenges: 12
+                    available_challenges: []
+                    active_challenges:
+                    - challenge_id: 16438
+                      name: Buy 5 Cheese Breadsticks
+                      description: Buy 5 Cheese Breadsticks to earn bonus points
+                      image_url: IMAGE_URL_GOES_HERE
+                      icon_url: IMAGE_URL_GOES_HERE
+                      icon_completed_url: IMAGE_URL_GOES_HERE
+                      start_date: '2025-01-01'
+                      end_date: '2025-12-31'
+                      challenge_starting_at_tz: '2025-01-01T00:00:00+05:30'
+                      challenge_expiring_at_tz: '2025-12-31T23:59:59+05:30'
+                      challenge_reach: universal_auto_enrolment
+                      challenge_status: enrolled
+                      challenge_type: receipt_qualification
+                      occurrence: single
+                      past_completions: 1
+                      opted_in: true
+                      opted_out: false
+                      explicit_opt_in: true
+                      gift_reason: Buy 5 Cheese Breadsticks
+                      miscellaneous: '{"detailedDescription":"Earn 50 bonus points after you purchase five breadsticks."}'
+                      progress:
+                      - completed_steps: 0
+                        total_steps: 1
+                    past_challenges: []
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      filter:
+                        type: string
+              examples:
+                Invalid filter value:
+                  value:
+                    errors:
+                      filter: 'Invalid filter value. Valid values are: active, available, past'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  unauthorized:
+                    type: array
+                    items:
+                      type: string
+              examples:
+                Invalid or missing access token:
+                  value:
+                    unauthorized:
+                    - An active access token must be used to query information about the current user.
+        '412':
+          description: Precondition Failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      invalid_signature:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                Invalid Signature:
+                  value:
+                    errors:
+                      invalid_signature:
+                      - Signature doesn't match. For information about generating the x-pch-digest header, see https://developers.punchh.com.
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      disabled_feature:
+                        type: string
+              examples:
+                Challenges not enabled:
+                  value:
+                    errors:
+                      disabled_feature: Business does not have challenges enabled.
+      x-stoplight:
+        id: challenges-listing-get
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                page:
+                  type: integer
+                  description: Page number for pagination
+                per_page:
+                  type: integer
+                  description: Number of challenges to return per page
+                filter:
+                  type: string
+                  description: 'Filters the response to return only challenges of a specific category. Possible values are:
+
+                    - available: Returns only available challenges
+
+                    - active: Returns only active challenges
+
+                    - past: Returns only past challenges
+
+
+                    If not provided, all categories are returned.'
+                  enum:
+                  - available
+                  - active
+                  - past
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  page: 1
+                  per_page: 10
+                  filter: active
+  /api2/mobile/challenge_opt_in:
+    put:
+      summary: Opt In to Challenge
+      operationId: put-api2-mobile-challenge_opt_in
+      responses:
+        '200':
+          description: 'OK: For a valid user and campaign ID, the API returns 200 OK with "status": "success". '
+          content:
+            application/json:
+              examples:
+                Request Example:
+                  value:
+                    message: You have been successfully enrolled in the challenge campaign.
+        '401':
+          description: 'Unauthorized: For an invalid access_token, the API returns 401 unauthorized error with the message (“An active access token must be used to query information about the current user.”).'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '409':
+          description: 'Conflict: If an opt-in request is sent again for the same user and campaign, the API returns a 409 error with the message ‘Guest already opted in.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '422':
+          description: "Unprocessable Entity: \n- For an invalid or non-existing campaign ID, the API returns a 422 error with a descriptive error message (“Challenge campaign not found”).\n- When the Enable Guest Opt-in to Challenge Campaigns flag is set to false, the API returns 422 Unprocessable Entity with the message “Business does not have challenges opt-in enabled.”\n"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      description: 'Allows loyalty users to explicitly opt into challenge campaigns. This functionality is disabled by default. Contact your Punchh representative to update this configuration setting.
+
+        <!--Cockpit > Dashboard > Major Features > Enable Challenges-->
+
+        <!--Cockpit > Dashboard > Major Features > Enable Opt-In for challenges-->
+
+        <!--Cockpit > Dashboard > Major Features > Enable Opt-Out for challenges-->'
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/punchh-app-device-id'
+      tags:
+      - Challenges
+      x-stoplight:
+        id: ef045c6ba3b80
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  x-stoplight:
+                    id: f25ymzwge28vf
+                  description: OAuth client ID provided by the business
+                id:
+                  type: string
+                  x-stoplight:
+                    id: d281gca2ohpsc
+                  description: ID of the challenge to opt in
+              required:
+              - client
+              - id
+            examples:
+              Request Example:
+                value:
+                  client: CLIENT_GOES_HERE
+                  id: '63724'
+  /api2/mobile/challenge_opt_out:
+    put:
+      summary: Opt Out of Challenge
+      operationId: put-api2-mobile-challenge_opt_out
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    x-stoplight:
+                      id: vb4yodbfk2k31
+              examples:
+                Example Response:
+                  value:
+                    message: You have been successfully opted out of the challenge campaign.
+        '400':
+          description: 'Bad Request: API returns a 400 error with the message "Parameter ''id'' is required" if `id` is missing or empty'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    x-stoplight:
+                      id: jfbb7m1w77zio
+              examples:
+                User Not Signed In:
+                  value:
+                    error: You need to sign in or sign up before continuing.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    x-stoplight:
+                      id: th0q67aeox9j6
+              examples:
+                User Not Enrolled In Challenge:
+                  value:
+                    message: You did not opt in for this challenge campaign yet.
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                User Already Opted Out:
+                  value:
+                    message: You have already opted out of this challenge campaign.
+        '422':
+          description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    x-stoplight:
+                      id: clyir58p5cgxo
+                    properties:
+                      error_name:
+                        type: string
+                        x-stoplight:
+                          id: 6u2kim391jtik
+              examples:
+                Challenge Not Found:
+                  value:
+                    errors:
+                      challenge_not_found: Challenge campaign not found.
+                Opt-Out Option Disabled in Platform:
+                  value:
+                    errors:
+                      challenges_opt_out_disabled: Business does not have challenges opt out enabled.
+                Opt-In Option Disabled in Platform:
+                  value:
+                    errors:
+                      challenge_explicit_opt_in_disabled: Challenge campaign does not have explicit opt in enabled.
+      description: 'Allows loyalty users to explicitly opt out of enrolled/opted-in challenge campaigns. This functionality is disabled by default. Contact your Punchh representative to update this configuration setting.
+
+
+        <!--Cockpit > Dashboard > Major Features > Enable Challenges-->
+
+        <!--Cockpit > Dashboard > Major Features > Enable Opt-In for challenges-->
+
+        <!--Cockpit > Dashboard > Major Features > Enable Opt-Out for challenges-->'
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/punchh-app-device-id'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Accept-Language'
+      tags:
+      - Challenges
+      x-stoplight:
+        id: c3990cac3e805
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  x-stoplight:
+                    id: 2ih0cf821pmok
+                  description: OAuth client ID provided by the business
+                id:
+                  type: string
+                  x-stoplight:
+                    id: ex15s1doe7np6
+                  description: ID of the challenge to opt out of
+              required:
+              - client
+              - id
+            examples:
+              Request Example:
+                value:
+                  client: CLIENT_GOES_HERE
+                  id: '63724'
+        description: ''
+components:
+  parameters:
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
+    punchh-app-device-id:
+      schema:
+        type: string
+        default: APP_DEVICE_ID_GOES_HERE
+      name: punchh-app-device-id
+      in: header
+      required: true
+      description: The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.
+  schemas:
+    ChallengeListingItem:
+      type: object
+      properties:
+        challenge_id:
+          type: integer
+          description: Challenge ID
+        name:
+          type: string
+          description: Name of the challenge. The name is returned in the language specified in the Accept-Language request header, provided the challenge name has been translated into the relevant language by the business admin in the Punchh platform when creating or editing a challenge campaign under <b>Marketing Automation > Campaign Management</b>. If the translation is unavailable, the response returns the value for this parameter in the default English language. For example, if the header specifies "fr" (French), the name is returned in French if a French translation is configured for the name in the Punchh platform; otherwise the value is returned in the default English language.
+        description:
+          type: string
+          description: Description of the challenge. The description is returned in the language specified in the Accept-Language request header, provided the challenge description has been translated into the relevant language by the business admin in the Punchh platform when creating or editing a challenge campaign under <b>Marketing Automation > Campaign Management</b>. If the translation is unavailable, the response returns the value for this parameter in the default English language. For example, if the header specifies "fr" (French), the description is returned in French if a French translation is configured for the description in the Punchh platform; otherwise the value is returned in the default English language.
+        image_url:
+          type: string
+          description: URL of the main banner image associated with the challenge campaign
+        icon_url:
+          type: string
+          description: URL of the default icon image for the challenge
+        icon_completed_url:
+          type: string
+          description: URL of the image icon that represents completion of the challenge
+        start_date:
+          type: string
+          format: date
+          enum:
+          - YYYY-MM-DD
+          description: Start date of the campaign
+        end_date:
+          type: string
+          format: date
+          enum:
+          - YYYY-MM-DD
+          description: End date of the campaign
+        challenge_starting_at_tz:
+          type: string
+          format: date-time
+          description: Start date and time of the challenge in the business timezone (ISO 8601 format)
+        challenge_expiring_at_tz:
+          type: string
+          format: date-time
+          description: End date and time of the challenge in the business timezone (ISO 8601 format)
+        challenge_reach:
+          type: string
+          x-nullable: true
+          description: 'Returns the type of challenge reach strategy defined on the challenge campaign. Possible values are:
+
+            - universal_auto_enrolment
+
+            - segment_auto_enrolment
+
+            - null (when no reach strategy is defined)'
+        challenge_status:
+          type: string
+          x-nullable: true
+          description: "Returns the details of availability of and enrollment of a guest into a specific challenge. Possible values are:\n* unavailable: This status will be returned for \"segment_auto_enrolment\" when a guest is NOT added to the \"user_feature_enrolment\" table.\n* enrolled: This status will be returned for:<br>\n  a) \"universal_auto_enrolment\" in all cases since all signed-up guests are automatically enrolled for the challenge.<br>\n  b) \"segment_auto_enrolment\" in cases when guests from the attached segment (to the challenge campaign) get added to the user_feature_enrolment table and are automatically enrolled for the challenge.<br>\n* null: For older default \"Segment\" type challenges, the status will always be null."
+        challenge_type:
+          type: string
+          description: 'Returns the type of challenge that is configured in the Punchh platform. Supported values are:
+
+            - receipt_qualification
+
+            - every_x_points
+
+            - segment'
+        occurrence:
+          type: string
+          description: 'Possible values are:
+
+            - **single** - Shows when restarting the challenge button is OFF in the campaign
+
+            - **multiple** - Shows when restarting the challenge button is ON in the campaign'
+        past_completions:
+          type: integer
+          description: The number of times the user has previously completed the challenge campaign.
+        opted_in:
+          type: boolean
+          description: 'Indicates whether the user has opted in to a challenge. Possible values:
+
+            * true - The user has opted in. The mobile app should show the opt-out button on the challenge card if the opt-out feature is enabled for the business in the Punchh platform.
+
+            * false - The user has not opted in. The mobile app should show the opt-in button on the challenge card if the opt-in feature is enabled for the business in the Punchh platform.
+
+            Contact your Punchh representative to update this configuration setting.'
+        opted_out:
+          type: boolean
+          description: Indicates whether the user has opted out of the challenge
+        explicit_opt_in:
+          type: boolean
+          description: Indicates whether the challenge requires explicit opt-in from the user before enrollment
+        gift_reason:
+          type: string
+          description: Reason to give gifts to a user
+        miscellaneous:
+          type: string
+          description: Returns miscellaneous response string as configured in the Punchh platform
+        progress:
+          type: array
+          description: Array of progress objects showing completed steps and total steps for the challenge
+          items:
+            type: object
+            properties:
+              completed_steps:
+                type: integer
+                description: Number of steps a user has completed for a challenge
+              total_steps:
+                type: integer
+                description: Number of total steps set for a challenge
+x-stoplight:
+  id: bf6eddb435209
+x-ext-urls: {}

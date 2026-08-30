@@ -1,0 +1,679 @@
+openapi: 3.2.0
+info:
+  title: Mobile Payment Cards API
+  version: '1.0'
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+  description: 'Punchh provides a robust platform for offering loyalty programs to customers. When a business integrates its back-end with the Punchh server, the Punchh APIs become instrumental in executing loyalty programs for enrolled customers, primarily via business-branded mobile apps and websites tailored by Punchh.
+
+
+    To establish integration with the Punchh APIs, you need to understand how they are invoked and what responses are returned by the Punchh server. You can call APIs using any suitable API test client, such as Postman. Thus, the response to every API call made in Postman under a chosen environment (in app and/or platform) is reflected in the app and/or platform.'
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: Payment Cards
+paths:
+  /api2/mobile/payment_cards:
+    parameters: []
+    post:
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/punchh-app-device-id'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Accept'
+      summary: Create a Payment Card
+      description: Creates and saves a payment card for a user. This API is triggered when the user saves the payment card on the mobile application.
+      operationId: create_api2-mobile-payment_cards
+      tags:
+      - Payment Cards
+      responses:
+        '200':
+          description: Payment Card Added
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  uuid:
+                    type: string
+                    description: Saved payment card UUID
+                  nickname:
+                    type: string
+                    description: Saved payment card nickname, as set by the user
+                  preferred:
+                    type: boolean
+                    description: This value determines whether this saved payment card will be selected as the default card or not when the user makes a payment through the mobile application. If the value is set to true, this card will be selected as the default card for payments. Valid values are true or false.
+                  card_details:
+                    type: object
+                    description: User's saved payment card details
+                    properties:
+                      name_on_card:
+                        type: string
+                        description: Cardholder name
+                      card_type:
+                        type: string
+                        description: Saved payment card type (e.g., Visa, Mastercard, Amex, etc.)
+                      cc_4:
+                        type: string
+                        description: Last 4 digits of the saved payment card
+                      expiry_month:
+                        type: string
+                        description: Expiration month of the saved payment card
+                      expiry_year:
+                        type: string
+                        description: Expiration year of the saved payment card
+              examples:
+                default:
+                  value:
+                    uuid: <UUID_GOES_HERE>
+                    nickname: <NICKNAME_GOES_HERE>
+                    preferred: true
+                    card_details:
+                      name_on_card: <CARDHOLDER_NAME_GOES_HERE>
+                      cc_4: '4242'
+                      card_type: Visa
+                      expiry_month: '02'
+                      expiry_year: '28'
+        '400':
+          description: Bad Request (missing or blank required parameter)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      missing_required_param:
+                        type: string
+              examples:
+                Bad Request (missing or blank required parameter):
+                  value:
+                    errors:
+                      missing_required_param_name: Required parameter missing or the value is empty
+        '401':
+          description: Unauthorized Request (incorrect client value)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      unauthorized:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                Unauthorized Request (incorrect client value):
+                  value:
+                    errors:
+                      unknown_client:
+                      - Client ID is incorrect. Please check client param or contact us
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: string
+              examples:
+                Payment gateway error:
+                  value:
+                    errors: Invalid Customer Key
+                transaction_token not valid:
+                  value:
+                    errors: Invalid Payment token
+                User not authenticated:
+                  value:
+                    errors: Unauthenticated User
+                Invalid zip code:
+                  value:
+                    errors: Invalid Zip Code value
+                Missing zip code:
+                  value:
+                    errors: Zip Code required for this card type (Amex)
+                Invalid country:
+                  value:
+                    errors: Invalid country error
+                Payment adapter not supported:
+                  value:
+                    errors: This payment adapter is currently not supported or you might have passed the incorrect payment adapter.
+      x-stoplight:
+        id: 86d781cf0d5d7
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                transaction_token:
+                  type: string
+                  description: Unique digital identifier/token of the user's payment card provided by the payment processor
+                adapter_code:
+                  type: string
+                  description: Name of the payment processor / payment gateway. Valid value is par_payment.
+                preferred:
+                  type: boolean
+                  description: This value determines whether this card will be selected as the default card or not when the user makes a payment through the mobile application. If the value is set to true, this card will be selected as the default card for payments. Valid values are true or false.
+                nickname:
+                  type: string
+                  description: Payment card nickname, as set by the user
+                billing_info:
+                  type: object
+                  description: Billing information of the cardholder
+                  properties:
+                    name:
+                      type: string
+                      description: Cardholder name.
+                    country:
+                      type: string
+                      description: Country as specified by the cardholder in the billing address. Valid values are USA and CAN.
+                    zip_code:
+                      type: string
+                      description: Zip code as specified by the cardholder in the billing address. Required when the card to be added is of type Amex.
+              required:
+              - client
+              - transaction_token
+              - adapter_code
+            examples:
+              default:
+                value:
+                  client: <CLIENT_ID_GOES_HERE>
+                  transaction_token: <TRANSACTION_TOKEN_GOES_HERE>
+                  adapter_code: <ADAPTER_CODE_GOES_HERE>
+                  preferred: true
+                  nickname: NICKNAME_GOES_HERE
+                  billing_info:
+                    name: CUSTOMER_NAME_GOES_HERE
+                    country: USA
+                    zip_code: ZIP_CODE_GOES_HERE
+    get:
+      summary: Fetch All Saved Payment Cards
+      operationId: get-api2-mobile-payment_cards
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: array
+                description: Array of payment cards in the user’s account, if available
+                items:
+                  type: object
+                  properties:
+                    uuid:
+                      type: string
+                      description: Saved payment card UUID
+                    nickname:
+                      type: string
+                      description: Saved payment card nickname, as set by the user
+                    card_details:
+                      type: object
+                      description: User's saved payment card details
+                      properties:
+                        name_on_card:
+                          type: string
+                          description: Cardholder name
+                        card_type:
+                          type: string
+                          description: Saved payment card type (e.g., Visa, Mastercard, Amex, etc.)
+                        cc_4:
+                          type: string
+                          description: Last 4 digits of the saved payment card
+                        ' expiry_month':
+                          type: string
+                          description: Expiration month of the saved payment card
+                        ' expiry_year':
+                          type: string
+                          description: Expiration year of the saved payment card
+                    preferred:
+                      type: boolean
+                      description: This value determines whether this saved payment card will be selected as the default card or not when the user makes a payment through the mobile application. If the value is set to true, this card will be selected as the default card for payments. Valid values are true or false.
+              examples:
+                default:
+                  value:
+                  - uuid: <UUID_GOES_HERE>
+                    nickname: <NICKNAME_GOES_HERE>
+                    card_details:
+                      name_on_card: <CARDHOLDER_NAME_GOES_HERE>
+                      cc_4: '4242'
+                      card_type: Visa
+                      expiry_month: '02'
+                      expiry_year: '28'
+                    preferred: true
+                  - uuid: <UUID_GOES_HERE>
+                    nickname: <NICKNAME_GOES_HERE>
+                    card_details:
+                      name_on_card: <CARDHOLDER_NAME_GOES_HERE>
+                      cc_4: '1111'
+                      card_type: Visa
+                      expiry_month: '06'
+                      expiry_year: '29'
+                    preferred: true
+        '400':
+          description: Bad Request (missing or blank required parameter)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      missing_required_param:
+                        type: string
+              examples:
+                Bad Request (missing or blank required parameter):
+                  value:
+                    errors:
+                      missing_required_param_name: Required parameter missing or the value is empty
+        '401':
+          description: Unauthorized Request (incorrect client value)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      unauthorized:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                Unauthorized Request (Incorrect client value):
+                  value:
+                    errors:
+                      unknown_client:
+                      - Client ID is incorrect. Please check client param or contact us
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: string
+              examples:
+                Invalid passcode:
+                  value:
+                    errors: Invalid Passcode
+                Payment gateway error:
+                  value:
+                    errors: Invalid Customer Key
+                User not authenticated:
+                  value:
+                    errors: Unauthenticated User
+      description: Enables a user to fetch all saved payment cards
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/punchh-app-device-id'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Accept'
+      tags:
+      - Payment Cards
+      x-stoplight:
+        id: 7e449f57a8e52
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                adapter_code:
+                  type: string
+                  description: Name of the payment processor / payment gateway. Valid value is par_payment.
+                passcode:
+                  type: string
+                  description: Passcode is a secondary authentication PIN that must be passed if it is enabled for a business. The passcode can be enabled or disabled from the Punchh platform.
+              required:
+              - client
+              - adapter_code
+            examples:
+              default:
+                value:
+                  client: <CLIENT_ID_GOES_HERE>
+                  adapter_code: <ADAPTER_CODE_GOES_HERE>
+                  passcode: <PASSCODE_GOES_HERE>
+        description: ''
+  /api2/mobile/payment_cards/{payment_card_uuid}:
+    parameters:
+    - schema:
+        type: string
+      name: payment_card_uuid
+      in: path
+      required: true
+      description: Unique ID of the saved payment card that Punchh generates when creating/saving this card in the system. See [Create a Payment Card](/docs/dev-portal-mobile/apis/mobile-api/tag/payment-cards/post/api2/mobile/payment_cards)
+    put:
+      summary: Update a Saved Payment Card
+      operationId: put-api2-mobile-payment_cards
+      responses:
+        '200':
+          description: Payment Card Updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  uuid:
+                    type: string
+                    description: Saved payment card UUID
+                  nickname:
+                    type: string
+                    description: Saved payment card nickname, as set by the user
+                  card_details:
+                    type: object
+                    description: User's saved payment card details
+                    properties:
+                      name_on_card:
+                        type: string
+                        description: Cardholder name
+                      card_type:
+                        type: string
+                        description: Saved payment card type (e.g., Visa, Mastercard, Amex, etc.)
+                      cc_4:
+                        type: string
+                        description: Last 4 digits of the saved payment card
+                      expiry_month:
+                        type: string
+                        description: Expiration month of the saved payment card
+                      expiry_year:
+                        type: string
+                        description: Expiration year of the saved payment card
+                  preferred:
+                    type: boolean
+                    description: This value determines whether this saved payment card will be selected as the default card or not when the user makes a payment through the mobile application. If the value is set to true, this card will be selected as the default card for payments. Valid values are true or false.
+              examples:
+                'application/json:':
+                  value:
+                    uuid: <UUID_GOES_HERE>
+                    nickname: <NICKNAME_GOES_HERE>
+                    card_details:
+                      name_on_card: <CARDHOLDER_NAME_GOES_HERE>
+                      cc_4: '4242'
+                      card_type: Visa
+                      expiry_month: '02'
+                      expiry_year: '28'
+                    preferred: true
+        '400':
+          description: Bad Request (missing or blank required parameter)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      missing_required_param:
+                        type: string
+              examples:
+                Bad Request (missing or blank required parameter):
+                  value:
+                    errors:
+                      missing_required_param_name: Required parameter missing or the value is empty
+        '401':
+          description: Unauthorized Request (incorrect client value)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      unauthorized:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                Unauthorized Request (Incorrect client value):
+                  value:
+                    errors:
+                      unknown_client:
+                      - Client ID is incorrect. Please check client param or contact us
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: string
+              examples:
+                Payment gateway error:
+                  value:
+                    errors: Invalid Customer Key
+                User not authenticated:
+                  value:
+                    errors: Unauthenticated User
+      tags:
+      - Payment Cards
+      description: Enables a user to update the nickname and preferred status of a saved payment card
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/punchh-app-device-id'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Accept'
+      x-stoplight:
+        id: 308acea94fbc8
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                nickname:
+                  type: string
+                  description: Saved payment card nickname as set by the user
+                preferred:
+                  type: boolean
+                  description: This value determines whether this card will be selected as the default card or not when the user makes a payment through the mobile application. If the value is set to true, this card will be selected as the default card for payments. Valid values are true or false.
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: <CLIENT_ID_GOES_HERE>
+                  nickname: <NICKNAME_GOES_HERE>
+                  preferred: true
+    delete:
+      summary: Delete a Saved Payment Card
+      operationId: delete-api2-mobile-payment_cards
+      responses:
+        '200':
+          description: Payment Card Deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Success or failure message for removing the payment card from the mobile application as returned in the response
+                  status:
+                    type: string
+                    description: Status of the payment card deletion operation. Valid values are success or failure.
+              examples:
+                'application/json:':
+                  value:
+                    message: Payment card has been deleted successfully.
+                    status: success
+        '400':
+          description: Bad Request (missing or blank required parameter)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      missing_required_param:
+                        type: string
+              examples:
+                Bad Request (missing or blank required parameter):
+                  value:
+                    errors:
+                      missing_required_param_name: Required parameter missing or the value is empty
+        '401':
+          description: Unauthorized Request (incorrect client value)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      unauthorized:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                Unauthorized Request (Incorrect client value):
+                  value:
+                    errors:
+                      unknown_client:
+                      - Client ID is incorrect. Please check client param or contact us
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: string
+              examples:
+                Payment card not found:
+                  value:
+                    errors: Payment card not found.
+                Invalid passcode:
+                  value:
+                    errors: Invalid Passcode
+                Payment gateway error:
+                  value:
+                    errors: Invalid Customer Key
+                User not authenticated:
+                  value:
+                    errors: Unauthenticated User
+      description: Enables a user to delete a selected payment card from the mobile application
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/punchh-app-device-id'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Accept'
+      tags:
+      - Payment Cards
+      x-stoplight:
+        id: 148b28fc3bbfe
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                passcode:
+                  type: string
+                  description: Passcode is a secondary authentication PIN that must be passed if it is enabled for a business. The passcode can be enabled or disabled from the Punchh platform.
+              required:
+              - client
+            examples:
+              'application/json:':
+                value:
+                  client: <CLIENT_ID_GOES_HERE>
+                  passcode: <PASSCODE_GOES_HERE>
+components:
+  parameters:
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
+    punchh-app-device-id:
+      schema:
+        type: string
+        default: APP_DEVICE_ID_GOES_HERE
+      name: punchh-app-device-id
+      in: header
+      required: true
+      description: The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.
+x-stoplight:
+  id: bf6eddb435209
+x-ext-urls: {}

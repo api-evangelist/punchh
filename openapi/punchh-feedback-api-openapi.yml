@@ -1,0 +1,586 @@
+openapi: 3.2.0
+info:
+  title: Punchh Feedback API
+  version: '1.0'
+  description: 'Operations tagged Feedback across 2 of this provider''s published API definitions: punchh-mobile-api-openapi.yml, punchh-platform-functions-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: Feedback
+paths:
+  /api2/mobile/feedbacks:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  feedback_id:
+                    type: integer
+                    description: Unique ID assigned to a user's feedback
+              examples:
+                default:
+                  value:
+                    feedback_id: 267383
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      invalid_language:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      invalid_language:
+                      - Unknown/Invalid locale in Accept-Language Header. Supported locales are en-GB, es-CR, en, es.
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      unknown_client:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      unknown_client:
+                      - Client ID is incorrect. Please check client param or contact us.
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      invalid_access_token:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      invalid_access_token:
+                      - 'Error: access_token not found or is incorrect! Valid access_token of the user required.'
+        '422':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      rating:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      rating:
+                      - Rating is not a number.
+      summary: Create Feedback
+      description: Creates feedback in the system based on the message and/or rating provided by a user
+      operationId: mobile_create_feedback
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: 7d1ab1645c5b5
+      tags:
+      - Feedback
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                message:
+                  type: string
+                  description: Text feedback that a user provides. At least one of 'message', 'rating', 'photo_url', or 'video_url' must be provided.
+                rating:
+                  type: integer
+                  format: int32
+                  description: Rating that a user provides. The maximum rating is indicated in the`maximum_rating_in_feedback` response parameter in the [Program Meta API](/docs/dev-portal-mobile/2617bed9b0e8e-program-meta-api). At least one of 'message', 'rating', 'photo_url', or 'video_url' must be provided.
+                checkin_id:
+                  type: integer
+                  description: ID of the check-in for which a user provides feedback
+                redemption_id:
+                  type: integer
+                  description: ID of the redemption for which a user provides feedback
+                facebook_post_id:
+                  type: integer
+                  description: ID of the feedback posted by a user to the user's Facebook account
+                republishable:
+                  type: boolean
+                  description: Whether the feedback message can be republished on a social media platform or not. The default value is "true", so the user must explicitly specify not to allow it.
+                requires_response:
+                  type: boolean
+                  description: Whether the user wants to be contacted by the business for this feedback or not
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  message: Good Coffee.
+                  rating: 5
+                  checkin_id: '8393395'
+                  redemption_id: '925805'
+                  facebook_post_id: '1496981783892853'
+                  republishable: false
+                  requires_response: false
+    servers:
+    - url: https://SERVER_NAME_GOES_HERE.punchh.com
+  /api2/mobile/feedbacks/{feedback_id}:
+    parameters:
+    - schema:
+        type: string
+      name: feedback_id
+      in: path
+      required: true
+    patch:
+      summary: Update Feedback
+      operationId: mobile_update_feedback
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: feedback_id
+        required: true
+        description: Feedback ID
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/User-Agent'
+      x-private: true
+      x-stoplight:
+        id: 3d4c52e665987
+      tags:
+      - Feedback
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  feedback_id:
+                    type: string
+                    description: ID of the feedback that was updated
+              examples:
+                default:
+                  value:
+                    feedback_id: FEEDBACK_ID_GOES_HERE
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                checkin_id:
+                  type: string
+                  description: Check-in ID of the feedback
+                video_url:
+                  type: string
+                  description: Video URL of the feedback
+                photo_url:
+                  type: string
+                  description: Photo URL of the feedback
+                redemption_id:
+                  type: string
+                  description: Redemption ID of the feedback
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+    servers:
+    - url: https://SERVER_NAME_GOES_HERE.punchh.com
+  /api2/dashboard/feedbacks:
+    post:
+      summary: Create Feedback
+      operationId: post-api2-dashboard-feedbacks
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  feedback_id:
+                    type: integer
+                    x-stoplight:
+                      id: mejh1yx6f7r9e
+                    description: Unique ID assigned to a user's feedback
+              examples:
+                default:
+                  value:
+                    feedback_id: 267383
+        '400':
+          description: Bad Request - Sending missing/incorrect params, bad encoding etc
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    x-stoplight:
+                      id: mnimybi60rzbx
+              examples:
+                default:
+                  value:
+                    error: 'Required parameter missing or the value is empty: user_id'
+        '401':
+          $ref: '#/components/responses/401-unauthorized'
+        '404':
+          description: 'Not Found: Sending incorrect values in search parameters or missing/invalid search parameters'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    x-stoplight:
+                      id: klq69efbwmoqd
+                    properties:
+                      error_name:
+                        type: string
+                        x-stoplight:
+                          id: sjvqtzbwr53rs
+                        examples:
+                        - user_not_found
+              examples:
+                default:
+                  value:
+                    errors:
+                      user_not_found: User Not Found
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    x-stoplight:
+                      id: fh3pseacmyl3f
+                  rating:
+                    type: array
+                    x-stoplight:
+                      id: 4rbiibghcwj15
+                    items:
+                      x-stoplight:
+                        id: sjc6njv5ovd63
+                      type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      rating:
+                      - Rating is not a number.
+      parameters:
+      - $ref: '#/components/parameters/authorization-header'
+      - $ref: '#/components/parameters/content-type'
+      description: 'Creates feedback in the system based on the message and/or rating provided by a user when the user’s access token or authentication token is not available at the time of creating the feedback in the Punchh system. The user is identified using email address, phone number, or user ID, with user ID given top priority if multiple look-up parameters are passed in the API.
+
+
+        Phone number will work only if it is set up as a unique parameter in the Punchh platform. The option to validate the uniqueness of phone number across guests must be enabled. Contact your Punchh representative to update this Punchh platform configuration. <!-- Cockpit > Guests > Guest Validation -->'
+      tags:
+      - Feedback
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: number
+                  x-stoplight:
+                    id: 4293k10f4ai22
+                  description: ID of the user in the Punchh system. You can get this value from the User object, `user_id` parameter in the response of a successful Online Ordering [sign-up](/docs/dev-portal-online-ordering/58f18dfdd2a3d-create-new-user) / [sign-in](/docs/dev-portal-online-ordering/97dc4430bb3aa-log-in-with-email-and-password) API call or Mobile [sign-up](/docs/dev-portal-mobile/2e67abf6f8e12-sign-up-register) / [sign-in](/docs/dev-portal-mobile/c1be403d96bc5-sign-in) API call.
+                email:
+                  type: string
+                  x-stoplight:
+                    id: f8dcsu9kvp58m
+                  description: Email address of the user in the Punchh system. You can get this value from the User object, `email` parameter in the response of a successful Online Ordering [sign-up](/docs/dev-portal-online-ordering/58f18dfdd2a3d-create-new-user) / [sign-in](/docs/dev-portal-online-ordering/97dc4430bb3aa-log-in-with-email-and-password) API call or Mobile [sign-up](/docs/dev-portal-mobile/2e67abf6f8e12-sign-up-register) / [sign-in](/docs/dev-portal-mobile/c1be403d96bc5-sign-in) API call.
+                phone:
+                  type: string
+                  x-stoplight:
+                    id: q3b9mhcz7gay7
+                  description: Phone number of the user in the Punchh system. You can get this value from the User object, phone parameter in the response of a successful Online Ordering [sign-up](/docs/dev-portal-online-ordering/58f18dfdd2a3d-create-new-user) / [sign-in](/docs/dev-portal-online-ordering/97dc4430bb3aa-log-in-with-email-and-password) API call or Mobile [sign-up](/docs/dev-portal-mobile/2e67abf6f8e12-sign-up-register) / [sign-in](/docs/dev-portal-mobile/c1be403d96bc5-sign-in) API call.
+                message:
+                  type: string
+                  x-stoplight:
+                    id: j3cynj807vljv
+                  description: 'Text feedback that a user provides '
+                video_url:
+                  type: string
+                  x-stoplight:
+                    id: 9a4u70i902tw0
+                  description: Video URL of the feedback that a user provides
+                photo_url:
+                  type: string
+                  x-stoplight:
+                    id: pkaf6p0ghwqej
+                  description: Photo URL of the feedback that a user provides
+                rating:
+                  type: integer
+                  x-stoplight:
+                    id: 3q6ukqwy7t4gp
+                  description: Rating that a user provides. The maximum rating is indicated in the `maximum_rating_in_feedback` response parameter in the [Program Meta API](https://developers.punchh.com/docs/dev-portal-mobile/2617bed9b0e8e-program-meta-api).
+                  format: int32
+                checkin_id:
+                  type: string
+                  x-stoplight:
+                    id: h386wbue37pxp
+                  description: ID of the check-in for which a user provides feedback
+                facebook_post_id:
+                  type: string
+                  x-stoplight:
+                    id: whdnu5zg7nb72
+                  description: ID of the feedback posted by a user to the user's Facebook account
+                redemption_id:
+                  type: string
+                  x-stoplight:
+                    id: rp67lw0wrhlgh
+                  description: ID of the redemption for which a user provides feedback
+                republishable:
+                  type: boolean
+                  x-stoplight:
+                    id: h13js18k4psdg
+                  description: 'Whether the feedback message can be republished on a social media platform or not. The default value is `true`, so the user must explicitly specify not to allow it. Possible values: `true`, `false`'
+                requires_response:
+                  type: boolean
+                  x-stoplight:
+                    id: bu578i4cd2003
+                  description: 'Whether the user wants to be contacted by the business for this feedback or not. Possible values: `true`, `false`'
+              required:
+              - user_id
+            examples:
+              default:
+                value:
+                  message: Good Coffee.
+                  rating: 5
+                  user_id: 111111
+                  checkin_id: '8393395'
+                  redemption_id: '106819236'
+                  facebook_post_id: '106819236106819236'
+                  video_url: VIDEO_URL_GOES_HERE
+                  photo_url: PHOTO_URL_GOES_HERE
+                  republishable: false
+                  requires_response: false
+        description: '1\. At least one of `user_id`, `phone`, or `email` is required.
+
+
+          2\. At least one of `message`, `rating`, `photo_url`, or `video_url` is required.'
+    servers:
+    - url: https://SERVER_NAME_GOES_HERE.punchh.com
+  /api2/dashboard/feedbacks/{feedback_id}:
+    parameters:
+    - schema:
+        type: string
+      name: feedback_id
+      in: path
+      required: true
+      description: The value of the `feedback_id` parameter returned in the response of the [Create Feedback](/docs/dev-portal-platform-functions/47280bbc46cda-create-feedback) API
+    patch:
+      summary: Update Feedback
+      operationId: patch-api2-dashboard-feedbacks-feedback_id
+      responses:
+        '200':
+          description: OK
+        '401':
+          $ref: '#/components/responses/401-unauthorized'
+      parameters:
+      - $ref: '#/components/parameters/authorization-header'
+      - $ref: '#/components/parameters/content-type'
+      tags:
+      - Feedback
+      description: Updates feedback in the system based on the ID of the feedback
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  x-stoplight:
+                    id: ykyalejlzm3m1
+                  description: Email address of the user in the Punchh system. You can get this value from the User object, `email` parameter in the response of a successful Online Ordering [sign-up](/docs/dev-portal-online-ordering/58f18dfdd2a3d-create-new-user) / [sign-in](/docs/dev-portal-online-ordering/97dc4430bb3aa-log-in-with-email-and-password) API call or Mobile [sign-up](/docs/dev-portal-mobile/2e67abf6f8e12-sign-up-register) / [sign-in](/docs/dev-portal-mobile/c1be403d96bc5-sign-in) API call.
+                phone:
+                  type: string
+                  x-stoplight:
+                    id: diu1pdb72n3c6
+                  description: Phone number of the user in the Punchh system. You can get this value from the User object, phone parameter in the response of a successful Online Ordering [sign-up](/docs/dev-portal-online-ordering/58f18dfdd2a3d-create-new-user) / [sign-in](/docs/dev-portal-online-ordering/97dc4430bb3aa-log-in-with-email-and-password) API call or Mobile [sign-up](/docs/dev-portal-mobile/2e67abf6f8e12-sign-up-register) / [sign-in](/docs/dev-portal-mobile/c1be403d96bc5-sign-in) API call.
+                user_id:
+                  type: number
+                  x-stoplight:
+                    id: tg5to2zpsf617
+                  description: ID of the user in the Punchh system. You can get this value from the User object, `user_id` parameter in the response of a successful Online Ordering [sign-up](/docs/dev-portal-online-ordering/58f18dfdd2a3d-create-new-user) / [sign-in](/docs/dev-portal-online-ordering/97dc4430bb3aa-log-in-with-email-and-password) API call or Mobile [sign-up](/docs/dev-portal-mobile/2e67abf6f8e12-sign-up-register) / [sign-in](/docs/dev-portal-mobile/c1be403d96bc5-sign-in) API call.
+                checkin_id:
+                  type: string
+                  x-stoplight:
+                    id: id93bajbfb3w7
+                  description: ID of the check-in for which a user provides feedback
+                message:
+                  type: string
+                  x-stoplight:
+                    id: c67ggybeu2utj
+                  description: Text feedback that a user provides
+                redemption_id:
+                  type: string
+                  x-stoplight:
+                    id: 6ap85okjno7ed
+                  description: ID of the redemption for which a user provides feedback
+                video_url:
+                  type: string
+                  x-stoplight:
+                    id: 3tf4oe57gzu73
+                  description: Video URL of the feedback that a user provides
+                photo_url:
+                  type: string
+                  x-stoplight:
+                    id: cjbog0yeotu9w
+                  description: Photo URL of the feedback that a user provides
+                requires_response:
+                  type: boolean
+                  x-stoplight:
+                    id: 6oij5xkcv1my6
+                  description: 'Whether the user wants to be contacted by the business for this feedback or not. Possible values: `true`, `false`'
+            examples:
+              default:
+                value:
+                  message: Good Coffee.
+                  user_id: 111111
+                  checkin_id: '8393395'
+                  redemption_id: '106819236'
+                  video_url: VIDEO_URL_GOES_HERE
+                  photo_url: PHOTO_URL_GOES_HERE
+                  requires_response: false
+    servers:
+    - url: https://SERVER_NAME_GOES_HERE.punchh.com
+components:
+  parameters:
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
+    authorization-header:
+      schema:
+        type: string
+        default: Bearer BUSINESS_ADMIN_KEY_GOES_HERE
+      name: Authorization
+      in: header
+      description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
+      required: true
+    content-type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+  responses:
+    401-unauthorized:
+      description: 'A business admin key is missing or invalid. A request header in the following format is needed to make the request:
+
+
+        `Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE`'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+          examples:
+            default:
+              value:
+                error: You need to sign in or sign up before continuing.
+x-refined-from:
+- punchh-mobile-api-openapi.yml
+- punchh-platform-functions-api-openapi.yml
+x-stoplight:
+  id: bf6eddb435209
+x-ext-urls: {}

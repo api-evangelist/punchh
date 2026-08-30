@@ -1,0 +1,344 @@
+openapi: 3.2.0
+info:
+  title: Mobile Migration API
+  version: '1.0'
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+  description: 'Punchh provides a robust platform for offering loyalty programs to customers. When a business integrates its back-end with the Punchh server, the Punchh APIs become instrumental in executing loyalty programs for enrolled customers, primarily via business-branded mobile apps and websites tailored by Punchh.
+
+
+    To establish integration with the Punchh APIs, you need to understand how they are invoked and what responses are returned by the Punchh server. You can call APIs using any suitable API test client, such as Postman. Thus, the response to every API call made in Postman under a chosen environment (in app and/or platform) is reflected in the app and/or platform.'
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: Migration
+paths:
+  /api2/mobile/verify_token:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      summary: Generate OTP Token
+      description: Generates and mails the verification one-time password (OTP) token used in the secure migration flow.
+      operationId: mobile_generate_otp_token
+      tags:
+      - Migration
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: 05a8f4b86f7ab
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      summary: Verify OTP Token
+      description: Verifies the one-time password (OTP) token used in the secure migration flow
+      operationId: mobile_verify_token
+      tags:
+      - Migration
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: 35cecee8eabcd
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  x-stoplight:
+                    id: 9uvnpg62r5r3f
+                  description: OAuth client ID provided by the business
+                token:
+                  type: string
+                  x-stoplight:
+                    id: sdc5r46bw90zt
+                  description: 'One-time password (OTP) token '
+                verification_mode:
+                  type: string
+                  x-stoplight:
+                    id: ekq3j8wk6nuet
+                  description: Can be either email address or phone number
+              required:
+              - client
+              - token
+              - verification_mode
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  token: OTP_GOES_HERE
+                  verification_mode: '1111111111'
+  /api2/mobile/migration_lookup:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email:
+                    type: string
+                    description: Email address of the user identified in the migration data
+                  first_name:
+                    type: string
+                    description: First name of the user identified in the migration data
+                  last_name:
+                    type: string
+                    description: Last name of the user identified in the migration data
+                  phone:
+                    type: string
+                    description: Phone number of the user identified in the migration data
+                  zip_code:
+                    type: string
+                    description: Zip code of the user identified in the migration data
+                  address:
+                    type: string
+                    description: Address of the user identified in the migration data
+                  birthday:
+                    type: string
+                    description: Birthday of the user identified in the migration data, in YYYY-MM-DD format
+                  anniversary:
+                    type: string
+                    description: Anniversary of the user identified in the migration data, in YYYY-MM-DD format
+                  marketing_pn_subscription:
+                    type: boolean
+                    description: 'Whether the user has subscribed to marketing push notifications or not
+
+
+                      A "null" value indicates that no preference was received in the user''s migration data.'
+                  marketing_email_subscription:
+                    type: boolean
+                    description: 'Whether the user has subscribed to marketing emails or not
+
+
+                      A "null" value indicates that no preference was received in the user''s migration data.'
+              examples:
+                default:
+                  value:
+                    email: test@example.com
+                    first_name: FIRST_NAME_GOES_HERE
+                    last_name: LAST_NAME_GOES_HERE
+                    phone: 1111111111
+                    zip_code: '94040'
+                    address: ADDRESS_GOES_HERE
+                    birthday: '1999-01-01'
+                    anniversary: '2013-07-13'
+                    marketing_pn_subscription: true
+                    marketing_email_subscription: false
+        '422':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: string
+              examples:
+                default:
+                  value:
+                    errors: Incorrect information submitted. Please retry.
+      x-private: true
+      summary: Migration Look-up
+      description: Returns the details of a user identified in the migration data provided by a business
+      operationId: mobile_migration_lookup
+      tags:
+      - Migration
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: 55d958a0147ba
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                card_number:
+                  type: string
+                  description: Membership number (any unique identification number) of the user from the old loyalty program used for the look-up. It can be made mandatory or optional from the Punchh platform.
+                email:
+                  type: string
+                  description: Email address of the user from the old loyalty program used for the look-up. It can be made mandatory or optional from the Punchh platform.
+                first_name:
+                  type: string
+                  description: First name of the user from the old loyalty program used for the look-up. It can be made mandatory or optional from the Punchh platform.
+                last_name:
+                  type: string
+                  description: Last name of the user from the old loyalty program used for the look-up. It can be made mandatory or optional from the Punchh platform.
+                phone:
+                  type: string
+                  description: Phone number of the user from the old loyalty program used for the look-up. It can be made mandatory or optional from the Punchh platform.
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  card_number: CARD_NUMBER_GOES_HERE
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+              examples:
+                default:
+                  value:
+                    response: ok
+        '422':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: string
+              examples:
+                default:
+                  value:
+                    errors: Incorrect information submitted. Please retry.
+      description: Returns the success response for a user identified in the migration data provided by a business
+      summary: Basic Migration Look-up
+      operationId: mobile_basic_migration_lookup
+      tags:
+      - Migration
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/User-Agent'
+      x-private: true
+      x-stoplight:
+        id: 132c22d8b0a45
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                email:
+                  type: string
+                  description: Email address of the user from the old loyalty program used for the look-up. It can be made mandatory or optional from the Punchh platform.
+                first_name:
+                  type: string
+                  description: First name of the user from the old loyalty program used for the look-up. It can be made mandatory or optional from the Punchh platform.
+                last_name:
+                  type: string
+                  description: Last name of the user from the old loyalty program used for the look-up. It can be made mandatory or optional from the Punchh platform.
+                phone:
+                  type: string
+                  description: Phone number of the user from the old loyalty program used for the look-up. It can be made mandatory or optional from the Punchh platform.
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  email: test@example.com
+components:
+  parameters:
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
+x-stoplight:
+  id: bf6eddb435209
+x-ext-urls: {}

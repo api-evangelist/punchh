@@ -1,0 +1,222 @@
+openapi: 3.2.0
+info:
+  title: Platform Functions Meta API
+  version: '1.0'
+  description: This API documentation is intended to provide comprehensive information for admin users of the Punchh platform. Many of the settings and available actions depend on an appropriate level of access to Platform Functions APIs.
+  contact:
+    name: Punchh DevSupport
+    url: https://developers.punchh.com
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: Meta
+paths:
+  /api2/dashboard/meta:
+    get:
+      responses:
+        '200':
+          description: '<b>Note</b>: The response will include these additional parameters only when the option to include additional loyalty configurations in platform Meta API is enabled in the Punchh platform for the business:
+
+            - program_type
+
+            - points_conversion_type
+
+            - guest_identity_code_type
+
+            - points_conversion_threshold
+
+            - guest_lookup_type
+
+            - membership_levels
+
+
+            Contact your Punchh representative for more information about this Punchh platform configuration.
+
+            <!--Cockpit > Dashboard > Miscellaneous Config > Enable Extended Loyalty Configs in Platform Meta API-->'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  redeemables:
+                    $ref: '#/components/schemas/redeemables'
+                  program_type:
+                    type: string
+                    x-stoplight:
+                      id: tevmc290uchgx
+                    description: 'Provides information about the program type configured for the business in the Punchh platform. Possible values:
+
+                      - points_unlock_redeemables - Indicates the program is Points Unlock Redeemables based
+
+                      - points - Indicates the program is points convert to rewards or currency
+
+                      - visit - Indicates the program is Visit-based
+
+                      - points_and_visits - Indicates the program is hybrid and includes both points and visits
+
+                      - none - Indicates no loyalty program
+
+                      See [Punchh Offers and Program Types](/docs/dev-portal-developer-resources/150fedd8daa77-punchh-offers-and-program-types#program-types). You must log in to the developer portal to access the topic.'
+                  points_conversion_type:
+                    type: string
+                    x-stoplight:
+                      id: tqup6rbzipvg8
+                    description: "Provides information about the conversion type configured for the business based on the program type selected for the business in the Punchh platform. Possible values: \n- staged - Applicable when `program_type` is points_unlock_redeemables or points. The staged value indicates that points are earned normally (check-ins, purchases, etc.), but when you redeem, the system does not deduct points immediately at the time of generating a redemption code or SSF code.\n- none - Applicable when `program_type` is points. The none value indicates points do not get converted into any entity, such as rewards or currency.\n- currency - Applicable when `program_type` is points. The currency value indicates that earned points are automatically converted to currency at predefined point thresholds.\n- rewards -  Applicable when `program_type' is points. The rewards value indicates that earned points are automatically converted to rewards at predefined point thresholds.\nSee [Punchh Offers and Program Types](/docs/dev-portal-developer-resources/150fedd8daa77-punchh-offers-and-program-types#program-types). You must log in to the developer portal to access the topic."
+                  guest_identity_code_type:
+                    type: string
+                    x-stoplight:
+                      id: jobacfplrht51
+                    description: How a user is identified at the POS (the POS scanner type - e.g., barcode, qr_code, etc.)
+                  points_conversion_threshold:
+                    type: integer
+                    x-stoplight:
+                      id: b0w1gnizsv6zo
+                    description: The threshold value at which a user's accumulated points get converted to banked rewards. For example, after accumulating 100 points, the points get converted to dollars.
+                  guest_lookup_type:
+                    type: string
+                    x-stoplight:
+                      id: 0u3cuzh9sdlrh
+                    description: An identifier in the mobile app and iFrame used for guest look-up at the POS. If the bar code is configured as the guest’s identity in the Punchh platform for the business, the mobile app and iFrame will only support phone number for guest look-up. Contact your Punchh representative for more information about this Punchh platform configuration.
+                  membership_levels:
+                    $ref: '#/components/schemas/Membership-Levels'
+              examples:
+                default:
+                  value:
+                    redeemables:
+                    - redeemable_image_url: IMAGE_URL_GOES_HERE
+                      redeemable_properties: Merchandise
+                      redeemable_id: 106
+                      name: Unlock redeemable at 200 points.
+                      description: Free with the purchase of an entree.
+                      points_required_to_redeem: 200
+                    - redeemable_image_url: IMAGE_URL_GOES_HERE
+                      redeemable_properties: null
+                      redeemable_id: 2397
+                      name: 'Free Brownie for Birthday '
+                      description: 'Free Brownie '
+                      points_required_to_redeem: 0
+        '401':
+          $ref: '#/components/responses/401-unauthorized'
+      summary: Dashboard Meta
+      parameters:
+      - $ref: '#/components/parameters/authorization-header'
+      operationId: dashboard_meta_api
+      description: 'Returns a list of redeemables created in the business
+
+
+        >Any update made to the configuration in the Punchh platform will be reflected in the API response after a 15-minute delay, instead of in real time, to improve performance.'
+      x-stoplight:
+        id: a72ad65058b7c
+      tags:
+      - Meta
+components:
+  schemas:
+    Membership-Levels:
+      type: array
+      items:
+        type: object
+        properties:
+          background_image_url:
+            type: string
+            description: URL of the image that can be displayed in the app. As the URL may change with the membership level, the image can be changed accordingly.
+          points_multiplier:
+            type: number
+            format: float
+            description: Factor (rate) with which points accumulate for a user. For example, if the points multiplier for a particular membership level is 1, the user will get 1 point for every $1 spent. If the points multiplier is 2, the user will get 2 points for every $1 spent.
+          membership_level_id:
+            type: integer
+            description: Unique ID of the membership level
+          name:
+            type: string
+            description: Membership level name that is displayed in the app
+          description:
+            type: string
+            description: Description of a particular membership level. This can be displayed in the app (e.g., "Earn twice the points for every dollar you spend.")
+          maximum_points:
+            type: integer
+            description: Upper threshold of a membership level in terms of points
+          minimum_points:
+            type: integer
+            description: Lower threshold of a membership level in terms of points
+          currency_earned:
+            type: number
+            description: When accumulated points reach the `points_conversion_threshold`, they are converted to a dollar value defined by `currency_earned`. A value of 10 means that accumulated points will be converted to banked rewards in batches of $10.
+            format: float
+          points_conversion_threshold:
+            type: integer
+            description: Number of points required to get converted to banked rewards
+      x-examples: []
+      title: Membership Levels (Array Object)
+      x-stoplight:
+        id: ipc2a8hbnjxod
+      description: The object contains details about each membership tier in a loyalty program.
+    redeemables:
+      type: array
+      description: 'Returned in the response of the Dashboard Meta API call '
+      x-stoplight:
+        id: 7565c93eb94f7
+      title: Redeemables (Array Object)
+      items:
+        x-stoplight:
+          id: 1aq7ecn9vu53f
+        type: object
+        properties:
+          redeemable_image_url:
+            type: string
+            x-stoplight:
+              id: lfbtw9urjod54
+            description: URL of the image displayed in the app to depict the redeemable
+          redeemable_properties:
+            type: string
+            x-stoplight:
+              id: pa5mdqi1eua6k
+            description: Properties such as "Merchandise", "Food Item", etc. can be added to a particular redeemable
+          redeemable_id:
+            type: integer
+            x-stoplight:
+              id: lcqm12he6rijp
+            description: Unique ID that identifies a redeemable in the system
+          name:
+            type: string
+            x-stoplight:
+              id: 1845zbez909w9
+            description: Name of the redeemable
+          ' description':
+            type: string
+            x-stoplight:
+              id: j6b7gu3eshf0z
+            description: A description of the redeemable that appears in the app. This can be used to persuade users to redeem.
+          points_required_to_redeem:
+            type: integer
+            x-stoplight:
+              id: bloo8f7axc0iu
+            description: Number of points required to redeem a particular redeemable
+  responses:
+    401-unauthorized:
+      description: 'A business admin key is missing or invalid. A request header in the following format is needed to make the request:
+
+
+        `Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE`'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+          examples:
+            default:
+              value:
+                error: You need to sign in or sign up before continuing.
+  parameters:
+    authorization-header:
+      schema:
+        type: string
+        default: Bearer BUSINESS_ADMIN_KEY_GOES_HERE
+      name: Authorization
+      in: header
+      description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
+      required: true
+x-stoplight:
+  id: 9820bbd2e8ee1
+x-ext-urls: {}

@@ -1,0 +1,657 @@
+openapi: 3.2.0
+info:
+  title: Mobile Collectibles API
+  version: '1.0'
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+  description: 'Punchh provides a robust platform for offering loyalty programs to customers. When a business integrates its back-end with the Punchh server, the Punchh APIs become instrumental in executing loyalty programs for enrolled customers, primarily via business-branded mobile apps and websites tailored by Punchh.
+
+
+    To establish integration with the Punchh APIs, you need to understand how they are invoked and what responses are returned by the Punchh server. You can call APIs using any suitable API test client, such as Postman. Thus, the response to every API call made in Postman under a chosen environment (in app and/or platform) is reflected in the app and/or platform.'
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: Collectibles
+paths:
+  /api2/mobile/collectibles:
+    get:
+      summary: List Collectibles
+      operationId: get-api2-mobile-collectibles
+      description: 'Returns the list of collectibles configured for a business. Supports pagination and optional filtering by collectible category.
+
+
+        Note: The Digital Collectibles feature must be enabled for the business in the Punchh platform. Contact your Punchh representative to update this Punchh platform configuration.
+
+        <!--Cockpit > Dashboard > Miscellaneous Config > Enable Digital Collectibles-->'
+      tags:
+      - Collectibles
+      parameters:
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/User-Agent'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        collectible_id:
+                          type: integer
+                          description: Unique ID of the collectible
+                        collectible_name:
+                          type: string
+                          description: Name of the collectible
+                        image:
+                          type: string
+                          description: URL of the collectible image
+                        description:
+                          type: string
+                          description: Description of the collectible
+                        sequence:
+                          type: integer
+                          description: Display order of the collectible. Null if no ordering is configured.
+                        collectible_category_name:
+                          type: string
+                          description: Name of the category the collectible belongs to. Null if not mapped to any category.
+                        collectible_category_id:
+                          type: integer
+                          description: ID of the category the collectible belongs to. Null if not mapped to any category.
+                  meta:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                        description: Current page number
+                      next_page:
+                        type: integer
+                        description: Next page number. Null if there is no next page.
+                      prev_page:
+                        type: integer
+                        description: Previous page number. Null if there is no previous page.
+                      total_pages:
+                        type: integer
+                        description: Total number of pages
+                      total_count:
+                        type: integer
+                        description: Total number of collectibles
+              examples:
+                Collectible without category:
+                  value:
+                    data:
+                    - collectible_name: Immortal
+                      collectible_id: 123
+                      image: IMAGE_URL_GOES_HERE
+                      description: DESCRIPTION_GOES_HERE
+                      sequence: null
+                      collectible_category_name: null
+                      collectible_category_id: null
+                    meta:
+                      current_page: 1
+                      next_page: 2
+                      prev_page: null
+                      total_pages: 4
+                      total_count: 33
+                Collectible with category:
+                  value:
+                    data:
+                    - collectible_name: Test
+                      collectible_id: 123
+                      image: IMAGE_URL_GOES_HERE
+                      description: DESCRIPTION_GOES_HERE
+                      sequence: null
+                      collectible_category_name: AutoCat_1770282575250
+                      collectible_category_id: 67
+                    meta:
+                      current_page: 1
+                      next_page: null
+                      prev_page: null
+                      total_pages: 1
+                      total_count: 1
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      client:
+                        type: string
+              examples:
+                Missing client parameter:
+                  value:
+                    errors:
+                      client: Required parameter missing or the value is empty.
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      unauthorized:
+                        type: array
+                        items:
+                          type: string
+                  error:
+                    type: string
+                  message:
+                    type: string
+              examples:
+                Invalid or missing access token:
+                  value:
+                    errors:
+                      unauthorized:
+                      - An active access token must be used to query information about the current user.
+                Invalid client ID:
+                  value:
+                    error: INVALID_CLIENT
+                    message: Client ID is incorrect. Please verify client param or contact support.
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: string
+              examples:
+                Feature disabled:
+                  value:
+                    errors: Your current loyalty program configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: Unique client identifier
+                page:
+                  type: integer
+                  description: Page number for pagination
+                per_page:
+                  type: integer
+                  description: Number of records to return per page
+                collectible_category_id:
+                  type: string
+                  description: Comma-separated collectible category IDs to filter by (e.g., "67,69,75"). Multiple category IDs must be comma-separated.
+              required:
+              - client
+            examples:
+              Request Example:
+                value:
+                  client: CLIENT_GOES_HERE
+                  page: 1
+                  per_page: 33
+                  collectible_category_id: 67,69,75
+  /api2/mobile/collectibles/{collectible_id}:
+    get:
+      summary: Fetch Collectible Details
+      operationId: get-api2-mobile-collectibles-collectible_id
+      description: 'Returns the details of a specific collectible by its ID, including the active campaigns associated with it.
+
+        The API enforces the following validations and business rules:
+
+        * Only one collectible_id is allowed per request.
+
+        * Responses are limited to collectibles associated with the requesting business.
+
+        * Only active campaigns are included in the response.
+
+        * Campaigns are sorted by start date in ascending order, with the earliest starting campaign displayed first.
+
+
+        Note: The Digital Collectibles feature must be enabled for the business in the Punchh platform. Contact your Punchh representative to update this Punchh platform configuration.
+
+        <!--Cockpit > Dashboard > Miscellaneous Config > Enable Digital Collectibles-->'
+      tags:
+      - Collectibles
+      parameters:
+      - schema:
+          type: integer
+        in: path
+        name: collectible_id
+        required: true
+        description: The unique identifier of the collectible to fetch details for.
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/punchh-app-device-id'
+      - $ref: '#/components/parameters/User-Agent'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  collectible_id:
+                    type: integer
+                    description: Unique ID of the collectible
+                  collectible_name:
+                    type: string
+                    description: Name of the collectible
+                  image:
+                    type: string
+                    description: URL of the collectible image
+                  description:
+                    type: string
+                    description: Description of the collectible
+                  sequence:
+                    type: integer
+                    description: Display order of the collectible. Null if no ordering is configured.
+                  collectible_category_name:
+                    type: string
+                    description: Name of the category the collectible belongs to. Null if not mapped to any category.
+                  collectible_category_id:
+                    type: integer
+                    description: ID of the category the collectible belongs to. Null if not mapped to any category.
+                  disappear_date:
+                    type: string
+                    format: date-time
+                    description: Date and time when the collectible disappears. Null if it does not disappear.
+                  timezone:
+                    type: string
+                    description: Timezone associated with the collectible disappearance date
+                  status:
+                    type: string
+                    description: Current status of the collectible (e.g., Active)
+                  share_message:
+                    type: string
+                    description: Message displayed when the collectible is shared
+                  campaign_details:
+                    type: array
+                    description: List of campaigns associated with this collectible
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: Name of the campaign
+                        description:
+                          type: string
+                          description: Description of the campaign
+                        type:
+                          type: string
+                          description: Type of campaign (e.g., ChallengeCampaign)
+                        start_date:
+                          type: string
+                          description: Start date of the campaign. Null if not set.
+                        end_date:
+                          type: string
+                          description: End date of the campaign. Null if not set.
+                        timezone:
+                          type: string
+                          description: Timezone associated with the campaign start and end dates
+              examples:
+                Response Example:
+                  value:
+                    collectible_id: 123
+                    collectible_name: Test Collectible
+                    image: IMAGE_URL_GOES_HERE
+                    description: Test Collectible
+                    sequence: 6
+                    collectible_category_name: Easter 2026
+                    collectible_category_id: 7
+                    disappear_date: '2027-03-19T18:29:59Z'
+                    timezone: Asia/Kolkata
+                    status: Active
+                    share_message: Test Collectible
+                    campaign_details:
+                    - name: Every X universal new2
+                      description: ''
+                      type: ChallengeCampaign
+                      start_date: null
+                      end_date: null
+                      timezone: Asia/Kolkata
+                    - name: segment auto enrolled
+                      description: ''
+                      type: ChallengeCampaign
+                      start_date: '2026-04-04'
+                      end_date: '2026-04-30'
+                      timezone: Asia/Kolkata
+                    - name: With Collectible
+                      description: With Collectible
+                      type: ChallengeCampaign
+                      start_date: '2026-04-18'
+                      end_date: '2026-05-30'
+                      timezone: America/Los_Angeles
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      unauthorized:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                Invalid or missing access token:
+                  value:
+                    errors:
+                      unauthorized:
+                      - An active access token must be used to query information about the current user.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: string
+              examples:
+                Collectible not found:
+                  value:
+                    errors: Collectible not found.
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: string
+              examples:
+                Feature disabled:
+                  value:
+                    errors: Your current configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+              required:
+              - client
+            examples:
+              Request Example:
+                value:
+                  client: CLIENT_GOES_HERE
+  /api2/mobile/users_collectibles:
+    get:
+      summary: Fetch User Collectibles
+      operationId: get-api2-mobile-users_collectibles
+      description: 'Returns the list of collectibles earned by a user. Supports pagination and optional filtering by collectible category.
+
+
+        Note: The Digital Collectibles feature must be enabled for the business in the Punchh platform. Contact your Punchh representative to update this Punchh platform configuration.
+
+        <!--Cockpit > Dashboard > Miscellaneous Config > Enable Digital Collectibles-->'
+      tags:
+      - Collectibles
+      parameters:
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/User-Agent'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        collectible_id:
+                          type: integer
+                          description: Unique ID of the collectible
+                        collectible_name:
+                          type: string
+                          description: Name of the collectible
+                        image:
+                          type: string
+                          description: URL of the collectible image
+                        count:
+                          type: integer
+                          description: Number of times the user has earned this collectible
+                        disappear_at:
+                          type: string
+                          description: Date and time when the collectible disappears. Null if it does not disappear.
+                        sequence:
+                          type: integer
+                          description: Display order of the collectible. Null if no ordering is configured.
+                        collectible_category_id:
+                          type: integer
+                          description: ID of the category the collectible belongs to. Null if not mapped to any category.
+                        collectible_category_name:
+                          type: string
+                          description: Name of the category the collectible belongs to. Null if not mapped to any category.
+                  meta:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                        description: Current page number
+                      next_page:
+                        type: integer
+                        description: Next page number. Null if there is no next page.
+                      prev_page:
+                        type: integer
+                        description: Previous page number. Null if there is no previous page.
+                      total_pages:
+                        type: integer
+                        description: Total number of pages
+                      total_count:
+                        type: integer
+                        description: Total number of collectibles
+              examples:
+                With collectibles:
+                  value:
+                    data:
+                    - collectible_id: 116
+                      collectible_name: easter 7
+                      image: IMAGE_URL_GOES_HERE
+                      count: 1
+                      disappear_at: null
+                      sequence: 1
+                      collectible_category_id: 7
+                      collectible_category_name: Easter 2026
+                    - collectible_id: 103
+                      collectible_name: without category3
+                      image: IMAGE_URL_GOES_HERE
+                      count: 1
+                      disappear_at: '2026-03-28T09:00:00Z'
+                      sequence: 4
+                      collectible_category_id: null
+                      collectible_category_name: null
+                    meta:
+                      current_page: 1
+                      next_page: 2
+                      prev_page: null
+                      total_pages: 2
+                      total_count: 22
+                No collectibles:
+                  value:
+                    data: []
+                    meta:
+                      current_page: 1
+                      next_page: null
+                      prev_page: null
+                      total_pages: 0
+                      total_count: 0
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      unauthorized:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                Invalid or missing access token:
+                  value:
+                    errors:
+                      unauthorized:
+                      - An active access token must be used to query information about the current user.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  error:
+                    type: string
+              examples:
+                Incorrect endpoint:
+                  value:
+                    status: 404
+                    error: Not Found
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: string
+              examples:
+                Feature disabled:
+                  value:
+                    errors: Your current configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue.
+      x-stoplight:
+        id: collectibles-users-get
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                page:
+                  type: integer
+                  default: 1
+                  description: Page number for pagination. If not specified, returns the first page by default.
+                per_page:
+                  type: integer
+                  default: 20
+                  description: Number of records to return per page. Defaults to 20 if not specified.
+                include_disappeared_collectibles:
+                  type: boolean
+                  default: false
+                  description: Whether to include collectibles that have disappeared. Defaults to false.
+                collectible_category_id:
+                  type: string
+                  description: 'Filters collectibles by category. Accepts a single ID or multiple comma-separated IDs.
+
+
+                    - NULL (not provided) → Returns all categories, including collectibles with no category.
+
+                    - 0 → Returns only collectibles with no category.
+
+                    - Single or multiple IDs (e.g., "0,1,2,3") → Returns collectibles matching those category IDs.'
+              required:
+              - client
+            examples:
+              Request Example:
+                value:
+                  client: CLIENT_GOES_HERE
+components:
+  parameters:
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
+    punchh-app-device-id:
+      schema:
+        type: string
+        default: APP_DEVICE_ID_GOES_HERE
+      name: punchh-app-device-id
+      in: header
+      required: true
+      description: The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.
+x-stoplight:
+  id: bf6eddb435209
+x-ext-urls: {}

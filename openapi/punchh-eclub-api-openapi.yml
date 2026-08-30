@@ -1,0 +1,216 @@
+openapi: 3.2.0
+info:
+  title: Platform Functions E Club API
+  version: '1.0'
+  description: This API documentation is intended to provide comprehensive information for admin users of the Punchh platform. Many of the settings and available actions depend on an appropriate level of access to Platform Functions APIs.
+  contact:
+    name: Punchh DevSupport
+    url: https://developers.punchh.com
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: eClub
+paths:
+  /api2/dashboard/eclub_guests:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid data
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    status: 400
+                    error: data was not valid JSON
+        '401':
+          $ref: '#/components/responses/401-unauthorized'
+        '404':
+          description: Location not found based on store_number
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    errors:
+                      location_not_found: 'Cannot find corresponding location with store_number: 1234512345'
+        '422':
+          description: 'Error returned in case of Invalid source
+
+            '
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Invalid source! Please check configuration for valid source.
+      summary: eClub Guest Upload
+      description: "Allows you to upload a list of eClub guests along with their details\n\n#### eClub Update\nUse the eClub Guest Upload API to update the user information as well. The eClub user information that can be updated and other eClub settings are configured in the Punchh platform. This determines which parameters in the `user` object can be updated. The eClub user information can also be updated manually via the Punchh platform. Contact your Punchh representative to update these Punchh platform configuration settings. <!-- Cockpit > eClub Configuration -->\n\n**Note:** \n\n1\\. If the \"Explicit-Opt in\" flag is enabled, `marketing_email_subscription` is a required parameter. The value can be 0 / 1 / true / false. The values 'true' and 'false' are string, and 0 and 1 can be a string or an integer.\n\n2\\. If the business has “source” defined in the Punchh platform, only the source configured in the Punchh platform is considered valid in the API request and the user is created. If a “source” that is not configured for the business is passed in the API request, an error message is returned. If no “source” is passed, the user gets created (as an earlier functionality) as it is a non-mandatory parameter. <!-- Whitelabel > iFrame Configuration > eClub Widget -->\n\n3\\. If `active_registration` is sent as 'false' but `send_compliance_sms` is sent as 'true' in the API request, this call will be treated as a bulk upload and no campaigns or compliance/opt-in SMS will be triggered for the user uploaded through this API call.\n\n4\\. Either `email` or `phone` can be sent in the API request. The schema indicates that both are required; however if one is sent, then the other is not required."
+      operationId: dashboard_eclub_guest_upload
+      parameters:
+      - $ref: '#/components/parameters/authorization-header'
+      - $ref: '#/components/parameters/accept'
+      - $ref: '#/components/parameters/content-type'
+      x-stoplight:
+        id: bf43962d4c609
+      tags:
+      - eClub
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                store_number:
+                  type: string
+                  description: Store number of the location
+                source:
+                  type: string
+                  description: Name of the source from where guests are coming. The source for eClub widgets is defined in the Punchh platform. Contact your Punchh representative to update this Punchh platform configuration.
+                user:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      description: Email address of the user
+                    first_name:
+                      type: string
+                      description: First name of the user
+                    last_name:
+                      type: string
+                      description: Last name of the user
+                    phone:
+                      type: string
+                      description: Phone number of the user
+                    address_line1:
+                      type: string
+                      description: Address of the user
+                    state:
+                      type: string
+                      description: State where the user lives
+                    zip_code:
+                      type: string
+                      description: Zip code where the user lives
+                    birthday:
+                      type: string
+                      description: Date of birth of the user, in YYYY-MM-DD format
+                    program_anniversary:
+                      type: string
+                      description: Registration date of the loyalty program, in ISO 8601 YYYY-MM-DDTHH:mm:SSZ format
+                    marketing_email_subscription:
+                      type: string
+                      description: Whether the user has subscribed to receive marketing emails or not. If the "Explicit-Opt in" flag is enabled, `marketing_email_subscription` is required. The values 'true' and 'false' are string, and 0 and 1 can be a string or an integer.
+                    active_registration:
+                      type: string
+                      description: Send 'true' if the user is signing up directly (instead of as part of a bulk upload)
+                    send_compliance_sms:
+                      type: string
+                      description: Send 'true' to trigger compliance/opt-in SMS for the user
+                    title:
+                      type: string
+                      description: Salutation as selected by the user
+                    gender:
+                      type: string
+                      description: Gender of the user
+                    code:
+                      type: string
+                      description: Profile field question code configured in the Punchh platform. It is used to submit answers to profile field questions configured in the Punchh platform. A total of 25 answers can be submitted. The keys range from 'upf0' to 'upf24'. If questions have multiple answers, the values should be separated by a | character (pipe).
+                    external_source:
+                      type: string
+                      description: External source name (third-party IDP). Possible values for `external_source` are salesforce, customer_id, mparticle, azure, aws_cognito, auth0, and ext_idp. If you are using a different one, please reach out to your implementation manager to add a new value. The values are case-sensitive.
+                    external_source_id:
+                      type: string
+                      description: ID of the customer in the mentioned external source name (provided in the `external_source` request parameter), a unique identifier generated by the third-party IDP (GUID format).
+                    ' terms_and_conditions':
+                      type: boolean
+                      description: Whether the terms and conditions of a business have been accepted by the user or not
+                    privacy_policy:
+                      type: boolean
+                      description: Whether the user has agreed to the privacy policy to use the app as per the configuration or not
+                  required:
+                  - email
+                  - first_name
+                  - last_name
+                  - phone
+                  - marketing_email_subscription
+              required:
+              - store_number
+            examples:
+              default:
+                value:
+                  store_number: '3'
+                  source: Test
+                  user:
+                    email: test@example.com
+                    first_name: FIRST_NAME_GOES_HERE
+                    last_name: LAST_NAME_GOES_HERE
+                    phone: '1111111111'
+                    address_line1: ''
+                    state: ''
+                    zip_code: '302001'
+                    birthday: '1999-01-01'
+                    program_anniversary: '2008-10-26T23:59:59-07:00'
+                    marketing_email_subscription: '1'
+                    active_registration: '0'
+                    send_compliance_sms: '0'
+                    title: Mr.
+                    gender: Male
+                    Test2: Oreo|Kit Kat
+                    external_source: SOURCE_GOES_HERE
+                    external_source_id: SOURCE_ID_GOES_HERE
+                    terms_and_conditions: true
+                    privacy_policy: true
+        description: ''
+components:
+  parameters:
+    accept:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Accept
+      description: Advertises which content types the client is able to understand
+      required: true
+    authorization-header:
+      schema:
+        type: string
+        default: Bearer BUSINESS_ADMIN_KEY_GOES_HERE
+      name: Authorization
+      in: header
+      description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
+      required: true
+    content-type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+  responses:
+    401-unauthorized:
+      description: 'A business admin key is missing or invalid. A request header in the following format is needed to make the request:
+
+
+        `Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE`'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+          examples:
+            default:
+              value:
+                error: You need to sign in or sign up before continuing.
+x-stoplight:
+  id: 9820bbd2e8ee1
+x-ext-urls: {}

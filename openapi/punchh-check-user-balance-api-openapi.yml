@@ -1,0 +1,1133 @@
+openapi: 3.2.0
+info:
+  title: Online Ordering and SSO Check User Balance API
+  version: '1.0'
+  description: "The Punchh SSO API endpoints provide user-management functions such as login, registration, forgot password, and connect with Facebook for users on the Punchh loyalty platform. You can also fetch user-specific information such as rewards or point balances. \n\nThe Punchh Online Ordering API endpoints enable users to earn and redeem rewards for online orders."
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: Check User Balance
+paths:
+  /api/auth/checkins/balance:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  balance:
+                    $ref: '#/components/schemas/Account-Balance'
+                  rewards:
+                    $ref: '#/components/schemas/Rewards-Attribute'
+                  redeemables:
+                    $ref: '#/components/schemas/Redeemables-Attributes'
+              examples:
+                default:
+                  value:
+                    balance:
+                      banked_rewards: '376.00'
+                      membership_level: null
+                      membership_level_id: null
+                      net_balance: 376
+                      net_debits: 1100
+                      pending_points: 0
+                      points_balance: 1476
+                      signup_anniversary_day: 09/30
+                      total_credits: 1476
+                      total_debits: '1100.0'
+                      total_point_credits: 1476
+                      total_redeemable_visits: 98
+                      expired_membership_level: null
+                      total_visits: 87
+                      initial_visits: 0
+                      unredeemed_cards: 19
+                      membership_qualification_points: 500
+                    rewards:
+                    - business_id: 603
+                      end_date: null
+                      end_date_tz: null
+                      gaming_level_id: null
+                      gifted_for_type: null
+                      gift_reason: null
+                      id: 1089
+                      location_ids: []
+                      read_at: null
+                      redeemable_id: 1089
+                      reward_properties: null
+                      start_date: '2017-12-14'
+                      start_date_tz: '2017-12-14T13:04:55Z'
+                      external_store_numbers: []
+                      type: redeemable
+                    - business_id: 603
+                      end_date: null
+                      end_date_tz: null
+                      gaming_level_id: null
+                      gifted_for_type: FeedbackReply
+                      gift_reason: Support Activity
+                      id: 17111231
+                      location_ids: []
+                      read_at: '2016-12-12T07:53:20Z'
+                      redeemable_id: 1260
+                      reward_properties: null
+                      start_date: '2016-11-28'
+                      start_date_tz: '2016-11-28T13:56:29Z'
+                      external_store_numbers: []
+                      type: reward
+                    redeemables:
+                    - applicable_as_loyalty_redemption: true
+                      redeemable_properties: null
+                      discount_amount: 0
+                      discount_channel: all
+                      expire_redemption_code_with_reward_end_date: false
+                      id: 1089
+                      image: IMAGE_URL_GOES_HERE
+                      points: 100
+                      redeemable_id: 1089
+                      redemption_expiry: 240
+                      thumb_image: IMAGE_URL_GOES_HERE
+                      name: Free Pizza or Entree Salad @ 100 Points
+                      description: Congrats! You banked a Free Pizza or Entree Salad for earning 100 points!
+                    - applicable_as_loyalty_redemption: false
+                      redeemable_properties: null
+                      discount_amount: 0
+                      discount_channel: null
+                      expire_redemption_code_with_reward_end_date: null
+                      id: 1260
+                      image: IMAGE_URL_GOES_HERE
+                      points: 0
+                      redeemable_id: 1260
+                      redemption_expiry: 240
+                      thumb_image: IMAGE_URL_GOES_HERE
+                      name: Free Cookie
+                      description: Enjoy your free cookie.
+        '401':
+          description: Sending invalid credentials
+        '412':
+          description: Sending invalid Signature
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              examples:
+                application/json; charset=utf-8:
+                  value:
+                  - Invalid Signature
+        '422':
+          description: Sending invalid Entity
+      summary: Fetch Account Balance of User
+      description: 'Returns account balance details of a guest, such as banked_rewards, membership_level, net_balance, net_debits, pending_points, points_balance, signup_anniversary_day, total_credits, total_debits, total_point_credits, total_redeemable_visits, etc.
+
+
+        >User authentication required
+
+        >
+
+        >This API requires authentication_token to be supplied as `HTTP_AUTHORIZATION` header or in the `authentication_token` parameter.'
+      operationId: sso_account_balance
+      parameters:
+      - $ref: '#/components/parameters/Signature'
+      - $ref: '#/components/parameters/accept_language'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/content_type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Authorization'
+      tags:
+      - Check User Balance
+      x-stoplight:
+        id: 046241990d510
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: Client key of the business
+                  default: CLIENT_GOES_HERE
+                authentication_token:
+                  type: string
+                  description: The authentication token of the user. You can retrieve this from the response of a successful sign-in API call or through the [SSO process](/docs/dev-portal-online-ordering/9a41534336c87-sso-flow-for-web-and-mobile).
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  authentication_token: AUTHENTICATION_TOKEN_GOES_HERE
+  /api/auth/rewards:
+    get:
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rewards-Attribute'
+              examples:
+                application/json; charset=utf-8:
+                  value:
+                  - reward:
+                      id: 309203
+                      business_id: 452
+                      location_id: 302576
+                      user_id: 111111111
+                      redeemable_id: 41
+                      free_punchh_campaign_id: null
+                      redemption_id: null
+                      checkin_id: null
+                      admin_id: null
+                      created_at: '2015-03-31T11:41:52Z'
+                      updated_at: '2015-03-31T11:41:52Z'
+                      code: '907350'
+                      start_date: '2015-03-31'
+                      end_date: '2015-04-29'
+                      read_at: null
+                      gaming_level_id: null
+                      gifted_for_type: SignupCampaign
+                      gifted_for_id: 50
+                      gift_reason: 'Signup: Free Small The Original Sandwich with purchase of chips and 32 oz drink'
+                      location_ids:
+                      - 303133
+                      - 303134
+                      external_store_numbers:
+                      - '3613'
+                      - '3614'
+        '401':
+          description: ''
+        '412':
+          description: Sending invalid Signature
+        '422':
+          description: Sending invalid Entity
+      summary: List Available Rewards
+      description: Fetch available rewards or offers details of a user. This request returns how many rewards are available to the user.
+      operationId: sso_list_available_rewards
+      parameters:
+      - $ref: '#/components/parameters/Signature'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/content_type'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/Authorization'
+      tags:
+      - Check User Balance
+      x-stoplight:
+        id: 5ba386685f23e
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: Client key of the business
+                  default: CLIENT_GOES_HERE
+                authentication_token:
+                  type: string
+                  description: The authentication token of the user. You can retrieve this from the response of a successful sign-in API call or through the [SSO process](/docs/dev-portal-online-ordering/9a41534336c87-sso-flow-for-web-and-mobile).
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  authentication_token: AUTHENTICATION_TOKEN_GOES_HERE
+  /api/auth/users/balance:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  active_redemptions:
+                    type: array
+                    items:
+                      type: object
+                  challenge_badges:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        badge_id:
+                          type: integer
+                          description: Badge ID of the challenge
+                        challenge_campaign_id:
+                          type: integer
+                          description: Campaign ID of the challenge
+                        published:
+                          type: boolean
+                        public_url:
+                          type: string
+                          description: Public URL of the challenge
+                  coupons:
+                    $ref: '#/components/schemas/Coupons'
+                  messages:
+                    $ref: '#/components/schemas/Messages'
+                  notifications:
+                    $ref: '#/components/schemas/Notifications'
+                  rewards:
+                    $ref: '#/components/schemas/Rewards-Attribute'
+                  punch_cards:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        progress:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              completed_steps:
+                                type: integer
+                              total_steps:
+                                type: integer
+                        name:
+                          type: string
+                          description: Name of the card
+                        description:
+                          type: string
+                          description: Description of the card
+                        image_url:
+                          type: string
+                          description: Image URL of the card
+                        icon_url:
+                          type: string
+                        icon_completed_url:
+                          type: string
+                        start_date:
+                          type: string
+                        end_date:
+                          type: string
+                        gift_reason:
+                          type: string
+                        miscellaneous:
+                          type: string
+                        challenge_id:
+                          type: integer
+                  preferred_charities:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        user_donations:
+                          type: object
+                          properties:
+                            reward:
+                              type: object
+                              properties:
+                                user_donations:
+                                  type: integer
+                                last_donated_item:
+                                  x-nullable: true
+                                last_donation_time:
+                                  x-nullable: true
+                        name:
+                          type: string
+                        description:
+                          type: string
+                        social_cause_id:
+                          type: integer
+                        image_url:
+                          type: string
+                        miscellaneous:
+                          type: string
+                        city:
+                          type: string
+                        state:
+                          type: string
+                        street:
+                          type: string
+                        zip:
+                          type: string
+                        phone_number:
+                          x-nullable: true
+                        email:
+                          type: string
+                        address:
+                          type: string
+                  converted_category_balances:
+                    $ref: '#/components/schemas/Converted-Category-Balance'
+                  account_balance:
+                    $ref: '#/components/schemas/Account-balance-details'
+              examples:
+                default:
+                  value:
+                    converted_category_balances: []
+                    active_redemptions: []
+                    challenge_badges: []
+                    coupons: []
+                    messages: []
+                    notifications: []
+                    rewards: []
+                    punch_cards: []
+                    preferred_charities: []
+                    account_balance:
+                      banked_currency: 0
+                      banked_currency_expiring_on: null
+                      checkins_on_current_card: 0
+                      current_membership_level_id: null
+                      current_membership_level_expiring_on: null
+                      expiring_banked_currency: null
+                      pending_points: null
+                      redeemed_cards: null
+                      total_loyalty_visits: null
+                      unbanked_points: 0
+                      unredeemed_cards: null
+                      current_membership_level_name: null
+                      lifetime_points: 0
+                      redeemable_points: 0
+                      membership_qualification_points: 500
+      summary: Fetch User Balance
+      description: Displays user information regarding active redemptions, notifications, badges, balance, etc.
+      operationId: sso_fetch_user_balance
+      parameters:
+      - $ref: '#/components/parameters/Signature'
+      - $ref: '#/components/parameters/content_type'
+      - schema:
+          type: string
+          default: no cache
+        in: header
+        name: cache-control
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/Accept'
+      tags:
+      - Check User Balance
+      x-stoplight:
+        id: 67319738d3ef8
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: Client key of the business
+                authentication_token:
+                  type: string
+                  description: The authentication token of the user. You can retrieve this from the response of a successful sign-in API call or through the [SSO process](/docs/dev-portal-online-ordering/9a41534336c87-sso-flow-for-web-and-mobile).
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  authentication_token: AUTHENTICATION_TOKEN_GOES_HERE
+  /api/auth/balance_timelines:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  currency:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        actual_earned_currency:
+                          type: number
+                          format: float
+                          description: Actual earned currency at the time of conversion
+                        unredeemed_currency:
+                          type: number
+                          format: float
+                          description: Remaining currency available to redeem
+                        expiration_date:
+                          type: string
+                          enum:
+                          - YYYY-MM-DDThh:mm:ssZ
+                          format: date-time
+                          description: Expiration date of the conversion
+                        status:
+                          type: string
+                          description: 'Status of the entire conversion. The values can be:
+
+                            partially_redeemed, unredeemed, honored, partially_redeemed_expired, unredeemed_expired'
+                          x-nullable: true
+                  fuel_discount:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        actual_earned_currency:
+                          type: number
+                          format: float
+                        unredeemed_currency:
+                          type: number
+                          format: float
+                        expiration_date:
+                          type: string
+                          enum:
+                          - YYYY-MM-DDThh:mm:ssZ
+                          format: date-time
+                        status:
+                          type: string
+              examples:
+                default:
+                  value:
+                    currency:
+                    - actual_earned_currency: 2
+                      unredeemed_currency: 0
+                      expiration_date: null
+                      status: honored
+                    - actual_earned_currency: 1
+                      unredeemed_currency: 0
+                      expiration_date: '2019-07-17T23:59:59-05:00'
+                      status: null
+                    - actual_earned_currency: 10
+                      unredeemed_currency: 4
+                      expiration_date: '2019-07-17T23:59:59-05:00'
+                      status: unredeemed_expired
+                    fuel_discount:
+                    - actual_earned_currency: 0.05
+                      unredeemed_currency: 0.05
+                      expiration_date: '2019-08-15T23:59:59-05:00'
+                      status: unredeemed
+                    - actual_earned_currency: 0.5
+                      unredeemed_currency: 0.5
+                      expiration_date: '2019-08-15T23:59:59-05:00'
+                      status: unredeemed
+        '400':
+          description: ''
+      summary: Balance Timelines
+      description: Gets balance timelines of the user
+      operationId: sso_balance_timelines
+      parameters:
+      - $ref: '#/components/parameters/Signature'
+      - $ref: '#/components/parameters/content_type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/User-Agent'
+      tags:
+      - Check User Balance
+      x-stoplight:
+        id: cb5962b14aa0b
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: Client key of the business
+                  default: CLIENT_GOES_HERE
+                authentication_token:
+                  type: string
+                  description: The authentication token of the user. You can retrieve this from the response of a successful sign-in API call or through the [SSO process](/docs/dev-portal-online-ordering/9a41534336c87-sso-flow-for-web-and-mobile).
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  authentication_token: AUTHENTICATION_TOKEN_GOES_HERE
+components:
+  schemas:
+    Messages:
+      type: object
+      description: 'The `messages` object is returned in response to the Messages API (see the details below).
+
+        '
+      properties:
+        messages:
+          type: array
+          description: 'The `messages` object is returned in response to the Messages API:
+
+            '
+          items:
+            type: object
+            properties:
+              background_content:
+                $ref: '#/components/schemas/background-content'
+              body:
+                type: string
+                description: 'The text content of a rich message
+
+                  '
+              cta:
+                type: array
+                description: 'The short for Call-To-Action is a device designed to prompt an immediate response from a user.
+
+                  Refer to the `cta` object for details.'
+                items:
+                  $ref: '#/components/schemas/cta'
+              dismissable:
+                type: boolean
+                description: 'This boolean value decides whether guests can dismiss a message or not. When a guest dismisses a message, it should not be rendered in the app.
+
+                  '
+              hero_content:
+                $ref: '#/components/schemas/hero-content'
+              launch_time:
+                type: string
+                description: 'Date/time, in ISO 8601 format, when the notification should be rendered by the application client. This a useful field that can enable a business to create messages that can be sent to the mobile client in advance, and they appear in the app later when the launch time comes.
+
+
+                  If a rich message is triggered from a campaign, from a notification template as a result of user action, as a result of test notification, or if the Launch Time and Take Down Time fields are left blank in a business announcement, the values for launch_time and take_down_time will be null.'
+              message_type:
+                type: string
+                description: 'There are two types of rich messages returned in response:
+
+                  1. user_specific: Rich messages that have a user context. These include rich messages created based on campaigns or user actions.
+
+                  2. business_wide: Rich messages that are created as business announcements in the system.'
+              rank:
+                type: integer
+                description: Every message should have a rank. This marks the importance of a message. There may be a case when a more important message moves down the display list in the app as new messages are delivered to the mobile client. To keep important messages at the top of the display list, they should be given a higher number just as is the case with z-index. If two messages have the same rank, the app will determine the display order based on the launch_time.
+              style_url:
+                type: string
+                description: 'Link to the style sheet file for the style that will be applied to the message. The mobile client can download the style file, which can then be used to render the rich message in the app.
+
+                  '
+              subtitle:
+                type: string
+                description: 'A subordinate title providing additional information about the content
+
+                  '
+              tags:
+                type: array
+                description: 'Tags provide additional details about a message. A simple example could be the type (such as campaign, system_notification, etc.) that may help the app make decisions about the rendering of the message.
+
+                  '
+                items:
+                  type: string
+              take_down_time:
+                type: string
+                description: 'Date/time, in ISO 8601 format, when the mobile client should stop rendering the rich message in the app.
+
+
+                  If a rich message is triggered from a campaign, from a notification template as a result of user action, as a result of test notification, or if the Launch Time and Take Down Time fields are left blank in a business announcement, the values for launch_time and take_down_time will be null.'
+              title:
+                type: string
+                description: 'A suitable title for the rich message. A well-crafted title increases the chances that a user will view a message.
+
+                  '
+              message_id:
+                type: integer
+                description: 'Unique ID of the message sent to the user
+
+                  '
+      title: Messages (Object)
+      x-stoplight:
+        id: dae9f70f9e7f1
+    Redeemables-Attributes:
+      type: array
+      items:
+        type: object
+        properties:
+          applicable_as_loyalty_redemption:
+            type: boolean
+            description: Applicable on loyalty
+          redeemable_properties:
+            type: string
+            description: Comma-separated values that provide additional details about a redeemable. For example, a redeemable could be "Food Item" or "Merchandise", etc. These can be configured for a business in the Punchh platform and attached to a redeemable. If no value is attached to a redeemable, a blank field will be returned.
+          discount_amount:
+            type: integer
+            description: Amount of discount on the reward
+          discount_channel:
+            type: string
+            description: 'Can accept any one of the following values:
+
+              - all - discountable everywhere
+
+              - online_only - online orders only
+
+              - offline_only - in store only'
+          expire_redemption_code_with_reward_end_date:
+            type:
+            - boolean
+            - 'null'
+            description: Whether the redemption code expires with the expiry of the reward
+          id:
+            type: integer
+            description: Identification of the reward
+          image:
+            type: string
+            description: Image of the redeemable item
+          points:
+            type: integer
+            description: Total number of points required for redemption
+          redeemable_id:
+            type: integer
+            description: Identification of the redeemable item
+          redemption_expiry:
+            type: integer
+            description: Expiry of the redemption, in minutes
+          thumb_image:
+            type: string
+            description: Thumbnail image of the redeemable item
+          name:
+            type: string
+            description: Name of the redeemable item
+          description:
+            type: string
+            description: Description of the redeemable item
+      title: Redeemables Attributes (Object)
+      x-stoplight:
+        id: 173597e963ebd
+    Converted-Category-Balance:
+      type: array
+      items:
+        type: object
+        properties:
+          category_id:
+            type: integer
+            description: Category ID
+          name:
+            type: string
+            description: Name of the reward
+          source_type:
+            type: string
+            description: Type of source used for conversion
+          source_value:
+            type: integer
+            description: Threshold value at which points get converted
+          converted_type:
+            type: string
+            description: This could be "currency", "fuel_discount", or "charity" depending on the Punchh platform configuration.
+          converted_value:
+            type: number
+            description: Multiplier for the converted type
+            format: float
+          balance:
+            type: integer
+            description: Balance available for the user for this type of reward
+      title: Converted Category Balances (Object)
+      x-stoplight:
+        id: 721549331be0c
+    Coupons:
+      type: array
+      items:
+        type: object
+        properties:
+          code:
+            type: string
+            description: Alphanumeric coupon code that a user must use to receive an offer
+          image_url:
+            type: string
+            description: URL of the image of the reward that will be displayed in the app
+          name:
+            type: string
+            description: Name of the coupon campaign through which the coupon was given to a user
+          description:
+            type: string
+            description: Description of the offer that will be available to a user after using the coupon code
+            x-nullable: true
+          start_date:
+            type: string
+            description: Coupon start date
+            enum:
+            - YYYY-MM-DD
+            format: date
+            x-nullable: true
+          end_date:
+            type: string
+            description: Coupon expiration date
+            enum:
+            - YYYY-MM-DD
+            format: date
+      title: Coupons (Object)
+      x-stoplight:
+        id: 784153ff94ed5
+    Account-balance-details:
+      type: object
+      title: Account Balance Details (Object)
+      x-stoplight:
+        id: 581d141f4c275
+      properties:
+        banked_currency:
+          type: number
+          format: float
+          description: Value of the currency that a user has available. A "null" value indicates that the business does not support banking of points into currency. Use it only if the business opted for the Points Convert to Banked Currency program.
+        checkins_on_current_card:
+          type: integer
+          description: "A card gets completed after a user does a configured number of check-ins. \nFor example, if a business configuration requires 7 check-ins to complete a card, and a user does only 3 check-ins, the value of this parameter will be 3. This is useful for the Visit-based program."
+        current_membership_level_id:
+          description: Unique ID of the current membership level of a user
+          type: integer
+        current_membership_level_expiring_on:
+          type: string
+          description: If a business has a rolling expiry of membership levels, a particular membership level will expire after a period that is configured in the Punchh platform. A "null" value indicates that the business does not have a rolling expiry of membership levels.
+          enum:
+          - YYYY-MM-DD
+          format: date
+        expiring_banked_currency:
+          type: number
+          format: float
+          description: If a business has expiring banked currency configured in the Punchh platform, the banked currency will expire in a FIFO (first-in, first-out) pattern. This returns the value of the banked currency that will expire. A "null" value indicates that the business is not configured to support expiring banked currency.
+        banked_currency_expiring_on:
+          type: string
+          description: If a business is configured to support expiring banked currency, this returns the date on which it will expire. A "null" value indicates that the business is not configured to support expiring banked currency.
+          enum:
+          - YYYY-MM-DD
+          format: date
+        pending_points:
+          type: number
+          format: float
+          description: Points of a user that are in the pending state after a check-in. They are not added to the user's account before finalization. See [Pending Points Feature Overview](/docs/dev-portal-pos/ZG9jOjUwMjgzOTAz-pending-points-feature-overview) for details.
+        redeemed_cards:
+          type: integer
+          description: The number of cards that a user has redeemed in the user's lifetime
+        total_loyalty_visits:
+          type: integer
+          description: Total of the visits that a user has earned by doing loyalty check-ins and those visits that were migrated from an older loyalty program (if a business had an older loyalty program and wants to migrate its users to Punchh's loyalty program)
+          x-nullable: true
+        unredeemed_cards:
+          type: integer
+          description: Total unredeemed cards available to a user. If working with a Visit-based program, this value lets you know if the user has unredeemed cards or not.
+          x-nullable: true
+        current_membership_level_name:
+          type: string
+          description: Current membership level of the user
+          x-nullable: true
+        lifetime_points:
+          type: number
+          format: float
+          description: Sum of all loyalty points earned by a user from the time the user signed up
+        redeemable_points:
+          type: number
+          format: float
+          description: 'The total of all loyalty points earned by a user that satisfy all of the following conditions:
+
+            * approved
+
+            * non-pending
+
+            * unexpired. This is useful if working with the Points Unlock Redeemables program. This provides the available points for the guest to redeem.'
+        unbanked_points:
+          type: number
+          format: float
+          description: For a business that allows banking of points, this value represents the number of points the user has and has not banked yet. For example, if a business configuration requires 100 points to be banked to $10, and a user has accumulated 55 points, this value will be 55. When the user earns another 45 points, the user will be banked to $10 and this value will then become 0.
+        membership_qualification_points:
+          type: integer
+          x-stoplight:
+            id: ymt1v0qs8l7oj
+          description: 'The value of points earned toward progress across membership tiers. This is related to the migration strategy that allows businesses to "Consider Only Initial Points for Tier Migration". Currently, support for this parameter is limited to program type Points Unlock Redeemables, Membership Re-evaluation Strategy: Reset Based on Points Earned and Account Re-evaluation Strategy of Guest Inactivity.'
+    Notifications:
+      type: array
+      description: Returns the details of the notifications received by a user. A maximum of 10 notifications will be fetched.
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            description: ID of the notification
+          kind:
+            type: string
+            description: 'Type of notification. There are three types of notifications that a user can receive: ''system'', ''campaign'', and ''news''.'
+          message:
+            type: string
+            description: Message sent to the user in the notification
+          read_at:
+            type: string
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+            format: date-time
+            x-nullable: true
+          created_at:
+            type: string
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+            format: date-time
+      title: Notifications (Object)
+      x-stoplight:
+        id: ba4734ac30a93
+    cta:
+      type: array
+      items:
+        type: object
+        properties:
+          type:
+            type: string
+            description: 'Three possible values can be returned to the mobile client:
+
+              - web_link: The cta button prompts the user to open the link in a web browser available on the mobile client.
+
+              - deep_link: The cta button takes the user to a particular deep link specified in the app.
+
+              - drill_down: The cta button opens the detailed view of the rich message received by the app.'
+          link:
+            type: string
+            description: The URL to which the user will be directed, depending on the type of the cta
+          label:
+            type: string
+            description: The text that appears on the cta button in the app
+          cta_type:
+            type: string
+            description: 'More than one cta object can be returned to the app. The cta_type can have two possible values: primary and secondary. The primary cta is higher priority and is the main cta button. The secondary cta can be something like a terms and conditions link that can be rendered appropriately in the app.'
+      title: CTA (Object)
+      x-stoplight:
+        id: 792f98f6893c2
+    Account-Balance:
+      type: object
+      title: Account Balance Attributes (Object)
+      x-stoplight:
+        id: eaa5f08504941
+      properties:
+        banked_rewards:
+          type: number
+          format: double
+          description: Banked rewards value of the current account
+        membership_level:
+          type: string
+          description: Membership level of the current account
+        membership_level_id:
+          type: integer
+          description: ID of membership level
+        net_balance:
+          type: number
+          description: Net balance of the current account
+          format: double
+        net_debits:
+          type: number
+          description: Net debits of the current account
+          format: double
+        pending_points:
+          type: integer
+          description: Pending points of the current account
+        points_balance:
+          type: number
+          description: Points balance of the current account
+          format: double
+        signup_anniversary_day:
+          type: string
+          description: Sign-up anniversary day of the current account
+        total_credits:
+          type: number
+          description: Total credits of the current account
+          format: double
+        total_debits:
+          type: number
+          description: Total debits of the current account
+          format: double
+        total_point_credits:
+          type: number
+          description: Total point credits of the current account
+          format: double
+        total_redeemable_visits:
+          type: integer
+          description: Total redeemable visits of the current account
+        expired_membership_level:
+          type: string
+          description: Expired membership level (if any) of the current account
+          x-nullable: true
+        total_visits:
+          type: integer
+          description: Total number of loyalty visits
+        initial_visits:
+          type: integer
+          description: Visits registered before migration
+        unredeemed_cards:
+          type: integer
+          description: Number of unredeemed cards of the user
+        membership_qualification_points:
+          type: integer
+          x-stoplight:
+            id: o3fwt1pmd6lil
+          description: 'The value of points earned toward progress across membership tiers. This is related to the migration strategy that allows businesses to "Consider Only Initial Points for Tier Migration". Currently, support for this parameter is limited to program type Points Unlock Redeemables, Membership Re-evaluation Strategy: Reset Based on Points Earned and Account Re-evaluation Strategy of Guest Inactivity.'
+    background-content:
+      type: object
+      properties:
+        type:
+          type: string
+          description: 'The type of the background content. It can be an image or a color.
+
+            '
+        url:
+          type: string
+          description: 'The URL of the image that will be used as the background
+
+            '
+        alt_text:
+          type: string
+          description: 'Alternate text that appears if the app cannot render the background content of the message
+
+            '
+        initial_frame:
+          type: string
+          description: The initial frame or first frame is what appears behind the play button before a user taps it to start playing the video.
+      description: "This is the content that makes the background of the message.\n\n```\n{\n    \"type\": \"image\",\n    \"url\": \"IMAGE_URL\",\n    \"alt_text\": \"Black Background Image\",\n    \"initial_frame\": \"\"\n}\n```"
+      title: Background Content (Object)
+      x-stoplight:
+        id: 687af9f3ae9c4
+    hero-content:
+      type: object
+      description: "This is the first visual content that a user encounters when the user views a rich message. This can be an image or a video.\n\n```\n{\n    \"type\": \"image\",\n    \"url\": \"IMAGE_URL_GOES_HERE\",\n    \"alt_text\": \"Fries\",\n    \"initial_frame\": \"\"\n}\n```\n"
+      properties:
+        type:
+          type: string
+          description: 'Hero content can be an image or a video.
+
+            '
+        url:
+          type: string
+          description: 'The URL of the image/video that will be used as the hero content in a rich message
+
+            '
+        alt_text:
+          type: string
+          description: 'Alternate text that appears if the app cannot render the hero content of the message
+
+            '
+        initial_frame:
+          type: string
+          description: The initial frame or first frame is what appears behind the play button before a user taps it to start playing the video.
+      title: Hero Content (Object)
+      x-stoplight:
+        id: 9c1b89b88238d
+    Rewards-Attribute:
+      type: array
+      items:
+        type: object
+        properties:
+          business_id:
+            type: integer
+            description: Identification of the business
+          end_date:
+            type: string
+            description: Date after which the reward will not be allowed on redemption, in YYYY-MM-DD format
+            enum:
+            - YYYY-MM-DD
+            format: date
+          end_date_tz:
+            type: string
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+            format: date-time
+            description: Timestamp with time zone
+          gaming_level_id:
+            type: string
+            description: Gaming level that the user has reached
+          gifted_for_type:
+            type: string
+            description: 'The reward can be gifted for the following types:
+
+              - Admin reward - Offered by the administrator to a user
+
+              - Campaign - Offered to a user under a campaign triggered by a business
+
+              - Checkin - When a user makes a check-in
+
+              - FeedbackReply - Feedback provided by a user
+
+              - MassGifting - If a user is among the population of users that received rewards
+
+              - Referral - Referral of one user by another user
+
+              - ScratchPlay - Mobile game'
+          gift_reason:
+            type: string
+            description: Reward given for activity performed by a user
+          id:
+            type: integer
+            description: ID of reward
+            format: int64
+          location_ids:
+            type: array
+            description: Location IDs are interchangeable with external store numbers.
+            items:
+              type: integer
+          read_at:
+            type: string
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+            format: date-time
+            description: Time when the user acknowledged the reward
+          redeemable_id:
+            type: integer
+            description: ID of the redeemable item
+          reward_properties:
+            description: Properties of the reward
+            x-nullable: true
+          start_date:
+            type: string
+            enum:
+            - YYYY-MM-DD
+            format: date
+            description: Date from which the reward is applicable, in YYYY-MM-DD format
+          start_date_tz:
+            type: string
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+            format: date-time
+            description: Tmestamp with time zone
+          external_store_numbers:
+            type: array
+            description: External store numbers are interchangeable with location IDs.
+            items:
+              type: integer
+          type:
+            type: string
+            description: This will be either redeemable or reward. The Create Online Redemption API request depends on what is returned in this field.
+      title: Rewards Attributes (Object)
+      x-stoplight:
+        id: b56f79b98e3cd
+  parameters:
+    accept_language:
+      schema:
+        type: string
+        default: en
+      in: header
+      name: Accept-Language
+      description: Set to the language you are using.
+    User-Agent:
+      schema:
+        type: string
+        default: Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type
+      name: User-Agent
+      in: header
+      required: true
+      description: For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).
+    content_type:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Content-Type
+      description: Set this header to **application/json**.
+      required: true
+    Signature:
+      schema:
+        type: string
+        default: SIGNATURE_GOES_HERE
+      in: header
+      name: x-pch-digest
+      description: The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Accept
+      description: Advertises which content types the client is able to understand
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      required: true
+      description: You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+x-stoplight:
+  id: 73bbc35439926
+x-ext-urls: {}

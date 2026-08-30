@@ -1,0 +1,1794 @@
+openapi: 3.2.0
+info:
+  title: Mobile Gift Cards API
+  version: '1.0'
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+  description: 'Punchh provides a robust platform for offering loyalty programs to customers. When a business integrates its back-end with the Punchh server, the Punchh APIs become instrumental in executing loyalty programs for enrolled customers, primarily via business-branded mobile apps and websites tailored by Punchh.
+
+
+    To establish integration with the Punchh APIs, you need to understand how they are invoked and what responses are returned by the Punchh server. You can call APIs using any suitable API test client, such as Postman. Thus, the response to every API call made in Postman under a chosen environment (in app and/or platform) is reflected in the app and/or platform.'
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: Gift Cards
+paths:
+  /api2/mobile/gift_cards/purchase:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Gift-Card-Object'
+              examples:
+                default:
+                  value:
+                    card_background_image: IMAGE_URL_GOES_HERE
+                    card_number: CARD_NUMBER_GOES_HERE
+                    epin: EPIN_GOES_HERE
+                    usb_scannable_card_number: CARD_NUMBER_GOES_HERE
+                    created_at: '2016-05-12T03:54:45-06:00'
+                    design_id: 1
+                    preferred: false
+                    name: null
+                    last_fetched_amount: 10
+                    last_fetched_at: '2016-05-12T03:54:45-06:00'
+                    status: active
+                    updated_at: '2016-05-12T03:54:45-06:00'
+                    users:
+                    - user_id: 111111111
+                      email: test@example.com
+                      first_name: FIRST_NAME_GOES_HERE
+                      last_name: LAST_NAME_GOES_HERE
+                      fb_uid: null
+                      avatar_remote_url: null
+                      state: owner
+                    uuid: ID_GOES_HERE
+                    gift_card_id: ID_GOES_HERE
+                    auto_reload_enabled: true
+                    gc_user_auto_reload_threshold_amount: 50
+                    gc_user_auto_reload_default_amount: 50
+                    gc_user_auto_reload_preferred_payment: PAYMENT_CARD_UUID_GOES_HERE
+      summary: Purchase Gift Card
+      description: Enables a user to purchase a gift card using the app of a business
+      operationId: mobile_purchase_gift_card
+      tags:
+      - Gift Cards
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: 79eab19c99597
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                design_id:
+                  type: string
+                  description: ID of a particular gift card design selected by the user while purchasing a gift card
+                amount:
+                  type: string
+                  description: Amount with which the user wants to purchase a gift card. The minimum value can be configured in the Punchh platform.
+                payment_type:
+                  type: string
+                  description: This parameter is required when a user makes a payment via saved cards. Send "recurring" as the value of this parameter.
+                transaction_token:
+                  type: string
+                  description: Unique digital identifier/token of the user's payment card, or the UUID of the saved payment card if the value of `payment_type` is "recurring". The transaction token is issued by a payment processor used by a business.
+                cardholder_name:
+                  type: string
+                  description: Name of the person who owns the payment card used to purchase a gift card. Not needed for Apple Pay / Android Wallet
+                exp_date:
+                  type: string
+                  description: Expiration date of the payment card used by the user. Not needed for Apple Pay / Android Wallet
+                type:
+                  type: string
+                  description: Type of payment card used by the user (e.g., Visa, Mastercard, etc.). Not needed for Apple Pay / Android Wallet
+                postal_code:
+                  type: string
+                  description: Zip code as specified by the cardholder in the billing address
+            examples:
+              Purchase gift card via credit card:
+                value:
+                  client: CLIENT_GOES_HERE
+                  design_id: 13
+                  amount: '10'
+                  transaction_token: TOKEN_GOES_HERE
+                  cardholder_name: FIRST_NAME_GOES_HERE LAST_NAME_GOES_HERE
+                  exp_date: 419
+                  type: VISA
+                  postal_code: 10004
+              'Purchase gift card via saved payment card ':
+                value:
+                  client: CLIENT_GOES_HERE
+                  design_id: 13
+                  amount: '10'
+                  payment_type: recurring
+                  transaction_token: SAVED_CARD_UUID_GOES_HERE
+                  cardholder_name: FIRST_NAME_GOES_HERE LAST_NAME_GOES_HERE
+                  exp_date: 419
+                  type: VISA
+                  postal_code: 10004
+  /api2/mobile/gift_cards/{uuid}/reload:
+    parameters:
+    - schema:
+        type: string
+      name: uuid
+      in: path
+      required: true
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Gift-Card-Object'
+              examples:
+                default:
+                  value:
+                    card_background_image: IMAGE_URL_GOES_HERE
+                    card_number: CARD_NUMBER_GOES_HERE
+                    epin: EPIN_GOES_HERE
+                    usb_scannable_card_number: CARD_NUMBER_GOES_HERE
+                    created_at: '2016-05-12T03:54:45-06:00'
+                    design_id: 1
+                    preferred: false
+                    name: My first card
+                    last_fetched_amount: 42
+                    last_fetched_at: '2016-05-12T04:44:01-06:00'
+                    status: active
+                    type: null
+                    updated_at: '2016-05-12T04:44:01-06:00'
+                    users:
+                    - user_id: 111111111
+                      email: test@example.com
+                      first_name: FIRST_NAME_GOES_HERE
+                      last_name: LAST_NAME_GOES_HERE
+                      fb_uid: null
+                      avatar_remote_url: null
+                      state: owner
+                    uuid: ID_GOES_HERE
+                    gift_card_id: ID_GOES_HERE
+                    auto_reload_enabled: true
+                    gc_user_auto_reload_threshold_amount: 50
+                    gc_user_auto_reload_default_amount: 50
+                    gc_user_auto_reload_preferred_payment: PAYMENT_CARD_UUID_GOES_HERE
+      summary: Reload Gift Card
+      description: Enables a user to add to the balance of an existing gift card using the app of a business
+      operationId: mobile_reload_gift_card
+      tags:
+      - Gift Cards
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Authorization'
+      - schema:
+          type: string
+        in: path
+        name: uuid
+        required: true
+        description: Unique ID of the gift card issued by and maintained in the Punchh system
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: b1ac0c8bdfd2e
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                amount:
+                  type: string
+                  description: Amount with which the user wants to purchase a gift card. The minimum value can be configured in the Punchh platform.
+                payment_type:
+                  type: string
+                  description: This parameter is required when a user makes a payment via saved cards. Send "recurring" as the value of this parameter.
+                transaction_token:
+                  type: string
+                  description: Unique digital identifier/token of the user's payment card, or the UUID of the saved payment card if the value of `payment_type` is "recurring". The transaction token is issued by a payment processor used by a business.
+                cardholder_name:
+                  type: string
+                  description: Name of the person who owns the payment card used to purchase a gift card. Not needed for Apple Pay / Android Wallet
+                exp_date:
+                  type: string
+                  description: Expiration date of the payment card used by the user. Not needed for Apple Pay / Android Wallet
+                type:
+                  type: string
+                  description: Type payment card used by the user (e.g., Visa, Mastercard, etc.). Not needed for Apple Pay / Android Wallet
+                postal_code:
+                  type: string
+                  description: Zip code as specified by the cardholder in the billing address
+            examples:
+              Reload a gift card via credit card:
+                value:
+                  client: CLIENT_GOES_HERE
+                  design_id: 13
+                  amount: '10'
+                  transaction_token: TOKEN_GOES_HERE
+                  cardholder_name: FIRST_NAME_GOES_HERE LAST_NAME_GOES_HERE
+                  exp_date: 419
+                  type: Mastercard
+                  postal_code: 10004
+              Reload a gift card via saved payment card:
+                value:
+                  client: CLIENT_GOES_HERE
+                  design_id: 13
+                  amount: '10'
+                  payment_type: recurring
+                  transaction_token: SAVED_CARD_UUID_GOES_HERE
+                  cardholder_name: FIRST_NAME_GOES_HERE LAST_NAME_GOES_HERE
+                  exp_date: 419
+                  type: VISA
+                  postal_code: 10004
+  /api2/mobile/gift_cards:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Gift-Card-Object'
+              examples:
+                default:
+                  value:
+                    card_background_image: IMAGE_URL_GOES_HERE
+                    card_number: CARD_NUMBER_GOES_HERE
+                    epin: EPIN_GOES_HERE
+                    usb_scannable_card_number: CARD_NUMBER_GOES_HERE
+                    created_at: '2016-05-12T03:54:45-06:00'
+                    design_id: 1
+                    preferred: false
+                    name: My first card
+                    last_fetched_amount: 42
+                    last_fetched_at: '2016-05-12T04:44:01-06:00'
+                    status: active
+                    type: null
+                    updated_at: '2016-05-12T04:44:01-06:00'
+                    users:
+                    - user_id: 111111111
+                      email: test@example.com
+                      first_name: FIRST_NAME_GOES_HERE
+                      last_name: LAST_NAME_GOES_HERE
+                      fb_uid: null
+                      avatar_remote_url: null
+                      state: owner
+                    uuid: ID_GOES_HERE
+                    gift_card_id: ID_GOES_HERE
+                    auto_reload_enabled: true
+                    gc_user_auto_reload_threshold_amount: 50
+                    gc_user_auto_reload_default_amount: 50
+                    gc_user_auto_reload_preferred_payment: PAYMENT_CARD_UUID_GOES_HERE
+      summary: Import Physical Gift Card
+      description: Imports a user's physical gift card into the app. The physical gift card is added to the Punchh system.
+      operationId: mobile_import_physical_gift_card
+      tags:
+      - Gift Cards
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: 074d603d4be19
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                design_id:
+                  type: string
+                  description: 'ID of a particular gift card design selected by the user while purchasing a gift card
+
+                    '
+                card_number:
+                  type: string
+                  description: Card number of the physical gift card
+                epin:
+                  type: string
+                  description: Security PIN associated with the gift card
+                name:
+                  type: string
+                  description: Name assigned to the gift card by a user
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  design_id: 1
+                  card_number: CARD_NUMBER_GOES_HERE
+                  epin: EPIN_GOES_HERE
+                  name: My first card
+  /api2/mobile/gift_cards/{uuid}:
+    parameters:
+    - schema:
+        type: string
+      name: uuid
+      in: path
+      required: true
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Gift-Card-Object'
+              examples:
+                default:
+                  value:
+                    card_background_image: IMAGE_URL_GOES_HERE
+                    design_id: 1
+                    preferred: true
+                    name: My first card
+                    usb_scannable_card_number: CARD_NUMBER_GOES_HERE
+                    users:
+                    - state: owner
+                      email: test@example.com
+                      first_name: null
+                      last_name: null
+                      avatar_remote_url: null
+                      fb_uid: null
+                      user_id: 111111111
+                    card_number: CARD_NUMBER_GOES_HERE
+                    epin: EPIN_GOES_HERE
+                    created_at: '2016-06-13T12:42:21-07:00'
+                    last_fetched_amount: 0
+                    last_fetched_at: '2016-06-13T12:42:21-07:00'
+                    status: active
+                    updated_at: '2016-06-13T12:42:21-07:00'
+                    uuid: ID_GOES_HERE
+                    gift_card_id: ID_GOES_HERE
+                    auto_reload_enabled: true
+                    gc_user_auto_reload_threshold_amount: 50
+                    gc_user_auto_reload_default_amount: 50
+                    gc_user_auto_reload_preferred_payment: PAYMENT_CARD_UUID_GOES_HERE
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    x-stoplight:
+                      id: v6xbmnaj8c2gc
+                    items:
+                      x-stoplight:
+                        id: ybpdyzfk0hkg0
+                      type: string
+              examples:
+                example:
+                  value:
+                    errors:
+                    - You should be the owner of this card to perform this action.
+      summary: Update Gift Card
+      description: Enables a gift card owner to update the name, design, and preference of a gift card
+      operationId: mobile_udpate_gift_card
+      tags:
+      - Gift Cards
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Authorization'
+      - schema:
+          type: string
+        in: path
+        name: uuid
+        required: true
+        description: Unique ID of the gift card issued by and maintained in the Punchh system.
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: 5a6da59e09732
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                design_id:
+                  type: integer
+                  description: 'ID of a particular gift card design selected by the gift card owner while purchasing a gift card
+
+
+                    <b>Note</b>: As Punchh no longer supports updating the design ID of the gift card via the Update Gift Card API, the parameter is marked deprecated. It will be removed from the request body of the API topic.'
+                  x-deprecated: true
+                name:
+                  type: string
+                  description: Name assigned to a gift card by the gift card owner
+                preferred:
+                  type: boolean
+                  description: A "true" value for a gift card indicates that the gift card owner has selected it to be the preferred gift card for payment.
+                auto_reload_enabled:
+                  type: boolean
+                  description: Whether auto-reload is enabled for a gift card or not
+                threshold_amount:
+                  type: number
+                  format: float
+                  description: Threshold amount below which a gift card would be eligible for auto-reload
+                default_amount:
+                  type: number
+                  format: float
+                  description: Default amount with which a gift card would be auto-reloaded
+                payment_card_id:
+                  type: string
+                  description: UUID of a payment card
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  name: My first card
+                  preferred: true
+                  auto_reload_enabled: true
+                  threshold_amount: 50
+                  default_amount: 50
+                  payment_card_id: PAYMENT_CARD_UUID_GOES_HERE
+    delete:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                default:
+                  value: "{ \n  \"Gift Card successfully deleted.\"\n}"
+      summary: Delete Gift Card
+      description: 'Removes a gift card from a user''s app so that it will not be returned in API responses under the gift card list for a user, but does not delete it from the Punchh system
+
+
+        Note: It will be visible under the user profile in the Punchh platform as "card removed". To delete it from an existing user account in order to add it again for the same user or another user, please file a support ticket.'
+      operationId: mobile_delete_gift_card
+      tags:
+      - Gift Cards
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: uuid
+        required: true
+        description: 'Unique ID of the gift card issued by and maintained in the Punchh system
+
+          '
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: 18c84ea58fbd5
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+  /api2/mobile/gift_cards/:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Gift-Card-Object'
+              examples:
+                default:
+                  value:
+                  - card_background_image: IMAGE_URL_GOES_HERE
+                    card_number: CARD_NUMBER_GOES_HERE
+                    epin: EPIN_GOES_HERE
+                    usb_scannable_card_number: CARD_NUMBER_GOES_HERE
+                    created_at: '2016-05-12T03:54:45-06:00'
+                    design_id: 1
+                    preferred: true
+                    name: My first card
+                    last_fetched_amount: 42
+                    last_fetched_at: '2016-05-12T04:44:01-06:00'
+                    status: active
+                    type: null
+                    updated_at: '2016-05-12T04:44:01-06:00'
+                    users:
+                    - user_id: 111111111
+                      email: test@example.com
+                      first_name: FIRST_NAME_GOES_HERE
+                      last_name: LAST_NAME_GOES_HERE
+                      fb_uid: null
+                      avatar_remote_url: null
+                      state: owner
+                    uuid: ID_GOES_HERE
+                    gift_card_id: ID_GOES_HERE
+                  - card_background_image: IMAGE_URL_GOES_HERE
+                    card_number: CARD_NUMBER_GOES_HERE
+                    epin: EPIN_GOES_HERE
+                    usb_scannable_card_number: CARD_NUMBER_GOES_HERE
+                    created_at: '2016-05-13T06:15:44-06:00'
+                    design_id: 1
+                    preferred: false
+                    name: My second card
+                    last_fetched_amount: 50
+                    last_fetched_at: '2016-05-13T06:15:45-06:00'
+                    status: active
+                    type: null
+                    updated_at: '2016-05-13T06:15:46-06:00'
+                    users:
+                    - user_id: 111111111
+                      email: test@example.com
+                      first_name: FIRST_NAME_GOES_HERE
+                      last_name: LAST_NAME_GOES_HERE
+                      fb_uid: null
+                      avatar_remote_url: null
+                      state: shared
+                    - user_id: 111111111
+                      email: test@example.com
+                      first_name: FIRST_NAME_GOES_HERE
+                      last_name: LAST_NAME_GOES_HERE
+                      fb_uid: null
+                      avatar_remote_url: null
+                      state: owner
+                    uuid: ID_GOES_HERE
+                    gift_card_id: ID_GOES_HERE
+                    auto_reload_enabled: true
+                    gc_user_auto_reload_threshold_amount: 50
+                    gc_user_auto_reload_default_amount: 50
+                    gc_user_auto_reload_preferred_payment: PAYMENT_CARD_UUID_GOES_HERE
+      summary: Fetch Gift Cards
+      description: Returns all of the active gift cards of a user
+      operationId: mobile_fetch_gift_cards
+      tags:
+      - Gift Cards
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: f72dcf064d8e5
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                passcode:
+                  type: string
+                  description: Passcode is a secondary authentication PIN that must be passed if it is enabled for a business. It can be turned on/off from the Punchh platform.
+              required:
+              - client
+              - passcode
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  passcode: '123456'
+  /api2/mobile/gift_cards/{uuid}/balance:
+    parameters:
+    - schema:
+        type: string
+      name: uuid
+      in: path
+      required: true
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Gift-Card-Object'
+              examples:
+                default:
+                  value:
+                    card_background_image: IMAGE_URL_GOES_HERE
+                    card_number: CARD_NUMBER_GOES_HERE
+                    epin: EPIN_GOES_HERE
+                    usb_scannable_card_number: CARD_NUMBER_GOES_HERE
+                    created_at: '2016-05-12T03:54:45-06:00'
+                    design_id: 1
+                    preferred: false
+                    name: My first card
+                    last_fetched_amount: 42
+                    last_fetched_at: '2016-05-12T05:03:23-06:00'
+                    status: active
+                    type: null
+                    updated_at: '2016-05-12T05:03:23-06:00'
+                    users:
+                    - user_id: 111111111
+                      email: test@example.com
+                      first_name: FIRST_NAME_GOES_HERE
+                      last_name: LAST_NAME_GOES_HERE
+                      fb_uid: null
+                      avatar_remote_url: null
+                      state: owner
+                      user_card_id: ID_GOES_HERE
+                    uuid: ID_GOES_HERE
+                    gift_card_id: ID_GOES_HERE
+                    auto_reload_enabled: true
+                    gc_user_auto_reload_threshold_amount: 50
+                    gc_user_auto_reload_default_amount: 50
+                    gc_user_auto_reload_preferred_payment: PAYMENT_CARD_UUID_GOES_HERE
+      summary: Fetch Gift Card Balance
+      description: Returns the details of a specified gift card
+      operationId: mobile_fetch_gift_card_balance
+      tags:
+      - Gift Cards
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: uuid
+        required: true
+        description: 'Unique ID of the gift card issued by and maintained in the Punchh system
+
+          '
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: 2be7804e627a0
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+  /api2/mobile/gift_cards/{uuid}/history:
+    parameters:
+    - schema:
+        type: string
+      name: uuid
+      in: path
+      required: true
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    date:
+                      type: string
+                      enum:
+                      - YYYY-MM-DDThh:mm:ssZ
+                      format: date-time
+                      description: Date/time when the transaction happened, in ISO 8601 format
+                    event:
+                      type: string
+                      description: Title of the transaction event displayed in the app. This respects the locale, so the value of this may change with the requested locale.
+                    description:
+                      type: string
+                      description: Additional information about the transaction event. A 'null' value indicates that no additional details are available.
+                    amount:
+                      type: number
+                      format: float
+                      description: 'Amount involved in the transaction
+
+                        '
+                    balance:
+                      type: number
+                      format: float
+                      description: Updated balance of the gift card after the transaction
+                    event_type:
+                      type: string
+                      description: "Fixed value of the transaction event that indicates the type of gift card transaction. Logic in the app can be applied based on the values returned in this parameter. For example, color coding in the transaction history can be based on this. Values returned are:\n- reloaded \n- card_added \n- transferred \n- redeemed"
+              examples:
+                default:
+                  value:
+                  - date: '2016-05-12T03:54:45-06:00'
+                    event: Reloaded
+                    description: null
+                    amount: $10.00
+                    balance: $10.00
+                    event_type: reloaded
+                  - date: '2016-05-12T04:43:12-06:00'
+                    event: Reloaded
+                    description: null
+                    amount: $15.00
+                    balance: $25.00
+                    event_type: reloaded
+                  - date: '2016-05-12T04:44:01-06:00'
+                    event: Reloaded
+                    description: null
+                    amount: $17.00
+                    balance: $42.00
+                    event_type: reloaded
+      summary: Fetch Gift Card Transaction History
+      description: Returns the transaction history of a specified gift card
+      operationId: mobile_fetch_gift_card_transaction_history
+      tags:
+      - Gift Cards
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Authorization'
+      - schema:
+          type: string
+        in: path
+        name: uuid
+        required: true
+        description: 'Unique ID of the gift card issued by and maintained in the Punchh system
+
+          '
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: a7c0fda10d070
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+  /api2/mobile/gift_cards/{uuid}/transfer:
+    parameters:
+    - schema:
+        type: string
+      name: uuid
+      in: path
+      required: true
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            text/plain:
+              examples:
+                default:
+                  value: "[\n  \"Your transfer of $13.00 to <user> is bound to come back to you tenfold. It’s the burrito karma, Amigo!\"\n]"
+      summary: Transfer Gift Card or Balance
+      description: Transfers an entire gift card or partial amount from one user to another user
+      operationId: mobile_transfer_gift_card_or_balance
+      tags:
+      - Gift Cards
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: uuid
+        required: true
+        description: Unique ID of the gift card issued by and maintained in the Punchh system
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: 5019de3af9ae9
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                recipient_email:
+                  type: string
+                  description: Email address of the user to whom the balance / gift card is being transferred. At least one of the three (i.e., recipient_email, recipient_phone, and recipient_fb_uid) should be provided. If more than one are provided as parameters, the system will identify that user for whom all of the provided parameters match.
+                recipient_phone:
+                  type: integer
+                  format: int32
+                  description: Phone number of the user to whom the balance / gift card is being transferred. At least one of the three (i.e., recipient_email, recipient_phone, and recipient_fb_uid) should be provided. If more than one are provided as parameters, the system will identify that user for whom all of the provided parameters match.
+                recipient_fb_uid:
+                  type: string
+                  description: Facebook "uid" of the user to whom the balance / gift card is being transferred. At least one of the three (i.e., recipient_email, recipient_phone, and recipient_fb_uid) should be provided. If more than one are provided as parameters, the system will identify that user for whom all of the provided parameters match.
+                passcode:
+                  type: string
+                  description: Secondary authentication PIN that must be passed if it is enabled for a business. It can be turned on/off from the Punchh platform.
+                amount:
+                  type: string
+                  description: Amount being transferred to a recipient. If the entire available amount on a gift card is selected, the whole card will be transferred.
+                full_transfer:
+                  type: boolean
+                  description: Whether a gift card should be transferred or not. A "true" value indicates that the gift card itself should be transferred. Following the gift card transfer, the system revokes the original user’s ownership, and the transferee becomes the new owner. A "false" value indicates that only a partial amount should be transferred from the gift card.
+              required:
+              - client
+              - recipient_email
+              - recipient_phone
+              - recipient_fb_uid
+              - amount
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  recipient_email: test@example.com
+                  recipient_phone: 1111111111
+                  recipient_fb_uid: FB_UID_GOES_HERE
+                  passcode: '1234'
+                  amount: '13'
+                  full_transfer: false
+  /api2/mobile/gift_cards/{uuid}/share:
+    parameters:
+    - schema:
+        type: string
+      name: uuid
+      in: path
+      required: true
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              examples:
+                default:
+                  value: "[\n  \"Well done Amigo, you’re sharing our Cafe love by giving <user> access to your card. Well done.\"\n]"
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      client:
+                        type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      client: Required parameter missing or the value is empty.
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      unknown_client:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            '0':
+                              type: string
+              examples:
+                Unauthorized (unknown client):
+                  value:
+                    errors:
+                      unknown_client:
+                      - Client ID is incorrect. Please check client param or contact us
+                Unauthorized ( access token not valid):
+                  value: '{
+
+                    "errors": {
+
+                    "unauthorized": [
+
+                    "An active access token must be used to query information about the current user."
+
+                    ]
+
+                    }
+
+                    }'
+      summary: Share Gift Card
+      description: Enables a user to share a gift card with another user
+      operationId: Mobile_share_gift_card
+      tags:
+      - Gift Cards
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: uuid
+        required: true
+        description: Unique ID of the gift card issued by and maintained in the Punchh system
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: b418bf82a0cfb
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                recipient_email:
+                  type: string
+                  description: Email address of the user with whom the balance / gift card is being shared. At least one of the three (i.e., recipient_email, recipient_phone, and recipient_fb_uid) should be provided. If more than one are provided as parameters, the system will identify that user for whom all of the provided parameters match.
+                recipient_phone:
+                  type: string
+                  description: Phone number of the user with whom the balance / gift card is being shared. At least one of the three (i.e., recipient_email, recipient_phone, and recipient_fb_uid) should be provided. If more than one are provided as parameters, the system will identify that user for whom all of the provided parameters match.
+                recipient_fb_uid:
+                  type: string
+                  description: Facebook "uid" of the user with whom the balance/gift card is being shared. At least one of the three (i.e., recipient_email, recipient_phone, and recipient_fb_uid) should be provided. If more than one are provided as parameters, the system will identify that user for whom all of the provided parameters match.
+                passcode:
+                  type: string
+                  description: Secondary authentication PIN that must be passed if it is enabled for a business. It can be turned on/off from the Punchh platform.
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+              required:
+              - recipient_email
+              - recipient_phone
+              - recipient_fb_uid
+              - passcode
+              - client
+            examples:
+              default:
+                value:
+                  recipient_email: test@example.com
+                  recipient_phone: 1111111111
+                  recipient_fb_uid: FB_UID_GOES_HERE
+                  passcode: '1234'
+                  client: CLIENT_GOES_HERE
+  /api2/mobile/gift_cards/{uuid}/revoke:
+    parameters:
+    - schema:
+        type: string
+      name: uuid
+      in: path
+      required: true
+      description: Unique ID of the gift card issued by and maintained in the Punchh system
+    delete:
+      summary: Revoke Sharing
+      operationId: delete-revoke_sharing
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            text/plain:
+              examples:
+                default:
+                  value:
+                  - You are no longer sharing this card with <user>.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      client:
+                        type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      client: Required parameter missing or the value is empty.
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      unknown_client:
+                        type: array
+                        items:
+                          type: object
+              examples:
+                Unauthorized (access token not valid):
+                  value:
+                    errors:
+                      unauthorized:
+                      - An active access token must be used to query information about the current user.
+                Unauthorized (unknown client):
+                  value:
+                    errors:
+                      unknown_client:
+                      - Client ID is incorrect. Please check client param or contact us
+      description: If a user has [shared a gift card](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1gift_cards~1{uuid}~1share/post) with another user, this API enables the user to revoke the sharing rights.
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      tags:
+      - Gift Cards
+      x-stoplight:
+        id: 7e6f5ca940716
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sharer_email:
+                  type: string
+                  description: Email address of the user whose gift card sharing rights will be revoked
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+              required:
+              - sharer_email
+              - client
+            examples:
+              default:
+                value:
+                  sharer_email: test@example.com
+                  client: CLIENT_GOES_HERE
+  /api2/mobile/gift_cards/gift:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            text/plain:
+              examples:
+                default:
+                  value: "[\n  \"Whoa! You are one generous burrito stuffed amigo, with your gift of $28.00 to <user>.\"\n]"
+      summary: Gift a Gift Card
+      description: Enables a user to gift a gift card to another user
+      operationId: mobile_gift_a_card
+      tags:
+      - Gift Cards
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: 49b921e067bb4
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                recipient_email:
+                  type: string
+                  description: Email address of the user who will receive the gift card. At least one of the three (i.e., recipient_email, recipient_phone, and recipient_fb_uid) should be provided. If more than one are provided as parameters, the system will identify that user for whom all of the provided parameters match.
+                recipient_phone:
+                  type: integer
+                  format: int32
+                  description: Phone number of the user who will receive the gift card. At least one of the three (i.e., recipient_email, recipient_phone, and recipient_fb_uid) should be provided. If more than one are provided as parameters, the system will identify that user for whom all of the provided parameters match.
+                recipient_fb_uid:
+                  type: string
+                  description: Facebook "uid" of the user who will receive the gift card. At least one of the three (i.e., recipient_email, recipient_phone, and recipient_fb_uid) should be provided. If more than one are provided as parameters, the system will identify that user for whom all of the provided parameters match.
+                amount:
+                  type: string
+                  description: Monetary value of the gift card
+                design_id:
+                  type: string
+                  description: Identification of a particular gift card design selected by the user while gifting a gift card
+                payment_type:
+                  type: string
+                  description: This parameter is required when a user makes a payment via saved cards. Send "recurring" as the value of this parameter.
+                transaction_token:
+                  type: string
+                  description: Unique digital identifier/token of the user's payment card, or the UUID of the saved payment card if the value of `payment_type` is "recurring". The transaction token is issued by a payment processor used by a business.
+                cardholder_name:
+                  type: string
+                  description: Name of the person who owns the payment card used to purchase the gift card
+                exp_date:
+                  type: string
+                  enum:
+                  - YYYY-MM-DD
+                  format: date
+                  description: Expiration date of the payment card used by the user
+                type:
+                  type: string
+                  description: Type of payment card used by the user (e.g., Visa, Mastercard, etc.).
+              required:
+              - client
+            examples:
+              Payment via credit card:
+                value:
+                  recipient_email: test@example.com
+                  recipient_phone: 1111111111
+                  recipient_fb_uid: FB_UID_GOES_HERE
+                  client: CLIENT_GOES_HERE
+                  amount: '28'
+                  design_id: '1'
+                  transaction_token: TOKEN_GOES_HERE
+                  cardholder_name: FIRST_NAME_GOES_HERE LAST_NAME_GOES_HERE
+                  exp_date: 418
+                  type: VISA
+              Payment via saved payment card:
+                value:
+                  recipient_email: test@example.com
+                  recipient_phone: 1111111111
+                  recipient_fb_uid: FB_UID_GOES_HERE
+                  client: CLIENT_GOES_HERE
+                  amount: '28'
+                  design_id: '1'
+                  payment_type: recurring
+                  transaction_token: TOKEN_GOES_HERE
+                  cardholder_name: FIRST_NAME_GOES_HERE LAST_NAME_GOES_HERE
+                  exp_date: 418
+                  type: VISA
+  /api2/mobile/gift_cards/{uuid}/consolidate:
+    parameters:
+    - schema:
+        type: string
+      name: uuid
+      in: path
+      required: true
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  source_card:
+                    $ref: '#/components/schemas/Gift-Card-Object'
+                  destination_card:
+                    $ref: '#/components/schemas/Gift-Card-Object'
+              examples:
+                default:
+                  value: "{\n  \"source_card\": {}, \n  \"destination_card\": {}\n}"
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      missing_param:
+                        type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      missing_param: source_cards is missing/invalid
+      summary: Consolidate Gift Cards
+      description: 'Enables a user to transfer the entire balance of a gift card to another gift card.
+
+
+        Note: After the balance transfer, the system removes the source gift card from the user''s timeline and changes its status to ''closed'' for the owner. Additionally, access is revoked for all users with whom the gift card was shared. Currently, this is applicable only to Givex and Heartland gift card providers.'
+      operationId: mobile_consolidate_gift_cards
+      tags:
+      - Gift Cards
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: uuid
+        required: true
+        description: Unique ID of the destination gift card to which the entire balance will be transferred
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/Authorization'
+      x-stoplight:
+        id: a2e28763b0597
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                access_token:
+                  type: string
+                  description: Access token of the user
+                source_card:
+                  type: string
+                  description: UUID of the source gift card from which the entire balance will be transferred
+              required:
+              - client
+              - access_token
+              - source_card
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  access_token: ACCESS_TOKEN_GOES_HERE
+                  source_card: CARD_GOES_HERE
+  /api2/mobile/gift_cards/{uuid}/tip:
+    parameters:
+    - schema:
+        type: string
+      name: uuid
+      in: path
+      required: true
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tipping_time:
+                    type: string
+                    enum:
+                    - YYYY-MM-DDThh:mm:ssZ
+                    format: date-time
+                    description: Date/time when the tip was created in the system, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+                  checkin_id:
+                    type: integer
+                    description: 'Identifier of the check-in/order for which the tip is given '
+                  location_id:
+                    type: integer
+                    description: Unique ID of the location where the tip occurred
+                  approved_amount:
+                    type: number
+                    description: Amount of the tip
+                  gift_card_uuid:
+                    type: string
+                    description: Unique ID of the gift card used for the tip
+              examples:
+                default:
+                  value:
+                    tipping_time: '2018-03-12T11:30:20+00:00'
+                    checkin_id: 47004327
+                    location_id: 315736
+                    approved_amount: 4.52
+                    gift_card_uuid: UUID_GOES_HERE
+      summary: Tip via Gift Card
+      description: Enables a user to leave a tip (gratuity) using a gift card
+      operationId: mobile_tip_via_gift_card
+      tags:
+      - Gift Cards
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: uuid
+        required: true
+        description: Unique ID of the gift card used for the tip
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: 0dacb575663e1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                checkin_id:
+                  type: integer
+                  description: Identifier of the check-in/order for which the tip is given
+                tip:
+                  type: number
+                  description: Currency value of the tip, which should be less than or equal to the gift card balance
+              required:
+              - client
+              - checkin_id
+              - tip
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  checkin_id: 47004327
+                  tip: 4.52
+  /api2/mobile/gift_cards/{uuid}/epin:
+    parameters:
+    - schema:
+        type: string
+      name: uuid
+      in: path
+      required: true
+      description: Unique ID of the gift card issued by and maintained in the Punchh system.
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  epin:
+                    type: string
+                    description: Security PIN associated with a gift card. A 'NULL' value indicates that no EPIN is associated with the gift card.
+              examples:
+                default:
+                  value:
+                    epin: EPIN_GOES_HERE
+      x-private: true
+      summary: Get Gift Card EPIN
+      description: Returns the generated EPIN for a gift card
+      operationId: mobile_generating_gift_card_epin
+      tags:
+      - Gift Cards
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: uuid
+        required: true
+        description: Unique ID of the gift card issued by and maintained in the Punchh system
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: 1a0508fff6a62
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  x-stoplight:
+                    id: tnkt076emc6xx
+                  description: OAuth client ID provided by the business
+                passcode:
+                  type: string
+                  x-stoplight:
+                    id: efhmzbgt45e9x
+                  description: Secondary authentication PIN that must be passed if it is enabled for a business. It can be turned on/off from the Punchh platform.
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  passcode: PASSCODE_GOES_HERE
+components:
+  parameters:
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
+  schemas:
+    User-object:
+      type: object
+      description: Includes details about the users who are registered on a particular business
+      x-examples:
+        json/application:
+          address: ''
+          anniversary: '2013-02-16'
+          avatar_remote_url: null
+          birthday: '1999-01-01'
+          city: ''
+          communicable_email: test@example.com
+          created_at: '2019-01-11T09:08:25Z'
+          email: test@example.com
+          email_verified: false
+          facebook_signup: null
+          apple_signup: null
+          apple_uid: null
+          favourite_location_ids: 306082,333070,304374
+          favourite_store_numbers: 12345,0604,1234
+          fb_uid: null
+          first_name: FIRST_NAME_GOES_HERE
+          gender: ''
+          has_generated_fb_email: false
+          last_name: LAST_NAME_GOES_HERE
+          marketing_email_subscription: true
+          marketing_pn_subscription: true
+          migrate_status: false
+          passcode_configured_for_giftcards: false
+          phone: '1111111111'
+          profile_field_answers:
+            test1: Option 1
+          referral_code: REFERRAL_CODE_GOES_HERE
+          referral_path: URL_GOES_HERE
+          secondary_email: ''
+          state: ''
+          superuser: false
+          terms_and_conditions: true
+          title: ''
+          updated_at: '2020-04-29T04:18:24Z'
+          user_as_qrcode: QR_CODE_GOES_HERE
+          user_code: P11111111
+          user_id: 111111111
+          preferred_locale: en
+          user_relations: []
+          zip_code: null
+          verification_mode: null
+          sms_subscription: true
+          apple_pass_url: APPLE_PASS_URL_GOES_HERE
+          google_pass_url: GOOGLE_PASS_URL_GOES_HERE
+          user_joined_at: '2019-01-11T09:08:25Z'
+      title: User (Object)
+      x-stoplight:
+        id: 447c4c510a499
+      properties:
+        address:
+          type: string
+          description: Address of the user
+        avatar_remote_url:
+          type: string
+          description: URL of the user's profile image uploaded to an online file storage system. This will be used for users who signed up using email.
+          x-nullable: true
+        birthday:
+          type: string
+          description: Date of birth of the user, in YYYY-MM-DD format
+          enum:
+          - YYYY-MM-DD
+          format: date-time
+        communicable_email:
+          type: string
+          description: Email address used for communication with the user
+        city:
+          type: string
+          description: City where the user lives
+        created_at:
+          type: string
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+          description: Date/time when the user was created in the system, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+        email:
+          type: string
+          description: Unique email address used to identify the user
+        email_verified:
+          type: boolean
+          description: Whether the email address of the user has been verified or not
+        facebook_signup:
+          type: boolean
+          description: Indicates whether the user signed up using Facebook. This parameter returns true the first time a user signs up in the mobile app using Facebook. For all subsequent logins, it returns a null value.
+        favourite_locations:
+          type: string
+          description: List of the user's favorite locations
+        favourite_store_numbers:
+          type: string
+          description: List of store numbers of the user's favorite locations
+        fb_uid:
+          type: string
+          description: Facebook ID that identifies the user
+          x-nullable: true
+        first_name:
+          type: string
+          description: First name of the user
+        gender:
+          type: string
+          description: Gender of the user
+        last_name:
+          type: string
+          description: Last name of the user
+        marketing_email_subscription:
+          type: boolean
+          description: Whether the user has subscribed to receive marketing emails or not
+        marketing_pn_subscription:
+          type: boolean
+          description: Whether the user has subscribed to marketing push notifications or not
+        migrate_status:
+          type: boolean
+          description: Whether the user has a migrate status or not
+        passcode_configured_for_giftcards:
+          type: boolean
+          description: Whether the user has configured a passcode for gift cards or not
+        phone:
+          type: string
+          description: Phone number of the user
+        profile_field_answers:
+          $ref: '#/components/schemas/profile_field_answers'
+        referral_code:
+          type: string
+          description: Referral code of the user. A user can refer others to join the business loyalty program by sharing this referral code. When a referred user signs up and enters the shared referral code in the mobile app, this `referral_code` must be passed in the `invite_code` request parameter when calling the Sign up / Register API.
+        referral_path:
+          type: string
+          description: Referral URL of the user
+        secondary_email:
+          type: string
+          description: The secondary email address of the user is configured when a user signs up with Facebook/Apple but does not share the email address. The app asks for an alternate email address, which is kept as the `secondary_email`.
+        state:
+          type: string
+          description: State where the user lives
+        superuser:
+          type: boolean
+          description: Whether multiple check-ins are allowed for a user. This is used mostly for testing purposes by developers.
+        terms_and_conditions:
+          type: boolean
+          description: Whether the terms and conditions of a business have been accepted by a user or not
+        title:
+          type: string
+          description: Salutation as selected by the user
+          x-nullable: true
+        updated_at:
+          type: string
+          description: Date/time when the user was updated in the system, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+        user_as_barcode:
+          type: string
+          description: Barcode that identifies the user
+        user_as_qrcode:
+          type: string
+          description: QR code that identifies the user
+        user_code:
+          type: string
+          description: A unique ID that identifies the user. This smaller code can be converted to a QR code in the app and scanned at some POS systems that do not support longer codes. Alternatively, a user could give this to the POS operator if the POS does not have a scanner.
+        user_id:
+          type: integer
+          description: ID that identifies the user
+        user_relations:
+          type: array
+          description: Relatives of the user. Valid values are "kid" and "spouse".
+          items:
+            type: string
+            enum:
+            - kid
+            - spouse
+        zip_code:
+          type: string
+          description: Zip code where the user lives
+        anniversary:
+          type: string
+          description: Anniversary date of the user, in YYYY-MM-DD format
+        verification_mode:
+          description: Mode of verification (available only for a user in awaiting migration state)
+          x-nullable: true
+        apple_signup:
+          type: boolean
+          description: Whether the user has an Apple sign-up or not. This will return true for the first time sign-up.
+        apple_uid:
+          type: string
+          description: Unique ID generated by Apple
+        has_generated_fb_email:
+          type: boolean
+          description: Whether the user has generated a Facebook email or not
+        sms_subscription:
+          type: boolean
+          description: Whether the user has subscribed to SMS services or not
+        apple_pass_url:
+          type: string
+          format: uri
+          description: URL that a user can use to download the user's associated loyalty Apple pass
+        google_pass_url:
+          type: string
+          format: uri
+          description: URL that a user can use to download the user's associated loyalty Google pass
+        age_verified_status:
+          type: boolean
+          x-stoplight:
+            id: ougfjyb55y0rf
+          description: 'Whether or not the user has undergone age verification by Koupon Media. Possible Values: true, false. The value is set to true if the user''s age is verified by Koupon Media; otherwise, it is set to false. The response returns this parameter in sign-in, sign-up, and user update APIs if Koupon Media is selected as the age verification adapter for the business in the Punchh platform. Contact your Punchh representative to update this configuration.'
+        account_created_at:
+          type: string
+          x-stoplight:
+            id: o07dhmip4epo0
+          format: date-time
+          description: 'This value is set when a guest account is created on the Punchh Platform and varies depending on business configurations. For example:
+
+            * If an eClub account is created with a historical registration date, that specific date is returned in this parameter.
+
+            * If guest data is migrated from a previous platform and includes a registration date, the system creates the guest account with this registration date from the prior system, and the API returns that date in this parameter.'
+        user_joined_at:
+          type: string
+          x-stoplight:
+            id: kbj7omjru7mry
+          format: date-time
+          description: Date and time when the user became a loyalty member
+    profile_field_answers:
+      title: Profile Field Answers (Object)
+      x-stoplight:
+        id: lme68mm8va3zz
+      type: object
+      properties:
+        upf0:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+        upf1:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+        upf2:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+      description: Answers given by the user while filling in the user profile. The user submits answers to profile field questions that are configured in the Punchh platform. A total of 25 answers can be submitted. The keys range from 'upf0' to 'upf24'. If questions have multiple answers, the values should be separated by a | character (pipe).
+    Gift-Card-Object:
+      type: object
+      title: Gift Card (Object)
+      x-stoplight:
+        id: 2eff352e87b8c
+      properties:
+        card_background_image:
+          type: string
+          description: URL of the image that is displayed as the gift card background in the app of a business
+        card_number:
+          type: string
+          description: Unique gift card number as issued by the gift card processor (e.g., Aloha, Vantiv, Valutec, etc.) used by the business
+        epin:
+          type: string
+          description: Security PIN associated with a gift card. A "null" value indicates that no epin is associated with the gift card.
+        usb_scannable_card_number:
+          type: string
+          description: Easily scannable form of a gift card's number by adding ~ and ^ as prefix and suffix, respectively, to the gift card number. This is done to avoid issues at certain POS systems while scanning the QR code.
+        created_at:
+          type: string
+          description: Date/time when the gift card was created in the system, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+        design_id:
+          type: integer
+          description: Identification of a particular gift card design selected by the user while purchasing a gift card
+        preferred:
+          type: boolean
+          description: A "true" value for a gift card indicates that a user has selected it to be the preferred gift card for payment.
+        name:
+          description: Name of the card that has been assigned by the user. In case of purchase of a gift card from an app, users cannot add a name to the card. A "null" value indicates that a name has not been added to the card. A name can be added later using the [Update Gift Cards](/docs/dev-portal-mobile/5a6da59e09732-update-gift-cards) API.
+          x-nullable: true
+        last_fetched_amount:
+          type: number
+          description: The balance amount of a gift card last fetched from the gift card processor
+          format: float
+        last_fetched_at:
+          type: string
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+          description: The last time the balance amount of a gift card was fetched from the gift card processor. This indicates when it was cached.
+        status:
+          type: string
+          description: The status of a gift card. The only value exposed to a gift card in the app is "active". Other statuses are maintained for internal tracking.
+        updated_at:
+          type: string
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+          description: Date/time when the gift card was updated in the system, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+        users:
+          $ref: '#/components/schemas/User-object'
+        uuid:
+          type: string
+          description: Unique ID of the gift card issued by and maintained in the Punchh system
+        gift_card_id:
+          type: integer
+          description: Unique ID assigned to each gift card by the Punchh system. This ID will be passed in the push notification payload to app clients in the key `gc`. By mapping this, the app client can fetch the updated balance of a particular gift card.
+        auto_reload_enabled:
+          type: boolean
+          description: Whether auto-reload is enabled for a gift card or not
+        gc_user_auto_reload_threshold_amount:
+          type: number
+          format: float
+          description: Threshold amount below which a gift card becomes eligible for auto-reload
+        gc_user_auto_reload_default_amount:
+          type: number
+          format: float
+          description: Default amount with which a gift card would be auto-reloaded
+        gc_user_auto_reload_preferred_payment:
+          type: string
+          x-stoplight:
+            id: vi0chaw55927t
+          description: UUID of the preferred payment card, which is used for making payments when auto-reloading the gift card
+x-stoplight:
+  id: bf6eddb435209
+x-ext-urls: {}

@@ -1,0 +1,1210 @@
+openapi: 3.2.0
+info:
+  title: Online Ordering and SSO User Management API
+  version: '1.0'
+  description: "The Punchh SSO API endpoints provide user-management functions such as login, registration, forgot password, and connect with Facebook for users on the Punchh loyalty platform. You can also fetch user-specific information such as rewards or point balances. \n\nThe Punchh Online Ordering API endpoints enable users to earn and redeem rewards for online orders."
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: User Management
+paths:
+  /api/auth/users/forgot_password:
+    post:
+      responses:
+        '200':
+          description: Blank Response.
+          content:
+            application/json:
+              schema: {}
+              examples:
+                default:
+                  value: Blank Response
+        '412':
+          description: ' Sending invalid Signature'
+        '422':
+          description: Sending invalid Entity
+      summary: Forgot Password
+      description: Triggers the forgot password email sent to the user's email address containing the password reset link.
+      operationId: sso_forgot_password
+      parameters:
+      - $ref: '#/components/parameters/Signature'
+      - $ref: '#/components/parameters/content_type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/User-Agent'
+      tags:
+      - User Management
+      x-stoplight:
+        id: 6e9f023450f46
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      description: Email address of the user
+                  required:
+                  - email
+                client:
+                  type: string
+                  description: Client key of the business
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  user:
+                    email: test@example.com
+                  client: CLIENT_GOES_HERE
+  /api/auth/users:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user-object'
+              examples:
+                default:
+                  value:
+                    address_line1: ADDRESS_GOES_HERE
+                    anniversary: '2013-07-13'
+                    avatar_remote_url: null
+                    birthday: '1985-03-21'
+                    city: Mountain View
+                    created_at: '2016-03-15T06:33:42Z'
+                    email: test@example.com
+                    email_verified: false
+                    fb_uid: null
+                    first_name: FIRST_NAME_GOES_HERE
+                    gender: male
+                    id: 111111111
+                    last_name: LAST_NAME_GOES_HERE
+                    state: California
+                    updated_at: '2016-03-15T06:38:34Z'
+                    zip_code: '94040'
+                    allow_multiple: false
+                    authentication_token: AUTHENTICATION_TOKEN_GOES_HERE
+                    favourite_locations: '304988'
+                    favourite_store_numbers: '2310'
+                    marketing_email_subscription: true
+                    marketing_pn_subscription: true
+                    passcode_configured: false
+                    profile_field_answers: {}
+                    referral_code: REFERRAL_CODE_GOES_HERE
+                    referral_path: URL_GOES_HERE
+                    secondary_email: null
+                    terms_and_conditions: false
+                    title: Mr.
+                    user_as_barcode: '1111111'
+                    user_as_qrcode: QR_CODE_GOES_HERE
+                    user_code: P11111111
+                    user_id: 111111111
+                    user_relations:
+                    - id: 774
+                      name: FIRST_NAME_GOES_HERE LAST_NAME_GOES_HERE
+                      relation: spouse
+                      birthday: '1984-07-18'
+                    wants_menu_notifications: false
+                    work_zip_code: null
+                    mindbody_client_id: null
+                    preferred_locale: ''
+                    phone: '1111111111'
+                    migrate_status: false
+                    email_unsubscribe: false
+                    allow_push_notifications: true
+                    facebook_signup: false
+                    communicable_email: test@example.com
+                    access_token: ACCESS_TOKEN_GOES_HERE
+                    expiration_date: '2018-07-31'
+                    age_verified_status: true
+      summary: Fetch User Information
+      description: Returns the user's details including birthday, anniversary, gender, zip code, etc.
+      operationId: sso_fetch_user_informaton
+      parameters:
+      - $ref: '#/components/parameters/Signature'
+      - $ref: '#/components/parameters/content_type'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/User-Agent'
+      tags:
+      - User Management
+      x-stoplight:
+        id: bcce4b1009ba3
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                authentication_token:
+                  type: string
+                  description: The authentication token of the user. You can retrieve this from the response of a successful sign-in API call or through the [SSO process](/docs/dev-portal-online-ordering/9a41534336c87-sso-flow-for-web-and-mobile).
+                client:
+                  type: string
+                  description: Client key of the business
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  authentication_token: AUTHENTICATION_TOKEN_GOES_HERE
+                  client: client_key_goes_here
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user-object'
+              examples:
+                default:
+                  value:
+                    address_line1: ADDRESS_GOES_HERE
+                    anniversary: null
+                    avatar_remote_url: null
+                    birthday: null
+                    city: ''
+                    created_at: '2016-10-10T07:19:19Z'
+                    email: test@example.com
+                    email_verified: false
+                    fb_uid: ''
+                    first_name: FIRST_NAME_GOES_HERE
+                    gender: ''
+                    id: 111111111
+                    last_name: LAST_NAME_GOES_HERE
+                    state: ''
+                    updated_at: '2017-10-11T16:03:19Z'
+                    zip_code: '25110'
+                    allow_multiple: true
+                    authentication_token: AUTHENTICATION_TOKEN_GOES_HERE
+                    favourite_locations: '308052'
+                    favourite_store_numbers: '2310'
+                    marketing_email_subscription: true
+                    marketing_pn_subscription: true
+                    passcode_configured: false
+                    profile_field_answers:
+                      profile_question_key: Answer
+                    referral_code: REFERRAL_CODE_GOES_HERE
+                    referral_path: URL_GOES_HERE
+                    secondary_email: ''
+                    terms_and_conditions: false
+                    title: ''
+                    user_as_barcode: '1111111'
+                    user_as_qrcode: QR_CODE_GOES_HERE
+                    user_code: P11111111
+                    user_id: 111111111
+                    user_relations: []
+                    wants_menu_notifications: false
+                    work_zip_code: null
+                    mindbody_client_id: null
+                    preferred_locale: en
+                    phone: ''
+                    migrate_status: false
+                    email_unsubscribe: false
+                    allow_push_notifications: true
+                    facebook_signup: false
+                    communicable_email: test@example.com
+                    access_token: null
+                    expiration_date: '2018-07-31'
+                    age_verified_status: true
+                    sms_subscription: true
+        '401':
+          description: ''
+        '412':
+          description: Sending invalid Signature
+        '422':
+          description: Sending invalid Entity
+      summary: Update User Information
+      description: "Updates details in the user profile, such as first name, last name, birthday, anniversary, or change password. \n\nNote: Due to fraud protections, guests are permitted to update their birthdays only once. Subsequent attempts to modify the birthday parameter using the API will fail. In such a case, the API returns a 200 response, but the birthday is not updated. "
+      operationId: sso_update_user_information
+      parameters:
+      - $ref: '#/components/parameters/Signature'
+      - $ref: '#/components/parameters/content_type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/Authorization'
+      tags:
+      - User Management
+      x-stoplight:
+        id: eef4eef6c97a0
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: Client key of the business
+                authentication_token:
+                  type: string
+                  description: The authentication token of the user. You can retrieve this from the response of a successful sign-in API call or through the [SSO process](/docs/dev-portal-online-ordering/9a41534336c87-sso-flow-for-web-and-mobile).
+                user:
+                  $ref: '#/components/schemas/user-input-object'
+              required:
+              - client
+            examples:
+              Update user information:
+                value:
+                  client: CLIENT_ID_GOES_HERE
+                  authentication_token: AUTHENTICATION_TOKEN_GOES_HERE
+                  user:
+                    address_line1: ADDRESS_GOES_HERE
+                    anniversary: null
+                    avatar_remote_url: URL_GOES_HERE
+                    birthday: '1993-01-01'
+                    city: Columbus
+                    email: test@example.com
+                    first_name: FIRST_NAME_GOES_HERE
+                    age_verified: true
+                    privacy_policy: true
+                    gender: female
+                    last_name: LAST_NAME_GOES_HERE
+                    state: Ohio
+                    zip_code: '43016'
+                    allow_multiple: true
+                    favourite_locations: ''
+                    marketing_email_subscription: true
+                    marketing_pn_subscription: true
+                    profile_field_answers:
+                      upf0: Coffee|Tea|Lemonade
+                      upf1: Pasta|Pizza|Hamburger
+                      upf2: Movies|Music|Sports
+                    secondary_email: test@example.com
+                    terms_and_conditions: true
+                    title: ''
+                    user_relations:
+                    - relation: spouse
+                      name: SPOUSE_NAME_GOES_HERE
+                      birthday: '1999-01-01'
+                    work_zip_code: ''
+                    preferred_locale: ''
+                    phone: '1111111111'
+                    unsubscribed: true
+                    allow_push_notifications: true
+                    apn_token: APN_TOKEN_GOES_HERE
+                    gcm_token: GCM_TOKEN_GOES_HERE
+                    age_verified_status: true
+              Update access token for an external IDP user:
+                value:
+                  client: CLIENT_ID_GOES_HERE
+                  authentication_token: AUTHENTICATION_TOKEN_GOES_HERE
+                  user:
+                    external_source: customer_id
+                    external_source_id: '11111111111111111111'
+        description: ''
+  /api/auth/accounts:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    date:
+                      type: string
+                      enum:
+                      - YYYY-MM-DDThh:mm:ssZ
+                      format: date-time
+                      description: Date/time when the event was created in the system, in ISO 8601 format
+                    title:
+                      type: string
+                      description: Event title
+                    event_name:
+                      type: string
+                      description: Event name (e.g., Checkin, Redemption, etc.)
+                    event_value:
+                      type: string
+                      description: Event value (e.g., Visit, Point, or Item)
+                    description:
+                      type: string
+                      description: Reason for the event
+                    sub_value:
+                      type: string
+                      description: Sub-value of the event
+                      x-nullable: true
+                    bar_column1:
+                      type: string
+                      description: Points details
+                    bar_column2:
+                      type: string
+                      description: Visit details
+                      x-nullable: true
+                    bar_column3:
+                      type: string
+                      description: Item details
+                    points:
+                      type: integer
+                      description: Total number of points that were redeemed
+                    visits:
+                      type: integer
+                      description: Total number of visits that were redeemed
+                      x-nullable: true
+                    rewards:
+                      type: number
+                      format: double
+                      description: Total number of rewards that were redeemed
+                    items:
+                      type: integer
+                      description: Total number of items that were redeemed
+                    pending_refresh:
+                      type: boolean
+                      description: If the event is related to a check-in, whether the check-in is pending refresh or not
+                    expired:
+                      type: boolean
+                      description: Whether the event has expired or not
+                    disapproved:
+                      type: boolean
+                      description: Whether the event is disapproved or not
+                    level:
+                      type: string
+                      description: Membership level at the time of the event
+                    event_details:
+                      type: object
+                      description: Details of the event
+                    store_number:
+                      type: string
+                      description: Store number or other external identifier set on the location
+                    event_expiry:
+                      type: string
+                      enum:
+                      - YYYY-MM-DDThh:mm:ssZ
+                      format: date-time
+                      description: Expiry date of the event as configured in the Punchh platform
+                    channel:
+                      type: string
+                      description: Channel where the event took place (e.g., POS)
+                    external_uid:
+                      type: string
+                      description: External UID received at the time of check-in
+              examples:
+                default:
+                  value:
+                  - date: '2019-05-18T13:15:27Z'
+                    title: Item Gifted
+                    event_name: Reward
+                    event_value: +Item
+                    description: 'You were gifted: Sandwich (Signup)'
+                    sub_value: null
+                    bar_column1: 'Points: 0'
+                    bar_column2: 'Punchh: 1'
+                    bar_column3: 'Item: 1'
+                    points: 0
+                    visits: 1
+                    rewards: 0
+                    items: 1
+                    pending_refresh: false
+                    expired: false
+                    disapproved: false
+                    level: null
+                    event_details: null
+                    store_number: null
+                    event_expiry: '2019-06-26T06:59:59Z'
+                  - date: '2019-05-27T15:24:52Z'
+                    title: Item Gifted
+                    channel: null
+                    event_name: Reward
+                    event_value: +Item
+                    external_uid: null
+                    description: 'You were gifted: BOGO Cookie for customers who buy cookies 50% of the time (Expired)'
+                    sub_value: null
+                    bar_column1: 'Points: 820'
+                    bar_column2: null
+                    bar_column3: 'Items: 0'
+                    points: 820
+                    visits: null
+                    rewards: 0
+                    items: 0
+                    pending_refresh: false
+                    expired: true
+                    disapproved: false
+                    level: null
+                    event_details: null
+                    store_number: null
+                    event_expiry: '2019-06-26T06:59:59Z'
+                  - date: '2019-05-18T08:20:00Z'
+                    title: Points Earned
+                    channel: POS
+                    event_name: Checkin
+                    event_value: +13 points
+                    external_uid: ''
+                    description: 13 points earned for your $12.86 purchase at Adrian
+                    sub_value: null
+                    bar_column1: 'Points: 820'
+                    bar_column2: null
+                    bar_column3: 'Items: 0'
+                    points: 820
+                    visits: null
+                    rewards: 0
+                    items: 0
+                    pending_refresh: false
+                    expired: false
+                    disapproved: false
+                    level: null
+                    event_details: null
+                    store_number: ''
+                    event_expiry: '2019-06-26'
+                  - date: '2019-05-18T08:12:57Z'
+                    title: Points Earned
+                    channel: POS
+                    event_name: Checkin
+                    event_value: +13 points
+                    external_uid: ''
+                    description: 13 points earned for your $12.86 purchase at Adrian
+                    sub_value: null
+                    bar_column1: 'Points: 807'
+                    bar_column2: null
+                    bar_column3: 'Items: 0'
+                    points: 807
+                    visits: null
+                    rewards: 0
+                    items: 0
+                    pending_refresh: false
+                    expired: false
+                    disapproved: false
+                    level: null
+                    event_details: null
+                    store_number: ''
+                    event_expiry: '2019-06-20'
+      summary: Get Account History
+      description: 'Returns the user''s account history details. Event expiry is displayed in date format for check-in and date/time format (ISO 8601) for other events.
+
+        '
+      operationId: sso_account_history
+      parameters:
+      - $ref: '#/components/parameters/Signature'
+      - $ref: '#/components/parameters/content_type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/accept_language'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/User-Agent'
+      tags:
+      - User Management
+      x-stoplight:
+        id: b4e529bdacc41
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: Client key of the business
+                  default: CLIENT_GOES_HERE
+                authentication_token:
+                  type: string
+                  description: The authentication token of the user. You can retrieve this from the response of a successful sign-in API call or through the [SSO process](/docs/dev-portal-online-ordering/9a41534336c87-sso-flow-for-web-and-mobile).
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  authentication_token: AUTHENTICATION_TOKEN_GOES_HERE
+        description: ''
+  /api/auth/users/change_password:
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user-object'
+              examples:
+                default:
+                  value:
+                    address_line1: ADDRESS_GOES_HERE
+                    anniversary: '2013-07-13'
+                    avatar_remote_url: null
+                    birthday: '1985-03-21'
+                    city: Mountain View
+                    created_at: '2016-03-15T06:33:42Z'
+                    email: test@example.com
+                    email_verified: false
+                    fb_uid: null
+                    first_name: FIRST_NAME_GOES_HERE
+                    gender: male
+                    id: 111111111
+                    last_name: LAST_NAME_GOES_HERE
+                    state: California
+                    updated_at: '2016-03-15T11:57:44Z'
+                    zip_code: '94040'
+                    allow_multiple: false
+                    authentication_token: AUTHENTICATION_TOKEN_GOES_HERE
+                    favourite_locations: 304988,304989,304991
+                    marketing_email_subscription: true
+                    marketing_pn_subscription: true
+                    passcode_configured: false
+                    preferred_menu_items: []
+                    profile_field_answers: {}
+                    referral_code: REFERRAL_CODE_GOES_HERE
+                    referral_path: URL_GOES_HERE
+                    secondary_email: null
+                    terms_and_conditions: false
+                    title: Mr.
+                    user_as_barcode: '1111111'
+                    user_as_qrcode: QR_CODE_GOES_HERE
+                    user_id: 111111111
+                    user_relations:
+                    - id: 774
+                      name: FIRST_NAME_GOES_HERE LAST_NAME_GOES_HERE
+                      relation: spouse
+                      birthday: '1984-07-18'
+                    wants_menu_notifications: false
+                    work_zip_code: null
+                    mindbody_client_id: null
+                    phone: null
+                    migrate_status: false
+                    email_unsubscribe: false
+                    allow_push_notifications: true
+                    facebook_signup: false
+                    communicable_email: test@example.com
+                    access_token: null
+        '400':
+          description: ''
+      summary: Change Password
+      operationId: sso_change_password
+      parameters:
+      - $ref: '#/components/parameters/Signature'
+      - $ref: '#/components/parameters/content_type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/User-Agent'
+      - schema:
+          type: string
+          default: Bearer ACCESS_TOKEN_GOES_HERE
+        in: header
+        name: Authorization
+        description: You may pass access_token instead of authentication_token in the Authorization header. It will be passed as a bearer token. If the reset_password_token parameter is included in the request body, an Authorization header is not needed.
+      description: Changes the user's password without using the current password
+      tags:
+      - User Management
+      x-stoplight:
+        id: 08d53a1922d23
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    password:
+                      type: string
+                      description: New password of the user
+                    password_confirmation:
+                      type: string
+                      description: Confirm the new password of the user
+                  required:
+                  - password
+                client:
+                  type: string
+                  description: Client key of the business
+                authentication_token:
+                  type: string
+                  description: The authentication token of the user. You can retrieve this from the response of a successful sign-in API call or through the [SSO process](/docs/dev-portal-online-ordering/9a41534336c87-sso-flow-for-web-and-mobile).
+                reset_password_token:
+                  type: string
+                  description: The user's reset password token. Required if the access_token is not passed via the Authorization header or the authentication_token parameter is not included in the request body. If the reset_password_token parameter is included in the request body, an Authorization header is not needed.
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  user:
+                    password: PASSWORD_GOES_HERE
+                    password_confirmation: PASSWORD_GOES_HERE
+                  client: CLIENT_GOES_HERE
+                  authentication_token: AUTHENTICATION_TOKEN_GOES_HERE
+  /api/auth/user_enrollments:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              examples:
+                default:
+                  value:
+                  - Successfully registered
+        '400':
+          description: ''
+      summary: User Enrollment
+      description: Enrolls a user in a campaign (currently supported for social cause campaigns)
+      operationId: sso_user_enrollment
+      parameters:
+      - $ref: '#/components/parameters/Signature'
+      - schema:
+          type: string
+          default: no-cache
+        in: header
+        name: cache-control
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/content_type'
+      tags:
+      - User Management
+      x-stoplight:
+        id: 6da2a2909eae2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: Client key of the business
+                  default: CLIENT_GOES_HERE
+                authentication_token:
+                  type: string
+                  description: The authentication token of the user. You can retrieve this from the response of a successful sign-in API call or through the [SSO process](/docs/dev-portal-online-ordering/9a41534336c87-sso-flow-for-web-and-mobile).
+                item_id:
+                  type: integer
+                  description: ID of the campaign in which the user will be enrolled
+                  default: 1
+                  format: int32
+                item_type:
+                  type: string
+                  description: Type of the campaign in which the user will be enrolled. The currently supported type is `social_cause_campaign`.
+                  default: social_cause_campaign
+                  enum:
+                  - social_cause_campaign
+              required:
+              - client
+              - item_id
+              - item_type
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  authentication_token: AUTHENTICATION_TOKEN_GOES_HERE
+                  item_id: 1
+                  item_type: social_cause_campaign
+    delete:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              examples:
+                default:
+                  value:
+                  - Successfully deregistered
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ? ''
+                  : type: string
+        '400':
+          description: ''
+      summary: User Disenrollment
+      description: Disenrolls a user from a campaign (currently supported for social cause campaigns)
+      operationId: sso_user_disenrollment
+      parameters:
+      - $ref: '#/components/parameters/Signature'
+      - schema:
+          type: string
+          default: no-cache
+        in: header
+        name: cache-control
+      - $ref: '#/components/parameters/content_type'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Accept'
+      tags:
+      - User Management
+      x-stoplight:
+        id: f79a7ffc641d7
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: Client key of the business
+                  default: CLIENT_GOES_HERE
+                authentication_token:
+                  type: string
+                  description: The authentication token of the user. You can retrieve this from the response of a successful sign-in API call or through the [SSO process](/docs/dev-portal-online-ordering/9a41534336c87-sso-flow-for-web-and-mobile).
+                item_id:
+                  type: integer
+                  description: ID of the campaign in which the user will be enrolled
+                  default: 1
+                  format: int32
+                item_type:
+                  type: string
+                  description: Type of the campaign in which the user will be enrolled. The currently supported type is `social_cause_campaign`.
+                  default: social_cause_campaign
+                  enum:
+                  - social_cause_campaign
+              required:
+              - client
+              - item_id
+              - item_type
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  authentication_token: AUTHENTICATION_TOKEN_GOES_HERE
+                  item_id: 1
+                  item_type: social_cause_campaign
+components:
+  schemas:
+    user-input-object:
+      type: object
+      title: User Input (Object)
+      x-examples:
+        application/json:
+          address_line1: ADDRESS_GOES_HERE
+          anniversary: null
+          avatar_remote_url: URL_GOES_HERE
+          birthday: '1993-01-01'
+          city: Columbus
+          email: test@example.com
+          first_name: FIRST_NAME_GOES_HERE
+          age_verified: true
+          privacy_policy: true
+          gender: female
+          last_name: LAST_NAME_GOES_HERE
+          state: Ohio
+          zip_code: '43016'
+          allow_multiple: true
+          favourite_locations: ''
+          marketing_email_subscription: true
+          marketing_pn_subscription: true
+          profile_field_answers:
+            upf0: Coffee|Tea|Lemonade
+            upf1: Pasta|Pizza|Hamburger
+            upf2: Movies|Music|Sports
+          secondary_email: test@example.com
+          terms_and_conditions: true
+          title: ''
+          user_relations:
+          - relation: spouse
+            name: SPOUSE_NAME_GOES_HERE
+            birthday: '1999-01-01'
+          work_zip_code: ''
+          preferred_locale: ''
+          phone: '1111111111'
+          unsubscribed: true
+          allow_push_notifications: true
+          apn_token: APN_TOKEN_GOES_HERE
+          gcm_token: GCM_TOKEN_GOES_HERE
+          external_source: customer_id
+          external_source_id: '11111111111111111111'
+      x-stoplight:
+        id: 2f9bb36917e65
+      properties:
+        address_line1:
+          type: string
+          description: Address information (part 1) of the user
+        anniversary:
+          type: string
+          description: Anniversary of the user, in YYYY-MM-DD format. This field gets updated in the database only if the user did not set it at time of sign-up.
+        avatar_remote_url:
+          type: string
+          description: Avatar URL of the user profile image
+        birthday:
+          type: string
+          description: Birthday of the user, in YYYY-MM-DD format. This field gets updated in the database only if the user did not set it initially during sign-up. Due to fraud protections, guests are permitted to update their birthdays only once. Subsequent attempts to modify the birthday parameter using the API will fail. In such a case, the API returns a 200 response, but the birthday is not updated.
+          enum:
+          - YYYY-MM-DD
+        city:
+          type: string
+          description: 'City where the user lives
+
+            '
+        email:
+          type: string
+          description: Email address of the user
+        first_name:
+          type: string
+          description: First name of the user
+        age_verified:
+          type: boolean
+          description: Whether age is verified or not
+        privacy_policy:
+          type: boolean
+        gender:
+          type: string
+          description: Gender of the user. Valid values are "male", "female", or "declined".
+        last_name:
+          type: string
+          description: Last name of the user
+        state:
+          type: string
+          description: State where the user lives
+        zip_code:
+          type: string
+          description: Zip code where the user lives
+        allow_multiple:
+          type: boolean
+          description: Whether multiple check-ins are allowed for the user or not
+        favourite_locations:
+          type: string
+          description: Favorite locations of the user (comma-separated for multiple locations)
+        marketing_email_subscription:
+          type: boolean
+          description: Whether the user has subscribed to receive marketing emails or not. This is mandatory if Explicit Opt-in is enabled in the Punchh platform.
+        marketing_pn_subscription:
+          type: boolean
+          description: Whether the user has subscribed to receive marketing push notifications or not
+        profile_field_answers:
+          $ref: '#/components/schemas/profile_field_answers'
+        secondary_email:
+          type: string
+          description: Secondary email address of the user
+        terms_and_conditions:
+          type: boolean
+          description: Whether the user has agreed to the terms and conditions to use the app as per the configuration
+        title:
+          type: string
+          description: Title of the user. Possible values are Mr., Mrs., Miss, Ms., and Dr.
+        user_relations:
+          $ref: '#/components/schemas/user-relations'
+        work_zip_code:
+          type: string
+          description: Zip code of the user's office
+        preferred_locale:
+          type: string
+          description: Preferred locale of the user
+        phone:
+          type: string
+          description: Phone number of the user
+        unsubscribed:
+          type: boolean
+          description: Whether the user has unsubscribed from marketing email notifications
+        allow_push_notifications:
+          type: boolean
+          description: Whether the user has allowed push notifications or not
+        apn_token:
+          type: string
+          description: Apple Push Notification (APN) token
+        gcm_token:
+          type: string
+          description: Google Cloud Messaging (GCM) or FCM token
+        external_source:
+          type: string
+          description: External source name (third-party IDP). Possible values for external_source are salesforce, customer_id, mparticle, azure, aws_cognito, auth0, and ext_idp. If you are using a different one, please reach out to your implementation manager to add a new value. The values are case-sensitive. This is a required parameter if you want to update the access token for an external IDP user.
+        external_source_id:
+          type: string
+          description: ID of the customer in the mentioned external source name (external_source), a unique identifier generated by the third-party IDP (GUID format). This is a required parameter if you want to update the access token for an external IDP user.
+        age_verified_status:
+          type: boolean
+          x-stoplight:
+            id: fnmox22klesc2
+          description: 'Whether or not the user has undergone age verification by Koupon Media. Possible values: true, false. The parameter is accepted in the request if Koupon Media is selected as the age verification adapter for the business in the Punchh platform. Contact your Punchh representative to update this configuration. '
+    user-object:
+      type: object
+      title: User (Object)
+      x-stoplight:
+        id: 3b4442b722f1f
+      properties:
+        address_line1:
+          type: string
+          description: 'Address information (part 1) of the user
+
+            '
+        anniversary:
+          type: string
+          enum:
+          - YYYY-MM-DD
+          format: date
+          description: Anniversary of the user in YYYY-MM-DD format. This field gets updated in the database only if the user did not set it at time of sign-up.
+        avatar_remote_url:
+          type: string
+          description: Avatar URL of the user profile image
+        birthday:
+          type: string
+          enum:
+          - YYYY-MM-DD
+          format: date
+          description: Birthday of the user, in YYYY-MM-DD format. This field gets updated in the database only if the user did not set it at time of sign-up.
+        city:
+          type: string
+          description: 'City where the user lives
+
+            '
+        created_at:
+          type: string
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+          description: Date/time when the user was created in the system, in ISO 8601 format
+        email:
+          type: string
+          description: Email address of the user
+        email_verified:
+          type: boolean
+          description: Whether the email address is verified or not
+        fb_uid:
+          type: integer
+          description: Unique Facebook ID of the user
+        first_name:
+          type: string
+          description: First name of the user
+        gender:
+          type: string
+          description: Gender of the user
+        id:
+          type: integer
+          description: Unique ID of the user
+        last_name:
+          type: string
+          description: Last name of the user
+        state:
+          type: string
+          description: State where the user lives
+        updated_at:
+          type: string
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+          description: Date/time when the user was updated in the system, in ISO 8601 format
+        zip_code:
+          type: string
+          description: Zip code of the user
+        allow_multiple:
+          type: boolean
+          description: Whether multiple check-ins are allowed for the user or not
+        authentication_token:
+          type: string
+          description: The authentication token of the user. You can retrieve this from the response of a successful sign-in API call or through the [SSO process](/docs/dev-portal-online-ordering/9a41534336c87-sso-flow-for-web-and-mobile).
+        favourite_locations:
+          type: string
+          description: List of the user's favorite locations
+        favourite_store_numbers:
+          type: string
+          description: List of store numbers of the user's favorite locations
+        marketing_email_subscription:
+          type: boolean
+          description: Whether the user has subscribed to receive marketing emails or not
+        marketing_pn_subscription:
+          type: boolean
+          description: Whether the user has subscribed to receive marketing push notifications or not
+        passcode_configured:
+          type: boolean
+          description: Whether the passcode has been configured or not
+        profile_field_answers:
+          $ref: '#/components/schemas/profile_field_answers'
+        referral_code:
+          type: string
+          description: The user's referral code. The user can share this referral code to refer others to join the business loyalty program. When a referred user signs up and enters the shared referral code, this `referral_code` must be passed in the `invite_code` request parameter when calling the Create New User API.
+        referral_path:
+          type: string
+          description: URL that points to the referred path
+        secondary_email:
+          type: string
+          description: Secondary email address of the user
+        terms_and_conditions:
+          type: boolean
+          description: Whether the user has agreed to the terms and conditions to use the app as per the configuration
+        title:
+          type: string
+          description: Title used for the user (e.g., Mr., Mrs., etc.)
+        user_as_barcode:
+          type: integer
+          description: Unique user ID in barcode format
+        user_as_qrcode:
+          type: string
+          description: Unique user ID in QR code format
+        user_code:
+          type: string
+        user_id:
+          type: integer
+          description: Unique user ID
+        user_relations:
+          $ref: '#/components/schemas/user-relations'
+        wants_menu_notifications:
+          type: boolean
+          description: Whether the user wants to receive menu notifications or not
+        work_zip_code:
+          description: 'Zip code of the user''s office
+
+            '
+          x-nullable: true
+        mindbody_client_id:
+          x-nullable: true
+        preferred_locale:
+          type: string
+          description: Preferred locale of the user
+        phone:
+          type: string
+          description: Phone number of the user
+        migrate_status:
+          type: boolean
+          description: Whether the user has been migrated or not
+        email_unsubscribe:
+          type: string
+          description: Unsubscribed email address of the user
+        allow_push_notifications:
+          type: boolean
+          description: Whether the user has allowed push notifications or not
+        facebook_signup:
+          type: boolean
+          description: Indicates whether the user signed up using Facebook. This parameter returns true the first time a user signs up using Facebook. For all subsequent logins, it returns a false value.
+        communicable_email:
+          type: string
+          description: Email address where emails should be sent
+        access_token:
+          type: string
+          description: Security token that identifies the user
+          x-nullable: true
+        expiration_date:
+          type: string
+          enum:
+          - YYYY-MM-DD
+          format: date
+          description: This value will be returned only if "Account re-evaluation strategy" is set to Guest Inactivity. All other cases return a NULL value.
+          x-nullable: true
+        user_joined_at:
+          type: string
+          x-stoplight:
+            id: sl1218jvmndoj
+          description: Sign-up anniversary date of the user, in YYYY-MM-DDThh:mm:ssZ format
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+        sms_subscription:
+          type: boolean
+          description: Whether the user has subscribed to SMS services or not
+        age_verified_status:
+          type: boolean
+          x-stoplight:
+            id: mynywehbcs39p
+          description: 'Whether or not the user has undergone age verification by Koupon Media. Possible Values: true, false. The value is set to true if the user''s age is verified by Koupon Media; otherwise, it is set to false. The response returns this parameter in sign-in, sign-up, and user update APIs if Koupon Media is selected as the age verification adapter for the business in the Punchh platform. Contact your Punchh representative to update this configuration. '
+      required:
+      - email
+    profile_field_answers:
+      type: object
+      description: Answers given by the user while filling in the user profile. The user submits answers to profile field questions that are configured in the Punchh platform. A total of 25 answers can be submitted. The keys range from 'upf0' to 'upf24'. If questions have multiple answers, the values should be separated by a | character (pipe).
+      title: Profile Field Answers (Object)
+      properties:
+        upf0:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+        upf1:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+        upf2:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+      x-stoplight:
+        id: 232889e28c1c8
+    user-relations:
+      title: User Relations (Array Object)
+      x-stoplight:
+        id: ut0ic50qnqmhq
+      type: array
+      items:
+        x-stoplight:
+          id: s8m992rimfngd
+        type: object
+        properties:
+          id:
+            type: integer
+            x-stoplight:
+              id: hwhbkrukhoown
+            description: Unique ID of the relationship
+          name:
+            type: string
+            x-stoplight:
+              id: 2fmpih7siw5sc
+            description: Name of the relative
+          relation:
+            type: string
+            x-stoplight:
+              id: 7hqerbd50q2gx
+            description: Relation to the user. Valid values are "spouse" and "kid".
+          birthday:
+            type: string
+            x-stoplight:
+              id: knsdt60v0v4ef
+            format: date
+            enum:
+            - YYYY-MM-DD
+            description: Birthday of the relative
+      description: The object contains information about the relationship details of a user, for example, spouse and kid information. If the user account does not have relationship details, the API returns an empty user_relations object in the response.
+  parameters:
+    accept_language:
+      schema:
+        type: string
+        default: en
+      in: header
+      name: Accept-Language
+      description: Set to the language you are using.
+    User-Agent:
+      schema:
+        type: string
+        default: Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type
+      name: User-Agent
+      in: header
+      required: true
+      description: For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).
+    content_type:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Content-Type
+      description: Set this header to **application/json**.
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Accept
+      description: Advertises which content types the client is able to understand
+      required: true
+    Signature:
+      schema:
+        type: string
+        default: SIGNATURE_GOES_HERE
+      in: header
+      name: x-pch-digest
+      description: The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      required: true
+      description: You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+x-stoplight:
+  id: 73bbc35439926
+x-ext-urls: {}

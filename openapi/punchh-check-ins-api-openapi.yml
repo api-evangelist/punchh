@@ -1,0 +1,1329 @@
+openapi: 3.2.0
+info:
+  title: Mobile Check Ins API
+  version: '1.0'
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+  description: 'Punchh provides a robust platform for offering loyalty programs to customers. When a business integrates its back-end with the Punchh server, the Punchh APIs become instrumental in executing loyalty programs for enrolled customers, primarily via business-branded mobile apps and websites tailored by Punchh.
+
+
+    To establish integration with the Punchh APIs, you need to understand how they are invoked and what responses are returned by the Punchh server. You can call APIs using any suitable API test client, such as Postman. Thus, the response to every API call made in Postman under a chosen environment (in app and/or platform) is reflected in the app and/or platform.'
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: Check-ins
+paths:
+  /api2/mobile/checkins/barcode:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Checkin'
+              examples:
+                default:
+                  value:
+                    created_at: '2016-05-16T08:22:25-04:00'
+                    current_membership_level: Club Lite - Level 1 (0-400)
+                    location_id: 304252
+                    pending_refresh: false
+                    points_earned: 72
+                    store_number: ''
+                    survey_url: URL_GOES_HERE
+                    checkin_id: 11140692
+                    first_checkin: false
+                    expiring_on: null
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      missing_required_param:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                Bad Reqeust (required parameter missing):
+                  value: "{\n  \"errors\": {\n    \"missing_required_param\": [\n      \"Required parameter missing or the value is empty: client\"\n    ]\n  }\n}"
+                Bad Request (barcode missing):
+                  value: "{  \n   \"errors\":{  \n      \"missing_required_param\":[  \n         \"Required parameter missing or the value is empty: bar_code\"\n      ]\n   }\n}"
+        '412':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      invalid_signature:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      invalid_signature:
+                      - Signature doesn't match. See [this topic](/docs/dev-portal-mobile/17c2f8eb39142-generating-x-pch-digest-header-for-mobile-ap-is)
+        '422':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      base:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                Unprocessable entity (used barcode):
+                  value: "{  \n   \"errors\":{  \n      \"base\":[  \n         \"You cannot use the same receipt more than once.\"\n      ]\n   }\n}"
+                unprocessable entity (invalid barcode):
+                  value: "{  \n   \"errors\":{  \n      \"base\":[  \n         \"This bar code is not valid.\"\n      ]\n   }\n}"
+                unprocessable entity (below minimum checkin amount):
+                  value: "{  \n   \"errors\":{  \n      \"base\":[  \n         \"The minimum checkin amount is $0.01.\"\n      ]\n   }\n}"
+                unprocessable entity (old barcode):
+                  value: "{  \n   \"errors\":{  \n      \"base\":[  \n         \"This receipt is too old to be accepted.\"\n      ]\n   }\n}"
+                unprocessable entity (guest not within range):
+                  value: "{  \n   \"errors\":{  \n      \"base\":[  \n         \"Guest not within range of restaurant location.\"\n      ]\n   }\n}"
+                unprocessable entity (no barcode scanned):
+                  value: "{  \n   \"errors\":{  \n      \"base\":[  \n         \"Due to network connectivity issues at the printing location, this Bar Code cannot be scanned. Please submit a picture of the receipt showing the receipt amount and receipt date via  'Need Help?' button.\"\n      ]\n   }\n}"
+                unprocessable entity (multiple checkin error):
+                  value: "{  \n   \"errors\":{  \n      \"base\":[  \n         \"You aren't allowed to scan multiple receipts in one visit, please try again later.\"\n      ]\n   }\n}"
+                unprocessable entity (failed redis lookup):
+                  value: "{  \n   \"errors\":{  \n      \"base\":[  \n         \"We are looking for your check, but it's taking longer than expected. Once we find it, we'll let you know and add it to your account.\"\n      ]\n   }\n}"
+      summary: Create Loyalty Check-in by Barcode
+      description: Creates a loyalty check-in for a user when the user scans/enters the barcode printed on an order receipt. The user can scan the barcode using the mobile app of the business or enter the barcode on the website of the business.
+      operationId: mobile_create_loyalty_checkin_by_barcode
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/punchh-app-device-id'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: e1805d58af142
+      tags:
+      - Check-ins
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bar_code:
+                  type: integer
+                  format: int32
+                  description: Barcode printed on the receipt
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                gps_accuracy:
+                  type: string
+                  description: Accuracy of the user's device GPS
+                latitude:
+                  type: number
+                  format: double
+                  description: Latitude coordinate of the user's device GPS. The latitude of the location is required if location_id is not provided.
+                location_id:
+                  type: integer
+                  format: int32
+                  description: ID of the location where the user did the check-in. The location ID is required if both the latitude and longitude of the location are not provided. If the latitude and longitude of the location are not provided, then by default Punchh identifies location based on the barcode printed on the receipt.
+                longitude:
+                  type: number
+                  format: double
+                  description: Longitude coordinate of the user's device GPS. The longitude of the location is required if location_id is not provided.
+                manual:
+                  type: boolean
+                  description: True if the user entered the barcode by hand.
+              required:
+              - bar_code
+              - client
+            examples:
+              default:
+                value:
+                  bar_code: BARCODE_GOES_HERE
+                  client: CLIENT_GOES_HERE
+                  gps_accuracy: '27'
+                  latitude: '26.9167509'
+                  location_id: '304991'
+                  longitude: '75.8136926'
+  /api2/mobile/checkins/qrcode:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Checkin'
+              examples:
+                default:
+                  value:
+                    created_at: '2016-05-16T08:22:25-04:00'
+                    current_membership_level: Club Lite - Level 1 (0-400)
+                    location_id: 304252
+                    pending_refresh: false
+                    points_earned: 72
+                    store_number: ''
+                    survey_url: URL_GOES_HERE
+                    checkin_id: 11140685
+                    first_checkin: false
+                    expiring_on: '2024-03-13'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      missing_required_param:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                Bad Request (client missing):
+                  value:
+                    errors:
+                      missing_required_param:
+                      - 'Required parameter missing or the value is empty: client'
+                Bad Request (Decoded QR missing):
+                  value: "{  \n   \"errors\":{  \n      \"missing_required_param\":[  \n         \"Required parameter missing or the value is empty: qr_decoded\"\n      ]\n   }\n}"
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      unknown_client:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      unknown_client:
+                      - Client ID is incorrect. Please check client param or contact us.
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      invalid_access_token:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      invalid_access_token:
+                      - 'Error: access_token not found or is incorrect! Valid access_token of the user required.'
+        '412':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      invalid_signature:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      invalid_signature:
+                      - Signature doesn't match. See [this topic](/docs/dev-portal-mobile/17c2f8eb39142-generating-x-pch-digest-header-for-mobile-ap-is)
+        '422':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      base:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                unprocessable entity (muliple checkins made):
+                  value: "{  \n   \"errors\":{  \n      \"base\":[  \n         \"You aren't allowed to scan multiple receipts in one visit, please try again later.\"\n      ]\n   }\n}"
+                unprocessable entity (unable to determine location):
+                  value: "{  \n   \"errors\":{  \n      \"base\":[  \n         \"Unable to determine your distance from El Paso. Please check to see if your phone's GPS is enabled and try upgrading your app.\"\n      ]\n   }\n}"
+                unprocessable entity (location time validation):
+                  value: "{  \n   \"errors\":{  \n      \"base\":[  \n         \"You can only checkin at this location within working hours.\"\n      ]\n   }\n}"
+                unprocessable entity (invalid qr code):
+                  value: "{  \n   \"errors\":{  \n      \"base\":[  \n         \"Invalid QR Code.\"\n      ]\n   }\n}"
+      summary: Create Loyalty Check-in by QR Code
+      description: Creates a loyalty check-in for a user when the user scans a quick-response (QR) code using the mobile app of the business
+      operationId: mobile_create_loyalty_checkin_by_qr_code
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: 351a504277f3b
+      tags:
+      - Check-ins
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                qr_decoded:
+                  type: string
+                  format: int32
+                  description: Decoded form of the QR code printed on the receipt
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                gps_accuracy:
+                  type: string
+                  description: Accuracy of the user's device GPS
+                latitude:
+                  type: number
+                  format: double
+                  description: Latitude coordinate of the user's device GPS. The latitude of the location is required if location_id is not provided.
+                location_id:
+                  type: integer
+                  format: int32
+                  description: 'ID of the location where the user did the check-in. The location ID is required if both the latitude and longitude of the location are not provided. '
+                longitude:
+                  type: number
+                  format: double
+                  description: Longitude coordinate of the user's device GPS. The longitude of the location is required if location_id is not provided.
+                manual:
+                  type: string
+                  description: True if the user entered the QR code by hand
+              required:
+              - qr_decoded
+              - client
+            examples:
+              default:
+                value:
+                  qr_decoded: QR_CODE_GOES_HERE
+                  client: CLIENT_GOES_HERE
+                  location_id: 304155
+                  latitude: 26.9167509
+                  longitude: 75.8136926
+                  gps_accuracy: '27'
+                  manual: ''
+  /api2/mobile/checkins/receipt_image:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Checkin'
+              examples:
+                default:
+                  value:
+                    created_at: '2016-05-17T08:22:25-04:00'
+                    current_membership_level: Club Lite - Level 2 (0-400)
+                    location_id: 304252
+                    pending_refresh: false
+                    points_earned: 72
+                    store_number: ''
+                    survey_url: URL_GOES_HERE
+                    checkin_id: 11140255
+                    first_checkin: false
+                    expiring_on: null
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      unknown_client:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      unknown_client:
+                      - Client ID is incorrect. Please check client param or contact us
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      invalid_access_token:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      invalid_access_token:
+                      - 'Error: access_token not found or is incorrect! Valid access_token of the user required'
+        '422':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      base:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      base:
+                      - Location could not be determined
+      summary: Create Loyalty Check-in by Receipt Image
+      description: Creates a loyalty check-in for a user based on the receipt image captured by the user. The user captures the receipt image for an order and taps the create check-in button on the mobile app of the business. When the receipt is approved, loyalty points are added to the user's account.
+      operationId: mobile_create_loyalty_checkin_by_receipt_image
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: eebe5e52f84d3
+      tags:
+      - Check-ins
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                location_id:
+                  type: string
+                  description: ID of the location where the user did the check-in. The location ID is required if both the latitude and longitude of the location are not provided.
+                receipt_url:
+                  type: string
+                  description: URL of the receipt image captured by the user. Use the [Image Upload to AWS](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1aws_s3_pre_signed_url/post) API endpoint to upload the receipt image to AWS. The endpoint returns the URL of the uploaded image in its response.
+                latitude:
+                  type: string
+                  description: Latitude coordinate of the user's device GPS. The latitude of the location is required if location_id is not provided.
+                longitude:
+                  type: string
+                  description: Longitude coordinate of the user's device GPS. The longitude of the location is required if location_id is not provided.
+                gps_accuracy:
+                  type: string
+                  description: Accuracy of the user's device GPS
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  location_id: '304155'
+                  receipt_url: IMAGE_URL_GOES_HERE
+  /api2/mobile/checkins:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    created_at:
+                      type: string
+                      enum:
+                      - YYYY-MM-DDThh:mm:ssZ
+                      format: date-time
+                      description: Date/time when the check-in was created in the system, in [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) format
+                    location_id:
+                      type: integer
+                      description: Unique location ID associated with the check-in
+                    location_name:
+                      type: string
+                      description: Name of the location associated with the check-in
+                    store_number:
+                      type: string
+                      description: Number of the store where the check-in occurred
+                    status:
+                      type: string
+                      description: 'Defines the type of check-in. Values returned are:
+
+                        - gift
+
+                        - loyalty
+
+                        - referral'
+                    pending_refresh:
+                      type: boolean
+                      description: Whether the check-in is pending refresh or not
+                    checkin_id:
+                      type: integer
+                      description: Unique ID of the check-in
+                    expiring_on:
+                      type: string
+                      enum:
+                      - YYYY-MM-DD
+                      format: date
+                      description: Date on which the check-in will expire
+              examples:
+                default:
+                  value:
+                  - created_at: '2016-05-06T11:23:03+00:00'
+                    location_id: 304252
+                    location_name: ADDRESS_GOES_HERE
+                    store_number: ''
+                    status: gift
+                    pending_refresh: false
+                    checkin_id: 10895576
+                    expiring_on: null
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  code:
+                    type: integer
+              examples:
+                default:
+                  value:
+                    errors:
+                      message: Access is denied due to invalid credentials.
+                      code: 401
+      summary: Fetch Check-ins
+      description: Returns all check-ins of a user
+      operationId: mobile_Fetch_checins
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: c7e74b4a278eb
+      tags:
+      - Check-ins
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+  /api2/mobile/checkins/account_balance:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  rewards:
+                    $ref: '#/components/schemas/rewards'
+                  banked_redemptions:
+                    $ref: '#/components/schemas/redemption_details'
+                  account_balance_details:
+                    $ref: '#/components/schemas/account-balance-details'
+              examples:
+                default:
+                  value:
+                    rewards:
+                    - becomes_available_at: '2016-05-17T05:23:29-07:00'
+                      campaign_type: null
+                      created_at: '2016-05-24T00:52:48-07:00'
+                      description: Free with the purchase of an entree.
+                      discount_channel: all
+                      discount_amount: null
+                      reward_image_url: IMAGE_URL_GOES_HERE
+                      name: Dessert
+                      read_at: null
+                      reward_properties: order-ahead
+                      store_numbers: []
+                      franchisee_id: 1234
+                      meta_data: Tag1, Tag2, Tag3, Tag4, Tag5
+                      reward_id: 5051791
+                      expiring_at: '2016-06-01T02:59:59-04:00'
+                      redemption_details:
+                        redemption_status: redeemable
+                        created_at: '2016-05-20T16:05:14+05:30'
+                        redeemable_id: 1041895320
+                        redeemable_name: Dessert
+                        redeemable_description: ''
+                        redeemed_value: '20'
+                        redemption_image_url: IMAGE_URL_GOES_HERE
+                        redemption_message: ''
+                        updated_at: '2016-05-20T16:05:14+05:30'
+                        redemption_id: 994925280
+                        redemption_tracking_code: '1435308'
+                        expiring_at: '2016-05-20T18:05:14+05:30'
+                    banked_redemptions:
+                    - redemption_status: expired
+                      created_at: '2018-02-05T04:52:20-06:00'
+                      redeemable_id: 3096
+                      redemption_image_url: IMAGE_URL_GOES_HERE
+                      redemption_message: ''
+                      updated_at: '2018-02-05T04:52:20-06:00'
+                      redemption_id: 22383235
+                      redemption_tracking_code: '8103935'
+                      expiring_at: '2018-02-05T08:52:20-06:00'
+                      redeemable_name: $5 Reward
+                      redeemed_value: null
+                    - redemption_status: expired
+                      created_at: '2018-02-06T03:48:02-06:00'
+                      redeemable_id: 3096
+                      redemption_image_url: IMAGE_URL_GOES_HERE
+                      redemption_message: ''
+                      updated_at: '2018-02-06T03:48:02-06:00'
+                      redemption_id: 22450832
+                      redemption_tracking_code: '8381242'
+                      expiring_at: '2018-02-06T07:48:02-06:00'
+                      redeemable_name: $5 Reward
+                      redeemed_value: null
+                    - redemption_status: expired
+                      created_at: '2018-07-19T07:19:47-05:00'
+                      redeemable_id: null
+                      redemption_image_url: IMAGE_URL_GOES_HERE
+                      redemption_message: ''
+                      updated_at: '2018-07-19T07:19:47-05:00'
+                      redemption_id: 34510132
+                      redemption_tracking_code: '1656060'
+                      expiring_at: '2018-07-19T11:19:47-05:00'
+                      redeemable_name: null
+                      redeemed_value: 5
+                    - redemption_status: redeemable
+                      created_at: '2019-01-07T02:00:38-06:00'
+                      redeemable_id: null
+                      redemption_image_url: IMAGE_URL_GOES_HERE
+                      redemption_message: ''
+                      updated_at: '2019-01-07T02:00:38-06:00'
+                      redemption_id: 49572717
+                      redemption_tracking_code: '9861700'
+                      expiring_at: '2019-01-07T06:00:38-06:00'
+                      redeemable_name: null
+                      redeemed_value: 1
+                    account_balance_details:
+                      banked_currency: 10
+                      banked_currency_expiring_on: null
+                      checkins_on_current_card: 0
+                      current_membership_level_id: null
+                      current_membership_level_expiring_on: null
+                      expiring_banked_currency: null
+                      pending_points: 0
+                      redeemed_cards: null
+                      total_loyalty_visits: null
+                      unredeemed_cards: null
+                      current_membership_level_name: null
+                      lifetime_points: 165
+                      redeemable_points: 10
+                      unbanked_points: 65
+                      membership_qualification_points: 500
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      invalid_language:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      invalid_language:
+                      - Unknown/Invalid locale in Accept-Language Header. Supported locales are en-GB, es-CR, en, es.
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      unknown_client:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      unknown_client:
+                      - Client ID is incorrect. Please check client param or contact us.
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      invalid_access_token:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      invalid_access_token:
+                      - 'Error: access_token not found or is incorrect! Valid access_token of the user required'
+      summary: Account Balance
+      description: Returns a user's account details, including reward details such as reward ID and account balance details such as banked currency, membership level, etc.
+      operationId: mobile_account_balance
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: 1ac8c60c0b08d
+      tags:
+      - Check-ins
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+  /api2/mobile/checkins/transactions:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  checkin:
+                    type: object
+                    properties:
+                      created_at:
+                        type: string
+                        description: Date/time when the check-in was created in the system, in ISO 8601 format
+                        enum:
+                        - YYYY-MM-DDThh:mm:ssZ
+                        format: date-time
+                      current_membership_level:
+                        type: string
+                        description: Membership level of the user
+                      location_id:
+                        type: integer
+                        description: ID of the location associated with the loyalty check-in
+                      pending_refresh:
+                        type: boolean
+                        description: Whether the check-in is pending refresh or not
+                      points_earned:
+                        type: integer
+                        description: Number of points earned in the loyalty check-in
+                      store_number:
+                        type: string
+                        description: The store number where the check-in occurred
+                      checkin_id:
+                        type: integer
+                        description: ID of the loyalty check-in made by the user
+                      first_checkin:
+                        type: boolean
+                        description: Whether it is the first check-in at the business or not
+                      expiring_on:
+                        type: string
+                        enum:
+                        - YYYY-MM-DD
+                        format: date
+                        description: Date when points earned in the loyalty check-in will expire
+                      survey_url:
+                        type: string
+                        description: URL of the survey presented to a user completing a check-in
+                  redemptions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        redemption_status:
+                          type: string
+                          description: 'Status of the redemption. The values returned can be:
+
+
+                            - redeemable: The redemption can be redeemed at the POS.
+
+
+                            - expired: The redemption has expired and becomes unusable for the user.
+
+
+                            - honored: The redemption has already been processed successfully and redeemed by the user at a POS.
+
+
+                            - cancelled: The redemption can be voided by a user by approaching the POS if a redemption is done by mistake and the user wants to cancel it.'
+                        created_at:
+                          type: string
+                          description: Date/time when the redemption was created in the system, in ISO 8601 format
+                          enum:
+                          - YYYY-MM-DDThh:mm:ssZ
+                          format: date-time
+                        redeemable_id:
+                          type: integer
+                          description: Unique ID of the redeemable
+                        redeemable_name:
+                          type: string
+                          description: Name of the redeemable
+                        redeemed_value:
+                          type: number
+                          format: float
+                          description: 'For a business with banked currency, a currency value will be returned (e.g., 10 would mean $10).
+
+
+                            For a business without banked currency, a points value will be returned (e.g., 10 would mean 10 points).'
+                        redemption_image_url:
+                          type: string
+                          description: URL of the image displayed in the app to depict the redeemable
+                        redemption_message:
+                          type: string
+                          description: A descriptive message that tells a user what the user has redeemed
+                        updated_at:
+                          type: string
+                          enum:
+                          - YYYY-MM-DDThh:mm:ssZ
+                          format: date-time
+                          description: Date/time at which the redemption was updated in the system
+                        redemption_id:
+                          type: integer
+                          description: Unique ID of the redemption that has been created
+                        redemption_tracking_code:
+                          type: string
+                          description: Code that a user must submit at the POS to receive the redeemed reward
+                        expiring_at:
+                          type: string
+                          description: Date/time, in ISO 8601 format, when the redemption_tracking_code expires and the user cannot use it at the POS
+                          enum:
+                          - YYYY-MM-DDThh:mm:ssZ
+                          format: date-time
+              examples:
+                default:
+                  value:
+                    checkin:
+                      created_at: '2016-05-24T07:19:37-04:00'
+                      current_membership_level: Tier 1
+                      location_id: 304252
+                      pending_refresh: false
+                      points_earned: 229
+                      store_number: ABC01
+                      survey_url: null
+                      checkin_id: 11370180
+                      first_checkin: false
+                      expiring_on: null
+                    redemptions:
+                    - redemption_status: redeemable
+                      created_at: '2016-05-20T16:05:14+05:30'
+                      redeemable_id: 1041895320
+                      redeemable_name: Dessert
+                      redeemed_value: '20'
+                      redemption_image_url: IMAGE_URL_GOES_HERE
+                      redemption_message: ''
+                      updated_at: '2016-05-20T16:05:14+05:30'
+                      redemption_id: 994925280
+                      redemption_tracking_code: '1435308'
+                      expiring_at: '2016-05-20T18:05:14+05:30'
+      summary: Transaction Details
+      description: Returns the details of a particular transaction using the transaction ID
+      operationId: mobile_transaction_details
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/signature'
+      x-stoplight:
+        id: 2d7bc9f034998
+      tags:
+      - Check-ins
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: 'OAuth client ID provided by the business
+
+                    '
+                transaction_id:
+                  type: string
+                  description: 'Receipt transaction ID. This transaction ID is received in the payload key "t", which comes along with the push notification.
+
+                    '
+              required:
+              - client
+              - transaction_id
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  transaction_id: TRANSACTION_ID_GOES_HERE
+components:
+  schemas:
+    Checkin:
+      type: object
+      title: Check-in (Object)
+      x-stoplight:
+        id: 4bae7b81b0f8a
+      properties:
+        created_at:
+          type: string
+          description: Date/time when the check-in was created in the system, in [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) format
+        external_uid:
+          type: string
+          description: External unique identifier of the check-in
+        checkin_id:
+          type: integer
+          description: ID of the loyalty check-in made by the user
+        pending_points:
+          type: integer
+          description: Number of pending points
+        pending_refresh:
+          type: boolean
+          description: Whether check-in is pending refresh or not
+        points_earned:
+          type: integer
+          description: Number of points earned in the loyalty check-in
+        bar_code:
+          type: string
+          description: Barcode printed on the receipt
+        current_membership_level:
+          type: string
+          description: Membership level of the user
+          x-nullable: true
+        first_checkin:
+          type:
+          - string
+          - boolean
+          description: Whether it is the first check-in at the business or not
+        location_id:
+          type: integer
+          description: ID of the location associated with the loyalty check-in
+        store_number:
+          type: string
+          description: The store number where the check-in occurred
+        expiring_on:
+          type: string
+          format: date
+          description: Date when points earned in the loyalty check-in will expire
+          examples:
+          - '2024-03-13'
+    redemption_details:
+      type: object
+      description: 'Returns the details of a redemption done by a user
+
+        '
+      properties:
+        redemption_status:
+          type: string
+          description: 'Status of the redemption. The values returned can be:
+
+
+            - redeemable: The redemption can be redeemed at the POS.
+
+
+            - expired: The redemption has expired and becomes unusable for the user.
+
+
+            - honored: The redemption has already been processed successfully and redeemed by the user at a POS.
+
+
+            - cancelled: The redemption can be voided by a user by approaching the POS if a redemption is done by mistake and the user wants to cancel it.'
+        created_at:
+          type: string
+          description: 'Date/time when the redemption was created in the system
+
+            '
+        redeemable_id:
+          type: integer
+          description: 'Unique ID of the redeemable
+
+            '
+        redeemable_name:
+          type: string
+          description: 'Name of the redeemable
+
+            '
+        redeemed_value:
+          type: string
+          description: 'For a business with banked currency, a currency value will be returned (e.g., 10 would mean $10).
+
+
+            For a business without banked currency, a points value will be returned (e.g., 10 would mean 10 points).'
+        redemption_image_url:
+          type: string
+          description: 'URL of the image displayed in the app to depict the redeemable
+
+            '
+        redemption_message:
+          type: string
+          description: 'A descriptive message that tells a user what the user has redeemed
+
+            '
+        redeemable_description:
+          type: string
+          description: 'Description of the redeemable
+
+            '
+        updated_at:
+          type: string
+          description: 'Date/time at which the redemption was updated in the system
+
+            '
+        redemption_id:
+          type: integer
+          description: 'Unique ID of the redemption that has been created
+
+            '
+        redemption_tracking_code:
+          type: string
+          description: 'Code that a user must submit at the POS to receive the redeemed reward
+
+            '
+        expiring_at:
+          type: string
+          description: Date/time when the redemption_tracking_code expires and the user cannot use it at the POS
+        location_id:
+          type: integer
+          description: ID of the location associated with the with the redemption (where the redemption code is generated). If no location ID is provided, then the ID for the default location is returned.
+      title: Redemption Details (Object)
+      x-stoplight:
+        id: bc87eb1cec331
+    rewards:
+      type: array
+      description: Contains information about the available rewards of the user
+      title: Rewards (Array Object)
+      x-stoplight:
+        id: 593a939bbb6fa
+      items:
+        x-stoplight:
+          id: boujhknpz5coc
+        type: object
+        properties:
+          becomes_available_at:
+            type: string
+            x-stoplight:
+              id: im795luv5su27
+            description: Date/time at which the reward becomes redeemable by a user
+            format: date-time
+          campaign_type:
+            type: string
+            x-stoplight:
+              id: 7f6xlqvvehpqk
+            description: Type of campaign through which a user received a reward. Currently, the only possible value is "loyalty". A null value indicates that the user did not get the reward through a campaign.
+          created_at:
+            type: string
+            x-stoplight:
+              id: os20mdeoqfq3z
+            format: date-time
+            description: Date/time when the reward was created for a user in the system
+          description:
+            type: string
+            x-stoplight:
+              id: 6hg1xma6nl1w4
+            description: Description of the reward
+          discount_channel:
+            type: string
+            x-stoplight:
+              id: 0ti076e2v9ohc
+            description: 'Channels where the reward can be used. Possible values are:
+
+
+              - online_only - online orders
+
+              - offline_only - POS
+
+              - all - both'
+          discount_amount:
+            type: integer
+            x-stoplight:
+              id: e7waqx8jk4ulk
+            description: Discount amount associated with the reward
+          reward_image_url:
+            type: string
+            x-stoplight:
+              id: v0wl0df7rs844
+            description: URL of the image displayed in the app to depict the reward
+          name:
+            type: string
+            x-stoplight:
+              id: e2ho1o5jtdjin
+            description: Name of the reward
+          read_at:
+            type: string
+            x-stoplight:
+              id: p3uv2kyj3085t
+            format: date-time
+            description: Date/time when the reward notification was read by a user in the app
+          reward_properties:
+            type: string
+            x-stoplight:
+              id: v4jg31ks5gly0
+            description: Additional properties of the reward (e.g., "merchandise", "order ahead", "promo", etc.) that can be configured in the Punchh platform
+          store_numbers:
+            type: array
+            x-stoplight:
+              id: eu3v3y9m8zkxi
+            description: Store numbers of all locations where the reward can be redeemed. An empty array indicates that the reward can be redeemed at any location.
+            items:
+              x-stoplight:
+                id: 2cijorr4t6693
+              type: string
+          franchisee_id:
+            type: integer
+            x-stoplight:
+              id: aqdjczff8wolf
+            description: ID of the franchisee who credited the reward to the user's account. This could be done through a campaign or admin generosity.
+          meta_data:
+            type: string
+            x-stoplight:
+              id: zzj946kbbq1xw
+            description: Metadata that can be added to a redeemable. This will be returned only if it is configured in the Punchh platform. The maximum length is 255 characters.
+          redeemable_created_at:
+            type: string
+            x-stoplight:
+              id: mlwoe89xeubtv
+            format: date-time
+            description: Date/time when the redeemable was created in the Punchh platform
+          reward_id:
+            type: integer
+            x-stoplight:
+              id: rvc7fk1jyance
+            format: int64
+            description: Unique ID of the reward
+          expiring_at:
+            type: string
+            x-stoplight:
+              id: 40snv09u8jow8
+            description: Date/time when the reward expires
+            format: date-time
+          redemption_details:
+            $ref: '#/components/schemas/redemption_details'
+          auto_select:
+            type: boolean
+            x-stoplight:
+              id: supgkji7b6rag
+            description: Whether the offer is enabled for auto-redemption or not
+    account-balance-details:
+      type: object
+      title: Account Balance Details (Object)
+      x-stoplight:
+        id: 2a0aec02b7738
+      properties:
+        banked_currency:
+          type: number
+          format: float
+          description: Value of the currency that a user has available. A "null" value indicates that the business does not support banking of points into currency.
+        checkins_on_current_card:
+          type: integer
+          description: "A card gets completed after a user does a configured number of check-ins. \nFor example, if a business configuration requires 7 check-ins to complete a card, and a user does only 3 check-ins, the value of this parameter will be 3."
+        current_membership_level_id:
+          description: Unique ID of the current membership level of a user
+          type: integer
+        current_membership_level_expiring_on:
+          type: string
+          description: If a business has a rolling expiry of membership levels, a particular membership level will expire after a period that is configured in the Punchh platform. A "null" value indicates that the business does not have a rolling expiry of membership levels.
+          enum:
+          - YYYY-MM-DD
+          format: date
+        expiring_banked_currency (Deprecated):
+          type: number
+          format: float
+          description: If a business has expiring banked currency configured in the Punchh platform, the banked currency will expire in a FIFO (first-in, first-out) pattern. This returns the value of the banked currency that will expire. A "null" value indicates that the business is not configured to support expiring banked currency.
+        banked_currency_expiring_on (Deprecated):
+          type: string
+          description: If a business is configured to support expiring banked currency, this returns the date on which it will expire. A "null" value indicates that the business is not configured to support expiring banked currency.
+          enum:
+          - YYYY-MM-DD
+          format: date
+        pending_points:
+          type: number
+          format: float
+          description: Points of a user that are in the pending state after a check-in. They are not added to the user's account before finalization. See [Pending Points Feature Overview](/docs/dev-portal-pos/ZG9jOjUwMjgzOTAz-pending-points-feature-overview) for details.
+        redeemed_cards:
+          type: integer
+          description: The number of cards that a user has redeemed in the user's lifetime
+        total_loyalty_visits:
+          type: integer
+          description: Total of the visits that a user has earned by doing loyalty check-ins and those visits that were migrated from an older loyalty program (if a business had an older loyalty program and wants to migrate its users to Punchh's loyalty program)
+          x-nullable: true
+        unredeemed_cards:
+          type: integer
+          description: Total unredeemed cards available to a user
+          x-nullable: true
+        current_membership_level_name:
+          type: string
+          description: Current membership level of the user
+          x-nullable: true
+        lifetime_points:
+          type: number
+          format: float
+          description: Sum of all loyalty points earned by a user from the time the user signed up
+        redeemable_points:
+          type: number
+          format: float
+          description: 'The total of all loyalty points earned by a user that satisfy all of the following conditions:
+
+            * approved
+
+            * non-pending
+
+            * unexpired'
+        unbanked_points:
+          type: number
+          format: float
+          description: For a business that allows banking of points, this value represents the number of points the user has and has not banked yet. For example, if a business configuration requires 100 points to be banked to $10, and a user has accumulated 55 points, this value will be 55. When the user earns another 45 points, the user will be banked to $10 and this value will then become 0.
+        membership_qualification_points:
+          type: integer
+          x-stoplight:
+            id: gq5ah9naehygk
+          description: 'The value of points earned toward progress across membership tiers. This is related to the migration strategy that allows businesses to "Consider Only Initial Points for Tier Migration". Currently, support for this parameter is limited to program type Points Unlock Redeemables, Membership Re-evaluation Strategy: Reset Based on Points Earned and Account Re-evaluation Strategy of Guest Inactivity.'
+  parameters:
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
+    punchh-app-device-id:
+      schema:
+        type: string
+        default: APP_DEVICE_ID_GOES_HERE
+      name: punchh-app-device-id
+      in: header
+      required: true
+      description: The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.
+x-stoplight:
+  id: bf6eddb435209
+x-ext-urls: {}

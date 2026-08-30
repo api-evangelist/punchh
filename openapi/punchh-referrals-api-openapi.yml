@@ -1,0 +1,184 @@
+openapi: 3.2.0
+info:
+  title: Mobile Referrals API
+  version: '1.0'
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+  description: 'Punchh provides a robust platform for offering loyalty programs to customers. When a business integrates its back-end with the Punchh server, the Punchh APIs become instrumental in executing loyalty programs for enrolled customers, primarily via business-branded mobile apps and websites tailored by Punchh.
+
+
+    To establish integration with the Punchh APIs, you need to understand how they are invoked and what responses are returned by the Punchh server. You can call APIs using any suitable API test client, such as Postman. Thus, the response to every API call made in Postman under a chosen environment (in app and/or platform) is reflected in the app and/or platform.'
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: Referrals
+paths:
+  /api2/mobile/{checkin_id}/referrals:
+    parameters:
+    - schema:
+        type: string
+      name: checkin_id
+      in: path
+      required: true
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    avatar_remote_url:
+                      type: string
+                      description: Avatar URL of the possible referrer's profile image
+                    email:
+                      type: string
+                      description: Email address of the possible referrer
+                    fb_uid:
+                      type: string
+                      description: Facebook ID of the possible referrer
+                    first_name:
+                      type: string
+                      description: First name of the possible referrer
+                    last_name:
+                      type: string
+                      description: Last name of the possible referrer
+                    user_id:
+                      type: string
+                      description: ID that identifies the possible referrer within Punchh
+              examples:
+                default:
+                  value:
+                  - avatar_remote_url: URL_GOES_HERE
+                    email: test@example.com
+                    fb_uid: FB_UID_GOES_HERE
+                    first_name: FIRST_NAME_GOES_HERE
+                    last_name: LAST_NAME_GOES_HERE
+                    user_id: 111111111
+      summary: Fetch Possible Referrers
+      description: Returns the details of people who have possibly referred a guest to use the loyalty program of a business
+      operationId: mobile_fetch_possible_referrers
+      tags:
+      - Referrals
+      parameters:
+      - schema:
+          type: integer
+        in: path
+        name: checkin_id
+        required: true
+        description: 'Check-in ID of the first check-in done by the referred user
+
+          '
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: 679d8638cb88f
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+    post:
+      responses:
+        '200':
+          description: ''
+      summary: Select Referrer
+      description: Selects a person who possibly referred a guest to use the loyalty program of a business
+      operationId: mobile_select_referrer
+      tags:
+      - Referrals
+      parameters:
+      - schema:
+          type: integer
+        in: path
+        name: checkin_id
+        required: true
+        description: Check-in ID of the first check-in done by the referred user
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: e1a077c19a06b
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                friend_to_refer:
+                  type: string
+                  description: Punchh ID of the user who possibly referred the guest
+              required:
+              - client
+              - friend_to_refer
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  friend_to_refer: '1058012332'
+components:
+  parameters:
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
+x-stoplight:
+  id: bf6eddb435209
+x-ext-urls: {}

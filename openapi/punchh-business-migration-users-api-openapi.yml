@@ -1,0 +1,1005 @@
+openapi: 3.2.0
+info:
+  title: Platform Functions Business Migration Users API
+  version: '1.0'
+  description: This API documentation is intended to provide comprehensive information for admin users of the Punchh platform. Many of the settings and available actions depend on an appropriate level of access to Platform Functions APIs.
+  contact:
+    name: Punchh DevSupport
+    url: https://developers.punchh.com
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: Business Migration Users
+paths:
+  /api2/dashboard/migration_users:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  address_line1:
+                    type: string
+                    description: Address of the user
+                  birthday:
+                    type: string
+                    format: date
+                    description: Date of birth of the user, in YYYY-MM-DD format
+                  city:
+                    type: string
+                    description: City where the user lives
+                  email:
+                    type: string
+                    description: Email address of the user that will be added to the migration data. Migration can be based on this value as well.
+                  first_name:
+                    type: string
+                    description: First name of the user
+                  gifted_value:
+                    type: integer
+                    description: Value of points gifted to the user at the time of migration. This is the product of `original_points` and `rate_of_conversion`. This does not include the initial points.
+                  initial_points:
+                    type: integer
+                    description: Number of points that will be used to determine a guest’s membership tier during migration. Contact your Punchh representative for more information.
+                  last_name:
+                    type: string
+                    description: Last name of the user
+                  marketing_email_subscription:
+                    type: boolean
+                    description: Whether the user has subscribed to receive marketing emails or not
+                  marketing_pn_subscription:
+                    type: boolean
+                    description: Whether the user has subscribed to marketing push notifications or not
+                  migrated_redeemables:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        redeemable_id:
+                          type: integer
+                          format: int32
+                          description: ID of the redeemable migrated for the user. This redeemable should be active on the platform. After the user has been migrated, the user will be able to use this redeemable.
+                        rewards_count:
+                          type: integer
+                          format: int32
+                          description: Number of redeemables that will be migrated for the guest
+                  migrated_rewards:
+                    type: integer
+                    description: Currency value of rewards that will be migrated from the incumbent loyalty program
+                  migrated_rewards_expiration_date:
+                    type: string
+                    format: date
+                    description: 'Expiration date of the currency value of rewards that will be migrated from the incumbent loyalty program. Note: This expiration date will be applicable only on the currency value passed in the `migrated_rewards` parameter.'
+                  name:
+                    type: string
+                    description: Name of the loyalty program of the business
+                  original_membership_no:
+                    type: integer
+                    description: Membership number of the user as per the incumbent loyalty program. Migration can be based on this value as well.
+                  original_phone:
+                    type: integer
+                    description: Phone number of the user. This value may contain special characters (e.g., hyphen, etc.).
+                  original_points:
+                    type: number
+                    description: Number of points that will be migrated from the incumbent loyalty program
+                    format: float
+                  phone:
+                    type: integer
+                    description: Phone number of the user. This is used as the unique identifier for migration of the user. This should be a 10-digit value without special characters (e.g., hyphen, etc.).
+                  preferred_location:
+                    type: integer
+                    description: Favorite location ID of the user
+                  registration_date:
+                    type: string
+                    format: date-time
+                    description: 'Registration date of the loyalty program. Accepted formats: YYYY-MM-DD or YYYY-MM-DDTHH:mm:ssZ. If only a date is provided, the time defaults to 00:00:00.'
+                  state:
+                    type: string
+                    description: State where the user lives
+                  street_address:
+                    type: string
+                    description: Address of the user
+                  user_relations:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: Name of the relative
+                        relation:
+                          type: string
+                          description: Relation to the user. Valid values are "spouse" and "kid".
+                        birthday:
+                          type: string
+                          format: date
+                          description: Birthday of the relative, in YYYY-MM-DD format
+                  zip_code:
+                    type: string
+                    description: Zip code where the user lives
+                  gift_cards:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        card_number:
+                          type: string
+                          description: 'Gift card number. Gift cards that meet the validation criteria stated in the description of the `card_number` request parameter are returned in the response. '
+                        card_design_id:
+                          type: string
+                          x-stoplight:
+                            id: lr6z0pgcip5ky
+                          description: ID of a particular gift card design. See the `card_design_id` request parameter description.
+                        epin:
+                          type: string
+                          description: EPIN of the gift card. Leave this blank if a PIN is not available or not required.
+                  challenge_progress:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        challenge_campaign_id:
+                          type: integer
+                          description: ID of the campaign generated by Punchh
+                        progress_count:
+                          type: integer
+                          description: Value of progress that the user has made toward the challenge while in the incumbent system
+                  migration_user_id:
+                    type: integer
+                    description: Unique ID assigned to the user by Punchh at the time of migration
+                  fb_uid:
+                    type: string
+                    x-stoplight:
+                      id: ak5hezpjl5u21
+                    description: Facebook ID that identifies the user
+                  loyalty_cards:
+                    $ref: '#/components/schemas/loyalty-cards'
+              examples:
+                default:
+                  value:
+                    address_line1: ADDRESS_GOES_HERE
+                    birthday: '1999-01-01'
+                    city: Mountain View
+                    email: test@example.com
+                    first_name: FIRST_NAME_GOES_HERE
+                    gifted_value: 97
+                    initial_points: 3
+                    last_name: LAST_NAME_GOES_HERE
+                    marketing_email_subscription: false
+                    marketing_pn_subscription: true
+                    migrated_redeemables:
+                    - redeemable_id: 2329
+                      rewards_count: 2
+                    migrated_rewards: 10.9
+                    migrated_rewards_expiration_date: '2020-01-31'
+                    name: Incumbent Loyalty Program
+                    original_membership_no: 123456789
+                    original_phone: 1111111111
+                    original_points: 97
+                    phone: '1111111111'
+                    preferred_location: 311031
+                    registration_date: '2008-10-26T23:59:59-07:00'
+                    state: California
+                    street_address: ADDRESS_GOES_HERE
+                    user_relations:
+                    - name: FIRST_NAME_GOES_HERE LAST_NAME_GOES_HERE
+                      relation: spouse
+                      birthday: '1999-01-01'
+                    - name: FIRST_NAME_GOES_HERE
+                      relation: kid
+                      birthday: '1999-01-01'
+                    zip_code: '94040'
+                    gift_cards:
+                    - card_number: CARD_NUMBER_GOES_HERE
+                      card_design_id: '2'
+                      epin: EPIN_GOES_HERE
+                    - card_number: CARD_NUMBER_GOES_HERE
+                      card_design_id: '2'
+                      epin: EPIN_GOES_HERE
+                    challenge_progress:
+                    - challenge_campaign_id: 21571
+                      progress_count: 2
+                    loyalty_cards:
+                    - card_number: CARD_NUMBER_GOES_HERE
+                      status: ACTIVE
+                      card_signup_date: '2021-05-03'
+                    - card_number: CARD_NUMBER_GOES_HERE
+                      status: SUSPENDED
+                      card_signup_date: '2021-03-03'
+                    migration_user_id: 12345678
+                    fb_uid: ''
+        '401':
+          $ref: '#/components/responses/401-unauthorized'
+      summary: Create Business Migration User
+      description: Creates a business migration user in the system
+      operationId: dashboard_create_business_migration_user
+      tags:
+      - Business Migration Users
+      parameters:
+      - $ref: '#/components/parameters/authorization-header'
+      - $ref: '#/components/parameters/accept'
+      - $ref: '#/components/parameters/content-type'
+      x-stoplight:
+        id: e3f5573f9451c
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the loyalty program of the business
+                birthday:
+                  type: string
+                  description: Date of birth of the user, in YYYY-MM-DD format
+                  format: date
+                phone:
+                  type: integer
+                  description: Phone number of the user. This is used as the unique identifier for migration of the user. This should be a 10-digit value without special characters (e.g., hyphen, etc.).
+                  format: int32
+                email:
+                  type: string
+                  description: Email address of the user that will be added to the migration data. Migration can be based on this value as well.
+                original_membership_no:
+                  type: integer
+                  description: Membership number of the user as per the incumbent loyalty program. Migration can be based on this value as well.
+                  format: int32
+                registration_date:
+                  type: string
+                  format: date-time
+                  description: 'Registration date of the loyalty program. Accepted formats: YYYY-MM-DD or YYYY-MM-DDTHH:mm:ssZ. If only a date is provided, the time defaults to 00:00:00.'
+                first_name:
+                  type: string
+                  description: First name of the user
+                last_name:
+                  type: string
+                  description: Last name of the user
+                original_phone:
+                  type: string
+                  description: Phone number of the user. This value may contain special characters (e.g., hyphen, etc.).
+                original_points:
+                  type: number
+                  description: Number of points that will be migrated from the incumbent loyalty program
+                  format: float
+                fb_uid:
+                  type: string
+                  description: Facebook ID that identifies the user
+                initial_points:
+                  type: integer
+                  format: int32
+                  description: Number of points that will be used to determine a guest’s membership tier during migration. Contact your Punchh representative for more information.
+                migrated_rewards:
+                  type: integer
+                  format: int32
+                  description: Currency value of rewards that will be migrated from the incumbent loyalty program
+                migrated_rewards_expiration_date:
+                  type: string
+                  format: date
+                  description: 'Expiration date of the currency value of rewards that will be migrated from the incumbent loyalty program. Note: This expiration date will be applicable only on the currency value passed in the `migrated_rewards` parameter.'
+                marketing_pn_subscription:
+                  type: boolean
+                  description: Whether the user has subscribed to marketing push notifications or not
+                marketing_email_subscription:
+                  type: boolean
+                  description: Whether the user has subscribed to receive marketing emails or not
+                address_line1:
+                  type: string
+                  description: Address of the user
+                city:
+                  type: string
+                  description: City where the user lives
+                state:
+                  type: string
+                  description: State where the user lives
+                zip_code:
+                  type: string
+                  description: Zip code where the user lives
+                preferred_location:
+                  type: string
+                  description: Favorite location ID of the user
+                migrated_redeemables:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      redeemable_id:
+                        type: integer
+                        format: int32
+                        description: ID of the redeemable that will be migrated for the user. This redeemable should be active on the platform. After the user has been migrated, the user will be able to use this redeemable.
+                      rewards_count:
+                        type: integer
+                        format: int32
+                        description: Number of redeemables that will be migrated for the guest
+                user_relations:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        description: Name of the relative
+                      relation:
+                        type: string
+                        description: Relation to the user. Valid values are "spouse" and "kid".
+                      birthday:
+                        type: string
+                        format: date
+                        description: Birthday of the relative, in YYYY-MM-DD format
+                gift_cards:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      card_number:
+                        type: string
+                        description: "Gift card number. There are validations when adding gift cards to migration data.  If the gift card data is blank for a business migration user, then the user is created, but the gift card data is skipped from getting uploaded with the rest of the data provided for the business migration user. If gift cards with both valid details and blank card details exist in the Punchh system for a business migration user, then when the user signs up with their email address, only gift cards that have valid details are added to the user’s account. \n\nGift cards are added to the business migration user account if 1) gift card details are valid or 2) only the gift card number is provided without the epin of the gift card. If one gift card has valid details and another gift card either has invalid or blank card details, then the gift card with valid card details is added to the user’s account.\n\nGift cards are not added to the business migration user account if 1) the gift card number and epin are passed blank, passed as an empty string, or passed with a value nil in the string, 2) one gift card is passed with blank card details and another with invalid card details, 3) multiple gift cards with invalid card numbers are passed, 4) the gift card number is invalid, but the epin of the gift card is valid, 5) the gift card number is valid, but epin for the gift card is invalid, and 6) the gift card number is blank and only epin of the gift card is passed."
+                      card_design_id:
+                        type: string
+                        x-stoplight:
+                          id: lh77s8wibpwkj
+                        description: ID of a particular gift card design. Punchh checks if the card_design_id value is valid or not. If the design is valid, the system assigns it to all gift cards; otherwise, the system checks whether the recently added design is active or not. If an active design is found, the system assigns the design to gift cards. If the recently added design is found inactive, the system checks for the latest design out of all active designs and assigns it to all gift cards.
+                      epin:
+                        type: string
+                        description: EPIN of the gift card. Leave this blank if a PIN is not available or not required.
+                challenge_progress:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      challenge_campaign_id:
+                        type: integer
+                        description: ID of the campaign generated by Punchh
+                      progress_count:
+                        type: integer
+                        description: Value of progress that the user has made toward the challenge while in the incumbent system
+                rate_of_conversion:
+                  type: number
+                  x-stoplight:
+                    id: y6vwxnuqqtxp2
+                  description: Rate of conversion of loyalty points from the incumbent loyalty program
+                  format: float
+                loyalty_cards:
+                  $ref: '#/components/schemas/loyalty-cards'
+            examples:
+              default:
+                value:
+                  name: Incumbent Loyalty Program
+                  birthday: '1999-01-01'
+                  phone: 1111111111
+                  email: test@example.com
+                  original_membership_no: 123456789
+                  registration_date: '2008-10-26T23:59:59-07:00'
+                  first_name: FIRST_NAME_GOES_HERE
+                  last_name: LAST_NAME_GOES_HERE
+                  original_phone: '1111111111'
+                  original_points: 97
+                  fb_uid: ''
+                  initial_points: 3
+                  migrated_rewards: 10.9
+                  migrated_rewards_expiration_date: '2020-01-31'
+                  marketing_pn_subscription: true
+                  marketing_email_subscription: false
+                  address_line1: ADDRESS_GOES_HERE
+                  city: Mountain View
+                  state: California
+                  zip_code: '94040'
+                  preferred_location: '311031'
+                  migrated_redeemables:
+                  - redeemable_id: 2329
+                    rewards_count: 2
+                  user_relations:
+                  - name: FIRST_NAME_GOES_HERE LAST_NAME_GOES_HERE
+                    relation: spouse
+                    birthday: '1999-01-01'
+                  - name: FIRST_NAME_GOES_HERE
+                    relation: kid
+                    birthday: '1999-01-01'
+                  gift_cards:
+                  - card_number: CARD_NUMBER_GOES_HERE
+                    card_design_id: '2'
+                    epin: EPIN_GOES_HERE
+                  - card_number: CARD_NUMBER_GOES_HERE
+                    card_design_id: '2'
+                    epin: EPIN_GOES_HERE
+                  challenge_progress:
+                  - challenge_campaign_id: 21571
+                    progress_count: 2
+                  rate_of_conversion: 1
+                  loyalty_cards:
+                  - card_number: CARD_NUMBER_GOES_HERE
+                    status: ACTIVE
+                    card_signup_date: '2021-05-03'
+                  - card_number: CARD_NUMBER_GOES_HERE
+                    status: SUSPENDED
+                    card_signup_date: '2021-03-03'
+        description: ''
+  /api2/dashboard/migration_users/{ID}:
+    parameters:
+    - schema:
+        type: string
+      name: ID
+      in: path
+      required: true
+      description: The value of the `migration_user_id` parameter returned in the response of the [Create Business Migration User](/docs/dev-portal-platform-functions/e3f5573f9451c-create-business-migration-user) API
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  address_line1:
+                    type: string
+                    description: Address of the user
+                  birthday:
+                    type: string
+                    format: date
+                    description: Date of birth of the user, in YYYY-MM-DD format
+                  city:
+                    type: string
+                    description: City where the user lives
+                  email:
+                    type: string
+                    description: Email address of the user that will be added to the migration data. Migration can be based on this value as well.
+                  first_name:
+                    type: string
+                    description: 'First name of the user
+
+                      '
+                  gifted_value:
+                    type: integer
+                    description: The value of gifted points to guest at the time of migration. This is the product of `original_points` and `rate_of_conversion`. This does not include the initial points.
+                  initial_points:
+                    type: integer
+                    description: Number of points that will be used to determine a guest’s membership tier during migration. Contact your Punchh representative for more information.
+                  last_name:
+                    type: string
+                    description: Last name of the user
+                  marketing_email_subscription:
+                    type: boolean
+                    description: Whether the user has subscribed to receive marketing emails or not
+                  marketing_pn_subscription:
+                    type: boolean
+                    description: Whether the user has subscribed to marketing push notifications or not
+                  migrated_redeemables:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        redeemable_id:
+                          type: string
+                          description: ID of the redeemable that will be migrated for the user. This redeemable should be active on the platform. After the user has been migrated, the user will be able to use this redeemable.
+                        rewards_count:
+                          type: string
+                          description: Number of redeemables that will be migrated for the guest
+                  migrated_rewards:
+                    type: integer
+                    description: Currency value of rewards that will be migrated from the incumbent loyalty program
+                  migrated_rewards_expiration_date:
+                    type: string
+                    format: date
+                    description: 'Expiration date of the currency value of rewards that will be migrated from the incumbent loyalty program. Note: This expiration date will be applicable only on the currency value passed in the `migrated_rewards` parameter.'
+                  name:
+                    type: string
+                    description: Name of the loyalty program of the business
+                  original_membership_no:
+                    type: integer
+                    description: Membership number of the user as per the incumbent loyalty program. Migration can be based on this value as well.
+                  original_phone:
+                    type: integer
+                    description: Phone number of the user. This value may contain special characters (e.g., hyphen, etc.).
+                  original_points:
+                    type: number
+                    format: float
+                    description: Number of points that will be migrated from the incumbent loyalty program
+                  phone:
+                    type: integer
+                    description: Phone number of the user. This is used as the unique identifier for migration of the user. This should be a 10-digit value without special characters (e.g., hyphen, etc.).
+                  preferred_location:
+                    type: integer
+                    description: Favorite location ID of the user
+                  registration_date:
+                    type: string
+                    format: date-time
+                    description: 'Registration date of the loyalty program. Accepted formats: YYYY-MM-DD or YYYY-MM-DDTHH:mm:ssZ. If only a date is provided, the time defaults to 00:00:00.'
+                  state:
+                    type: string
+                    description: State where the user lives
+                  street_address:
+                    type: string
+                    description: Address of the user
+                  user_relations:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: Name of the relative
+                        relation:
+                          type: string
+                          description: Relation to the user. Valid values are "spouse" and "kid".
+                        birthday:
+                          type: string
+                          description: Birthday of the relative, in YYYY-MM-DD format
+                  zip_code:
+                    type: string
+                    description: Zip code where the user lives
+                  gift_cards:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        card_number:
+                          type: string
+                          description: 'Gift card number. Gift cards that meet the validation criteria stated in the description of the `card_number` request parameter are returned in the response. '
+                        epin:
+                          type: string
+                          description: EPIN of the gift card. Leave this blank if a PIN is not available or not required.
+                  migration_user_id:
+                    type: integer
+                    description: Unique ID assigned to the user by Punchh at the time of migration
+                  fb_uid:
+                    type: string
+                    x-stoplight:
+                      id: 2ncw0y7gw3h9j
+                    description: Facebook ID that identifies the user
+                  challenge_progress:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        challenge_campaign_id:
+                          type: integer
+                          description: ID of the campaign generated by Punchh
+                        progress_count:
+                          type: integer
+                          description: Value of progress that the user has made toward the challenge while in the incumbent system
+                  loyalty_cards:
+                    $ref: '#/components/schemas/loyalty-cards'
+              examples:
+                default:
+                  value:
+                    address_line1: ADDRESS_GOES_HERE
+                    birthday: '1999-01-01'
+                    city: Mountain View
+                    email: test@example.com
+                    first_name: FIRST_NAME_GOES_HERE
+                    gifted_value: 97
+                    initial_points: 3
+                    last_name: LAST_NAME_GOES_HERE
+                    marketing_email_subscription: false
+                    marketing_pn_subscription: true
+                    migrated_redeemables:
+                    - redeemable_id: '2329'
+                      rewards_count: '2'
+                    migrated_rewards: 10.9
+                    migrated_rewards_expiration_date: '2020-01-31'
+                    name: Incumbent Loyalty Program
+                    original_membership_no: 123456789
+                    original_phone: 1111111111
+                    original_points: 97
+                    phone: 1111111111
+                    preferred_location: 311031
+                    registration_date: '2017-12-23T19:39:54+00:00'
+                    state: California
+                    street_address: ADDRESS_GOES_HERE
+                    user_relations:
+                    - name: FIRST_NAME_GOES_HERE LAST_NAME_GOES_HERE
+                      relation: spouse
+                      birthday: '1999-01-01'
+                    - name: FIRST_NAME_GOES_HERE
+                      relation: kid
+                      birthday: '1999-01-01'
+                    zip_code: '94040'
+                    gift_cards:
+                    - card_number: CARD_NUMBER_GOES_HERE
+                      epin: EPIN_GOES_HERE
+                    - card_number: CARD_NUMBER_GOES_HERE
+                      epin: ''
+                    migration_user_id: 14017338
+                    fb_uid: ''
+                    challenge_progress:
+                    - challenge_campaign_id: 21571
+                      progress_count: 2
+                    loyalty_cards:
+                    - card_number: CARD_NUMBER_GOES_HERE
+                      status: ACTIVE
+                      card_signup_date: '2021-05-03'
+                    - card_number: CARD_NUMBER_GOES_HERE
+                      status: SUSPENDED
+                      card_signup_date: '2021-03-03'
+        '401':
+          $ref: '#/components/responses/401-unauthorized'
+      summary: Update Business Migration User
+      description: Updates a business migration user in the Punchh system. The user attributes in the [Create Business Migration User](/docs/dev-portal-platform-functions/apis/platform-functions-api/paths/~1api2~1dashboard~1migration_users/post) API can be updated by invoking the Update Business Migration User API. Append the value of the `migration_user_id` parameter to the endpoint path.
+      operationId: dashboard_update_business_migration_user
+      tags:
+      - Business Migration Users
+      parameters:
+      - $ref: '#/components/parameters/authorization-header'
+      - $ref: '#/components/parameters/accept'
+      - $ref: '#/components/parameters/content-type'
+      x-stoplight:
+        id: 2c80a36d0db41
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the loyalty program of the business
+                birthday:
+                  type: string
+                  format: date
+                  description: Date of birth of the user, in YYYY-MM-DD format
+                phone:
+                  type: integer
+                  format: int32
+                  description: Phone number of the user. This is used as the unique identifier for migration of the user. This should be a 10-digit value without special characters (e.g., hyphen, etc.).
+                email:
+                  type: string
+                  description: Email address of the user that will be added to the migration data. Migration can be based on this value as well.
+                original_membership_no:
+                  type: integer
+                  format: int32
+                  description: Membership number of the user as per the incumbent loyalty program. Migration can be based on this value as well.
+                registration_date:
+                  type: string
+                  format: date-time
+                  description: 'Registration date of the loyalty program. Accepted formats: YYYY-MM-DD or YYYY-MM-DDTHH:mm:ssZ. If only a date is provided, the time defaults to 00:00:00.'
+                first_name:
+                  type: string
+                  description: First name of the user
+                last_name:
+                  type: string
+                  description: Last name of the user
+                original_phone:
+                  type: string
+                  description: Phone number of the user. This value may contain special characters (e.g., hyphen, etc.).
+                original_points:
+                  type: number
+                  format: float
+                  description: Number of points that will be migrated from the incumbent loyalty program
+                rate_of_conversion:
+                  type: number
+                  format: float
+                  description: Rate of conversion of loyalty points from the incumbent loyalty program. This must be sent with the request when updating original points for a migration user.
+                fb_uid:
+                  type: string
+                  description: Facebook ID that identifies the user
+                initial_points:
+                  type: integer
+                  format: int32
+                  description: Number of points that will be used to determine a guest’s membership tier during migration. Contact your Punchh representative for more information.
+                migrated_rewards:
+                  type: integer
+                  format: int32
+                  description: Number of points that will be added to the migrated points from the incumbent loyalty program
+                migrated_rewards_expiration_date:
+                  type: string
+                  enum:
+                  - YYYY-MM-DD
+                  format: date
+                  description: 'Expiration date of the currency value of rewards that will be migrated from the incumbent loyalty program. Note: This expiration date will be applicable only on the currency value passed in the `migrated_rewards` parameter.'
+                marketing_pn_subscription:
+                  type: boolean
+                  description: Whether the user has subscribed to marketing push notifications or not
+                marketing_email_subscription:
+                  type: boolean
+                  description: Whether the user has subscribed to receive marketing emails or not
+                address_line1:
+                  type: string
+                  description: Address of the user
+                city:
+                  type: string
+                  description: City where the user lives
+                state:
+                  type: string
+                  description: State where the user lives
+                zip_code:
+                  type: string
+                  description: Zip code where the user lives
+                preferred_location:
+                  type: string
+                  description: Favorite location ID of the user
+                migrated_redeemables:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      redeemable_id:
+                        type: integer
+                        format: int32
+                        description: ID of the redeemable that will be migrated for the user. This redeemable should be active on the platform. After the user has been migrated, the user will be able to use this redeemable.
+                      rewards_count:
+                        type: integer
+                        format: int32
+                        description: Number of redeemables that will be migrated for the guest
+                user_relations:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        description: Name of the relative
+                      relation:
+                        type: string
+                        description: Relation to the user. Valid values are "spouse" and "kid".
+                      birthday:
+                        type: string
+                        format: date
+                        description: Birthday of the relative, in YYYY-MM-DD format
+                gift_cards:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      card_number:
+                        type: string
+                        description: "Gift card number. There are validations when adding gift cards to migration data.  If the gift card data is blank for a business migration user, then the user is created, but the gift card data is skipped from getting uploaded with the rest of the data provided for the business migration user. If gift cards with both valid details and blank card details exist in the Punchh system for a business migration user, then when the user signs up with their email address, only gift cards that have valid details are added to the user’s account. \n\nGift cards are added to the business migration user account if 1) gift card details are valid or 2) only the gift card number is provided without the epin of the gift card. If one gift card has valid details and another gift card either has invalid or blank card details, then the gift card with valid card details is added to the user’s account.\n\nGift cards are not added to the business migration user account if 1) the gift card number and epin are passed blank, passed as an empty string, or passed with a value nil in the string, 2) one gift card is passed with blank card details and another with invalid card details, 3) multiple gift cards with invalid card numbers are passed, 4) the gift card number is invalid, but the epin of the gift card is valid, 5) the gift card number is valid, but epin for the gift card is invalid, and 6) the gift card number is blank and only epin of the gift card is passed."
+                      epin:
+                        type: string
+                        description: EPIN of the gift card. Leave this blank if a PIN is not available or not required.
+                challenge_progress:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      challenge_campaign_id:
+                        type: integer
+                        description: ID of the campaign generated by Punchh
+                      progress_count:
+                        type: integer
+                        description: Value of progress that the user has made toward the challenge while in the incumbent system
+                loyalty_cards:
+                  $ref: '#/components/schemas/loyalty-cards'
+            examples:
+              default:
+                value:
+                  name: Incumbent Loyalty Program
+                  birthday: '1999-01-01'
+                  phone: 1111111111
+                  email: test@example.com
+                  original_membership_no: 123456789
+                  registration_date: '2017-12-23T19:39:54+00:00'
+                  first_name: FIRST_NAME_GOES_HERE
+                  last_name: LAST_NAME_GOES_HERE
+                  original_phone: '1111111111'
+                  original_points: 97
+                  rate_of_conversion: 1
+                  fb_uid: ''
+                  initial_points: 3
+                  migrated_rewards: 10.9
+                  migrated_rewards_expiration_date: '2020-01-31'
+                  marketing_pn_subscription: true
+                  marketing_email_subscription: false
+                  address_line1: ADDRESS_GOES_HERE
+                  city: Mountain View
+                  state: California
+                  zip_code: '94040'
+                  preferred_location: '311031'
+                  migrated_redeemables:
+                  - redeemable_id: 2329
+                    rewards_count: 2
+                  user_relations:
+                  - name: FIRST_NAME_GOES_HERE LAST_NAME_GOES_HERE
+                    relation: spouse
+                    birthday: '1999-01-01'
+                  - name: FIRST_NAME_GOES_HERE
+                    relation: kid
+                    birthday: '1999-01-01'
+                  gift_cards:
+                  - card_number: CARD_NUMBER_GOES_HERE
+                    epin: EPIN_GOES_HERE
+                  - card_number: CARD_NUMBER_GOES_HERE
+                    epin: ''
+                  challenge_progress:
+                  - challenge_campaign_id: 21571
+                    progress_count: 2
+                  loyalty_cards:
+                  - card_number: CARD_NUMBER_GOES_HERE
+                    status: ACTIVE
+                    card_signup_date: '2021-05-03'
+                  - card_number: CARD_NUMBER_GOES_HERE
+                    status: SUSPENDED
+                    card_signup_date: '2021-03-03'
+        description: ''
+    delete:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          $ref: '#/components/responses/401-unauthorized'
+      summary: Delete Business Migration User
+      description: Deletes a business migration user from the Punchh system. Append the value of the `migration_user_id` parameter to the endpoint path.
+      operationId: dashboard_delete_business_migration_user
+      tags:
+      - Business Migration Users
+      parameters:
+      - $ref: '#/components/parameters/authorization-header'
+      - $ref: '#/components/parameters/accept'
+      x-stoplight:
+        id: 59118e4ea4723
+  /api2/dashboard/migration_users/bulk_bmu_upload:
+    post:
+      summary: Bulk Upload Business Migration Users
+      operationId: post-api2-dashboard-migration_users-bulk_bmu_upload
+      responses:
+        '200':
+          description: OK
+      description: 'Allows you to upload a list of business migration users along with their details using a CSV file. See the [Create Business Migration User](/docs/dev-portal-platform-functions/apis/platform-functions-api/paths/~1api2~1dashboard~1migration_users/post) API for details about the user attributes that can be uploaded in the CSV file. <br>These are the maximum values that can be included per user in the business migration user CSV file:
+
+        - Gift card: 15
+
+        - User relations: 6
+
+        - Profile fields: 25
+
+        - Rewards: 15
+
+        - Challenge progress: 15
+
+        - Loyalty card: 10
+
+
+        Note: This feature is designed for new brands onboarding to Punchh. If the brand is already live with Punchh, this feature will not add significant value to their operations.
+
+
+        <b>Permission Required</b>
+
+
+        A user account with the Business Admin role is required.
+
+
+        <b>Sample CSV File Format</b>
+
+
+        In the CSV file, the attributes are added in columns, and each row will contain the values for these attributes for each user. The following image shows the format for the CSV file (not all user attributes are shown in this example).
+
+
+        ```csv
+
+        address_line1,birthday,city,email,first_name,last_name,gender,phone,state,zip_code
+
+        address1,1990-01-01,Mountain View,test1@example.com,first1,last1,male,1111111111,CA,94040
+
+        address2,2000-01-01,Austin,test2@example.com,first2,last2,female,1111111112,TX,77494
+
+        ```
+
+        <b>Bulk Upload Business Migration Users via Punchh Platform</b>
+
+
+        The bulk upload feature for migrating business users is also available from the Punchh platform. See the "Bulk Business Migration User Upload" section in [Awaiting Migration](https://support.punchh.com/s/article/Awaiting-Migration) on the Punchh Support Portal for more information.
+
+
+        Note: To view the Punchh product documentation on the Punchh Support Portal, you must log in to a Punchh platform production environment. If you already have access to a production environment, follow the instructions [here](https://support.punchh.com/s/article/How-do-I-access-the-Punchh-Support-Portal-Single-Sign-On) to access the Punchh Support Portal.'
+      parameters:
+      - $ref: '#/components/parameters/accept'
+      - $ref: '#/components/parameters/content-type'
+      - $ref: '#/components/parameters/authorization-header'
+      tags:
+      - Business Migration Users
+      x-stoplight:
+        id: 70c2fa6b90887
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  x-stoplight:
+                    id: fqo9botfghnwv
+                  description: Name for the bulk upload request
+                bulk_guest_activity_file:
+                  type: string
+                  x-stoplight:
+                    id: 7v232ca2qfj6z
+                  description: 'Location of the file that will be used for bulk upload. Punchh supports only the CSV file format with a maximum file size of 15 MB. The bulk upload will fail if the file size exceeds 15 MB. <b>Note</b>: The file location should be passed in either the `import_file_url` parameter or the `bulk_guest_activity_file` parameter. The bulk upload request will fail if the file location is provided in both parameters.'
+                import_file_url:
+                  type: string
+                  x-stoplight:
+                    id: z7ff2i582ps4j
+                  description: 'URL of the file for bulk upload, publicly hosted on a cloud service like S3. Punchh supports only the CSV file format with a maximum file size of 50 MB. The bulk upload will fail if the file size exceeds 50 MB. <b>Note</b>: The file location should be passed in either the `import_file_url` parameter or the `bulk_guest_activity_file` parameter. The bulk upload request will fail if the file location is provided in both parameters.'
+              required:
+              - name
+            examples:
+              Example:
+                value:
+                  name: bulk-upload-batch1
+                  bulk_guest_activity_file: CSV_FILE_PATH_GOES_HERE
+                  import_file_url: CSV_FILE_PATH_GOES_HERE
+        description: "The requests for this API endpoint are passed using form data, as shown in the following examples.\n\n<b>Sample Request for Bulk Uploading Business Migration Users Using a Local CSV File</b>\n\n```curl\ncurl --request POST \\\n--url https://server_name_goes_here.punchh.com/api2/dashboard/migration_users/bulk_bmu_upload \\\n--header 'Accept: application/json' \\\n--header 'Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE' \\\n--header 'Content-Type: application/json' \\\n--form 'name=\"BMU804\"' \\\n--form 'bulk_guest_activity_file=@\"CSV_FILE_PATH_GOES_HERE\"'\n``` \n<b>Sample Request for Bulk Uploading Business Migration Users Using a CSV File URL</b>\n```curl\ncurl --request POST \\\n--url https://server_name_goes_here.punchh.com/api2/dashboard/migration_users/bulk_bmu_upload \\\n--header 'Accept: application/json' \\\n--header 'Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE' \\\n--header 'Content-Type: application/json' \\\n--form 'name=\"BMU805\"' \\\n--form 'bulk_guest_activity_file=\"CSV_FILE_PATH_GOES_HERE\"'\n```"
+components:
+  schemas:
+    loyalty-cards:
+      title: Loyalty Cards (Array Object)
+      x-stoplight:
+        id: njdpgb4yli57e
+      type: array
+      description: Details of the loyalty cards migrated for the user
+      items:
+        x-stoplight:
+          id: 6r04rfmx3h83g
+        type: object
+        properties:
+          card_number:
+            type: string
+            x-stoplight:
+              id: aju6sonvqllwe
+            description: Unique identifier of the loyalty card associated with the user
+          status:
+            type: string
+            x-stoplight:
+              id: 1yb2rg1mynli7
+            description: "Status of the loyalty card. These statuses apply only to ZipLine loyalty cards and are null for other loyalty cards. Each loyalty card can have only one status. \n\nA Punchh representative must enable the migration of physical ZipLine loyalty cards for the business. <b>Note</b>: Contact your Punchh representative to update this configuration setting. \n\nPossible values:\n* ACTIVE: The card is active and ready for payment.\n* WAITING_APPROVAL: The user has enrolled or updated their bank information, and ZipLine is awaiting verification of deposit/withdrawal transactions.\n* REJECT: The user’s banking information is invalid, or the entered deposit/withdrawal amounts are incorrect.\n* SUSPENDED: The user has unenrolled, reported a lost/damaged card, or is awaiting a new card.\n* EXPIRED: The user did not verify deposit or withdrawal amounts within 60 days of enrollment or a bank update.\n* PENDING_ENROLLMENT: The user failed identity verification and is on hold for address verification.\n* WAITING_PIN: A temporary PIN has been sent to the user.\n* HOLD: The user may have insufficient funds (NSF) or has exceeded invalid PIN attempts."
+          card_signup_date:
+            type: string
+            x-stoplight:
+              id: x0gtealx4p3s2
+            description: Date when the loyalty card was issued to the user, in YYYY-MM-DD format
+            format: date
+            default: YYYY-MM-DD
+            examples:
+            - '2023-02-03'
+  parameters:
+    accept:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Accept
+      description: Advertises which content types the client is able to understand
+      required: true
+    authorization-header:
+      schema:
+        type: string
+        default: Bearer BUSINESS_ADMIN_KEY_GOES_HERE
+      name: Authorization
+      in: header
+      description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
+      required: true
+    content-type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+  responses:
+    401-unauthorized:
+      description: 'A business admin key is missing or invalid. A request header in the following format is needed to make the request:
+
+
+        `Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE`'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+          examples:
+            default:
+              value:
+                error: You need to sign in or sign up before continuing.
+x-stoplight:
+  id: 9820bbd2e8ee1
+x-ext-urls: {}

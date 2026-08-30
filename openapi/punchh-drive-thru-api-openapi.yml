@@ -1,0 +1,179 @@
+openapi: 3.2.0
+info:
+  title: Mobile Drive Thru API
+  version: '1.0'
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+  description: 'Punchh provides a robust platform for offering loyalty programs to customers. When a business integrates its back-end with the Punchh server, the Punchh APIs become instrumental in executing loyalty programs for enrolled customers, primarily via business-branded mobile apps and websites tailored by Punchh.
+
+
+    To establish integration with the Punchh APIs, you need to understand how they are invoked and what responses are returned by the Punchh server. You can call APIs using any suitable API test client, such as Postman. Thus, the response to every API call made in Postman under a chosen environment (in app and/or platform) is reflected in the app and/or platform.'
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: Drive-Thru
+paths:
+  /api2/mobile/drivethru_code:
+    post:
+      summary: Generate Loyalty Short Code
+      operationId: post-api2-mobile-drivethru_code
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  short_code:
+                    type: string
+                    x-stoplight:
+                      id: 11bejs2b2uvv4
+                    description: Short code generated for the loyalty guest
+                  expiring_at:
+                    type: string
+                    x-stoplight:
+                      id: milcbftl59ekt
+                    description: Date/time when the short code expires and can no longer be used at the drive-thru, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+                  new_short_code_generated:
+                    type: boolean
+                    description: Indicates whether a new short code is generated. When the value is true, a new short code is generated and returned. When false, a previously active short code is returned.
+              examples:
+                Response Example:
+                  value:
+                    short_code: CODE_GOES_HERE
+                    expiring_at: '2025-11-04T07:58:07Z'
+                    new_short_code_generated: true
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    x-stoplight:
+                      id: s4k0g7hir3u42
+                    properties:
+                      location_id:
+                        type: string
+                        x-stoplight:
+                          id: h77vd9ybb3b3j
+              examples:
+                location_id is missing:
+                  value:
+                    errors:
+                      location_id: Required parameter missing or the value is empty.
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: string
+                    x-stoplight:
+                      id: jqp0b8ys32qb1
+              examples:
+                Drive-thru feature disabled:
+                  value:
+                    errors: Drive-thru feature not enabled
+      description: "Generates a short code from the mobile app, which the loyalty user can share verbally at the drive-thru window, enabling faster and more convenient account look-up at the POS. \n\nThe loyalty short code is intended for drive-thru identification only and cannot be used for payments. To generate a loyalty short code that supports both identification and payments, use the [Generate Single-Scan Code or Short Code API](https://developers.partech.com/docs/dev-portal-mobile/apis/mobile-api/tag/single-scan-code/post/api2/mobile/single_scan_tokens).\n\nNote: To generate the code, the drive-thru loyalty identification must be enabled for the business on the Punchh platform. Contact your Punchh representative to update this Punchh platform configuration setting.\n<!-- Cockpit > Dashboard > Miscellaneous Config > Enable Loyalty Identification at Drive-Thru -->"
+      parameters:
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/punchh-app-device-id'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/signature'
+      tags:
+      - Drive-Thru
+      x-stoplight:
+        id: 647b28e02d630
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  x-stoplight:
+                    id: 28nbheozq2h1p
+                  description: OAuth client ID provided by the business
+                location_id:
+                  type: number
+                  x-stoplight:
+                    id: vb9f2ayu0h0s6
+                  description: ID of the location for which the short code is requested. This parameter is required only when the location-level short code strategy is selected in the Punchh platform for the business. Contact your Punchh representative to update this Punchh platform configuration setting.
+              required:
+              - client
+            examples:
+              Request Example:
+                value:
+                  client: CLIENT_GOES_HERE
+                  location_id: 1
+components:
+  parameters:
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
+    punchh-app-device-id:
+      schema:
+        type: string
+        default: APP_DEVICE_ID_GOES_HERE
+      name: punchh-app-device-id
+      in: header
+      required: true
+      description: The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.
+x-stoplight:
+  id: bf6eddb435209
+x-ext-urls: {}

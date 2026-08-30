@@ -1,0 +1,332 @@
+openapi: 3.2.0
+info:
+  title: Online Ordering and SSO Deals API
+  version: '1.0'
+  description: "The Punchh SSO API endpoints provide user-management functions such as login, registration, forgot password, and connect with Facebook for users on the Punchh loyalty platform. You can also fetch user-specific information such as rewards or point balances. \n\nThe Punchh Online Ordering API endpoints enable users to earn and redeem rewards for online orders."
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: Deals
+paths:
+  /api/auth/deals:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deals'
+              examples:
+                default:
+                  value:
+                  - applicable_as_loyalty_redemption: false
+                    redeemable_properties: ''
+                    discount_amount: 0
+                    discount_channel: all
+                    expire_redemption_code_with_reward_end_date: false
+                    id: 23
+                    image: IMAGE_URL_GOES_HERE
+                    points: 0
+                    redeemable_id: 23
+                    redemption_expiry: 240
+                    thumb_image: IMAGE_URL_GOES_HERE
+                    meta_data: ''
+                    redeemable_uuid: ID_GOES_HERE
+                    name: BOGO Breadsticks
+                    description: ''
+                    start_time: '2021-04-28T13:59:47+05:30'
+        '412':
+          description: Sending invalid Signature
+        '422':
+          description: Sending invalid Entity
+      summary: List All Deals
+      description: Returns all available deals for a user
+      operationId: sso_list_all_deals
+      parameters:
+      - $ref: '#/components/parameters/Signature'
+      - schema:
+          type: string
+          default: no-cache
+        in: header
+        name: cache-control
+      - $ref: '#/components/parameters/content_type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/User-Agent'
+      tags:
+      - Deals
+      x-stoplight:
+        id: 40844ae91bcb3
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  default: CLIENT_GOES_HERE
+                  description: Client key of the business
+                authentication_token:
+                  type: string
+                  default: AUTHENTICATION_TOKEN_GOES_HERE
+                  description: The authentication token of the user. You can retrieve this from the response of a successful sign-in API call or through the [SSO process](/docs/dev-portal-online-ordering/9a41534336c87-sso-flow-for-web-and-mobile).
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  authentication_token: AUTHENTICATION_TOKEN_GOES_HERE
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '412':
+          description: Sending invalid Signature
+        '422':
+          description: Sending invalid Entity
+      summary: Save Selected Deals
+      description: Adds the selected deal to the user's account
+      operationId: sso_save_selected_deals
+      parameters:
+      - $ref: '#/components/parameters/Signature'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/content_type'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/Accept'
+      tags:
+      - Deals
+      x-stoplight:
+        id: 06e600d4accdf
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: Client key of the business
+                  default: CLIENT_GOES_HERE
+                authentication_token:
+                  type: string
+                  default: AUTHENTICATION_TOKEN_GOES_HERE
+                  description: The authentication token of the user. You can retrieve this from the response of a successful sign-in API call or through the [SSO process](/docs/dev-portal-online-ordering/9a41534336c87-sso-flow-for-web-and-mobile).
+                redeemable_uuid:
+                  type: string
+                  description: Redeemable UUID of the deal to be saved by the user
+                  default: REDEEMABLE_UUID_GOES_HERE
+              required:
+              - client
+              - redeemable_uuid
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  authentication_token: AUTHENTICATION_TOKEN_GOES_HERE
+                  redeemable_uuid: REDEEMABLE_UUID_GOES_HERE
+  /api/auth/deals/{redeemable_uuid}:
+    parameters:
+    - schema:
+        type: string
+      name: redeemable_uuid
+      in: path
+      required: true
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deals'
+              examples:
+                default:
+                  value:
+                    redeemable_image_url: IMAGE_URL_GOES_HERE
+                    redeemable_properties: ''
+                    redeemable_id: 36
+                    name: Large Pizza (Box Top Pizza)
+                    description: ''
+                    points_required_to_redeem: null
+                    meta_data: ''
+                    expiry_days: null
+                    expiring_at: null
+                    discount_amount: null
+                    created_at: '2019-05-31T20:04:54Z'
+                    redeemable_uuid: ID_GOES_HERE
+                    start_time: '2021-04-28T13:59:47+05:30'
+        '412':
+          description: Sending invalid Signature
+        '422':
+          description: Sending invalid Entity
+      summary: Get Deal Details
+      description: Returns the details of the deal
+      operationId: sso_get_the_deal_detail
+      parameters:
+      - $ref: '#/components/parameters/Signature'
+      - schema:
+          type: string
+        in: path
+        name: redeemable_uuid
+        required: true
+        description: UUID that uniquely identifies the redeemable
+      - $ref: '#/components/parameters/content_type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/accept_language'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/User-Agent'
+      tags:
+      - Deals
+      x-stoplight:
+        id: 31b74446c54ab
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  default: CLIENT_GOES_HERE
+                  description: Client key of the business
+                authentication_token:
+                  type: string
+                  description: The authentication token of the user. You can retrieve this from the response of a successful sign-in API call or through the [SSO process](/docs/dev-portal-online-ordering/9a41534336c87-sso-flow-for-web-and-mobile).
+                  default: AUTHENTICATION_TOKEN_GOES_HERE
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  authentication_token: AUTHENTICATION_TOKEN_GOES_HERE
+        description: ''
+components:
+  parameters:
+    accept_language:
+      schema:
+        type: string
+        default: en
+      in: header
+      name: Accept-Language
+      description: Set to the language you are using.
+    User-Agent:
+      schema:
+        type: string
+        default: Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type
+      name: User-Agent
+      in: header
+      required: true
+      description: For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).
+    content_type:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Content-Type
+      description: Set this header to **application/json**.
+      required: true
+    Signature:
+      schema:
+        type: string
+        default: SIGNATURE_GOES_HERE
+      in: header
+      name: x-pch-digest
+      description: The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Accept
+      description: Advertises which content types the client is able to understand
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      required: true
+      description: You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+  schemas:
+    deals:
+      type: array
+      title: Deals (Object)
+      x-stoplight:
+        id: de3191c1d2f29
+      items:
+        type: object
+        properties:
+          applicable_as_loyalty_redemption:
+            type: boolean
+            description: Enables redeemables to be allowed for loyalty reward redemption as well
+          redeemable_properties:
+            type: string
+            description: Properties such as "Merchandise", "Food Item", etc. can be added to a particular redeemable.
+          discount_amount:
+            type: integer
+            description: Discount amount associated with a deal
+          discount_channel:
+            type: string
+            description: 'Possible values are:
+
+              - online_only - online orders
+
+              - offline_only - POS
+
+              - all - both'
+          expire_redemption_code_with_reward_end_date:
+            type: boolean
+            description: Whether the redemption code expires with the expiry of the reward
+          id:
+            type: integer
+            description: Unique ID of the deal in the system
+          image:
+            type: string
+            description: URL of the image displayed in the app to depict the redeemable
+          points:
+            type: integer
+            description: Number of points required to redeem a particular redeemable
+          redeemable_id:
+            type: integer
+            description: Unique ID that identifies a redeemable in the system
+          redemption_expiry:
+            type: integer
+            description: Expiry of the redemption
+          thumb_image:
+            type: string
+            description: URL of the thumbnail image displayed in the app to depict the redeemable
+          meta_data:
+            type: string
+            description: Metadata that can be added to a redeemable. This will be returned only if it is configured in the Punchh platform. The maximum length is 255 characters.
+          redeemable_uuid:
+            type: string
+            description: UUID assigned to the redeemable
+          name:
+            type: string
+            description: Name of the redeemable
+          description:
+            type: string
+            description: A description of the redeemable that appears in the app. This can be used to persuade users to redeem.
+          start_time:
+            type: string
+            x-stoplight:
+              id: 2ohakgika5dxk
+            format: date-time
+            description: Activation date and time of the redeemable. A redeemable cannot be active before this date.
+x-stoplight:
+  id: 73bbc35439926
+x-ext-urls: {}

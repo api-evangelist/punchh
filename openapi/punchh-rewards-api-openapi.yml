@@ -1,0 +1,668 @@
+openapi: 3.2.0
+info:
+  title: Online Ordering and SSO Rewards API
+  version: '1.0'
+  description: "The Punchh SSO API endpoints provide user-management functions such as login, registration, forgot password, and connect with Facebook for users on the Punchh loyalty platform. You can also fetch user-specific information such as rewards or point balances. \n\nThe Punchh Online Ordering API endpoints enable users to earn and redeem rewards for online orders."
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: Rewards
+paths:
+  /api/auth/loyalty_points_estimator:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  estimated_points:
+                    type: integer
+                    description: 'System-estimated loyalty points of the user based on the `subtotal_amount` provided in the request. This value depends on the points conversion rate, which can be configured in the Punchh platform. Contact your Punchh representative to update this configuration. '
+              examples:
+                default:
+                  value:
+                    estimated_points: 46
+      summary: Estimate Loyalty Points Earning
+      description: 'Returns a prediction of how many points can be earned before submitting the transaction. The estimate is derived from the base earning rate of the business and does not account for special promotions or campaigns.
+
+        '
+      operationId: sso_estimate_loyalty_points_earning
+      parameters:
+      - $ref: '#/components/parameters/Signature'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/content_type'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/User-Agent'
+      tags:
+      - Rewards
+      x-stoplight:
+        id: f588025c608a3
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: Client key of the business
+                  default: CLIENT_GOES_HERE
+                authentication_token:
+                  type: string
+                  default: AUTHENTICATION_TOKEN_GOES_HERE
+                  description: The authentication token of the user. You can retrieve this from the response of a successful sign-in API call or through the [SSO process](/docs/dev-portal-online-ordering/9a41534336c87-sso-flow-for-web-and-mobile).
+                subtotal_amount:
+                  type: number
+                  format: float
+                  description: Order amount before any taxes (sum of all amounts minus any discounts). This is the amount upon which loyalty points/visits are granted.
+              required:
+              - client
+              - subtotal_amount
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  authentication_token: AUTHENTICATION_TOKEN_GOES_HERE
+                  subtotal_amount: 10
+  /api/auth/conversions:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              examples:
+                default:
+                  value:
+                  - 250 points converted into 2
+      summary: Convert Points
+      description: Converts points to cash, fuel discounts, and charities based on the configuration or conversion rules set in the Punchh platform
+      operationId: sso_points_conversion_api
+      parameters:
+      - $ref: '#/components/parameters/Signature'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/content_type'
+      tags:
+      - Rewards
+      x-stoplight:
+        id: d23537781e07c
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: Client key of the business
+                  default: CLIENT_GOES_HERE
+                authentication_token:
+                  type: string
+                  default: AUTHENTICATION_TOKEN_GOES_HERE
+                conversion_rule_id:
+                  type: integer
+                  description: Conversion rule ID set for the Punchh platform configuration (returned for the converted_category_balances object as category_id)
+                  format: int32
+                source_value:
+                  type: integer
+                  format: int32
+                  description: Number of points the user wants to convert to cash, fuel discounts, or charities
+                converted_value:
+                  type: integer
+                  description: Values of the cash, fuel discounts, or charities converted from points
+                  format: int32
+                social_cause_campaign_id:
+                  type: string
+                  description: Campaign ID in case of points converted to charity
+              required:
+              - client
+              - conversion_rule_id
+              - source_value
+              - converted_value
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  authentication_token: AUTHENTICATION_TOKEN_GOES_HERE
+                  conversion_rule_id: 8
+                  source_value: 100
+                  converted_value: 10
+                  social_cause_campaign_id: '12'
+  /api/auth/estimate_points:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  estimated_points:
+                    type: integer
+                    description: System-estimated loyalty points of the user based on the subtotal_amount provided in the request. This value depends on the points conversion rate, which can be configured in the Punchh platform. Contact your Punchh representative to update this configuration.
+              examples:
+                default:
+                  value:
+                    estimated_points: 200
+      summary: Estimate Points Earning
+      description: Returns a prediction of how many points can be earned before submitting the transaction. The estimate is derived from the base earning rate of the business and does not account for special promotions or campaigns.
+      operationId: sso_estimate_points_earning
+      parameters:
+      - $ref: '#/components/parameters/Signature'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/content_type'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/User-Agent'
+      tags:
+      - Rewards
+      x-stoplight:
+        id: bce80fc26cf46
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: Client key of the business
+                  default: CLIENT_GOES_HERE
+                authentication_token:
+                  type: string
+                  default: AUTHENTICATION_TOKEN_GOES_HERE
+                menu_items:
+                  $ref: '#/components/schemas/menu_items'
+                subtotal_amount:
+                  type: number
+                  format: float
+                  description: Order amount before taxes (sum of all item amounts minus any discounts). Same as `receipt_amount`. For historical reasons, include this parameter along with `receipt_amount` in the API request.
+                receipt_amount:
+                  type: number
+                  description: Order amount before taxes, calculated as the sum of all item amounts minus any discounts. This is the amount used to calculate loyalty points/visits. The value of this parameter should match `subtotal_amount`. For example, if the order amount is $10, both `receipt_amount` and `subtotal_amount` will be 10. If a $2 discount is applied, both will be 8.
+                  format: double
+              required:
+              - client
+              - subtotal_amount
+              - receipt_amount
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  authentication_token: AUTHENTICATION_TOKEN_GOES_HERE
+                  menu_items:
+                  - item_name: White rice
+                    item_qty: 1
+                    item_amount: 2
+                    menu_item_type: M
+                    menu_item_id: '3419'
+                    menu_family: '800'
+                    menu_major_group: '152'
+                    serial_number: '1.0'
+                  - item_name: Brown rice
+                    item_qty: 1
+                    item_amount: 8
+                    menu_item_type: M
+                    menu_item_id: '3418'
+                    menu_family: '800'
+                    menu_major_group: '152'
+                    serial_number: '2.0'
+                  subtotal_amount: 10
+                  receipt_amount: 10
+  /api/auth/ordering_meta:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  base_redeemable_name:
+                    type: string
+                    description: Name of the base reedemable
+                  base_redeemable_description:
+                    type: string
+                    description: Description of the base reedemable
+                  base_redeemable_image:
+                    type: string
+                    description: Image of the base reedemable
+                  base_redeemable_properties:
+                    type:
+                    - string
+                    - 'null'
+                    description: Properties of the base reedemable
+              examples:
+                default:
+                  value:
+                    base_redeemable_name: 'Punch Card = FREE Adult Buffet or Carryout 1-Topping Pizza '
+                    base_redeemable_description: 'You just earned yourself an awesome reward! Now, you get to choose a FREE Adult Buffet or your favorite Carryout 1-Topping Pizza. Either way, you win.
+
+                      *To redeem, use your Punch Card Reward when ordering online or through the MyAcme App.'
+                    base_redeemable_image: IMAGE_URL_GOES_HERE
+                    base_redeemable_properties: null
+        '400':
+          description: Sending invalid credentials
+        '412':
+          description: Sending invalid Signature
+      summary: Ordering Meta
+      description: Retrieves information about the base redeemable
+      operationId: sso_ordering_meta
+      parameters:
+      - $ref: '#/components/parameters/Signature'
+      - schema:
+          type: string
+          default: base_redeemable
+        in: query
+        name: filter
+        required: true
+        description: Send "base_redeemable" to get metadata about the redeemable
+      - $ref: '#/components/parameters/content_type'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/Accept'
+      tags:
+      - Rewards
+      x-stoplight:
+        id: 7108126712419
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: Client key of the business
+                  default: CLIENT_GOES_HERE
+                authentication_token:
+                  type: string
+                  x-stoplight:
+                    id: h11lxep7b4xy6
+                  description: The authentication token of the user. You can retrieve this from the response of a successful sign-in API call or through the [SSO process](https://developers.partech.com/docs/dev-portal-online-ordering/9a41534336c87-sso-flow-for-web-and-mobile).
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+  /api/auth/offers:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pinned_message:
+                    type: string
+                    description: Message attached with available offers
+                  rewards:
+                    $ref: '#/components/schemas/Rewards-Attribute'
+                  notifications:
+                    $ref: '#/components/schemas/Notifications'
+                  redeemables:
+                    $ref: '#/components/schemas/Redeemables-Attributes'
+              examples:
+                default:
+                  value:
+                    pinned_message: ''
+                    rewards:
+                    - code: '531611'
+                      id: 1014491
+                      business_id: 470
+                      redeemable_id: 105
+                      start_date: '2015-06-16'
+                      end_date: '2015-07-15'
+                      read_at: null
+                      start_date_tz: '2015-06-15T18:30:00Z'
+                      end_date_tz: '2015-07-15T18:29:59Z'
+                      gaming_level_id: null
+                      gifted_for_type: Admin
+                      gift_reason: Admin Generosity
+                      location_ids:
+                      - 303133
+                      - 303134
+                      external_store_numbers:
+                      - '3613'
+                      - '3614'
+                    notifications:
+                    - id: 8415352
+                      message: notification message
+                      user_id: 111111111
+                      token: null
+                      sent_at: '2015-05-28T17:03:27Z'
+                      kind: campaign
+                      network: null
+                      status: sent
+                      deleted_at: null
+                      created_at: '2015-05-28T17:03:26Z'
+                      updated_at: '2015-05-28T17:03:27Z'
+                      read_at: null
+                      business_name: BUSINESS_NAME_GOES_HERE
+                      sent_at_tz: '2015-05-28T11:03:27-06:00'
+                    redeemables:
+                    - description: Free Soft Drink (600 ml) when you purchase a Pizza!!
+                      discount_amount: 700
+                      id: 105
+                      image: /images/punchh-icon-small.png
+                      name: Free Soft Drink Offer!
+                      points: 0
+                      redeemable_id: 105
+                      thumb_image: /images/punchh-icon-thumb.png
+                      applicable_as_loyalty_redemption: null
+        '412':
+          description: Sending invalid Signature
+        '422':
+          description: Sending invalid Entity
+      summary: Fetch Available Offers
+      description: Fetches available offers or offer details of a user. This request returns how many offers are available to the user.
+      operationId: sso_auth_fetchavailableoffers
+      parameters:
+      - $ref: '#/components/parameters/Signature'
+      - $ref: '#/components/parameters/content_type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/Authorization'
+      tags:
+      - Rewards
+      x-stoplight:
+        id: ba92ee7891a30
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                authentication_token:
+                  type: string
+                  description: The authentication token of the user. You can retrieve this from the response of a successful sign-in API call or through the [SSO process](/docs/dev-portal-online-ordering/9a41534336c87-sso-flow-for-web-and-mobile).
+                client:
+                  type: string
+                  description: Client key of the business
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  authentication_token: AUTHENTICATION_TOKEN_GOES_HERE
+                  client: CLIENT_GOES_HERE
+components:
+  schemas:
+    Redeemables-Attributes:
+      type: array
+      items:
+        type: object
+        properties:
+          applicable_as_loyalty_redemption:
+            type: boolean
+            description: Applicable on loyalty
+          redeemable_properties:
+            type: string
+            description: Comma-separated values that provide additional details about a redeemable. For example, a redeemable could be "Food Item" or "Merchandise", etc. These can be configured for a business in the Punchh platform and attached to a redeemable. If no value is attached to a redeemable, a blank field will be returned.
+          discount_amount:
+            type: integer
+            description: Amount of discount on the reward
+          discount_channel:
+            type: string
+            description: 'Can accept any one of the following values:
+
+              - all - discountable everywhere
+
+              - online_only - online orders only
+
+              - offline_only - in store only'
+          expire_redemption_code_with_reward_end_date:
+            type:
+            - boolean
+            - 'null'
+            description: Whether the redemption code expires with the expiry of the reward
+          id:
+            type: integer
+            description: Identification of the reward
+          image:
+            type: string
+            description: Image of the redeemable item
+          points:
+            type: integer
+            description: Total number of points required for redemption
+          redeemable_id:
+            type: integer
+            description: Identification of the redeemable item
+          redemption_expiry:
+            type: integer
+            description: Expiry of the redemption, in minutes
+          thumb_image:
+            type: string
+            description: Thumbnail image of the redeemable item
+          name:
+            type: string
+            description: Name of the redeemable item
+          description:
+            type: string
+            description: Description of the redeemable item
+      title: Redeemables Attributes (Object)
+      x-stoplight:
+        id: 173597e963ebd
+    menu_items:
+      type: array
+      items:
+        type: object
+        properties:
+          item_name:
+            type: string
+            description: 'Name of the menu item
+
+              '
+          item_qty:
+            type: integer
+            description: Quantity ordered by the customer. If the item is a modifier (such as extra cheese on a pizza base item), make sure the quantity reflects the total number of base items included. For example, if you have a pizza base item with a certain item ID and a quantity of two, and the pizzas each have an extra cheese modifier added to them, then the modifier quantity should be two to account for the modifier across both pizzas. This applies only to base items of the same ID. If different base items include the same modifier, you do not need to sum the modifiers.
+          item_amount:
+            type: number
+            description: 'The total price of the line item or the amount of the discount that you applied to an item. In case of multiple quantities, this means the sum total of all item amounts. Always represent this value as a positive number, even when the item is a discount.
+
+              '
+          menu_item_type:
+            type: string
+            description: "The classification of the item. Choose from the following types based on the item:\n\nM - Menu item ( + or - ) \n\nD - Discount (negative). Either internal or Punchh will always evaluate lines as ( - ) regardless of the sign assigned in the API call\n\nS - Service item. Any item representing money received that is not a sale. For example, service charges, delivery fees, tips, purchase of gift cards/certificates, etc. \n\nT - Tax item. Taxes of all sorts \n\nP - Payment item. Visa, MasterCard, cash, gift card/certificate (when used to pay for the order)"
+          menu_item_id:
+            type: string
+            description: Unique identifier for the item
+          menu_family:
+            type: string
+            description: The family that the item belongs to. The family is the subcategory for the item. Even though the parameter is required, you can pass it in the request with a blank value. You can leave this blank if the item does not belong to a family.
+          menu_major_group:
+            type: string
+            description: 'The major group that the item belongs to. The major group is the parent category for the item. Even though the parameter is required, you can pass it in the request with a blank value. You can leave this blank if the item does not belong to a major group.
+
+              '
+          serial_number:
+            type: string
+            description: A serialized number that differentiates distinct menu items on a receipt. The purpose of this field is to identify which items on the receipt are base items and which items are modifiers to the base items. For example, a main menu item (such as pizza) may have serial number "1.0", and the associated modifiers (such as "extra cheese", "olives", and "jalapenos") may have serial numbers "1.1", "1.2", and "1.3" respectively. Serialization is limited to one decimal point, so you can only modify the base item. You cannot modify a modifier with 1.x.x, and so on.
+        required:
+        - item_name
+        - item_qty
+        - item_amount
+        - menu_item_type
+        - menu_item_id
+        - menu_family
+        - menu_major_group
+        - serial_number
+      title: Menu Items (Object)
+      x-stoplight:
+        id: e8647930d00a4
+    Notifications:
+      type: array
+      description: Returns the details of the notifications received by a user. A maximum of 10 notifications will be fetched.
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            description: ID of the notification
+          kind:
+            type: string
+            description: 'Type of notification. There are three types of notifications that a user can receive: ''system'', ''campaign'', and ''news''.'
+          message:
+            type: string
+            description: Message sent to the user in the notification
+          read_at:
+            type: string
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+            format: date-time
+            x-nullable: true
+          created_at:
+            type: string
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+            format: date-time
+      title: Notifications (Object)
+      x-stoplight:
+        id: ba4734ac30a93
+    Rewards-Attribute:
+      type: array
+      items:
+        type: object
+        properties:
+          business_id:
+            type: integer
+            description: Identification of the business
+          end_date:
+            type: string
+            description: Date after which the reward will not be allowed on redemption, in YYYY-MM-DD format
+            enum:
+            - YYYY-MM-DD
+            format: date
+          end_date_tz:
+            type: string
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+            format: date-time
+            description: Timestamp with time zone
+          gaming_level_id:
+            type: string
+            description: Gaming level that the user has reached
+          gifted_for_type:
+            type: string
+            description: 'The reward can be gifted for the following types:
+
+              - Admin reward - Offered by the administrator to a user
+
+              - Campaign - Offered to a user under a campaign triggered by a business
+
+              - Checkin - When a user makes a check-in
+
+              - FeedbackReply - Feedback provided by a user
+
+              - MassGifting - If a user is among the population of users that received rewards
+
+              - Referral - Referral of one user by another user
+
+              - ScratchPlay - Mobile game'
+          gift_reason:
+            type: string
+            description: Reward given for activity performed by a user
+          id:
+            type: integer
+            description: ID of reward
+            format: int64
+          location_ids:
+            type: array
+            description: Location IDs are interchangeable with external store numbers.
+            items:
+              type: integer
+          read_at:
+            type: string
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+            format: date-time
+            description: Time when the user acknowledged the reward
+          redeemable_id:
+            type: integer
+            description: ID of the redeemable item
+          reward_properties:
+            description: Properties of the reward
+            x-nullable: true
+          start_date:
+            type: string
+            enum:
+            - YYYY-MM-DD
+            format: date
+            description: Date from which the reward is applicable, in YYYY-MM-DD format
+          start_date_tz:
+            type: string
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+            format: date-time
+            description: Tmestamp with time zone
+          external_store_numbers:
+            type: array
+            description: External store numbers are interchangeable with location IDs.
+            items:
+              type: integer
+          type:
+            type: string
+            description: This will be either redeemable or reward. The Create Online Redemption API request depends on what is returned in this field.
+      title: Rewards Attributes (Object)
+      x-stoplight:
+        id: b56f79b98e3cd
+  parameters:
+    User-Agent:
+      schema:
+        type: string
+        default: Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type
+      name: User-Agent
+      in: header
+      required: true
+      description: For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).
+    content_type:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Content-Type
+      description: Set this header to **application/json**.
+      required: true
+    Signature:
+      schema:
+        type: string
+        default: SIGNATURE_GOES_HERE
+      in: header
+      name: x-pch-digest
+      description: The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Accept
+      description: Advertises which content types the client is able to understand
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      required: true
+      description: You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+x-stoplight:
+  id: 73bbc35439926
+x-ext-urls: {}

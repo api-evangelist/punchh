@@ -1,0 +1,343 @@
+openapi: 3.2.0
+info:
+  title: Mobile Game API
+  version: '1.0'
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+  description: 'Punchh provides a robust platform for offering loyalty programs to customers. When a business integrates its back-end with the Punchh server, the Punchh APIs become instrumental in executing loyalty programs for enrolled customers, primarily via business-branded mobile apps and websites tailored by Punchh.
+
+
+    To establish integration with the Punchh APIs, you need to understand how they are invoked and what responses are returned by the Punchh server. You can call APIs using any suitable API test client, such as Postman. Thus, the response to every API call made in Postman under a chosen environment (in app and/or platform) is reflected in the app and/or platform.'
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: Game
+paths:
+  /api2/mobile/par_games:
+    get:
+      summary: Fetch Games
+      tags:
+      - Game
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  games:
+                    $ref: '#/components/schemas/games'
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+              examples:
+                Response Example:
+                  value:
+                    games:
+                    - id: 4
+                      name: Spin Wheel 1
+                      description: zscc
+                      url: URL_GOES_HERE
+                      status: active
+                      channel: mobile
+                      created_at: '2025-11-30T22:32:25-08:00'
+                      updated_at: '2025-11-30T22:32:25-08:00'
+                      cover_img: IMAGE_URL_GOES_HERE
+                    - id: 3
+                      name: Black OPS I
+                      description: ''
+                      url: URL_GOES_HERE
+                      status: active
+                      channel: web
+                      created_at: '2025-11-30T22:32:01-08:00'
+                      updated_at: '2025-11-30T22:32:01-08:00'
+                      cover_img: null
+                    - id: 1
+                      name: Mario
+                      description: test
+                      url: URL_GOES_HERE
+                      status: active
+                      channel: mobile_web
+                      created_at: '2025-11-30T22:31:13-08:00'
+                      updated_at: '2025-11-30T22:31:13-08:00'
+                      cover_img: IMAGE_URL_GOES_HERE
+                    pagination:
+                      current_page: 1
+                      per_page: 20
+                      total_count: 3
+                      total_pages: 1
+                      has_next_page: false
+                      has_previous_page: false
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    x-stoplight:
+                      id: rha4znr291vz1
+                    properties:
+                      parameter_name:
+                        type: string
+                        x-stoplight:
+                          id: 5aon316o67m1h
+              examples:
+                client parameter value empty or missing:
+                  value:
+                    errors:
+                      client: Required parameter missing or the value is empty.
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    x-stoplight:
+                      id: bkdiw7ypfvxuu
+                    properties:
+                      error_name:
+                        type: array
+                        x-stoplight:
+                          id: qbwgu8p7g5ll6
+                        items: {}
+              examples:
+                Invalid or missing access token:
+                  value:
+                    errors:
+                      unauthorized:
+                      - An active access token must be used to query information about the current user.
+        '404':
+          description: 'Not Found: No games found for the given brand'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: get-api2-mobile-par_games
+      description: This API allows clients to fetch configured game URLs from the Punchh dashboard through an authenticated request. It enables mobile and web applications to dynamically display or trigger the correct game experiences based on the configurations set by brand admins. Only active game URLs are returned, ensuring that apps always reference the most current and valid game links.
+      parameters:
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/punchh-app-device-id'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Accept-Language'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  x-stoplight:
+                    id: fxllut8rdqa9i
+                  description: OAuth client ID provided by the business
+                page:
+                  type: integer
+                  x-stoplight:
+                    id: vbsnwue59ti1b
+                  description: Page number of results to retrieve. If a value is provided, the API returns only that page, using the value of per_page to determine how many records are included. If page is not specified, the API returns the first page by default. Any invalid value will be treated as the default value.
+                  default: 1
+                per_page:
+                  type: integer
+                  x-stoplight:
+                    id: 5x7dm4ii6qxzj
+                  description: Number of records to return per page. If per_page is not specified, the API defaults to 20 records per page. The maximum allowed value is 100. Any invalid value will be treated as the default value.
+                  minimum: 1
+                  maximum: 100
+                  default: 20
+                channel:
+                  type: string
+                  x-stoplight:
+                    id: kdot3n2lj5wt7
+                  description: 'Filters the list of games by channel. Possible values:
+
+
+                    * mobile: Returns games available on mobile.
+
+                    * web: Returns games available on web.
+
+                    * mobile_web: Returns games available on both mobile and web.
+
+                    * If not specified, all games are returned.'
+              required:
+              - client
+            examples:
+              Request Example:
+                value:
+                  client: CLIENT_GOES_HERE
+                  page: 1
+                  per_page: 20
+                  channel: mobile
+        description: ''
+components:
+  parameters:
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
+    punchh-app-device-id:
+      schema:
+        type: string
+        default: APP_DEVICE_ID_GOES_HERE
+      name: punchh-app-device-id
+      in: header
+      required: true
+      description: The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.
+  schemas:
+    games:
+      title: Games (Array Object)
+      x-stoplight:
+        id: 4mrgpodjouhpb
+      type: array
+      description: A paginated list of active games available for the brand, along with detailed information for each game.
+      items:
+        x-stoplight:
+          id: 6vw5kq92w2hyf
+        type: object
+        properties:
+          id:
+            type: string
+            x-stoplight:
+              id: lmpwcytq6fwlw
+            description: Unique Punchh identifier for the game configuration
+          name:
+            type: string
+            x-stoplight:
+              id: 0p7e7fm39qk1k
+            description: Display name of the game (e.g., "Spin Wheel 1")
+          description:
+            type: string
+            x-stoplight:
+              id: h7mltk1dbo7c0
+            description: Brief summary of the game
+          url:
+            type: string
+            x-stoplight:
+              id: ya00ps1c1c4it
+            description: Primary URL that brand's app must use to launch the game
+          channel:
+            type: string
+            x-stoplight:
+              id: mo8kq1e1fb8x0
+            description: 'Channel(s) where the game is intended to be displayed or played. Possible values:
+
+
+              * mobile: Returns games available on mobile.
+
+              * web: Returns games available on the web.
+
+              * mobile_web: Returns games available on both mobile and web.'
+          status:
+            type: string
+            x-stoplight:
+              id: icy8s3fjs86nb
+            description: Current status of the game configuration (e.g., active).
+          created_at:
+            type: string
+            x-stoplight:
+              id: c3f9tynsqep6f
+            description: Date and time when the game configuration was created, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+          updated_at:
+            type: string
+            x-stoplight:
+              id: 5ms5jk0n31mn1
+            description: Date and time when the game configuration was last updated, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+          cover_img:
+            type: string
+            x-stoplight:
+              id: cover-img-games
+            x-nullable: true
+            description: The URL of the branded cover/intro image for the game. Used by brand mobile app to display the image on the games list and details screens. Returns null if no cover image has been uploaded, or if the game's channel is set to Web only. Only populated for games with a channel of `mobile` and `mobile_web`
+    pagination:
+      title: Pagination (Object)
+      x-stoplight:
+        id: tgyhdl9oiowfr
+      type: object
+      description: Returns pagination information of the results.
+      properties:
+        current_page:
+          type: integer
+          x-stoplight:
+            id: u3w44a3aeb9lc
+          description: Page number of the results currently being returned by the API
+        per_page:
+          type: integer
+          x-stoplight:
+            id: 3fzvsml7u9cpv
+          description: Number of items returned per page in the response
+        total_count:
+          type: integer
+          x-stoplight:
+            id: ypgff6iq9dgqx
+          description: Total number of records available across all pages
+        total_pages:
+          type: integer
+          x-stoplight:
+            id: kprld26pw8gae
+          description: Total number of pages required to display all available records
+        has_next_page:
+          type: boolean
+          x-stoplight:
+            id: 3ax9n5j7i0e7i
+          description: Indicates whether more pages are available after the current page
+        has_previous_page:
+          type: boolean
+          x-stoplight:
+            id: qshbr9pjl4b3c
+          description: Indicates whether there are pages available before the current page
+x-stoplight:
+  id: bf6eddb435209
+x-ext-urls: {}

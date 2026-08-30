@@ -1,0 +1,557 @@
+openapi: 3.2.0
+info:
+  title: Punchh WiFi Acquisition API
+  version: '1.0'
+  description: 'Operations tagged WiFi Acquisition across 2 of this provider''s published API definitions: punchh-mobile-api-openapi.yml, punchh-platform-functions-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: WiFi Acquisition
+paths:
+  /api2/wifi/users/:
+    get:
+      responses:
+        '202':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      summary: Guest Look-up for WiFi Enrollment
+      description: Returns whether a user exists in the business or not
+      operationId: mobile_wifi_enrollment
+      tags:
+      - WiFi Acquisition
+      parameters:
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: ccd88fee787fe
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  x-stoplight:
+                    id: m89d3as1th0l0
+                  description: OAuth client ID provided by the business
+                email:
+                  type: string
+                  x-stoplight:
+                    id: xyu85ewum26uv
+                  description: Email address of the user that will be looked up. Either `email` or `phone` should be provided to make the request.
+              required:
+              - client
+              - email
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  email: test@example.com
+        description: ''
+    post:
+      responses:
+        '202':
+          description: "Accepted! This response means that the user has been added to the business as a WiFi-enrolled guest. \n\nIf this call is made accidentally for a user who already exists in the business, the record will be skipped and the response will still be `202` (accepted)."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      summary: Enroll Guests via WiFi
+      description: Enrolls guests for eClub using WiFi as the acquisition channel
+      operationId: mobile_enroll_guest_for_wifi
+      tags:
+      - WiFi Acquisition
+      parameters:
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: f3a013f9ed402
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                location_id:
+                  type: integer
+                  description: ID of the WiFi location
+                store_number:
+                  type: integer
+                  description: Store number of the location
+                user:
+                  $ref: '#/components/schemas/User-object'
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  location_id: 311031
+                  store_number: 4
+                  user:
+                    email: test@example.com
+                    first_name: FIRST_NAME_GOES_HERE
+                    last_name: LAST_NAME_GOES_HERE
+                    phone: '1111111111'
+                    address_line1: ADDRESS_GOES_HERE
+                    state: California
+                    zip_code: '94040'
+                    birthday: '1999-01-01'
+                    marketing_email_subscription: '1'
+    servers:
+    - url: https://SERVER_NAME_GOES_HERE.punchh.com
+  /api2/wifi/users:
+    get:
+      responses:
+        '200':
+          description: User already exists either as a Loyalty Guest or as an eClub Member for the business.
+        '202':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          $ref: '#/components/responses/401-unauthorized'
+        '403':
+          description: You do not have acccess to this feature.
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    errors:
+                      unauthorized: you do not have acccess to this feature
+        '404':
+          description: User does not exist either as a Loyalty Guest or an eClub Member for the business.
+      summary: Guest Look-up for WiFi Enrollment
+      description: Returns whether a user exists in the business or not. Either `email` or `phone` should be provided with the request.
+      operationId: dashboard_guest_lookup_for_wifi_enrollment
+      tags:
+      - WiFi Acquisition
+      parameters:
+      - schema:
+          type: string
+        in: query
+        name: client
+        description: Client key of the business
+      - schema:
+          type: string
+        in: query
+        name: email
+        description: Email address of the user that will be looked up
+      - schema:
+          type: string
+        in: query
+        name: phone
+        description: Phone number of the user that will be looked up
+      - $ref: '#/components/parameters/authorization-header'
+      x-stoplight:
+        id: 550dfb3d50f7b
+    post:
+      responses:
+        '202':
+          description: The user was added to the business as a WiFi-enrolled guest. If this call is made accidentally for a user that already exists in the business, the record will be skipped and the response will still be `202` accepted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          $ref: '#/components/responses/401-unauthorized'
+      summary: Enroll Guests via WiFi
+      description: Enrolls guests for eClub using WiFi as the acquisition channel.  If both `location_id` and `store_number` are provided, `store_number` will be preferred.
+      operationId: dashboard_enroll_guests_for_wifi
+      tags:
+      - WiFi Acquisition
+      parameters:
+      - $ref: '#/components/parameters/authorization-header'
+      x-stoplight:
+        id: 6482652874a19
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: Client key of the business
+                location_id:
+                  type: integer
+                  description: ID of the location where the user enrolls via WiFi
+                store_number:
+                  type: integer
+                  description: Store number of the location where the user enrolls via WiFi
+                user:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      description: Email address of the enrolling user
+                    first_name:
+                      type: string
+                      description: First name of the enrolling user
+                    last_name:
+                      type: string
+                      description: Last name of the enrolling user
+                    phone:
+                      type: string
+                      description: Phone number of the enrolling user
+                    address_line1:
+                      type: string
+                      description: Address of the enrolling user
+                    state:
+                      type: string
+                      description: State where the enrolling user lives
+                    zip_code:
+                      type: string
+                      description: Zip code where the enrolling user lives
+                    birthday:
+                      type: string
+                      description: Birthday of the enrolling user
+                    marketing_email_subscription:
+                      type: string
+                      description: Whether the enrolling user has subscribed to receive marketing emails or not. If the "Explicit-Opt in" flag is enabled, `marketing_email_subscription` is required. The values ''true'' and ''false'' are string, and 0 and 1 can be a string or an integer.
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  location_id: 311031
+                  store_number: 4
+                  user:
+                    email: test@example.com
+                    first_name: FIRST_NAME_GOES_HERE
+                    last_name: LAST_NAME_GOES_HERE
+                    phone: '1111111111'
+                    address_line1: ADDRESS_GOES_HERE
+                    state: California
+                    zip_code: '94040'
+                    birthday: '1999-01-01'
+                    marketing_email_subscription: '1'
+    servers:
+    - url: https://SERVER_NAME_GOES_HERE.punchh.com
+components:
+  parameters:
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
+    authorization-header:
+      schema:
+        type: string
+        default: Bearer BUSINESS_ADMIN_KEY_GOES_HERE
+      name: Authorization
+      in: header
+      description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
+      required: true
+  schemas:
+    User-object:
+      type: object
+      description: Includes details about the users who are registered on a particular business
+      x-examples:
+        json/application:
+          address: ''
+          anniversary: '2013-02-16'
+          avatar_remote_url: null
+          birthday: '1999-01-01'
+          city: ''
+          communicable_email: test@example.com
+          created_at: '2019-01-11T09:08:25Z'
+          email: test@example.com
+          email_verified: false
+          facebook_signup: null
+          apple_signup: null
+          apple_uid: null
+          favourite_location_ids: 306082,333070,304374
+          favourite_store_numbers: 12345,0604,1234
+          fb_uid: null
+          first_name: FIRST_NAME_GOES_HERE
+          gender: ''
+          has_generated_fb_email: false
+          last_name: LAST_NAME_GOES_HERE
+          marketing_email_subscription: true
+          marketing_pn_subscription: true
+          migrate_status: false
+          passcode_configured_for_giftcards: false
+          phone: '1111111111'
+          profile_field_answers:
+            test1: Option 1
+          referral_code: REFERRAL_CODE_GOES_HERE
+          referral_path: URL_GOES_HERE
+          secondary_email: ''
+          state: ''
+          superuser: false
+          terms_and_conditions: true
+          title: ''
+          updated_at: '2020-04-29T04:18:24Z'
+          user_as_qrcode: QR_CODE_GOES_HERE
+          user_code: P11111111
+          user_id: 111111111
+          preferred_locale: en
+          user_relations: []
+          zip_code: null
+          verification_mode: null
+          sms_subscription: true
+          apple_pass_url: APPLE_PASS_URL_GOES_HERE
+          google_pass_url: GOOGLE_PASS_URL_GOES_HERE
+          user_joined_at: '2019-01-11T09:08:25Z'
+      title: User (Object)
+      x-stoplight:
+        id: 447c4c510a499
+      properties:
+        address:
+          type: string
+          description: Address of the user
+        avatar_remote_url:
+          type: string
+          description: URL of the user's profile image uploaded to an online file storage system. This will be used for users who signed up using email.
+          x-nullable: true
+        birthday:
+          type: string
+          description: Date of birth of the user, in YYYY-MM-DD format
+          enum:
+          - YYYY-MM-DD
+          format: date-time
+        communicable_email:
+          type: string
+          description: Email address used for communication with the user
+        city:
+          type: string
+          description: City where the user lives
+        created_at:
+          type: string
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+          description: Date/time when the user was created in the system, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+        email:
+          type: string
+          description: Unique email address used to identify the user
+        email_verified:
+          type: boolean
+          description: Whether the email address of the user has been verified or not
+        facebook_signup:
+          type: boolean
+          description: Indicates whether the user signed up using Facebook. This parameter returns true the first time a user signs up in the mobile app using Facebook. For all subsequent logins, it returns a null value.
+        favourite_locations:
+          type: string
+          description: List of the user's favorite locations
+        favourite_store_numbers:
+          type: string
+          description: List of store numbers of the user's favorite locations
+        fb_uid:
+          type: string
+          description: Facebook ID that identifies the user
+          x-nullable: true
+        first_name:
+          type: string
+          description: First name of the user
+        gender:
+          type: string
+          description: Gender of the user
+        last_name:
+          type: string
+          description: Last name of the user
+        marketing_email_subscription:
+          type: boolean
+          description: Whether the user has subscribed to receive marketing emails or not
+        marketing_pn_subscription:
+          type: boolean
+          description: Whether the user has subscribed to marketing push notifications or not
+        migrate_status:
+          type: boolean
+          description: Whether the user has a migrate status or not
+        passcode_configured_for_giftcards:
+          type: boolean
+          description: Whether the user has configured a passcode for gift cards or not
+        phone:
+          type: string
+          description: Phone number of the user
+        profile_field_answers:
+          $ref: '#/components/schemas/profile_field_answers'
+        referral_code:
+          type: string
+          description: Referral code of the user. A user can refer others to join the business loyalty program by sharing this referral code. When a referred user signs up and enters the shared referral code in the mobile app, this `referral_code` must be passed in the `invite_code` request parameter when calling the Sign up / Register API.
+        referral_path:
+          type: string
+          description: Referral URL of the user
+        secondary_email:
+          type: string
+          description: The secondary email address of the user is configured when a user signs up with Facebook/Apple but does not share the email address. The app asks for an alternate email address, which is kept as the `secondary_email`.
+        state:
+          type: string
+          description: State where the user lives
+        superuser:
+          type: boolean
+          description: Whether multiple check-ins are allowed for a user. This is used mostly for testing purposes by developers.
+        terms_and_conditions:
+          type: boolean
+          description: Whether the terms and conditions of a business have been accepted by a user or not
+        title:
+          type: string
+          description: Salutation as selected by the user
+          x-nullable: true
+        updated_at:
+          type: string
+          description: Date/time when the user was updated in the system, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+        user_as_barcode:
+          type: string
+          description: Barcode that identifies the user
+        user_as_qrcode:
+          type: string
+          description: QR code that identifies the user
+        user_code:
+          type: string
+          description: A unique ID that identifies the user. This smaller code can be converted to a QR code in the app and scanned at some POS systems that do not support longer codes. Alternatively, a user could give this to the POS operator if the POS does not have a scanner.
+        user_id:
+          type: integer
+          description: ID that identifies the user
+        user_relations:
+          type: array
+          description: Relatives of the user. Valid values are "kid" and "spouse".
+          items:
+            type: string
+            enum:
+            - kid
+            - spouse
+        zip_code:
+          type: string
+          description: Zip code where the user lives
+        anniversary:
+          type: string
+          description: Anniversary date of the user, in YYYY-MM-DD format
+        verification_mode:
+          description: Mode of verification (available only for a user in awaiting migration state)
+          x-nullable: true
+        apple_signup:
+          type: boolean
+          description: Whether the user has an Apple sign-up or not. This will return true for the first time sign-up.
+        apple_uid:
+          type: string
+          description: Unique ID generated by Apple
+        has_generated_fb_email:
+          type: boolean
+          description: Whether the user has generated a Facebook email or not
+        sms_subscription:
+          type: boolean
+          description: Whether the user has subscribed to SMS services or not
+        apple_pass_url:
+          type: string
+          format: uri
+          description: URL that a user can use to download the user's associated loyalty Apple pass
+        google_pass_url:
+          type: string
+          format: uri
+          description: URL that a user can use to download the user's associated loyalty Google pass
+        age_verified_status:
+          type: boolean
+          x-stoplight:
+            id: ougfjyb55y0rf
+          description: 'Whether or not the user has undergone age verification by Koupon Media. Possible Values: true, false. The value is set to true if the user''s age is verified by Koupon Media; otherwise, it is set to false. The response returns this parameter in sign-in, sign-up, and user update APIs if Koupon Media is selected as the age verification adapter for the business in the Punchh platform. Contact your Punchh representative to update this configuration.'
+        account_created_at:
+          type: string
+          x-stoplight:
+            id: o07dhmip4epo0
+          format: date-time
+          description: 'This value is set when a guest account is created on the Punchh Platform and varies depending on business configurations. For example:
+
+            * If an eClub account is created with a historical registration date, that specific date is returned in this parameter.
+
+            * If guest data is migrated from a previous platform and includes a registration date, the system creates the guest account with this registration date from the prior system, and the API returns that date in this parameter.'
+        user_joined_at:
+          type: string
+          x-stoplight:
+            id: kbj7omjru7mry
+          format: date-time
+          description: Date and time when the user became a loyalty member
+    profile_field_answers:
+      title: Profile Field Answers (Object)
+      x-stoplight:
+        id: lme68mm8va3zz
+      type: object
+      properties:
+        upf0:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+        upf1:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+        upf2:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+      description: Answers given by the user while filling in the user profile. The user submits answers to profile field questions that are configured in the Punchh platform. A total of 25 answers can be submitted. The keys range from 'upf0' to 'upf24'. If questions have multiple answers, the values should be separated by a | character (pipe).
+  responses:
+    401-unauthorized:
+      description: 'A business admin key is missing or invalid. A request header in the following format is needed to make the request:
+
+
+        `Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE`'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+          examples:
+            default:
+              value:
+                error: You need to sign in or sign up before continuing.
+x-refined-from:
+- punchh-mobile-api-openapi.yml
+- punchh-platform-functions-api-openapi.yml
+x-stoplight:
+  id: bf6eddb435209
+x-ext-urls: {}

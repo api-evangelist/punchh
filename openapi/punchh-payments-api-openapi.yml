@@ -1,0 +1,1335 @@
+openapi: 3.2.0
+info:
+  title: Punchh Payments API
+  version: '1.0'
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+  description: 'Operations tagged Payments across 2 of this provider''s published API definitions: punchh-mobile-api-openapi.yml, punchh-pos-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: Payments
+paths:
+  /api2/mobile/secure_tokens/{service}:
+    parameters:
+    - schema:
+        type: string
+      name: service
+      in: path
+      required: true
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: A user-based token that can be used for different services, such as gift cards, online ordering, etc.
+              examples:
+                default:
+                  value:
+                    token: TOKEN_GOES_HERE
+      summary: Fetch Client Token
+      description: 'Returns a secure client token that can be used for different services, such as gift cards, online ordering, etc. '
+      operationId: mobile_fetch_client_token
+      tags:
+      - Payments
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Authorization'
+      - schema:
+          type: string
+        in: path
+        name: service
+        required: true
+        description: The service for which the secure token will be generated (e.g., ordering, braintree)
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: f51140e63501c
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+    servers:
+    - url: https://SERVER_NAME_GOES_HERE.punchh.com
+  /api2/mobile/payments/client_token:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: Payment client token
+              examples:
+                default:
+                  value:
+                    token: TOKEN_GOES_HERE
+      summary: Get Client Token
+      x-private: true
+      operationId: mobile_get_client_token
+      tags:
+      - Payments
+      parameters:
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: 7053c182bee30
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  x-stoplight:
+                    id: u1054amgmgwza
+                  description: OAuth client ID provided by the business
+                payment_gateway_name:
+                  type: string
+                  x-stoplight:
+                    id: yi9tccf8jxllq
+                  description: Name of the payment gateway for which the nonce is generated. Currently, only "braintree" is supported.
+                  enum:
+                  - braintree
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  payment_gateway_name: braintree
+    servers:
+    - url: https://SERVER_NAME_GOES_HERE.punchh.com
+  /api2/mobile/payments:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                      code:
+                        type: integer
+              examples:
+                default:
+                  value:
+                    errors:
+                      message: Access is denied due to invalid credentials.
+                      code: 401
+      summary: Record Payment
+      x-private: true
+      operationId: mobile_record_payment
+      tags:
+      - Payments
+      parameters:
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: 07db12035980f
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payment_method_nonce:
+                  type: string
+                  description: Payment method nonce
+                membership_program_id:
+                  type: string
+                  description: Membership program ID
+            examples:
+              default:
+                value:
+                  payment_method_nonce: PAYMENT_METHOD_NONCE_GOES_HERE
+                  membership_program_id: MEMBERSHIP_PROGRAM_ID_GOES_HERE
+    servers:
+    - url: https://SERVER_NAME_GOES_HERE.punchh.com
+  /api2/mobile/iframe_payments/new:
+    get:
+      summary: Get a PAR Pay Token
+      tags:
+      - Payments
+      operationId: get-api2-mobile-iframe_payments-new
+      description: 'Enables a user to generate a token for a payment card. The user can use the PAR Pay token to purchase gift cards, reload gift cards, generate a single scan code, etc. The API response presents a web page showing fields for entering payment card details. Once this HTML is submitted with proper card details, it will return a token.
+
+
+        To generate a token, PAR Payments must be configured in the Punchh platform for the business to enable integration services. Once integration services are enabled, the platform can be configured to enable recurring payments for the payment processor. Contact your Punchh representative to update this Punchh platform configuration. <!--Cockpit > Dashboard > Miscellaneous Config > Enable Integration Services?--><!--Whitelabel > Integration Services-->'
+      parameters:
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/User-Agent'
+      responses:
+        '200':
+          description: The response body will contain HTML text.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                Payment not supported:
+                  value:
+                    error: Payment is not supported or invalid configuration
+        '400':
+          description: Bad Request  (missing or blank required parameter)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      missing_required_param:
+                        type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      missing_required_param_name: Required parameter missing or the value is empty
+        '401':
+          description: Unauthorized Request (Incorrect client value)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      unauthorized:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      unknown_client:
+                      - Client ID is incorrect. Please check client param or contact us
+      x-stoplight:
+        id: 210d5819985a4
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: BUSINESS_CLIENT_ID_GOES_HERE
+        description: ''
+    servers:
+    - url: https://SERVER_NAME_GOES_HERE.punchh.com
+  /api/pos/payments:
+    post:
+      responses:
+        '200':
+          description: 'Successful response
+
+            '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  first_name:
+                    type: string
+                    description: 'First name of the user
+
+                      '
+                  last_name:
+                    type: string
+                    description: 'Last name of the user
+
+                      '
+                  transaction_no:
+                    type: string
+                    description: "Unique identifier for the transaction request \n"
+                  payment_reference_id:
+                    type: string
+                    description: 'Payment reference identifier from the payment processor
+
+                      '
+                  status:
+                    type: string
+                    description: "* processing - Intermediate status while processing payment (e.g., when the user approves payment)\n* unable_to_process - Failure with payment on the provider side \n* success - Payment success"
+                  payment_type:
+                    type: string
+                    description: 'Payment type used for the single scan flow transaction (e.g., CreditCard, recurring, etc.). See [Single Scan Flow](/docs/dev-portal-pos/54e5a71a7205c-single-scan-flow)
+
+                      '
+                  payment_transaction_id:
+                    type: string
+                    description: Transaction ID provided by the provider. This should be printed by the POS on receipts for user reference.
+                  response_message:
+                    type: string
+                    description: '* CREATED
+
+                      * COMPLETED
+
+                      '
+                  created_at:
+                    type: string
+                    description: 'Date/time in ISO 8601 format
+
+                      '
+                  updated_at:
+                    type: string
+                    description: 'Date/time in ISO 8601 format
+
+                      '
+                  card_type:
+                    type: string
+                    x-stoplight:
+                      id: 5ed838suvtt99
+                    description: 'Payment card type as received from the payment service provider when PAR Pay is the payment service provider of the business. For other payment service providers, this parameter returns a null value. Possible values:
+
+
+                      VIC - Visa
+
+
+                      MCC - Mastercard
+
+
+                      AXC - American Express Credit Card (AMEX)
+
+
+                      DCC - Diners Club Credit Card
+
+
+                      NVC - Discover Credit Card
+
+
+                      JCB Card - JCB Card
+
+
+                      GCC - Gift Card'
+              examples:
+                default:
+                  value:
+                    first_name: FIRST_NAME_GOES_HERE
+                    last_name: LAST_NAME_GOES_HERE
+                    transaction_no: '5678'
+                    payment_reference_id: '1562'
+                    status: Processing
+                    payment_type: CreditCard
+                    payment_transaction_id: TRANSACTION_ID_GOES_HERE
+                    response_message: CREATED
+                    created_at: '2021-05-01T12:00:00.000Z'
+                    updated_at: '2021-05-01T12:00:00.000Z'
+                    card_type: VIC
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                default:
+                  value:
+                    error: Invalid Location Key
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                default:
+                  value:
+                    error: User not found
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                default:
+                  value:
+                    error: Invalid payment type
+      tags:
+      - Payments
+      summary: Create Payment
+      description: "The Create Payment API commits the payment via the PAR Payment Services Gateway.\n\nFor more information, see: [Creating Payment](/docs/dev-portal-pos/fc53c158c75c6-pos-payments#creating-payments)\n\n### Headers\n\n#### `Token token`\nThe Location API key from the Punchh platform located under **Store Locations** > **All Store Locations** > **[Choose your location]** > **POS tab** > **Location key**\n#### `btoken`\nThe API key for the business, located in the Punchh platform. **Note:** This can be obtained only from Punchh administrators (e.g., Customer Success Manager). \n\n_For assistance with any API keys, reach out to your Punchh Customer Success Manager (CSM) or Implementation Manager (if applicable)._\n"
+      operationId: pos_create_payment_ssf
+      parameters:
+      - schema:
+          type: string
+          default: Token token="LOCATION_KEY_GOES_HERE"  btoken="BUSINESS_KEY_GOES_HERE"
+        in: header
+        name: Authorization
+        description: '**Token token** Location API key from the Punchh platform. **btoken** Business API key from the Punchh platform.'
+      - schema:
+          type: string
+          default: application/json
+        in: header
+        name: Content-Type
+        description: Set to **application/json**
+      x-stoplight:
+        id: 41617c28303e8
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payment_type:
+                  type: string
+                  description: 'Enter one of the following values for the Punchh single scan flow payment:
+
+
+                    * Credit Card = CreditCard
+
+
+                    * Recurring = recurring
+
+                    See [Single Scan Flow](/docs/dev-portal-pos/54e5a71a7205c-single-scan-flow)'
+                single_scan_code:
+                  type: string
+                  description: Single scan code of the user is a required parameter when the user makes a payment through the single scan flow. The single scan code identifies the user making the payment.
+                payable:
+                  type: integer
+                  description: 'Total amount the customer paid after taxes, service charges, and discounts
+
+                    '
+                pos_type:
+                  type: string
+                  description: 'Name of the POS system
+
+                    '
+                pos_version:
+                  type: string
+                  description: 'Version number of the POS system
+
+                    '
+                cc_last4:
+                  type: string
+                  description: 'Last 4 digits of the user''s credit card number
+
+                    '
+                employee_id:
+                  type: string
+                  description: 'POS employee ID
+
+                    '
+                employee_name:
+                  type: string
+                  description: 'POS employee name
+
+                    '
+                revenue_id:
+                  type: string
+                  description: "ID of the POS function that designates order fulfillment. \nAlso known as order mode or order type (e.g., dine in, take out)\n\nNot be to confused with revenue center (e.g., bar, patio, dining room)\n"
+                revenue_code:
+                  type: string
+                  description: "Name of the POS function that designates order fulfillment. \nAlso known as order mode or order type (e.g., dine in, take out)\n\nNot be to confused with revenue center (e.g., bar, patio, dining room)\n"
+                amount:
+                  type: number
+                  description: 'Receipt amount excluding taxes and inclusive of discounts
+
+                    '
+                subtotal_amount:
+                  type: number
+                  description: 'Receipt amount excluding taxes and inclusive of discounts
+
+                    '
+                currency_code:
+                  type: string
+                  description: 'Code of the currency in ISO 4217 format
+
+                    '
+                receipt_datetime:
+                  type: string
+                  description: 'Date/time when the check was opened in ISO 8601 format (YYYY-MM-DDTHH:MM:SS)
+
+                    '
+                punchh_key:
+                  type: string
+                  description: 'Value of the [Punchh QR code or Punchh barcode](/docs/dev-portal-pos/33262bfade37e-implement-the-punchh-barcode-algorithm) '
+                transaction_no:
+                  type: string
+                  description: "Unique identifier for the transaction request. Regardless of success or failure, only one transaction number per request. This is NOT to be confused with the POS check number. \n"
+                menu_items:
+                  $ref: '#/components/schemas/menu_items'
+              required:
+              - payment_type
+              - single_scan_code
+              - payable
+              - pos_type
+              - pos_version
+              - amount
+              - subtotal_amount
+              - currency_code
+              - receipt_datetime
+              - punchh_key
+              - transaction_no
+              - menu_items
+            examples:
+              Payment via SSF Flow QR Code:
+                value:
+                  payment_type: CreditCard
+                  single_scan_code: SINGLE_SCAN_CODE_GOES_HERE
+                  payable: 46
+                  pos_type: Aloha
+                  pos_version: v1.0
+                  cc_last4: ''
+                  employee_id: '01'
+                  employee_name: EMPLOYEE_NAME_GOES_HERE
+                  revenue_id: '111'
+                  revenue_code: CODE_GOES_HERE
+                  amount: 12.72
+                  subtotal_amount: 12.72
+                  currency_code: USD
+                  receipt_datetime: '2020-02-25T20:10:45+05:30'
+                  punchh_key: PUNCHH_KEY_GOES_HERE
+                  transaction_no: '3387553'
+                  menu_items:
+                  - item_name: White rice
+                    item_qty: 1
+                    item_amount: 2.86
+                    menu_item_type: M
+                    menu_item_id: '3419'
+                    menu_family: '800'
+                    menu_major_group: '152'
+                  - item_name: Brown rice
+                    item_qty: 1
+                    item_amount: 7.86
+                    menu_item_type: M
+                    menu_item_id: '3418'
+                    menu_family: '800'
+                    menu_major_group: '152'
+        description: ''
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    first_name:
+                      type: string
+                      description: First name of the user
+                    last_name:
+                      type: string
+                      description: Last name of the user
+                    transaction_no:
+                      type: string
+                      description: Unique identifier for the transaction request
+                    payment_reference_id:
+                      type: string
+                      description: Payment reference identifier from the payment processor
+                    status:
+                      type: string
+                      description: 'Punchh payment processing status. Possible values:
+
+                        * processing: An intermediate status indicating that the payment is being processed (e.g., when the user approves the payment)
+
+                        * processed: Indicates that the POS has sent the payment status as complete, and the system has marked the payment as processed
+
+                        * unable_to_process: Indicates a failure in processing the payment on the provider''s side
+
+                        * success: Indicates that the payment was successfully completed
+
+                        * unable_to_refund: Indicates that the system was unable to refund the payment
+
+                        * refunded: Indicates that the payment has been successfully refunded
+
+                        * refunding: An intermediate status between success/unused and refunded/not refunded'
+                    response_message:
+                      type: string
+                      description: Status as returned by the provider for payments
+                    payment_type:
+                      type: string
+                      description: Payment type used for the single scan flow transaction (e.g., CreditCard, recurring, etc.). See [Single Scan Flow](/docs/dev-portal-pos/54e5a71a7205c-single-scan-flow)
+                    created_at:
+                      type: string
+                      description: Date/time in ISO 8601 format (YYYY-MM-DDTHH:MM:SS)
+                    card_type:
+                      type: string
+                      x-stoplight:
+                        id: 1asbbrfv1egzb
+                      description: 'Payment card type as received from the payment service provider when PAR Pay is the payment service provider of the business. For other payment service providers, this parameter returns a null value. Possible values:
+
+
+                        VIC - Visa
+
+
+                        MCC - Mastercard
+
+
+                        AXC - American Express Credit Card (AMEX)
+
+
+                        DCC - Diners Club Credit Card
+
+
+                        NVC - Discover Credit Card
+
+
+                        JCB Card - JCB Card
+
+
+                        GCC - Gift Card'
+              examples:
+                default:
+                  value:
+                    first_name: FIRST_NAME_GOES_HERE
+                    last_name: LAST_NAME_GOES_HERE
+                    transaction_no: 352083094-10040
+                    payment_reference_id: '14000'
+                    status: processed
+                    response_message: COMPLETED
+                    payment_type: CreditCard
+                    created_at: '2020-12-18T07:05:11Z'
+                    card_type: VIC
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                default:
+                  value:
+                    error: Invalid Location Key
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                default:
+                  value:
+                    error: User not found
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                default:
+                  value:
+                    error: Invalid payment type
+      description: "The Update Payment Status API updates the payment status in the Punchh platform after the POS marks the payment as complete. \n\nFor more information, see: [Updating Payment Status](/docs/dev-portal-pos/fc53c158c75c6-pos-payments#updating-payments)\n\n### Headers\n\n#### `Token token` \nThe Location API key from the Punchh platform located under **Store Locations** > **All Store Locations** > **[Choose your location]** > **POS tab** > **Location key**\n#### `btoken`\nThe API key for the business, located in the Punchh platform. **Note:** This can be obtained only from Punchh administrators (e.g., Customer Success Manager). \n\n_For assistance with any API keys, reach out to your Punchh Customer Success Manager (CSM) or Implementation Manager (if applicable)._\n"
+      summary: Update Payment Status
+      operationId: pos_update_payments
+      tags:
+      - Payments
+      parameters:
+      - schema:
+          type: string
+          default: Token token="LOCATION_KEY_GOES_HERE"  btoken="BUSINESS_KEY_GOES_HERE"
+        in: header
+        name: Authorization
+        description: '**Token token** Location API key from the Punchh platform. **btoken** Business API key from the Punchh platform.'
+      - schema:
+          type: string
+          default: application/json
+        in: header
+        name: Content-type
+        description: Set to **aplication/json**
+      x-stoplight:
+        id: 61f48ba9babb2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payment_reference_id:
+                  type: string
+                  x-stoplight:
+                    id: 42dfle71x6g2a
+                  description: Payment reference identifier from the payment processor. This is obtained from the response of the [Create Payment API](/docs/dev-portal-pos/b3A6NTAyODM5Mjg-create-a-payment).
+                payment_type:
+                  type: string
+                  description: "Enter one of the following values for the Punchh single scan flow payment:              \n* Credit Card = CreditCard\n* Recurring = recurring\nSee [Single Scan Flow](/docs/dev-portal-pos/54e5a71a7205c-single-scan-flow)"
+                email:
+                  type: string
+                  description: Email address of the user. Required for loyalty guests. In the case of single scan flow, email is not a required parameter.
+                status:
+                  type: string
+                  description: Send "completed" to update the payment status and finalize payment processing. Use the [Get Payment Status](/docs/dev-portal-pos/63dd6a196a566-get-payment-status) endpoint to obtain the current status and status updates.
+                single_scan_code:
+                  type: string
+                  description: Single scan code of the user is a required parameter when the user makes a payment through the single scan flow. The single scan code identifies the user making the payment.
+              required:
+              - payment_type
+              - email
+              - status
+            examples:
+              Example:
+                value:
+                  payment_type: CreditCard
+                  email: test@example.com
+                  status: completed
+                  single_scan_code: SINGLE_SCAN_CODE_GOES_HERE
+    delete:
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    first_name:
+                      type: string
+                      description: First name of the user
+                    last_name:
+                      type: string
+                      description: Last name of the user
+                    transaction_no:
+                      type: string
+                      description: Unique identifier for the transaction request
+                    payment_reference_id:
+                      type: string
+                      description: Payment reference identifier from the payment processor
+                    status:
+                      type: string
+                      description: 'Punchh status returned as: processing, processed, unable_to_process, success, unable_to_refund, refunded, refunding'
+                    response_message:
+                      type: string
+                      description: 'Status returned by the provider for payments as: AWAITING_USER_INPUT, SUCCESS, ABORTED, FAILED, CANCELLED, CREATED, COMPLETED
+
+                        '
+                    payment_type:
+                      type: string
+                      description: Payment type used for the single scan flow transaction (e.g., CreditCard, recurring, etc.). See [Single Scan Flow](/docs/dev-portal-pos/54e5a71a7205c-single-scan-flow)
+                    created_at:
+                      type: string
+                      description: Date/time in ISO 8601 format (YYYY-MM-DDTHH:MM:SS)
+                    updated_at:
+                      type: string
+                      description: Date/time in ISO 8601 format (YYYY-MM-DDTHH:MM:SS)
+                    payment_transaction_id:
+                      type: string
+                      description: Transaction ID provided by the provider. This should be printed by the POS on receipts for user reference.
+                    card_type:
+                      type: string
+                      x-stoplight:
+                        id: qft5xmuo5royq
+                      description: 'Payment card type as received from the payment service provider when PAR Pay is the payment service provider of the business. For other payment service providers, this parameter returns a null value. Possible values:
+
+
+                        VIC - Visa
+
+
+                        MCC - Mastercard
+
+
+                        AXC - American Express Credit Card (AMEX)
+
+
+                        DCC - Diners Club Credit Card
+
+
+                        NVC - Discover Credit Card
+
+
+                        JCB Card - JCB Card
+
+
+                        GCC - Gift Card'
+              examples:
+                Example:
+                  value:
+                  - first_name: FIRST_NAME_GOES_HERE
+                    last_name: LAST_NAME_GOES_HERE
+                    transaction_no: 352083094-10040
+                    payment_reference_id: '14000'
+                    status: unable_to_process
+                    response_message: CANCELLED
+                    payment_type: CreditCard
+                    created_at: '2020-12-18T07:05:11Z'
+                    card_type: VIC
+      summary: Void/Cancel Payment
+      operationId: pos_void_payments
+      tags:
+      - Payments
+      description: "The Void/Cancel Payments API voids the payment request. \n\nFor more information, see: [Voiding Payments](/docs/dev-portal-pos/additional-topics/pos-payments#voiding-payment)\n\n### Headers\n\n#### `Token token`\nThe Location API key from the Punchh platform located under **Store Locations** > **All Store Locations** > **[Choose your location]** > **POS tab** > **Location key** \n#### `btoken`\nThe API key for the business, located in the Punchh platform. **Note:** This can be obtained only from Punchh administrators (e.g., Customer Success Manager). \n\n_For assistance with any API keys, reach out to your Punchh Customer Success Manager (CSM) or Implementation Manager (if applicable)._"
+      parameters:
+      - schema:
+          type: string
+          default: Token token="LOCATION_KEY_GOES_HERE" btoken="BUSINESS_KEY_GOES_HERE"
+        in: header
+        name: Authorization
+        description: '**Token token** Location API key from the Punchh platform. **btoken** Business API key from the Punchh platform.'
+      - schema:
+          type: string
+          default: application/json
+        in: header
+        name: Content/type
+        description: Set to **application/json**
+      x-stoplight:
+        id: 8712860d53e95
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payment_reference_id:
+                  type: string
+                  description: Payment reference identifier from the payment processor. This is obtained from the response of the [Create Payment API](/docs/dev-portal-pos/b3A6NTAyODM5Mjg-create-a-payment).
+                payment_type:
+                  type: string
+                  description: "Enter one of the following values for the Punchh single scan flow payment:              \n* Credit Card = CreditCard\n* Recurring = recurring\nSee [Single Scan Flow](/docs/dev-portal-pos/54e5a71a7205c-single-scan-flow)"
+                transaction_no:
+                  type: string
+                  description: "Unique identifier for the transaction request. Regardless of success or failure, only one transaction number per request. This is NOT to be confused with the POS check number. \n"
+            examples:
+              default:
+                value: {}
+    servers:
+    - url: https://SERVER_NAME_GOES_HERE.punchh.com
+  /api/pos/payments/status:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    first_name:
+                      type: string
+                      description: First name of the user
+                    last_name:
+                      type: string
+                      description: Last name of the user
+                    transaction_no:
+                      type: string
+                      description: Unique identifier for the transaction request
+                    payment_reference_id:
+                      type: string
+                      description: Payment reference identifier from the payment processor
+                    status:
+                      type: string
+                      description: 'Punchh payment processing status. Possible values:
+
+                        * processing: An intermediate status indicating that the payment is being processed (e.g., when the user approves the payment)
+
+                        * processed: Indicates that the POS has sent the payment status as complete, and the system has marked the payment as processed
+
+                        * unable_to_process: Indicates a failure in processing the payment on the provider''s side
+
+                        * success: Indicates that the payment was successfully completed
+
+                        * unable_to_refund: Indicates that the system was unable to refund the payment
+
+                        * refunded: Indicates that the payment has been successfully refunded
+
+                        * refunding: An intermediate status between success/unused and refunded/not refunded'
+                    response_message:
+                      type: string
+                      description: Status as returned by the provider for payments
+                    payment_type:
+                      type: string
+                      description: 'Payment type used for the single scan flow transaction (e.g., CreditCard, recurring, etc.). See [Single Scan Flow](/docs/dev-portal-pos/54e5a71a7205c-single-scan-flow)
+
+                        '
+                    created_at:
+                      type: string
+                      description: Date/time in ISO 8601 format (YYYY-MM-DDTHH:MM:SS)
+                    updated_at:
+                      type: string
+                      description: Date/time in ISO 8601 format (YYYY-MM-DDTHH:MM:SS)
+                    payment_transaction_id:
+                      type: string
+                      description: Transaction ID provided by the provider. This should be printed by the POS on receipts for user reference.
+                    card_type:
+                      type: string
+                      x-stoplight:
+                        id: o5rpdm29k03v1
+                      description: "Payment card type as received from the payment service provider when PAR Pay is the payment service provider of the business. For other payment service providers, this parameter returns a null value. Possible values:\n\nVIC - Visa\n\nMCC - Mastercard\n\nAXC - American Express Credit Card (AMEX) \n\nDCC - Diners Club Credit Card \n\nNVC - Discover Credit Card\n\nJCB Card - JCB Card\n\nGCC - Gift Card"
+              examples:
+                Current Business Day:
+                  value:
+                  - first_name: FIRST_NAME_GOES_HERE
+                    last_name: LAST_NAME_GOES_HERE
+                    transaction_no: 014038904-10012
+                    payment_reference_id: '14232'
+                    status: success
+                    response_message: COMPLETED
+                    payment_type: CreditCard
+                    payment_transaction_id: TRANSACTION_ID_GOES_HERE
+                    created_at: '2021-01-14T18:48:39Z'
+                    updated_at: '2020-11-19T06:25:59Z'
+                    card_type: 'null'
+                  - first_name: null
+                    last_name: null
+                    transaction_no: 014029904-10011
+                    payment_reference_id: '14231'
+                    status: success
+                    response_message: SUCCESS
+                    payment_type: CreditCard
+                    payment_transaction_id: TRANSACTION_ID_GOES_HERE
+                    created_at: '2021-01-14T16:18:35Z'
+                    updated_at: '2020-11-19T06:25:59Z'
+                    card_type: 'null'
+                  - first_name: null
+                    last_name: null
+                    transaction_no: 014029819-10010
+                    payment_reference_id: '14230'
+                    status: success
+                    response_message: SUCCESS
+                    payment_type: CreditCard
+                    payment_transaction_id: TRANSACTION_ID_GOES_HERE
+                    created_at: '2021-01-14T16:17:09Z'
+                    updated_at: '2020-11-19T06:25:59Z'
+                    card_type: 'null'
+                Specific Business Day:
+                  value:
+                  - first_name: FIRST_NAME_GOES_HERE
+                    last_name: LAST_NAME_GOES_HERE
+                    transaction_no: 352080019-10037
+                    payment_reference_id: '13998'
+                    status: success
+                    response_message: COMPLETED
+                    payment_type: CreditCard
+                    created_at: '2020-12-18T06:13:55Z'
+                    updated_at: '2020-11-19T06:25:59Z'
+                    card_type: VIC
+                    payment_transaction_id: TRANSACTION_ID_GOES_HERE
+                  - first_name: null
+                    last_name: null
+                    transaction_no: 352074560-10033
+                    payment_reference_id: '13997'
+                    status: success
+                    response_message: SUCCESS
+                    payment_type: CreditCard
+                    created_at: '2020-12-18T04:42:52Z'
+                    updated_at: '2020-11-19T06:25:59Z'
+                    card_type: VIC
+                    payment_transaction_id: TRANSACTION_ID_GOES_HERE
+                  - first_name: null
+                    last_name: null
+                    transaction_no: 352074486-10032
+                    payment_reference_id: '13996'
+                    status: success
+                    response_message: SUCCESS
+                    payment_type: CreditCard
+                    created_at: '2020-12-18T04:41:37Z'
+                    updated_at: '2020-11-19T06:25:59Z'
+                    card_type: VIC
+                    payment_transaction_id: TRANSACTION_ID_GOES_HERE
+                payment_reference_id:
+                  value:
+                    first_name: FIRST_NAME_GOES_HERE
+                    last_name: LAST_NAME_GOES_HERE
+                    transaction_no: 352080019-10037
+                    payment_reference_id: '13998'
+                    status: success
+                    response_message: COMPLETED
+                    payment_type: CreditCard
+                    created_at: '2020-12-18T06:13:55Z'
+                    updated_at: '2020-11-19T06:25:59Z'
+                    card_type: VIC
+                    payment_transaction_id: TRANSACTION_ID_GOES_HERE
+        '401':
+          description: '"Invalid Location Key"'
+        '422':
+          description: '"Incorrect reference_id"'
+      summary: Get Payment Status
+      description: "The Get Payment Status API retrieves the correct status and response message to know how to handle the next step (e.g., success--apply payment, cancel--payment cancelled by user, etc.). \n\nFor more information, see: [Getting Payment Status](/docs/dev-portal-pos/fc53c158c75c6-pos-payments#getting-payment-status)\n\n### Headers\n\n#### `Token token` \nThe Location API key from the Punchh platform located under **Store Locations** > **All Store Locations** > [**Choose your location**] > **POS tab** > **Location key**\n\n#### `btoken`\nThe API key for the business, located in the Punchh platform. **Note:** This can be obtained only from Punchh administrators (e.g., Customer Success Manager). \n\n_For assistance with any API keys, reach out to your Punchh Customer Success Manager (CSM) or Implementation Manager (if applicable)._\n"
+      tags:
+      - Payments
+      operationId: pos_get_payments_status
+      parameters:
+      - schema:
+          type: string
+          default: Token token="LOCATION_KEY_GOES_HERE" btoken="BUSINESS_KEY_GOES_HERE"
+        in: header
+        name: Authorization
+        description: '**Token token** Location API key from the Punchh platform. **btoken** Business API key from the Punchh platform.'
+      - schema:
+          type: string
+          default: application/json
+        in: header
+        name: Content-Type
+        description: Set to **application/json**.
+      x-stoplight:
+        id: 63dd6a196a566
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payment_date:
+                  type: string
+                  x-stoplight:
+                    id: 83kv0ru0jct24
+                  description: Payment date/time in ISO 8601 format (YYYY-MM-DDTHH:MM:SS)
+                  format: date-time
+                payment_reference_id:
+                  type: string
+                  x-stoplight:
+                    id: mydgbjrdiz1eq
+                  description: Payment reference identifier from the payment processor. This is obtained from the response of the [Create Payment API](/docs/dev-portal-pos/b3A6NTAyODM5Mjg-create-a-payment). When used with the **payment_date** parameter, returns any payment with this reference ID on the specified date. Without payment_date, the API returns any payment with the corresponding reference ID.
+            examples:
+              Example:
+                value:
+                  payment_date: '2019-08-24T14:15:22Z'
+                  payment_reference_id: '14000'
+    servers:
+    - url: https://SERVER_NAME_GOES_HERE.punchh.com
+  /api/pos/payments/refund:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    first_name:
+                      type: string
+                      description: First name of the user
+                      x-nullable: true
+                    last_name:
+                      type: string
+                      description: Last name of the user
+                      x-nullable: true
+                    transaction_no:
+                      type: string
+                      description: Unique identifier for the transaction request
+                    payment_reference_id:
+                      type: string
+                      description: Payment reference identifier from the payment processor
+                    status:
+                      type: string
+                      description: Punchh status returned as processing, processed, unable_to_process, success, unable_to_refund, refunded, refunding
+                    response_message:
+                      type: string
+                      description: 'Status returned by the provider for payments as AWAITING_USER_INPUT, SUCCESS, ABORTED, FAILED, CANCELLED, CREATED, COMPLETED
+
+                        '
+                    payment_type:
+                      type: string
+                      description: Payment type used for the single scan flow transaction (e.g., CreditCard, recurring, etc.). See [Single Scan Flow](/docs/dev-portal-pos/54e5a71a7205c-single-scan-flow)
+                    created_at:
+                      type: string
+                      description: Date/time in ISO 8601 format (YYYY-MM-DDTHH:MM:SS)
+                    updated_at:
+                      type: string
+                      description: Date/time in ISO 8601 format (YYYY-MM-DDTHH:MM:SS)
+                    payment_transaction_id:
+                      type: string
+                      description: Transaction ID provided by the provider. This should be printed by the POS on receipts for user reference.
+                    card_type:
+                      type: string
+                      x-stoplight:
+                        id: vze4lqnoj773v
+                      description: 'Payment card type as received from the payment service provider when PAR Pay is the payment service provider of the business. For other payment service providers, this parameter returns a null value. Possible values:
+
+
+                        VIC - Visa
+
+
+                        MCC - Mastercard
+
+
+                        AXC - American Express Credit Card (AMEX)
+
+
+                        DCC - Diners Club Credit Card
+
+
+                        NVC - Discover Credit Card
+
+
+                        JCB Card - JCB Card
+
+
+                        GCC - Gift Card'
+              examples:
+                default:
+                  value:
+                    first_name: null
+                    last_name: null
+                    transaction_no: '3387553'
+                    payment_reference_id: '784733681950555245904'
+                    status: refunded
+                    response_message: COMPLETED
+                    payment_type: CreditCard
+                    created_at: '2021-02-01T20:58:10Z'
+                    updated_at: '2021-02-08T05:40:09Z'
+                    payment_transaction_id: TRANSACTION_ID_GOES_HERE
+                    card_type: VIC
+      description: "After an accepted/processed payment, you can use the Refund Payments API to refund the payment. \n\nFor more information, see [Refunding Payment](/docs/dev-portal-pos/additional-topics/pos-payments#refunding-payment)\n\n### Headers\n\n#### `Token token` \nThe Location API key from the Punchh platform located under **Store Locations** > **All Store Locations** > [**Choose your location**] > **POS tab** > **Location key**\n\n#### `btoken`\nThe API key for the business, located in the Punchh platform. Note: This can be obtained only from Punchh administrators (e.g., Customer Success Manager).\n\n_For assistance with any API keys, reach out to your Punchh Customer Success Manager (CSM) or Implementation Manager (if applicable)._\t"
+      operationId: pos_refund_payments
+      tags:
+      - Payments
+      parameters:
+      - schema:
+          type: string
+          default: Token token="LOCATION_KEY_GOES_HERE"   btoken="BUSINESS_KEY_GOES_HERE"
+        in: header
+        name: Authorization
+        description: '**Token token** Location API key from the Punchh platform. **btoken** Business API key from the Punchh platform.'
+      - schema:
+          type: string
+          default: application/json
+        in: header
+        name: Content-type
+        description: Set to **application/json**
+      summary: Refund Payment
+      x-stoplight:
+        id: e0ad46ac95f92
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payment_type:
+                  type: string
+                  x-stoplight:
+                    id: 9rfc3ofelpz8d
+                  description: "Enter one of the following values for the Punchh single scan flow payment:              \n* Credit Card = CreditCard\n* Recurring = recurring\nSee [Single Scan Flow](/docs/dev-portal-pos/54e5a71a7205c-single-scan-flow)"
+                payment_reference_id:
+                  type: string
+                  x-stoplight:
+                    id: nf8p86c6z6ecr
+                  description: Payment reference identifier from the payment processor. This is obtained from the response of the [Create Payment API](/docs/dev-portal-pos/b3A6NTAyODM5Mjg-create-a-payment).
+                transaction_no:
+                  type: string
+                  x-stoplight:
+                    id: 9vcw8ilu76ucs
+                  description: Unique identifier for the transaction request. Regardless of success or failure, only one transaction number per request. This is NOT to be confused with the POS check number.
+              required:
+              - payment_type
+              - payment_reference_id
+              - transaction_no
+            examples:
+              default:
+                value:
+                  payment_type: CreditCard
+                  payment_reference_id: '784733681950555245904'
+                  transaction_no: '3387553'
+    servers:
+    - url: https://SERVER_NAME_GOES_HERE.punchh.com
+components:
+  parameters:
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
+  schemas:
+    menu_items:
+      type: array
+      title: Menu Items (Array Object)
+      description: The array contains one or more menu item objects added to an order. You send one of these arrays per API call. See [How To Send Menu Items to Punchh](/docs/dev-portal-pos/5277d762b8c6d-how-to-send-menu-items-to-punchh)
+      x-examples: []
+      x-stoplight:
+        id: 999c1d2fce704
+      items:
+        x-stoplight:
+          id: ua9wyw12mqzms
+        type: object
+        properties:
+          item_name:
+            type: string
+            x-stoplight:
+              id: rwiq1fr8m64uz
+            description: Name of the menu item as it displays in the POS catalog
+          menu_item_id:
+            type: string
+            x-stoplight:
+              id: puslpoyol0fta
+            description: Unique identifier that your POS system uses for the item
+          item_qty:
+            type: string
+            x-stoplight:
+              id: 09u6t66ixp3l5
+            description: Quantity ordered by the customer. If the item is a modifier (such as extra cheese on a pizza base item), make sure the quantity reflects the total number of base items included. For example, if you have a pizza base item with a certain item ID and a quantity of two, and the pizzas each have an extra cheese modifier added to them, then the modifier quantity should be two to account for the modifier across both pizzas. This applies only to base items of the same ID. If different base items include the same modifier, you do not need to sum the modifiers.
+          item_amount:
+            type: number
+            x-stoplight:
+              id: enlxfkrx0rn4y
+            description: The total price of the line item or the amount of the discount that you applied to an item. In case of multiple quantities, this means the sum total of all item amounts. Always represent this value as a positive number, even when the item is a discount.
+            format: float
+          menu_item_type:
+            type: string
+            x-stoplight:
+              id: s9g0hrpzxtlmj
+            description: 'The classification of the item. Choose from the following types based on the item:
+
+
+              M - Menu item ( + or - )
+
+
+              D - Discount (negative). Either internal or Punchh will always evaluate lines as ( - ) regardless of the sign assigned in the API call
+
+
+              S - Service item. Any item representing money received that is not a sale. For example, service charges, delivery fees, tips, purchase of gift cards/certificates, etc. In the case of single scan flow, send a menu item with service menu item type for the selected tip amount.
+
+
+              T - Tax item. Taxes of all sorts
+
+
+              P - Payment item. Visa, MasterCard, cash, gift card/certificate (when used to pay for the order)'
+          menu_major_group:
+            type: string
+            x-stoplight:
+              id: vfop7bejx00ec
+            description: The major group that the item belongs to. The major group is the parent category for the item. Even though the parameter is required, you can pass it in the request with a blank value. You can leave this blank if the item does not belong to a major group.
+          menu_family:
+            type: string
+            x-stoplight:
+              id: 1fv71gjx6ks8i
+            description: The family that the item belongs to. The family is the subcategory for the item. Even though the parameter is required, you can pass it in the request with a blank value. You can leave this blank if the item does not belong to a family.
+          serial_number:
+            type: string
+            x-stoplight:
+              id: iqs1adyj21swi
+            description: A serialized number that differentiates distinct items on the check. The purpose of this field is to identify which items on the check are base items and which items are modifiers to the base items. For example, a main menu item (such as pizza) may have serial number "1.0", and the associated modifiers (such as "extra cheese", "olives", and "jalapenos") may have serial numbers "1.1", "1.2", and "1.3" respectively. Serialization is limited to one decimal point, so you can only modify the base item. You cannot modify a modifier with 1.x.x, and so on.
+        required:
+        - item_name
+        - menu_item_id
+        - item_qty
+        - item_amount
+        - menu_item_type
+        - menu_major_group
+        - menu_family
+        - serial_number
+x-refined-from:
+- punchh-mobile-api-openapi.yml
+- punchh-pos-api-openapi.yml
+x-stoplight:
+  id: bf6eddb435209
+x-ext-urls: {}

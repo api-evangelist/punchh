@@ -1,0 +1,728 @@
+openapi: 3.2.0
+info:
+  title: Mobile Notifications API
+  version: '1.0'
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+  description: 'Punchh provides a robust platform for offering loyalty programs to customers. When a business integrates its back-end with the Punchh server, the Punchh APIs become instrumental in executing loyalty programs for enrolled customers, primarily via business-branded mobile apps and websites tailored by Punchh.
+
+
+    To establish integration with the Punchh APIs, you need to understand how they are invoked and what responses are returned by the Punchh server. You can call APIs using any suitable API test client, such as Postman. Thus, the response to every API call made in Postman under a chosen environment (in app and/or platform) is reflected in the app and/or platform.'
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: Notifications
+paths:
+  /api2/mobile/notifications:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: 'ID of the notification
+
+                        '
+                      format: int64
+                    kind:
+                      type: string
+                      description: 'Type of notification. There are three types of notifications that a user can receive: ''system'', ''campaign'', or ''news''.
+
+                        '
+                    message:
+                      type: string
+                      description: 'Message sent to the user in the notification
+
+                        '
+                    created_at:
+                      type: string
+                      description: 'Date/time when the notification was created in the system, in ISO 8601 format
+
+                        '
+                      enum:
+                      - YYYY-MM-DDThh:mm:ssZ
+                      format: date-time
+                    read_at:
+                      type: string
+                      description: 'Date/time when the notification was read by the user from the user''s device, in ISO 8601 format
+
+                        '
+                      enum:
+                      - YYYY-MM-DDThh:mm:ssZ
+                      format: date-time
+                    user_survey_id:
+                      type: integer
+                      description: 'ID of the attached survey. For details, see [Fetch User Survey API](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1survey_details/get).
+
+                        '
+              examples:
+                default:
+                  value:
+                  - id: 22240773
+                    kind: system
+                    message: Something to cheer you up!!
+                    created_at: '2016-03-30T01:50:13-05:00'
+                    read_at: null
+                    user_survey_id: null
+                  - id: 22240649
+                    kind: campaign
+                    message: Thanks for signing up for the Club. Enjoy your first 25 points on us!
+                    created_at: '2016-03-29T01:38:28-05:00'
+                    read_at: null
+                    user_survey_id: null
+                  - id: 22240545
+                    kind: system
+                    message: Thank you for signing up for the Wing Bar. You will receive 25 free points in 24 hours.
+                    created_at: '2016-03-28T01:38:34-05:00'
+                    read_at: null
+                    user_survey_id: null
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      invalid_language:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                Bad Request (invalid language):
+                  value: "{\n  \"errors\": {\n    \"invalid_language\": [\n      \"Unknown/Invalid locale in Accept-Language Header. Supported locales are en-GB, es-CR, en, es.\"\n    ]\n  }\n}"
+                Bad request (invalid quantity):
+                  value: "{  \n   \"errors\":{  \n      \"qty\":\"Number of Notifications should be greater than zero. '-1' is zero, Blank or non-integer value\"\n   }\n}"
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      unknown_client:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      unknown_client:
+                      - Client ID is incorrect. Please check client param or contact us.
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      invalid_access_token:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      invalid_access_token:
+                      - 'Error: access_token not found or is incorrect! Valid access_token of the user required'
+        '412':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      invalid_signature:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      invalid_signature:
+                      - Signature doesn't match. See [this topic](/docs/dev-portal-mobile/17c2f8eb39142-generating-x-pch-digest-header-for-mobile-ap-is)
+      summary: Fetch User Notifications
+      description: 'Returns the details of notifications received by a user
+
+
+        For more information about push notifications and payload based on different types of notifications, including platform configurations required to enable push notifications, see [Push Notifications](/docs/dev-portal-mobile/additional-topics/notifications-push).
+
+        Also, see [Notifications and Badges Count](/docs/dev-portal-mobile/additional-topics/notifications-badgecounts) for information about various use cases and best practices.'
+      operationId: mobile_fetch_user_notifications
+      tags:
+      - Notifications
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: 0285fe645c89d
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: 'OAuth client ID provided by the business
+
+                    '
+                qty:
+                  type: string
+                  description: 'Number of notifications for which the details are required. By default, a maximum of 10 notifications are returned at once in order of recency.
+
+                    '
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  qty: '3'
+  /api2/mobile/notifications/id:
+    delete:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      summary: Delete User Notification
+      description: 'Deletes a notification received by a user
+
+        '
+      operationId: mobile_delete_user_notification
+      tags:
+      - Notifications
+      parameters:
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Authorization'
+      - schema:
+          type: string
+        in: path
+        name: id
+        required: true
+        description: ID of the notification to be deleted
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: 507f773849cef
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: 'OAuth client ID provided by the business
+
+                    '
+              required:
+              - client
+  /api2/mobile/messages:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/messages'
+              examples:
+                default:
+                  value:
+                    messages:
+                    - background_content:
+                        type: image
+                        url: IMAGE_URL
+                        alt_text: Black Background Image
+                        initial_frame: ''
+                      body: A new gastronomical experience awaits you as we launch the Double Hamburger. Juicy handmade patties treated with a gravy bath and accompanied by shredded lettuce, tomato, pickle, bulky chopped onion, mustard, and mayo.
+                      cta:
+                      - type: external_web_link
+                        link: https://punchh.com
+                        label: More Details
+                        cta_type: primary
+                      - type: external_web_link
+                        link: https://punchh.com
+                        label: Terms & Conditions
+                        cta_type: secondary
+                      dismissable: true
+                      hero_content:
+                        type: image
+                        url: IMAGE_URL
+                        alt_text: Double Hamburger
+                        initial_frame: ''
+                      launch_time: '2017-08-14T06:00:00+00:00'
+                      message_type: business_wide
+                      rank: 500
+                      style_url: URL_OF_THE_STYLE_SHEET
+                      subtitle: Double the fun!
+                      tags:
+                      - business_announcement
+                      - menu_extension
+                      - recurring
+                      take_down_time: '2017-08-15T06:00:00+00:00'
+                      title: Introducing Double Hamburger
+                      read_at: '2024-08-19T15:31:28-07:00'
+                      created_at: '2024-08-19T15:30:27-07:00'
+                      message_id: 7491710585
+                      deleted_at: '2024-08-20T15:30:27-07:00'
+      summary: Fetch Messages
+      description: 'Fetches the list of rich messages available for a user
+
+
+        Apart from the API response mentioned here, the mobile client will have to fetch the style JSON directly from S3 (Amazon Cloud Storage), which defines how to render the rich message.
+
+
+        For details, see [Style JSON for Rich Messages](/docs/dev-portal-mobile/additional-topics/style-json-for-rich-messages).'
+      operationId: mobile_messages
+      tags:
+      - Notifications
+      parameters:
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: e9485ca96ff55
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: 'OAuth client ID provided by the business
+
+                    '
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+  /api2/mobile/message_readerships:
+    post:
+      responses:
+        '202':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      client:
+                        type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      client: Required parameter missing or the value is empty.
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      unauthorized:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      unauthorized:
+                      - An active access token must be used to query information about the current user.
+      summary: Mark Messages As Read
+      description: 'Rich messages of type `user_specific` can be marked as read by making this request.
+
+        '
+      operationId: mobile_mark_messages_read
+      tags:
+      - Notifications
+      parameters:
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: 899a3394bf4e6
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_rich_notifications:
+                  type: string
+                  description: 'Comma-separated values of multiple messages that will be marked as read
+
+                    '
+                client:
+                  type: string
+                  x-stoplight:
+                    id: jpbcmandbq4y1
+                  description: OAuth client ID provided by the business
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  user_rich_notifications: '821'
+                  client: CLIENT_GOES_HERE
+  /api2/mobile/message_readerships/{message_id}:
+    delete:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      client:
+                        type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      client: Required parameter missing or the value is empty.
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      unauthorized:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      unauthorized:
+                      - An active access token must be used to query information about the current user.
+      summary: Delete Messages
+      description: 'Rich messages of type `user_specific` can be deleted by making this request.
+
+        '
+      operationId: mobile_delete_messages
+      tags:
+      - Notifications
+      parameters:
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Authorization'
+      - schema:
+          type: string
+        in: path
+        name: message_id
+        required: true
+        description: ID of the `user_specific` message that will be deleted
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: 8dbb3bf79ad94
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  x-stoplight:
+                    id: 9il3bfrot8dnr
+                  description: OAuth client ID provided by the business
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+components:
+  parameters:
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
+  schemas:
+    cta:
+      type: array
+      items:
+        type: object
+        properties:
+          type:
+            type: string
+            description: 'Three possible values can be returned to the mobile client:
+
+              - web_link: The CTA button prompts the user to open the link in a web browser available on the mobile client.
+
+              - deep_link: The CTA button takes the user to a particular deep link specified in the app.
+
+              - drill_down: The CTA button opens the detailed view of the rich message received by the app.'
+          link:
+            type: string
+            description: 'The URL to which the user will be directed, depending on the type of the CTA
+
+              '
+          label:
+            type: string
+            description: 'The text that appears on the CTA button in the app
+
+              '
+          cta_type:
+            type: string
+            description: 'More than one CTA object can be returned to the app. The cta_type can have two possible values: primary and secondary. The primary CTA is higher priority and is the main CTA button. The secondary CTA can be something like a terms and conditions link that can be rendered appropriately in the app.'
+      description: "Short for call to action, a device designed to prompt an immediate response from a user\n\n```json\n[\n    {\n        \"type\": \"external_web_link\",\n        \"link\": \"URL_GOES_HERE\",\n        \"label\": \"More Details\",\n        \"cta_type\": \"primary\"\n    },\n    {\n        \"type\": \"external_web_link\",\n        \"link\": \"URL_GOES_HERE\",\n        \"label\": \"Terms & Conditions\",\n        \"cta_type\": \"secondary\"\n    }\n]\n```\n"
+      title: CTA (Array Object)
+      x-stoplight:
+        id: 80d7d22f4d11c
+    background-content:
+      type: object
+      description: "This is the content that makes the background of the message.\n\n```json\n{\n    \"type\": \"image\",\n    \"url\": \"IMAGE_URL_GOES_HERE\",\n    \"alt_text\": \"Black Background Image\",\n    \"initial_frame\": \"\"\n}\n```"
+      title: Background Content (Object)
+      properties:
+        type:
+          type: string
+          description: The type of the background content. It can be an image or a color.
+        url:
+          type: string
+          description: The URL of the image that will be used as the background
+        alt_text:
+          type: string
+          description: Alternate text that appears if the app cannot render the background content of the message
+        initial_frame:
+          type: string
+          description: The initial frame or first frame is what appears behind the play button before a user taps it to start playing the video.
+      x-stoplight:
+        id: 80de922cbc5ff
+    hero-content:
+      type: object
+      description: "This is the first visual content that a user encounters when the user views a rich message. This can be an image or a video.\n\n```json\n{\n    \"type\": \"image\",\n    \"url\": \"IMAGE_URL_GOES_HERE\",\n    \"alt_text\": \"Fries\",\n    \"initial_frame\": \"\"\n}\n```\n"
+      title: Hero Content (Object)
+      properties:
+        type:
+          type: string
+          description: Hero content can be an image or a video.
+        url:
+          type: string
+          description: The URL of the image/video that will be used as the hero content in a rich message
+        alt_text:
+          type: string
+          description: Alternate text that appears if the app cannot render the hero content of the message
+        initial_frame:
+          type: string
+          description: The initial frame or first frame is what appears behind the play button before a user taps it to start playing the video.
+      x-stoplight:
+        id: 4779761c509cd
+    messages:
+      type: object
+      description: 'Returned in response to the [Fetch Messages](/docs/dev-portal-mobile/e9485ca96ff55-fetch-messages) API
+
+        '
+      x-examples: []
+      title: Messages (Array Object)
+      x-stoplight:
+        id: 4e7b944f87362
+      properties:
+        messages:
+          type: array
+          items:
+            type: object
+            properties:
+              background_content:
+                $ref: '#/components/schemas/background-content'
+              body:
+                type: string
+                description: 'The text content of a rich message
+
+                  '
+              cta:
+                $ref: '#/components/schemas/cta'
+              dismissable:
+                type: boolean
+                description: 'This boolean value decides whether guests can dismiss a message or not. When a guest dismisses a message, it should not be rendered in the app.
+
+                  '
+              hero_content:
+                $ref: '#/components/schemas/hero-content'
+              launch_time:
+                type: string
+                description: "Date/time, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format, when the notification should be rendered by the application client. This is a useful field that can enable a business to create messages that can be sent to the mobile client in advance, and they appear in the app later when the launch time comes.\n\nIf a rich message is triggered from a campaign, from a notification template as a result of user action, as a result of test notification, or if the Launch Time and Take Down Time fields are left blank in a business announcement, the values for launch_time and take_down_time will be null.\n\nThe values of take_down_time and launch_time parameters are determined when configuring campaign announcements. To set up a campaign announcement in the Punchh platform, in the left navigation pane, navigate to <b>Loyalty Program > App Message Composer</b>, and click <b>Add App Message</b>. In the <b>New Announcement</b> page, specify the date and time of the launch in the <b>Launch Time</b> field and the take down time in the <b>Take Down Time</b> field. \n\nOnce configured, these values will be displayed in the `launch_time` and `take_down_time` parameters respectively when the messages are fetched via this Mobile API."
+              message_type:
+                type: string
+                description: 'There are two types of rich Messages returned in response:
+
+                  1. user_specific: Rich messages that have a user context. These include rich messages created based on campaigns or user actions.
+
+                  2. business_wide: Rich messages that are created as business announcements in the system.'
+              rank:
+                type: integer
+                description: Every message should have a rank. This marks the importance of a message. There may be a case when a more important message moves down the display list in the app as new messages are delivered to the mobile client. To keep important messages at the top of the display list, they should be given a higher number just as is the case with z-index. If two messages have the same rank, the app will determine the display order based on the launch_time.
+              style_url:
+                type: string
+                description: 'Link to the style sheet file for the style that will be applied to the message. The mobile client can download the style file, which can then be used to render the rich message in the app.
+
+                  '
+              subtitle:
+                type: string
+                description: 'A subordinate title providing additional information about the content
+
+                  '
+              tags:
+                type: array
+                description: 'Tags provide additional details about a message. A simple example could be the type (such as campaign, system_notification, etc.) that may help the app make decisions about the rendering of the message.
+
+                  '
+                items:
+                  type: string
+              take_down_time:
+                type: string
+                description: "Date/time, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format, when the mobile client should stop rendering the rich message in the app.\n\nIf a rich message is triggered from a campaign, from a notification template as a result of user action, as a result of test notification, or if the Launch Time and Take Down Time fields are left blank in a business announcement, the values for launch_time and take_down_time will be null.\n\nThe values of take_down_time and launch_time parameters are determined when configuring campaign announcements. To set up a campaign announcement in the Punchh platform, in the left navigation pane, navigate to <b>Loyalty Program > App Message Composer</b>, and click <b>Add App Message</b>. In the <b>New Announcement</b> page, specify the date and time of the launch in the <b>Launch Time</b> field and the take down time in the <b>Take Down Time</b> field. \n\nOnce configured, these values will be displayed in the `launch_time` and `take_down_time` parameters respectively when the messages are fetched via this Mobile API."
+              title:
+                type: string
+                description: 'A suitable title for the rich message. A well-crafted title increases the chances that a user will view a message.
+
+                  '
+              message_id:
+                type: integer
+                description: 'Unique ID of the message sent to the user
+
+                  '
+              read_at:
+                type: string
+                x-stoplight:
+                  id: ten5f40qgu98e
+                format: date-time
+                description: Date/time when the message was read, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format. To mark a message read, you must call the [Mark Messages As Read](/docs/dev-portal-mobile/899a3394bf4e6-mark-messages-as-read) API. The `read_at` parameter value remains null until the message is explicitly marked as read using the appropriate API.
+                enum:
+                - YYYY-MM-DDThh:mm:ssZ
+              created_at:
+                type: string
+                x-stoplight:
+                  id: 04jvdgbo8cmcv
+                format: date-time
+                description: Date/time when the message was created, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+                enum:
+                - YYYY-MM-DDThh:mm:ssZ
+              deleted_at:
+                type: string
+                x-stoplight:
+                  id: jynu306dbfuc9
+                format: date-time
+                description: Date/time when the message was deleted, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format. To delete the message, you must call the [Delete Messages](/docs/dev-portal-mobile/8dbb3bf79ad94-delete-messages) API. Once deleted, the `deleted_at` parameter will return a value in the API response.
+                enum:
+                - YYYY-MM-DDThh:mm:ssZ
+x-stoplight:
+  id: bf6eddb435209
+x-ext-urls: {}

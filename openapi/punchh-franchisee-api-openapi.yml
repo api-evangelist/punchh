@@ -1,0 +1,274 @@
+openapi: 3.2.0
+info:
+  title: Platform Functions Franchisee API
+  version: '1.0'
+  description: This API documentation is intended to provide comprehensive information for admin users of the Punchh platform. Many of the settings and available actions depend on an appropriate level of access to Platform Functions APIs.
+  contact:
+    name: Punchh DevSupport
+    url: https://developers.punchh.com
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: Franchisee
+paths:
+  /api2/dashboard/franchisees:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                description: The Franchisee object returns the details of the franchisee.
+                properties:
+                  name:
+                    type: string
+                    description: Name of the franchisee
+                  email:
+                    type: string
+                    description: Email address of the franchisee
+                  phone:
+                    type: string
+                    description: Phone number of the franchisee
+                  address:
+                    type: string
+                    description: Address of the franchisee
+                  state:
+                    type: string
+                    description: State where the franchisee is located
+                  zip_code:
+                    type: string
+                    description: Zip code where the franchisee is located
+                  created_by:
+                    type: string
+                    description: Admin user who created the franchisee
+                  enable_guest_upload:
+                    type: boolean
+                    description: Whether to allow uploading a list of guests for the franchisee or not
+              examples:
+                default:
+                  value:
+                    name: New Franchisee
+                    email: test@example.com
+                    phone: '1111111111'
+                    address: New Franchisee Address
+                    state: New Franchisee State
+                    zip_code: '909887'
+                    created_by: test@example.com
+                    enable_guest_upload: true
+        '401':
+          $ref: '#/components/responses/401-unauthorized'
+      summary: Create Franchisee
+      description: Allows a business admin user to create franchisees for accessible locations
+      operationId: dashboard_create_franchisee
+      tags:
+      - Franchisee
+      parameters:
+      - $ref: '#/components/parameters/authorization-header'
+      x-stoplight:
+        id: 6d431b40f1d51
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                franchisee:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: Name of the franchisee
+                    email:
+                      type: string
+                      description: Email address of the franchisee
+                    phone:
+                      type: string
+                      description: Phone number of the franchisee
+                    address:
+                      type: string
+                      description: Address of the franchisee
+                    state:
+                      type: string
+                      description: State where the franchisee is located
+                    zip_code:
+                      type: string
+                      description: Zip code where the franchisee is located
+                    enable_guest_upload:
+                      type: boolean
+                      description: Whether to allow uploading a list of guests for the franchisee or not
+            examples:
+              franchisee:
+                value:
+                  name: New Franchisee
+                  email: test@example.com
+                  phone: '1111111111'
+                  address: New Franchisee Address
+                  state: New Franchisee State
+                  zip_code: '909887'
+                  enable_guest_upload: true
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                description: The Franchisee object returns the details of the franchisee.
+                properties:
+                  name:
+                    type: string
+                    description: Name of the franchisee
+                  email:
+                    type: string
+                    description: Email address of the franchisee
+                  phone:
+                    type: string
+                    description: Phone number of the franchisee
+                  address:
+                    type: string
+                    description: Address of the franchisee
+                  state:
+                    type: string
+                    description: State where the franchisee is located
+                  zip_code:
+                    type: string
+                    description: State where the franchisee is located
+                  created_by:
+                    type: string
+                    description: Admin user who created the franchisee
+                  enable_guest_upload:
+                    type: boolean
+                    description: Whether to allow uploading a list of guests for the franchisee or not
+              examples:
+                default:
+                  value:
+                    name: New Franchisee
+                    email: test@example.com
+                    phone: '1111111111'
+                    address: New Franchisee Address
+                    state: New Franchisee State
+                    zip_code: '909887'
+                    created_by: test@example.com
+                    enable_guest_upload: true
+        '401':
+          $ref: '#/components/responses/401-unauthorized'
+      summary: Update Franchisee
+      description: Allows a business admin user to update franchisees for accessible locations
+      operationId: dashboard_update_franchisee
+      tags:
+      - Franchisee
+      parameters:
+      - $ref: '#/components/parameters/authorization-header'
+      x-stoplight:
+        id: 00e564e476a17
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: ID of the franchisee that will be updated
+                franchisee:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: Name of the franchisee
+                    email:
+                      type: string
+                      description: Name of the franchisee
+                    phone:
+                      type: string
+                      description: Name of the franchisee
+                    address:
+                      type: string
+                      description: Address of the franchisee
+                    state:
+                      type: string
+                      description: State where the franchisee is located
+                    zip_code:
+                      type: string
+                      description: Zip code where the franchisee is located
+                    enable_guest_upload:
+                      type: boolean
+                      description: Whether to allow uploading a list of guests for the franchisee or not
+            examples:
+              default:
+                value:
+                  id: '3'
+                  franchisee:
+                    name: New Franchisee
+                    email: test@example.com
+                    phone: '1111111111'
+                    address: New Franchisee Address
+                    state: New Franchisee State
+                    zip_code: '909887'
+                    enable_guest_upload: true
+    delete:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          $ref: '#/components/responses/401-unauthorized'
+      summary: Delete Franchisee
+      description: Allows a business admin user to delete franchisees for accessible locations
+      operationId: dashboard_delete_franchisee
+      tags:
+      - Franchisee
+      parameters:
+      - $ref: '#/components/parameters/authorization-header'
+      x-stoplight:
+        id: 5a0df9f35557f
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: ID of the franchisee that will be deleted
+            examples:
+              default:
+                value:
+                  id: '3'
+components:
+  responses:
+    401-unauthorized:
+      description: 'A business admin key is missing or invalid. A request header in the following format is needed to make the request:
+
+
+        `Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE`'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+          examples:
+            default:
+              value:
+                error: You need to sign in or sign up before continuing.
+  parameters:
+    authorization-header:
+      schema:
+        type: string
+        default: Bearer BUSINESS_ADMIN_KEY_GOES_HERE
+      name: Authorization
+      in: header
+      description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
+      required: true
+x-stoplight:
+  id: 9820bbd2e8ee1
+x-ext-urls: {}

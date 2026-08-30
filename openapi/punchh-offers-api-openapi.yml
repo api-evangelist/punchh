@@ -1,0 +1,531 @@
+openapi: 3.2.0
+info:
+  title: Mobile Offers API
+  version: '1.0'
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+  description: 'Punchh provides a robust platform for offering loyalty programs to customers. When a business integrates its back-end with the Punchh server, the Punchh APIs become instrumental in executing loyalty programs for enrolled customers, primarily via business-branded mobile apps and websites tailored by Punchh.
+
+
+    To establish integration with the Punchh APIs, you need to understand how they are invoked and what responses are returned by the Punchh server. You can call APIs using any suitable API test client, such as Postman. Thus, the response to every API call made in Postman under a chosen environment (in app and/or platform) is reflected in the app and/or platform.'
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: Offers
+paths:
+  /api2/mobile/offers:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pinned_message:
+                    type: string
+                    description: An ephemeral message that can be displayed to all users at the top of the News & Offers screen
+                  rewards:
+                    $ref: '#/components/schemas/rewards'
+                  notifications:
+                    $ref: '#/components/schemas/Notifications'
+                  coupons:
+                    $ref: '#/components/schemas/Coupons'
+              examples:
+                default:
+                  value:
+                    pinned_message: ''
+                    rewards:
+                    - becomes_available_at: '2016-05-17T05:23:29-07:00'
+                      campaign_type: null
+                      created_at: '2016-05-24T00:52:48-07:00'
+                      description: Free with the purchase of an entree.
+                      reward_image_url: IMAGE_URL_GOES_HERE
+                      name: Dessert
+                      read_at: null
+                      reward_properties: order-ahead
+                      store_numbers: []
+                      franchisee_id: 1234
+                      meta_data: Tag1, Tag2, Tag3, Tag4, Tag5
+                      reward_id: 5051791
+                      expiring_at: '2016-06-01T02:59:59-04:00'
+                      redemption_details: null
+                    notifications:
+                    - id: 29133403
+                      kind: system
+                      message: Something to cheer you up!
+                      read_at: null
+                      created_at: '2016-05-17T08:23:50-04:00'
+                    coupons:
+                    - code: Z954AC7
+                      image_url: IMAGE_URL_GOES_HERE
+                      name: All Sign Up Final Coupon
+                      description: null
+                      start_date: null
+                      end_date: '2016-10-04'
+      summary: List User Offers
+      operationId: mobile_list_user_offers
+      tags:
+      - Offers
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: f988f79b81913
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_KEY_GOES_HERE
+  /api2/mobile/offers/mark_read:
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      user_notifications:
+                        type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      user_notifications: Required parameter missing or the value is empty.
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                      code:
+                        type: integer
+              examples:
+                default:
+                  value:
+                    errors:
+                      message: Access is denied due to invalid credentials.
+                      code: 401
+        '422':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      invalid_event_type:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      invalid_event_type:
+                      - Invalid name given. It should be read_through_app or app_open_via_push
+      summary: Mark Offers As Read
+      description: 'Marks specific offers that have been read by a user:
+
+
+        - Within the app via the News & Offers screen. The value `read_through_app` is passed with the `event_type` request parameter.
+
+
+        - Via push notification on the phone screen. The value `app_open_via_push` is passed with the `event_type` parameter.
+
+
+        For more information about push notifications and payload based on different types of notifications, including platform configurations required to enable push notifications, see [Push Notifications](/docs/dev-portal-mobile/additional-topics/notifications-push).
+
+        Also, see [Notifications and Badges Count](/docs/dev-portal-mobile/additional-topics/notifications-badgecounts) for information about various use cases and best practices.'
+      operationId: mobile_mark_read
+      tags:
+      - Offers
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: f315da73eb9a7
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                rewards:
+                  type: string
+                  description: Comma-separated IDs of rewards. Either the `user_notifications` parameter or the `rewards` parameter must be sent in the request.
+                user_notifications:
+                  type: string
+                  description: Comma-separated IDs of user notifications. Either the `user_notifications` parameter or the `rewards` parameter must be sent in the request.
+                event_type:
+                  type: string
+                  description: 'Kind of event that shows how offers were read by the user. Valid values are read_through_app or app_open_via_push
+
+                    '
+                client:
+                  type: string
+                  description: 'OAuth client ID provided by the business
+
+                    '
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  rewards: 309203, 309210
+                  user_notifications: 7890469, 7890490
+                  event_type: read_through_app
+                  client: CLIENT_GOES_HERE
+        description: ''
+components:
+  parameters:
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
+  schemas:
+    Coupons:
+      type: array
+      title: Coupons (Array Object)
+      items:
+        type: object
+        properties:
+          code:
+            type: string
+            description: Alphanumeric coupon code that a user must use to receive an offer
+          image_url:
+            type: string
+            description: URL of the image of the reward that will be displayed in the app
+          name:
+            type: string
+            description: Name of the coupon campaign through which the coupon was given to a user
+          description:
+            type: string
+            description: Description of the offer that will be available to a user after using the coupon code
+            x-nullable: true
+          start_date:
+            type: string
+            description: Coupon start date
+            enum:
+            - YYYY-MM-DD
+            format: date
+            x-nullable: true
+          end_date:
+            type: string
+            description: Coupon expiration date
+            enum:
+            - YYYY-MM-DD
+            format: date
+      x-stoplight:
+        id: 16135004ce2f7
+    redemption_details:
+      type: object
+      description: 'Returns the details of a redemption done by a user
+
+        '
+      properties:
+        redemption_status:
+          type: string
+          description: 'Status of the redemption. The values returned can be:
+
+
+            - redeemable: The redemption can be redeemed at the POS.
+
+
+            - expired: The redemption has expired and becomes unusable for the user.
+
+
+            - honored: The redemption has already been processed successfully and redeemed by the user at a POS.
+
+
+            - cancelled: The redemption can be voided by a user by approaching the POS if a redemption is done by mistake and the user wants to cancel it.'
+        created_at:
+          type: string
+          description: 'Date/time when the redemption was created in the system
+
+            '
+        redeemable_id:
+          type: integer
+          description: 'Unique ID of the redeemable
+
+            '
+        redeemable_name:
+          type: string
+          description: 'Name of the redeemable
+
+            '
+        redeemed_value:
+          type: string
+          description: 'For a business with banked currency, a currency value will be returned (e.g., 10 would mean $10).
+
+
+            For a business without banked currency, a points value will be returned (e.g., 10 would mean 10 points).'
+        redemption_image_url:
+          type: string
+          description: 'URL of the image displayed in the app to depict the redeemable
+
+            '
+        redemption_message:
+          type: string
+          description: 'A descriptive message that tells a user what the user has redeemed
+
+            '
+        redeemable_description:
+          type: string
+          description: 'Description of the redeemable
+
+            '
+        updated_at:
+          type: string
+          description: 'Date/time at which the redemption was updated in the system
+
+            '
+        redemption_id:
+          type: integer
+          description: 'Unique ID of the redemption that has been created
+
+            '
+        redemption_tracking_code:
+          type: string
+          description: 'Code that a user must submit at the POS to receive the redeemed reward
+
+            '
+        expiring_at:
+          type: string
+          description: Date/time when the redemption_tracking_code expires and the user cannot use it at the POS
+        location_id:
+          type: integer
+          description: ID of the location associated with the with the redemption (where the redemption code is generated). If no location ID is provided, then the ID for the default location is returned.
+      title: Redemption Details (Object)
+      x-stoplight:
+        id: bc87eb1cec331
+    Notifications:
+      type: array
+      description: Returns the details of the notifications received by a user. A maximum of 10 notifications will be fetched.
+      title: Notifications (Array Object)
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            description: ID of the notification
+          kind:
+            type: string
+            description: 'Type of notification. There are three types of notifications that a user can receive: ''system'', ''campaign'', and ''news''.'
+          message:
+            type: string
+            description: Message sent to the user in the notification
+          read_at:
+            type: string
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+            format: date-time
+            x-nullable: true
+          created_at:
+            type: string
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+            format: date-time
+      x-stoplight:
+        id: c1638b1a83f29
+    rewards:
+      type: array
+      description: Contains information about the available rewards of the user
+      title: Rewards (Array Object)
+      x-stoplight:
+        id: 593a939bbb6fa
+      items:
+        x-stoplight:
+          id: boujhknpz5coc
+        type: object
+        properties:
+          becomes_available_at:
+            type: string
+            x-stoplight:
+              id: im795luv5su27
+            description: Date/time at which the reward becomes redeemable by a user
+            format: date-time
+          campaign_type:
+            type: string
+            x-stoplight:
+              id: 7f6xlqvvehpqk
+            description: Type of campaign through which a user received a reward. Currently, the only possible value is "loyalty". A null value indicates that the user did not get the reward through a campaign.
+          created_at:
+            type: string
+            x-stoplight:
+              id: os20mdeoqfq3z
+            format: date-time
+            description: Date/time when the reward was created for a user in the system
+          description:
+            type: string
+            x-stoplight:
+              id: 6hg1xma6nl1w4
+            description: Description of the reward
+          discount_channel:
+            type: string
+            x-stoplight:
+              id: 0ti076e2v9ohc
+            description: 'Channels where the reward can be used. Possible values are:
+
+
+              - online_only - online orders
+
+              - offline_only - POS
+
+              - all - both'
+          discount_amount:
+            type: integer
+            x-stoplight:
+              id: e7waqx8jk4ulk
+            description: Discount amount associated with the reward
+          reward_image_url:
+            type: string
+            x-stoplight:
+              id: v0wl0df7rs844
+            description: URL of the image displayed in the app to depict the reward
+          name:
+            type: string
+            x-stoplight:
+              id: e2ho1o5jtdjin
+            description: Name of the reward
+          read_at:
+            type: string
+            x-stoplight:
+              id: p3uv2kyj3085t
+            format: date-time
+            description: Date/time when the reward notification was read by a user in the app
+          reward_properties:
+            type: string
+            x-stoplight:
+              id: v4jg31ks5gly0
+            description: Additional properties of the reward (e.g., "merchandise", "order ahead", "promo", etc.) that can be configured in the Punchh platform
+          store_numbers:
+            type: array
+            x-stoplight:
+              id: eu3v3y9m8zkxi
+            description: Store numbers of all locations where the reward can be redeemed. An empty array indicates that the reward can be redeemed at any location.
+            items:
+              x-stoplight:
+                id: 2cijorr4t6693
+              type: string
+          franchisee_id:
+            type: integer
+            x-stoplight:
+              id: aqdjczff8wolf
+            description: ID of the franchisee who credited the reward to the user's account. This could be done through a campaign or admin generosity.
+          meta_data:
+            type: string
+            x-stoplight:
+              id: zzj946kbbq1xw
+            description: Metadata that can be added to a redeemable. This will be returned only if it is configured in the Punchh platform. The maximum length is 255 characters.
+          redeemable_created_at:
+            type: string
+            x-stoplight:
+              id: mlwoe89xeubtv
+            format: date-time
+            description: Date/time when the redeemable was created in the Punchh platform
+          reward_id:
+            type: integer
+            x-stoplight:
+              id: rvc7fk1jyance
+            format: int64
+            description: Unique ID of the reward
+          expiring_at:
+            type: string
+            x-stoplight:
+              id: 40snv09u8jow8
+            description: Date/time when the reward expires
+            format: date-time
+          redemption_details:
+            $ref: '#/components/schemas/redemption_details'
+          auto_select:
+            type: boolean
+            x-stoplight:
+              id: supgkji7b6rag
+            description: Whether the offer is enabled for auto-redemption or not
+x-stoplight:
+  id: bf6eddb435209
+x-ext-urls: {}

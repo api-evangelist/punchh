@@ -1,0 +1,787 @@
+openapi: 3.2.0
+info:
+  title: Mobile Invitations API
+  version: '1.0'
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+  description: 'Punchh provides a robust platform for offering loyalty programs to customers. When a business integrates its back-end with the Punchh server, the Punchh APIs become instrumental in executing loyalty programs for enrolled customers, primarily via business-branded mobile apps and websites tailored by Punchh.
+
+
+    To establish integration with the Punchh APIs, you need to understand how they are invoked and what responses are returned by the Punchh server. You can call APIs using any suitable API test client, such as Postman. Thus, the response to every API call made in Postman under a chosen environment (in app and/or platform) is reflected in the app and/or platform.'
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: Invitations
+paths:
+  /api2/mobile/invitations:
+    get:
+      summary: Get Invitations
+      description: Returns the list of pending invitations of a user
+      operationId: mobile_get_invitations
+      tags:
+      - Invitations
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    invitation_id:
+                      type: integer
+                      description: Unique ID of the invitation assigned by Punchh
+                    invitation_type:
+                      type: string
+                      description: Type of the invitation for gift card transfer. Invitation types can be "email", "phone", or "claim_token".
+                    invitation_date:
+                      type: string
+                      description: Date/time when the invitation was created
+                      enum:
+                      - YYYY-MM-DDThh:mm:ssZ
+                      format: date-time
+                    status:
+                      type: string
+                      description: Status of the invitation. The status can be "pending" or "cancelled".
+                    amount:
+                      type: integer
+                      description: Amount of the gift card for which the invitation is created
+                    gift_card:
+                      $ref: '#/components/schemas/Gift-Card-Object'
+              examples:
+                default:
+                  value:
+                  - invitation_id: 221
+                    invitation_type: claim_token
+                    invitation_date: '2017-03-29T23:48:00+05:30'
+                    status: pending
+                    amount: 25
+                    gift_card:
+                      card_background_image: IMAGE_URL_GOES_HERE
+                      design_id: 4
+                      name: My First Card
+                      preferred: false
+                      usb_scannable_card_number: CARD_NUMBER_GOES_HERE
+                      users:
+                      - state: owner
+                        email: test@example.com
+                        first_name: FIRST_NAME_GOES_HERE
+                        last_name: LAST_NAME_GOES_HERE
+                        avatar_remote_url: null
+                        fb_uid: FB_UID_GOES_HERE
+                        user_id: 111111111
+                      gift_card_id: ID_GOES_HERE
+                      card_number: CARD_NUMBER_GOES_HERE
+                      created_at: '2016-12-08T20:18:41+05:30'
+                      epin: EPIN_GOES_HERE
+                      last_fetched_amount: 25
+                      last_fetched_at: '2016-12-20T01:00:19+05:30'
+                      status: active
+                      updated_at: '2016-12-20T01:00:19+05:30'
+                      uuid: ID_GOES_HERE
+      x-stoplight:
+        id: eb521de5ed65f
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  x-stoplight:
+                    id: y3t01icl1hr46
+                  description: OAuth client ID provided by the business
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+        description: ''
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  invitation_id:
+                    type: integer
+                    description: Unique ID of the invitation assigned by Punchh
+                  invitation_type:
+                    type: string
+                    description: Type of the invitation for gift card transfer. Invitation types can be "email", "phone", or "claim_token".
+                  invitation_date:
+                    type: string
+                    description: Date/time when the invitation was created
+                    enum:
+                    - YYYY-MM-DDThh:mm:ssZ
+                    format: date-time
+                  claim_token:
+                    type: string
+                    description: Claim token for the gift card that has to be transferred. This is generated by Punchh.
+                  status:
+                    type: string
+                    description: Status of the invitation. The status can be "pending" or "cancelled".
+                  amount:
+                    type: integer
+                    description: Amount of the gift card for which the invitation is created
+                  gift_card:
+                    $ref: '#/components/schemas/Gift-Card-Object'
+              examples:
+                default:
+                  value:
+                    invitation_id: 222
+                    invitation_type: claim_token
+                    invitation_date: '2017-03-30T00:08:49+05:30'
+                    claim_token: TOKEN_GOES_HERE
+                    status: pending
+                    amount: 25
+                    gift_card:
+                      card_background_image: IMAGE_URL_GOES_HERE
+                      design_id: 4
+                      name: My first card
+                      preferred: false
+                      usb_scannable_card_number: CARD_NUMBER_GOES_HERE
+                      users:
+                      - state: owner
+                        email: test@example.com
+                        first_name: FIRST_NAME_GOES_HERE
+                        last_name: LAST_NAME_GOES_HERE
+                        avatar_remote_url: null
+                        fb_uid: FB_UID_GOES_HERE
+                        user_id: 111111111
+                      gift_card_id: ID_GOES_HERE
+                      card_number: CARD_NUMBER_GOES_HERE
+                      created_at: '2016-12-08T20:18:41+05:30'
+                      epin: EPIN_GOES_HERE
+                      last_fetched_amount: 25
+                      last_fetched_at: '2016-12-20T01:00:19+05:30'
+                      status: active
+                      updated_at: '2016-12-20T01:00:19+05:30'
+                      uuid: ID_GOES_HERE
+      summary: Create Gift Card Claim Token
+      operationId: Mobile_Create_Gift_Card_Claim_Token
+      tags:
+      - Invitations
+      description: Creates a claim token for a gift card that has to be transferred
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/Accept'
+      x-stoplight:
+        id: 38631116dcddd
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                uuid:
+                  type: string
+                  description: UUID of the gift card for which the claim token needs to be created
+                client:
+                  type: string
+                  x-stoplight:
+                    id: 76dopnrcgo5tt
+                  description: OAuth client ID provided by the business
+              required:
+              - uuid
+              - client
+            examples:
+              default:
+                value:
+                  uuid: ID_GOES_HERE
+                  client: CLIENT_GOES_HERE
+        description: ''
+  /api2/mobile/invitations/check_status:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            text/plain:
+              examples:
+                default:
+                  value:
+                  - This is a valid claim token and can be used in the app to claim the associated Gift Card.
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                    - This is a invalid/cancelled/used claim token
+      summary: Check Status of the Claim Token
+      description: Returns the status of a claim token to determine if the claim token is valid
+      operationId: mobile_Check_Status_of_the_claim_token
+      tags:
+      - Invitations
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: d335302f42dc6
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  x-stoplight:
+                    id: 5etxbz9m5021r
+                  description: OAuth client ID provided by the business
+                claim_token:
+                  type: string
+                  x-stoplight:
+                    id: fv8goz65r2zmn
+                  description: The claim token generated by the [Create Gift Card Claim Token](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1invitations/post) API
+              required:
+              - client
+              - claim_token
+        description: ''
+  /api2/mobile/invitations/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    delete:
+      responses:
+        '200':
+          description: ''
+          content:
+            text/plain:
+              examples:
+                default:
+                  value: "[\n  \"Invitation to use this gift card has been successfully cancelled.\"\n]"
+        '422':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                    - Invitation to use this gift card can't be cancelled.
+      summary: Delete an Invitation Claim Token
+      description: Deletes the invitation ID and corresponding claim token to transfer a gift card
+      operationId: Mobile_delete_an_invitation_claim_token
+      tags:
+      - Invitations
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/signature'
+      - schema:
+          type: string
+        in: path
+        name: id
+        required: true
+        description: 'Invitation ID that will be deleted
+
+          '
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: eb9967812969f
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  x-stoplight:
+                    id: jjh64onw64ath
+                  description: OAuth client ID provided by the business
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+  /api2/mobile/invitations/transfer:
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Gift-Card-Object'
+              examples:
+                default:
+                  value:
+                    card_background_image: IMAGE_URL_GOES_HERE
+                    design_id: 4
+                    name: null
+                    preferred: false
+                    usb_scannable_card_number: CARD_NUMBER_GOES_HERE
+                    users:
+                    - state: owner
+                      email: test@example.com
+                      first_name: FIRST_NAME_GOES_HERE
+                      last_name: LAST_NAME_GOES_HERE
+                      avatar_remote_url: null
+                      fb_uid: null
+                      user_id: 111111111
+                    gift_card_id: ID_GOES_HERE
+                    card_number: CARD_NUMBER_GOES_HERE
+                    created_at: '2016-12-08T20:18:41+05:30'
+                    epin: EPIN_GOES_HERE
+                    last_fetched_amount: 25
+                    last_fetched_at: '2016-12-20T01:00:19+05:30'
+                    status: active
+                    updated_at: '2016-12-20T01:00:19+05:30'
+                    uuid: ID_GOES_HERE
+        '422':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                    - This gift card can't be transferred, Please contact support
+      summary: Transfer a Gift Card Using Invitation Claim Token
+      description: Transfers a gift card to a user using the corresponding claim token
+      operationId: mobile_transfer_a_gift_card_using_invitation_claim_token
+      tags:
+      - Invitations
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: 8ca4a75f4019b
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  x-stoplight:
+                    id: ofimr4m4m3nep
+                  description: OAuth client ID provided by the business
+                claim_token:
+                  type: string
+                  x-stoplight:
+                    id: hta6rt379xt9m
+                  description: The claim token generated by the [Create Gift Card Claim Token](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1invitations/post) API
+              required:
+              - client
+              - claim_token
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  claim_token: CLAIM_TOKEN_GOES_HERE
+components:
+  parameters:
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
+  schemas:
+    User-object:
+      type: object
+      description: Includes details about the users who are registered on a particular business
+      x-examples:
+        json/application:
+          address: ''
+          anniversary: '2013-02-16'
+          avatar_remote_url: null
+          birthday: '1999-01-01'
+          city: ''
+          communicable_email: test@example.com
+          created_at: '2019-01-11T09:08:25Z'
+          email: test@example.com
+          email_verified: false
+          facebook_signup: null
+          apple_signup: null
+          apple_uid: null
+          favourite_location_ids: 306082,333070,304374
+          favourite_store_numbers: 12345,0604,1234
+          fb_uid: null
+          first_name: FIRST_NAME_GOES_HERE
+          gender: ''
+          has_generated_fb_email: false
+          last_name: LAST_NAME_GOES_HERE
+          marketing_email_subscription: true
+          marketing_pn_subscription: true
+          migrate_status: false
+          passcode_configured_for_giftcards: false
+          phone: '1111111111'
+          profile_field_answers:
+            test1: Option 1
+          referral_code: REFERRAL_CODE_GOES_HERE
+          referral_path: URL_GOES_HERE
+          secondary_email: ''
+          state: ''
+          superuser: false
+          terms_and_conditions: true
+          title: ''
+          updated_at: '2020-04-29T04:18:24Z'
+          user_as_qrcode: QR_CODE_GOES_HERE
+          user_code: P11111111
+          user_id: 111111111
+          preferred_locale: en
+          user_relations: []
+          zip_code: null
+          verification_mode: null
+          sms_subscription: true
+          apple_pass_url: APPLE_PASS_URL_GOES_HERE
+          google_pass_url: GOOGLE_PASS_URL_GOES_HERE
+          user_joined_at: '2019-01-11T09:08:25Z'
+      title: User (Object)
+      x-stoplight:
+        id: 447c4c510a499
+      properties:
+        address:
+          type: string
+          description: Address of the user
+        avatar_remote_url:
+          type: string
+          description: URL of the user's profile image uploaded to an online file storage system. This will be used for users who signed up using email.
+          x-nullable: true
+        birthday:
+          type: string
+          description: Date of birth of the user, in YYYY-MM-DD format
+          enum:
+          - YYYY-MM-DD
+          format: date-time
+        communicable_email:
+          type: string
+          description: Email address used for communication with the user
+        city:
+          type: string
+          description: City where the user lives
+        created_at:
+          type: string
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+          description: Date/time when the user was created in the system, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+        email:
+          type: string
+          description: Unique email address used to identify the user
+        email_verified:
+          type: boolean
+          description: Whether the email address of the user has been verified or not
+        facebook_signup:
+          type: boolean
+          description: Indicates whether the user signed up using Facebook. This parameter returns true the first time a user signs up in the mobile app using Facebook. For all subsequent logins, it returns a null value.
+        favourite_locations:
+          type: string
+          description: List of the user's favorite locations
+        favourite_store_numbers:
+          type: string
+          description: List of store numbers of the user's favorite locations
+        fb_uid:
+          type: string
+          description: Facebook ID that identifies the user
+          x-nullable: true
+        first_name:
+          type: string
+          description: First name of the user
+        gender:
+          type: string
+          description: Gender of the user
+        last_name:
+          type: string
+          description: Last name of the user
+        marketing_email_subscription:
+          type: boolean
+          description: Whether the user has subscribed to receive marketing emails or not
+        marketing_pn_subscription:
+          type: boolean
+          description: Whether the user has subscribed to marketing push notifications or not
+        migrate_status:
+          type: boolean
+          description: Whether the user has a migrate status or not
+        passcode_configured_for_giftcards:
+          type: boolean
+          description: Whether the user has configured a passcode for gift cards or not
+        phone:
+          type: string
+          description: Phone number of the user
+        profile_field_answers:
+          $ref: '#/components/schemas/profile_field_answers'
+        referral_code:
+          type: string
+          description: Referral code of the user. A user can refer others to join the business loyalty program by sharing this referral code. When a referred user signs up and enters the shared referral code in the mobile app, this `referral_code` must be passed in the `invite_code` request parameter when calling the Sign up / Register API.
+        referral_path:
+          type: string
+          description: Referral URL of the user
+        secondary_email:
+          type: string
+          description: The secondary email address of the user is configured when a user signs up with Facebook/Apple but does not share the email address. The app asks for an alternate email address, which is kept as the `secondary_email`.
+        state:
+          type: string
+          description: State where the user lives
+        superuser:
+          type: boolean
+          description: Whether multiple check-ins are allowed for a user. This is used mostly for testing purposes by developers.
+        terms_and_conditions:
+          type: boolean
+          description: Whether the terms and conditions of a business have been accepted by a user or not
+        title:
+          type: string
+          description: Salutation as selected by the user
+          x-nullable: true
+        updated_at:
+          type: string
+          description: Date/time when the user was updated in the system, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+        user_as_barcode:
+          type: string
+          description: Barcode that identifies the user
+        user_as_qrcode:
+          type: string
+          description: QR code that identifies the user
+        user_code:
+          type: string
+          description: A unique ID that identifies the user. This smaller code can be converted to a QR code in the app and scanned at some POS systems that do not support longer codes. Alternatively, a user could give this to the POS operator if the POS does not have a scanner.
+        user_id:
+          type: integer
+          description: ID that identifies the user
+        user_relations:
+          type: array
+          description: Relatives of the user. Valid values are "kid" and "spouse".
+          items:
+            type: string
+            enum:
+            - kid
+            - spouse
+        zip_code:
+          type: string
+          description: Zip code where the user lives
+        anniversary:
+          type: string
+          description: Anniversary date of the user, in YYYY-MM-DD format
+        verification_mode:
+          description: Mode of verification (available only for a user in awaiting migration state)
+          x-nullable: true
+        apple_signup:
+          type: boolean
+          description: Whether the user has an Apple sign-up or not. This will return true for the first time sign-up.
+        apple_uid:
+          type: string
+          description: Unique ID generated by Apple
+        has_generated_fb_email:
+          type: boolean
+          description: Whether the user has generated a Facebook email or not
+        sms_subscription:
+          type: boolean
+          description: Whether the user has subscribed to SMS services or not
+        apple_pass_url:
+          type: string
+          format: uri
+          description: URL that a user can use to download the user's associated loyalty Apple pass
+        google_pass_url:
+          type: string
+          format: uri
+          description: URL that a user can use to download the user's associated loyalty Google pass
+        age_verified_status:
+          type: boolean
+          x-stoplight:
+            id: ougfjyb55y0rf
+          description: 'Whether or not the user has undergone age verification by Koupon Media. Possible Values: true, false. The value is set to true if the user''s age is verified by Koupon Media; otherwise, it is set to false. The response returns this parameter in sign-in, sign-up, and user update APIs if Koupon Media is selected as the age verification adapter for the business in the Punchh platform. Contact your Punchh representative to update this configuration.'
+        account_created_at:
+          type: string
+          x-stoplight:
+            id: o07dhmip4epo0
+          format: date-time
+          description: 'This value is set when a guest account is created on the Punchh Platform and varies depending on business configurations. For example:
+
+            * If an eClub account is created with a historical registration date, that specific date is returned in this parameter.
+
+            * If guest data is migrated from a previous platform and includes a registration date, the system creates the guest account with this registration date from the prior system, and the API returns that date in this parameter.'
+        user_joined_at:
+          type: string
+          x-stoplight:
+            id: kbj7omjru7mry
+          format: date-time
+          description: Date and time when the user became a loyalty member
+    profile_field_answers:
+      title: Profile Field Answers (Object)
+      x-stoplight:
+        id: lme68mm8va3zz
+      type: object
+      properties:
+        upf0:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+        upf1:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+        upf2:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+      description: Answers given by the user while filling in the user profile. The user submits answers to profile field questions that are configured in the Punchh platform. A total of 25 answers can be submitted. The keys range from 'upf0' to 'upf24'. If questions have multiple answers, the values should be separated by a | character (pipe).
+    Gift-Card-Object:
+      type: object
+      title: Gift Card (Object)
+      x-stoplight:
+        id: 2eff352e87b8c
+      properties:
+        card_background_image:
+          type: string
+          description: URL of the image that is displayed as the gift card background in the app of a business
+        card_number:
+          type: string
+          description: Unique gift card number as issued by the gift card processor (e.g., Aloha, Vantiv, Valutec, etc.) used by the business
+        epin:
+          type: string
+          description: Security PIN associated with a gift card. A "null" value indicates that no epin is associated with the gift card.
+        usb_scannable_card_number:
+          type: string
+          description: Easily scannable form of a gift card's number by adding ~ and ^ as prefix and suffix, respectively, to the gift card number. This is done to avoid issues at certain POS systems while scanning the QR code.
+        created_at:
+          type: string
+          description: Date/time when the gift card was created in the system, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+        design_id:
+          type: integer
+          description: Identification of a particular gift card design selected by the user while purchasing a gift card
+        preferred:
+          type: boolean
+          description: A "true" value for a gift card indicates that a user has selected it to be the preferred gift card for payment.
+        name:
+          description: Name of the card that has been assigned by the user. In case of purchase of a gift card from an app, users cannot add a name to the card. A "null" value indicates that a name has not been added to the card. A name can be added later using the [Update Gift Cards](/docs/dev-portal-mobile/5a6da59e09732-update-gift-cards) API.
+          x-nullable: true
+        last_fetched_amount:
+          type: number
+          description: The balance amount of a gift card last fetched from the gift card processor
+          format: float
+        last_fetched_at:
+          type: string
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+          description: The last time the balance amount of a gift card was fetched from the gift card processor. This indicates when it was cached.
+        status:
+          type: string
+          description: The status of a gift card. The only value exposed to a gift card in the app is "active". Other statuses are maintained for internal tracking.
+        updated_at:
+          type: string
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+          description: Date/time when the gift card was updated in the system, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+        users:
+          $ref: '#/components/schemas/User-object'
+        uuid:
+          type: string
+          description: Unique ID of the gift card issued by and maintained in the Punchh system
+        gift_card_id:
+          type: integer
+          description: Unique ID assigned to each gift card by the Punchh system. This ID will be passed in the push notification payload to app clients in the key `gc`. By mapping this, the app client can fetch the updated balance of a particular gift card.
+        auto_reload_enabled:
+          type: boolean
+          description: Whether auto-reload is enabled for a gift card or not
+        gc_user_auto_reload_threshold_amount:
+          type: number
+          format: float
+          description: Threshold amount below which a gift card becomes eligible for auto-reload
+        gc_user_auto_reload_default_amount:
+          type: number
+          format: float
+          description: Default amount with which a gift card would be auto-reloaded
+        gc_user_auto_reload_preferred_payment:
+          type: string
+          x-stoplight:
+            id: vi0chaw55927t
+          description: UUID of the preferred payment card, which is used for making payments when auto-reloading the gift card
+x-stoplight:
+  id: bf6eddb435209
+x-ext-urls: {}

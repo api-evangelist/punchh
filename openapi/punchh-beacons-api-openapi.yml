@@ -1,0 +1,242 @@
+openapi: 3.2.0
+info:
+  title: Mobile Beacons API
+  version: '1.0'
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+  description: 'Punchh provides a robust platform for offering loyalty programs to customers. When a business integrates its back-end with the Punchh server, the Punchh APIs become instrumental in executing loyalty programs for enrolled customers, primarily via business-branded mobile apps and websites tailored by Punchh.
+
+
+    To establish integration with the Punchh APIs, you need to understand how they are invoked and what responses are returned by the Punchh server. You can call APIs using any suitable API test client, such as Postman. Thus, the response to every API call made in Postman under a chosen environment (in app and/or platform) is reflected in the app and/or platform.'
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: Beacons
+paths:
+  /api2/mobile/locations/beacon_entry:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      missing_required_param:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                Bad Request (missing parameter):
+                  value:
+                    errors:
+                      missing_required_param:
+                      - 'Required parameter missing or the value is empty: location_id'
+                Bad Request (invalid language):
+                  value: "{  \n   \"errors\":{  \n      \"invalid_language\":[  \n         \"Unknown/Invalid locale in Accept-Language Header. Supported locales are en-GB, es-CR, en, es.\"\n      ]\n   }\n}"
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      invalid_access_token:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      invalid_access_token:
+                      - 'Error: access_token not found or is incorrect! Valid access_token of the user required'
+      description: This API pertains to how a registered user is detected when the user enters the beacon's range and what follows.
+      summary: Record Beacon Entry
+      operationId: mobile_record_beacon_entry
+      tags:
+      - Beacons
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/Authorization'
+      x-private: true
+      x-stoplight:
+        id: 6720eb5930c53
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                access_token:
+                  type: string
+                  description: Security token that identifies a user
+                beacon_major:
+                  type: integer
+                  description: ID of the business assigned by Punchh
+                beacon_minor:
+                  type: integer
+                  description: ID assigned to the beacon. This value can be configured in the Punchh platform. A single location can have multiple minors.
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  access_token: ACCESS_TOKEN_GOES_HERE
+                  beacon_major: 635
+                  beacon_minor: 1
+  /api2/mobile/locations/beacon_exit:
+    delete:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      missing_required_param:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                Bad Request (missing parameter):
+                  value:
+                    errors:
+                      missing_required_param:
+                      - 'Required parameter missing or the value is empty: location_id'
+                Bad Request (invalid language):
+                  value: "{  \n   \"errors\":{  \n      \"invalid_language\":[  \n         \"Unknown/Invalid locale in Accept-Language Header.Supported locales are en-GB, es-CR, en, es.\"\n      ]\n   }\n}"
+        '403':
+          description: ''
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    errors:
+                      invalid_access_token:
+                      - 'Error: access_token not found or is incorrect! Valid access_token of the user required'
+      summary: Record Beacon Exit
+      description: This API pertains to what action is triggered when an already-detected, registered user leaves the beacon's range.
+      operationId: mobile_record_beacon_exit
+      tags:
+      - Beacons
+      parameters:
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/Authorization'
+      x-private: true
+      x-stoplight:
+        id: 512261b657431
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                access_token:
+                  type: string
+                  description: Security token that identifies a user
+                beacon_major:
+                  type: integer
+                  description: ID of the business assigned by Punchh
+                beacon_minor:
+                  type: integer
+                  description: ID assigned to the beacon. This value can be configured in the Punchh platform. A single location can have multiple minors.
+            examples:
+              default:
+                value:
+                  client: CLIENT_GOES_HERE
+                  access_token: ACCESS_TOKEN_GOES_HERE
+                  beacon_major: 635
+                  beacon_minor: 1
+components:
+  parameters:
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
+x-stoplight:
+  id: bf6eddb435209
+x-ext-urls: {}

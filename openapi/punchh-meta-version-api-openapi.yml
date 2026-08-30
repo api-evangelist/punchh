@@ -1,0 +1,1964 @@
+openapi: 3.2.0
+info:
+  title: Mobile Meta & Version API
+  version: '1.0'
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+  description: 'Punchh provides a robust platform for offering loyalty programs to customers. When a business integrates its back-end with the Punchh server, the Punchh APIs become instrumental in executing loyalty programs for enrolled customers, primarily via business-branded mobile apps and websites tailored by Punchh.
+
+
+    To establish integration with the Punchh APIs, you need to understand how they are invoked and what responses are returned by the Punchh server. You can call APIs using any suitable API test client, such as Postman. Thus, the response to every API call made in Postman under a chosen environment (in app and/or platform) is reflected in the app and/or platform.'
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: Meta & Version
+paths:
+  /api2/mobile/meta.json:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  android_ga_code:
+                    type: string
+                    description: Android Google Analytics code of the program's Android app
+                  android_geocode_api_key:
+                    type: string
+                    description: Android geolocation key
+                  beacon_uuid:
+                    type: string
+                    description: Unique ID that identifies a beacon deployed at any location
+                  content_language:
+                    type: string
+                    description: The language used in the response. Example values are "en", "es", "es-CR", etc.
+                  earning_description:
+                    type: string
+                    description: Brief description of the earning program for the business
+                  facebook_sharing:
+                    type: boolean
+                    description: Determines whether users can share feedback on their Facebook account or not
+                  email_verification_enabled:
+                    type: boolean
+                    description: 'Whether a user needs to verify the user''s email address by using the link sent in the verification email or not
+
+
+                      The default value is "false".'
+                  ios_ga_code:
+                    type: string
+                    description: iOS Google Analytics code of the program's iOS app
+                  ios_geocode_api_key:
+                    type: string
+                    description: iOS geolocation key
+                  marketing_image_url:
+                    type: string
+                    description: Marketing image URL of the business or service
+                  marketing_info:
+                    type: string
+                    description: A descriptive/fun blurb about the program
+                  marketing_message:
+                    type: string
+                    description: This is the default message that is shown to a user when the user writes a review. It is also the default tagline that appears on a Facebook post.
+                  marketing_title:
+                    type: string
+                    description: Name of the business or service
+                  uber_client_id:
+                    type: string
+                    description: Unique ID that identifies Punchh as a consumer of Uber APIs
+                  promotional_coupons_enabled:
+                    type: boolean
+                    description: Whether promotional coupons are enabled for the business or not
+                  gift_cards_enabled:
+                    type: boolean
+                    description: Whether the app of the business has gift cards or not
+                  gift_card_minimum_transaction_amount:
+                    type: integer
+                    description: Minimum amount with which gift card transactions (e.g., purchase/reload) will be allowed
+                  max_gift_card_balance:
+                    type: number
+                    format: double
+                    description: "Maximum currency amount that can be on a gift card \n\nA value of 0 (zero) indicates that there is no limit on the amount that can be on a gift card."
+                  social_cause_campaigns_enabled:
+                    type: boolean
+                    description: Whether social cause campaigns are enabled for the business or not
+                  default_map_search_radius:
+                    type: integer
+                    description: The radius within which the app searches for business locations with respect to the current location of a user
+                  facebook_signup_incentive_text:
+                    type: string
+                    description: Text displayed on the sign-up screen to inform a user about any rewards the user might get by signing up using Facebook
+                  require_passcode_for_gift_card:
+                    type: boolean
+                    description: A secondary authentication that, if enabled from the Punchh platform, is required for sharing and transferring gift cards
+                  support_email_address:
+                    type: string
+                    description: Support email address of a program
+                  faq_url:
+                    type: string
+                    description: URL of a program's frequently asked questions (FAQ) page
+                  instagram_page_url:
+                    type: string
+                    description: Instagram page URL allowing users to follow a business on Instagram
+                  order_now_url:
+                    type: string
+                    description: URL of the page from which a user can order. This opens in the Order tab of the app.
+                  order_url_for_sso:
+                    type: string
+                    description: SSO URL
+                  menus_url:
+                    type: string
+                    description: URL of the page where the program's menus are explained
+                  privacy_url:
+                    type: string
+                    description: URL of the page where a user can privately interact with a business or service
+                  terms_and_conditions_url:
+                    type: string
+                    description: URL of the page that explains the program's terms and conditions
+                  nutrition_url:
+                    type: string
+                    description: URL of the nutrition page
+                  catering_url:
+                    type: string
+                    description: URL of the catering page
+                  careers_url:
+                    type: string
+                    description: URL of the careers page
+                  facebook_page:
+                    type: string
+                    description: Facebook page of the business
+                  twitter_handle:
+                    type: string
+                    description: Twitter handle that allows a user to follow an app (e.g., `@business_name`)
+                  share_invite_code_message:
+                    type: string
+                    description: Invitation code message as configured in the Punchh platform
+                  share_invite_code_title:
+                    type: string
+                    description: Invitation code title as configured in the Punchh platform
+                  share_invite_code_description:
+                    type: string
+                    description: Invitation code description as configured in the Punchh platform
+                  app_disclaimer:
+                    type: string
+                    description: Disclaimer about the app and its usage
+                  game_disclaimer:
+                    type: string
+                    description: Disclaimer about the gaming module available in the app
+                  upgrade_disclaimer:
+                    type: string
+                    description: Disclaimer about account upgrade (if available) in the app
+                  challenges_disclaimer:
+                    type: string
+                    description: Disclaimer about the challenges module available in the app
+                  earning_disclaimer:
+                    type: string
+                    description: Disclaimer about the earning rules in the app
+                  olo_base_url:
+                    type: string
+                    description: Specific to a business using the Olo online ordering service. Base URL used for online ordering
+                  olo_api_key_ios:
+                    type: string
+                    description: Specific to a business using the Olo online ordering service. API key for iOS apps
+                  olo_api_key_android:
+                    type: string
+                    description: Specific to a business using the Olo online ordering service. API key for Android apps
+                  olo_provider_key:
+                    type: string
+                    description: Specific to a business using the Olo online ordering service. Provider key to use online ordering offered by Olo
+                  olo_group_order_invite_url:
+                    type: string
+                    description: Specific to a business using the Olo online ordering service. Olo supports group orders. This URL is used to invite multiple users to collaborate while placing an order.
+                  business_id:
+                    type: integer
+                    description: Unique ID that identifies the business
+                  business_name:
+                    type: string
+                    description: Name of the business
+                  checkin_evidenced_by:
+                    type: string
+                    description: Method of check-in used by a user (e.g., barcode, qr_code, receipt_image, etc.)
+                  guest_identity_code_type:
+                    type: string
+                    description: How a user is identified at the POS (the POS scanner type - e.g., barcode, qr_code, etc.)
+                  visits_per_card:
+                    type: integer
+                    description: Number of visits required for a single card completion
+                  card_redemption_value:
+                    type: integer
+                    description: What a user gets when redeeming a completed card
+                  migration_allowed:
+                    type: boolean
+                    description: Returns "true" if the migration flag is enabled for devices
+                  minimum_visit_amount:
+                    type: integer
+                    description: Minimum amount in selected currency required for a visit to be counted
+                  minimum_visit_hours:
+                    type: integer
+                    description: Minimum time duration between two consecutive visits of a user so that both visits are counted separately
+                  minimum_age_to_signup:
+                    type: integer
+                    description: Minimum age at which a user is allowed to sign up
+                  misc1:
+                    type: string
+                    description: Miscellaneous field used for app-specific needs. 1 of 4 fields
+                  misc2:
+                    type: string
+                    description: Miscellaneous field used for app-specific needs. 2 of 4 fields
+                  misc3:
+                    type: string
+                    description: Miscellaneous field used for app-specific needs. 3 of 4 fields
+                  misc4:
+                    type: string
+                    description: Miscellaneous field used for app-specific needs. 4 of 4 fields
+                  earning_unit:
+                    type: string
+                    description: What a user earns as the result of a check-in. Values can be points or visits.
+                  currency_earned:
+                    type: integer
+                    description: Value of points/visits earned as the result of a conversion as configured in the Punchh platform
+                  points_conversion_threshold:
+                    type: integer
+                    description: The threshold value at which a user's accumulated points get converted to banked rewards. For example, after accumulating 100 points, the points get converted to dollars.
+                  redemption_expiry_minutes:
+                    type: integer
+                    description: The time duration after which a redemption code generated by a user expires
+                  allow_rating_in_feedback:
+                    type: boolean
+                    description: "A value of \"true\" indicates that the app of the business supports ratings in feedback. Ratings can be either stars or emojis. \n\nThe default value is \"false\"."
+                  maximum_rating_in_feedback:
+                    type: integer
+                    description: Maximum rating that can be given by a user, as configured in the Punchh platform. The scale will be from 1 to this maximum value, which can vary from 3 to 10.
+                  checkins_earn:
+                    type: string
+                    description: What a user earns as the result of a check-in. Values returned are "points", "visits", and "points_and_visits".
+                  gift_card_designs:
+                    type: array
+                    description: 'Returns the different card designs configured in the Punchh platform
+
+                      '
+                    items:
+                      type: object
+                      properties:
+                        backgroud_image_url:
+                          type: string
+                          description: URL of the image that will be displayed as the background of a gift card
+                        card_type:
+                          type: string
+                          description: 'Type assigned to a particular gift card design. Different types available are:
+
+                            - Physical gift card
+
+                            - Virtual gift card'
+                        name:
+                          type: string
+                          description: Name assigned to a particular gift card design
+                        design_id:
+                          type: integer
+                          description: Unique ID of a particular gift card design
+                  locations:
+                    $ref: '#/components/schemas/Locations'
+                  membership_levels:
+                    $ref: '#/components/schemas/Membership-Levels'
+                  redeemables:
+                    $ref: '#/components/schemas/redeemable'
+                  games:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        game_viral_message:
+                          type: string
+                          description: The message for the game. It should be intuitive.
+                        name:
+                          type: string
+                          description: Name of the game
+                        images_on_card:
+                          type: integer
+                          description: Image on the card displayed for the game
+                        scratch_valid_codes:
+                          type: string
+                        game_type:
+                          type: string
+                          description: Game type (e.g., scratch_n_match, slot_machine, apples, etc.)
+                        requires_code_validation:
+                          type: boolean
+                          description: Whether games require a validation code to begin
+                        game_id:
+                          type: integer
+                          description: ID provided by Punchh that identifies the game in the business
+                        gaming_levels:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              extra_punchhs:
+                                type: integer
+                              redeemable_id:
+                                x-nullable: true
+                              level:
+                                type: string
+                  profile_field_questions:
+                    $ref: '#/components/schemas/profile_field_questions-Object'
+                  banking_rules:
+                    $ref: '#/components/schemas/banking_rules-Object'
+                  base_redeemable:
+                    $ref: '#/components/schemas/base_redeemable-Object'
+                  payment_credential:
+                    $ref: '#/components/schemas/payment_credential'
+                  enable_gift_card_auto_reload:
+                    type: boolean
+                    description: Whether the Gift Card Auto Reload option is enabled for a business or not
+                  gift_card_auto_reload_threshold:
+                    type: number
+                    format: float
+                    description: Threshold amount below which a gift card becomes eligible for auto-reload
+                  gift_card_auto_reload_default:
+                    type: number
+                    format: float
+                    description: Default amount with which an eligible gift card will be auto-reloaded
+                  gift_card_auto_reload_disclaimer:
+                    type: string
+                    description: Disclaimer about gift card auto-reload
+                  subscriptions:
+                    $ref: '#/components/schemas/subscription'
+                  subscription_enabled:
+                    type: boolean
+                    description: Whether the subscription feature is enabled for the business or not
+                  subscriptions_payment_credential:
+                    $ref: '#/components/schemas/subscriptions_payment_credential'
+                  auto_select_strategy:
+                    type: string
+                    x-stoplight:
+                      id: eouuusnx6t4mk
+                    description: One or more categories of discount types chosen for automatically applying discounts. Possible values - offer, subscription. The auto-redemption strategy selected by the business can be consumed by the mobile app to identify the offers that will be auto-applicable. This enables guests to have visibility on their available offers, which can be automatically applied on their discount basket during a transaction if their discount basket qualifies for auto-applicable offers. Applicable to businesses using [Redemptions 2.0](/docs/dev-portal-mobile/apis/mobile-redemptions-2-0-new-api).
+                  allow_guest_to_raise_reactivation:
+                    type: boolean
+                    x-stoplight:
+                      id: rwy483ir9twrx
+                    description: Whether or not to allow a user with a deactivated account to request account reactivation directly from the mobile app. The value is set to true if guests are allowed to raise reactivation requests via mobile app and iFrame. Otherwise, the value is set to false. For more information, see [Reactivate User Profile](/docs/dev-portal-mobile/5f81f5f1ee065-reactivate-user-profile).
+                  enable_gift_card_purchase:
+                    type: boolean
+                    x-stoplight:
+                      id: 7pxa55dfyipnx
+                    description: Determines whether users can purchase a gift card using the business mobile app
+                  enable_gift_card_reload:
+                    type: boolean
+                    x-stoplight:
+                      id: 2653t9xtf44mo
+                    description: Determines whether users can add to the balance of an existing gift card using the business mobile app
+                  enable_gift_card_transfer:
+                    type: boolean
+                    x-stoplight:
+                      id: rcr0s41ktzkln
+                    description: Determines whether users can transfer the gift card balance amount (both full and partial) to another user using the business mobile app.
+                  enable_gift_card_gifting:
+                    type: boolean
+                    x-stoplight:
+                      id: tt3nj6x4bkc7x
+                    description: Determines whether the mobile app should allow users to gift a card to another user
+                  enable_gift_card_consolidation:
+                    type: boolean
+                    x-stoplight:
+                      id: 10iefs1fqx3j2
+                    description: Determines whether users can transfer the entire balance of a gift card to another gift card using the business mobile app
+                  enable_gift_card_sharing:
+                    type: boolean
+                    x-stoplight:
+                      id: sq16wsc6729v5
+                    description: Determines whether users can share a gift card with another user using the business mobile app
+                  create_empty_gift_cards:
+                    type: boolean
+                    x-stoplight:
+                      id: 3z5e2d0h7nao6
+                    description: Determines whether users can create gift cards without any funds loaded onto them initially using the business mobile app
+                  show_gift_card_history:
+                    type: boolean
+                    x-stoplight:
+                      id: 2cxbwiefrynmh
+                    description: Determines whether the mobile app should show gift card history
+                  delete_gift_card_after_consolidation:
+                    type: boolean
+                    x-stoplight:
+                      id: ing457ommrg9t
+                    description: Determines whether the mobile app can automatically delete the empty gift card after card consolidation
+                  gift_card_default_amounts:
+                    $ref: '#/components/schemas/gift-card-default-amounts'
+                  preferred_gift_cards:
+                    type: array
+                    x-stoplight:
+                      id: otfzsn65uvwmr
+                    description: 'Types of gift cards supported by a business. Mobile apps can use this value to determine the gift cards the business supports. The gift cards supported by a business are configured in the Punchh platform. If no gift card types are configured in the Punchh platform, the array will be empty. Contact your Punchh representative to update this Punchh platform configuration. Possible values:
+
+                      * physical_gift_card: Physical gift cards issued by the business
+
+                      * virtual_gift_card: Digital gift cards issued by the business
+
+                      * physical_comp_card: Physical complimentary cards provided by the business
+
+                      * virtual_comp_card: Digital complimentary cards provided by the business
+
+                      * network_gift_card: Gift cards issued through a network of businesses'
+                    items:
+                      x-stoplight:
+                        id: nm4aklky8cx1h
+                      type: string
+                  multiple_redemptions_enabled:
+                    type: boolean
+                    x-stoplight:
+                      id: ix7ufqnza22up
+                    description: Indicates whether the multiple redemptions feature is enabled for the business. If set to true, the API returns the `multiple_redemptions` object in the response.
+                  multiple_redemptions:
+                    $ref: '#/components/schemas/multiple-redemptions'
+                  cancel_redemption:
+                    type: boolean
+                    x-stoplight:
+                      id: qrp2xkg22q8yk
+                    description: Indicates whether the user can revoke (cancel) the generated redemption code from the brand's app
+                  ios_guest_account_deactivation:
+                    type: boolean
+                    x-stoplight:
+                      id: v2hx8e1u9ndxw
+                    description: Indicates whether a business has enabled account deactivation for its iOS app users
+                  android_guest_account_deactivation:
+                    type: boolean
+                    x-stoplight:
+                      id: 27rh6m506kxpq
+                    description: Indicates whether a business has enabled account deactivation for its Android app users
+                  ios_guest_account_deletion:
+                    type: string
+                    x-stoplight:
+                      id: gr03hhm45pmj9
+                    description: 'Guest account deletion type that a business has configured for its iOS app users. Possible values: none, direct, email'
+                  android_guest_account_deletion:
+                    type: string
+                    x-stoplight:
+                      id: 3rojrxcv51ui5
+                    description: 'Guest account deletion type that a business has configured for its Android app users. Possible values: none, direct, email'
+                  guest_account_deletion_request_email:
+                    type: object
+                    x-stoplight:
+                      id: ci1ycws1wivl0
+                    description: Specifies the configuration for sending an email notification to the business when a guest requests account deletion. This includes details like the recipient email, subject line, and message body.
+                    properties:
+                      to:
+                        type: string
+                        x-stoplight:
+                          id: avv881uklhuw4
+                        description: Recipient email address where the account deletion request will be sent
+                      'subject ':
+                        type: string
+                        x-stoplight:
+                          id: pg6klkt0cvdxp
+                        description: Subject line of the email. It can include placeholders like {{{program_name}}} that will be dynamically replaced with the actual program name.
+                      body:
+                        type: string
+                        x-stoplight:
+                          id: ke7rtjn05oyy1
+                        description: Body of the email message. It can include dynamic placeholders like {{{email}}} for the guest's email and {{{program_name}}} for the loyalty program name.
+                  app_feedback_url:
+                    type: string
+                    x-stoplight:
+                      id: mcny5ckhel889
+                    description: URL of the business where users can submit feedback related to the mobile app experience
+                  accessibility_url:
+                    type: string
+                    x-stoplight:
+                      id: 2umrzch3lohhc
+                    description: URL of the business that provides information or support related to accessibility features
+                  enable_advance_auth:
+                    type: boolean
+                    x-stoplight:
+                      id: ebvx17jwjxw6f
+                    description: Indicates whether Advanced Authentication is enabled for the business. Returns true if Advanced Authentication is enabled for the business; otherwise, false.
+                  program_type:
+                    type: string
+                    x-stoplight:
+                      id: wiphqrzhie1cy
+                    description: 'Provides information about the program type configured for the business in the Punchh platform. Possible values:
+
+                      * points_unlock_redeemables - Indicates the program is Points Unlock Redeemables based
+
+                      * points - Indicates program is points convert to rewards or currency
+
+                      * visit - Indicates the program is Visit-based
+
+                      * points_and_visits - Indicates the program is hybrid and includes both points and visits
+
+                      * none - Indicates no loyalty program
+
+                      See [Punchh Offers and Program Types](/docs/dev-portal-developer-resources/150fedd8daa77-punchh-offers-and-program-types#program-types). You must log in to the developer portal to access the topic.'
+                  points_conversion_type:
+                    type: string
+                    x-stoplight:
+                      id: rubjr2reovscp
+                    description: "Provides information about the conversion type configured for the business based on the program type selected for the business in the Punchh platform: Possible values: \n- staged - Applicable when `program_type` is points_unlock_redeemables or points. The staged value indicates that points are earned normally (check-ins, purchases, etc.), but when you redeem, the system does not deduct points immediately at the time of generating a redemption code or [SSF code](/docs/dev-portal-mobile/apis/mobile-api/tag/single-scan-code/post/api2/mobile/single_scan_tokens).\n- none -  Applicable when `program_type` is points. The none value indicates points do not get converted into any entity, such as rewards or currency. \n- currency - Applicable when `program_type` is points. The currency value indicates that earned points are automatically converted to currency at predefined point thresholds.\n- rewards -  Applicable when `program_type` is points. The rewards value indicates that earned points are automatically converted to rewards at predefined point thresholds.\nSee [Punchh Offers and Program Types](/docs/dev-portal-developer-resources/150fedd8daa77-punchh-offers-and-program-types#program-types). You must log in to the developer portal to access the topic."
+                  guest_lookup_type:
+                    type: string
+                    x-stoplight:
+                      id: f26i84yfecjcm
+                    description: An identifier in the mobile app and iFrame used for guest look-up at the POS. If the bar code is configured as the guest’s identity in the Punchh platform for the business, the mobile app and iFrame will only support phone number for guest look-up. Contact your Punchh representative for more information about this Punchh platform configuration.
+                  enable_guest_challenge_opt_in:
+                    type: boolean
+                    x-stoplight:
+                      id: jraehwtu9pz58
+                    description: Indicates whether guests can opt in to challenge-based activities. When true, the opt-in button is shown on eligible challenge cards in the mobile app; when false, it is hidden. Contact your Punchh representative to update this configuration setting.
+                  enable_guest_challenge_opt_out:
+                    type: boolean
+                    x-stoplight:
+                      id: 0hslc3uxk730q
+                    description: Indicates whether guests can opt out of challenge-based activities. When true, the opt-out button is shown on eligible challenge cards in the mobile app; when false, it is hidden. Opt-in must be enabled for challenges in the Punchh platform if Opt-out functionality is required. Contact your Punchh representative to update this configuration setting. If an invalid combination is set (Opt-in disabled while Opt-out enabled), the mobile app hides both buttons.
+                  enable_loyalty_identification_at_drive_thru:
+                    type: boolean
+                    x-stoplight:
+                      id: j3apvz3uq7xib
+                    description: Indicates whether loyalty users can generate a 4-digit numeric/alphanumeric short code in the mobile app. The short code is used to look up the user’s account and retrieve their balance at the POS. See [Generate a Drive-Thru Short Code](https://developers.partech.com/docs/dev-portal-mobile/647b28e02d630-generate-a-drive-thru-short-code)
+                  drive_thru_location_level_strategy:
+                    type: boolean
+                    x-stoplight:
+                      id: dqjhyppyrpp8v
+                    description: Indicates whether the drive-thru short code should be generated from the location-level pool. When set to true, the mobile app must send a location_id when requesting a short code. This parameter is always set to true. See [Generate a Drive-Thru Short Code](https://developers.partech.com/docs/dev-portal-mobile/647b28e02d630-generate-a-drive-thru-short-code)
+                  enable_drive_thru_pay:
+                    type: boolean
+                    description: Indicates whether the short code can be used for drive-thru payments when the business supports the single scan flow. When set to true, the loyalty user can pay at the drive-thru using the short code. When set to false, the loyalty user can only earn points or rewards at the drive-thru using the short code, but cannot use it for payment. Contact your Punchh representative to update this Punchh platform configuration.
+                  enable_subscription_taxation_support:
+                    type: boolean
+                    x-stoplight:
+                      id: 7tdkirnwtjg67
+                    description: Indicates whether tax handling for subscriptions is enabled. When set to true, the mobile app displays tax-related line items and calculates them accordingly. When set to false, it hides tax line items during subscription check-out. Contact your Punchh representative to update this Punchh platform configuration.
+                  enable_pargames_integration:
+                    type: boolean
+                    description: Indicates whether PAR Games is enabled for the brand. When 'true', the mobile app displays the PAR Games section in the bottom navigation bar or the More menu. When 'false', the section is hidden. Contact your Punchh representative to update this Punchh platform configuration.
+                  enable_save_points_for_swag:
+                    type: boolean
+                    description: 'Indicates whether the "Save Points for Swag" feature is enabled for the business. When ''true'', loyalty users can choose to save loyalty points for merchandise redemption instead of having them automatically converted into rewards or currency. When ''false'' (or not configured), the feature is unavailable and user-level "Save Points for Swag" preferences cannot be configured through the mobile app.
+
+
+                      Contact your Punchh representative to update this platform configuration. Once enabled, this feature cannot be disabled through the Punchh platform. If changes are required, CSMs must contact the engineering team.
+
+                      '
+                  p2p_authentication_type:
+                    type: string
+                    x-stoplight:
+                      id: p2p-authentication-type
+                    description: 'Indicates the authentication type required for peer-to-peer (P2P) loyalty transfers. Possible values:
+
+                      * `none` - No additional authentication is required for P2P transfers.
+
+                      * `email_password_authentication` - The mobile app must prompt the user to enter their existing password before completing a P2P transfer.
+
+
+                      Contact your Punchh representative to update this Punchh platform configuration.'
+                  enable_points_transfer:
+                    type: boolean
+                    description: Indicates whether the peer-to-peer points transfer feature is enabled for the business. When set to true, users can transfer points to another user via the mobile app. Contact your Punchh representative to update this configuration.
+                  enable_currency_transfer:
+                    type: boolean
+                    description: Indicates whether the peer-to-peer currency transfer feature is enabled for the business. When set to true, users can transfer currency to another user via the mobile app. Contact your Punchh representative to update this configuration.
+                  enable_rewards_transfer:
+                    type: boolean
+                    description: Indicates whether the peer-to-peer rewards transfer feature is enabled for the business. When set to true, users can transfer rewards to another user via the mobile app. Contact your Punchh representative to update this configuration.
+                  membership_tier_boost:
+                    type: string
+                    description: "Indicates the current Membership Tier Boost status for the business. When enabled, allows business admins to grant members a temporary promotional tier upgrade through manual gifting, campaigns, or automated triggers. Possible values: \n* `enabled` - Tier Boost is active and admins can gift promotional tier status to members.\n* `disabled` - Default. Tier Boost is turned off and all currently active promotional gifts are revoked immediately upon save.\n* `disabled_keep_active` - Tier boost is turned off for new gifts but any currently active promotional gifts will continue until their expiry date).\n"
+                    enum:
+                    - enabled
+                    - disabled
+                    - disabled_keep_active
+                  enable_passkeys:
+                    type: boolean
+                    description: Indicates whether passkeys are enabled for the business. If false or absent, mobile/web app must not show any passkey-related UI. If true, mobile/web app may show passkey-related UI and must respect the `login_mode` parameter. Contact your Punchh representative to update this Punchh platform configuration. See [Passkey Authentication Guide](https://developers.partech.com/docs/identity-service/passkey-authentication#passkey-authentication-sign-in)
+                  login_mode:
+                    type: string
+                    enum:
+                    - preferred
+                    - optional
+                    default: preferred
+                    description: Controls whether passkey sign-in is presented as the preferred or an optional sign-in method. Only present when `enable_passkeys` is true. Defaults to "preferred" if no explicit mode is configured. Contact your Punchh representative to update this Punchh platform configuration. See [Passkey Authentication Guide](https://developers.partech.com/docs/identity-service/passkey-authentication#passkey-authentication-sign-in)
+                  enable_external_idp:
+                    type: boolean
+                    description: Indicates whether external identity provider (SAML/OIDC) login is enabled for this brand. If false or absent, mobile/web app should not show external IDP sign-in options. Contact your Punchh representative to update this Punchh platform configuration. See [Enterprise IDP Integration](https://developers.partech.com/docs/identity-service/apis/gis/tag/enterprise-idp-integration)
+                  gis:
+                    type: object
+                    description: Guest Identity Service (GIS) authentication configuration for this business.
+                    properties:
+                      enable_advance_auth:
+                        type: boolean
+                        description: Indicates whether advanced authentication is enabled.
+                      enable_basic_auth:
+                        type: boolean
+                        description: Indicates whether basic authentication (email and password) is enabled.
+                      enable_facebook_login:
+                        type: boolean
+                        description: Indicates whether Facebook sign-in is enabled.
+                      enable_google_login:
+                        type: boolean
+                        description: Indicates whether Google sign-in is enabled.
+                      enable_apple_login:
+                        type: boolean
+                        description: Indicates whether Apple sign-in is enabled.
+                      passkeys_enabled:
+                        type: boolean
+                        description: Corresponds to the root-level `enable_passkeys` response parameter. Always present, even when false. If this value differs from the root-level `enable_passkeys` response parameter, treat it as the source of truth.
+                      external_idp_enabled:
+                        type: boolean
+                        description: Corresponds to the root-level `enable_external_idp` response parameter. Always present, even when false. If this value differs from the root-level `enable_external_idp` response parameter, treat it as the source of truth.
+                      login_mode:
+                        type: string
+                        enum:
+                        - preferred
+                        - optional
+                        description: Corresponds to the root-level `login_mode` response parameter. Only present when passkeys are enabled. If this value differs from the root-level `login_mode` response parameter, treat it as the source of truth.
+              examples:
+                default:
+                  value:
+                    android_ga_code: CODE_GOES_HERE
+                    android_geocode_api_key: null
+                    program_type: points_unlock_redeemables
+                    points_conversion_type: staged
+                    guest_lookup_type: short_code
+                    beacon_uuid: UUID_GOES_HERE
+                    content_language: en
+                    earning_description: Receive a $10 credit every 100 points.
+                    facebook_sharing: true
+                    email_verification_enabled: false
+                    ios_ga_code: CODE_GOES_HERE
+                    ios_geocode_api_key: null
+                    marketing_image_url: IMAGE_URL_GOES_HERE
+                    marketing_info: Business Blurb to be posted on Facebook
+                    marketing_message: I'm earning rewards!
+                    marketing_title: Punchh Coffee Roasters
+                    uber_client_id: UBER_CLIENT_ID
+                    promotional_coupons_enabled: false
+                    gift_cards_enabled: false
+                    enable_gift_card_auto_reload: true
+                    gift_card_auto_reload_threshold: 50
+                    gift_card_auto_reload_default: 50
+                    gift_card_auto_reload_disclaimer: Gift Card Auto-reload disclaimer
+                    social_cause_campaigns_enabled: true
+                    default_map_search_radius: 100
+                    facebook_signup_incentive_text: Earn 5 Free points
+                    gift_card_minimum_transaction_amount: 10
+                    max_gift_card_balance: 350
+                    require_passcode_for_gift_card: false
+                    support_email_address: test@example.com
+                    faq_url: ''
+                    instagram_page_url: INSTAGRAM
+                    order_now_url: URL_GOES_HERE
+                    order_url_for_sso: URL_GOES_HERE
+                    menus_url: MENU_URL
+                    privacy_url: ''
+                    terms_and_conditions_url: ''
+                    nutrition_url: ''
+                    catering_url: ''
+                    careers_url: ''
+                    facebook_page: FACEBOOK_PAGE_URL
+                    twitter_handle: ''
+                    share_invite_code_message: Use my code {{referral_code}} or click on {{referral_url}} to earn extra points.
+                    share_invite_code_title: Use my Invitation Code!
+                    share_invite_code_description: null
+                    app_disclaimer: Disclaimer about the app and its usage
+                    game_disclaimer: Disclaimer about the gaming module available in the app
+                    upgrade_disclaimer: Disclaimer about account upgrade in the app
+                    challenges_disclaimer: Disclaimer about the challenges module available in app
+                    earning_disclaimer: Earn one point for every $1 spent.
+                    olo_base_url: URL_GOES_HERE
+                    olo_api_key_ios: '1234567890'
+                    olo_api_key_android: '1234567890'
+                    olo_provider_key: '1234567890'
+                    olo_group_order_invite_url: URL_GOES_HERE
+                    business_id: 123
+                    business_name: BUSINESS_NAME_GOES_HERE
+                    checkin_evidenced_by: barcode
+                    guest_identity_code_type: qrcode
+                    visits_per_card: 5
+                    card_redemption_value: null
+                    migration_allowed: true
+                    minimum_visit_amount: 1
+                    minimum_visit_hours: 4
+                    minimum_age_to_signup: 13
+                    misc1: Something useful
+                    misc2: '100'
+                    misc3: null
+                    misc4: '120.90'
+                    earning_unit: point
+                    currency_earned: 0
+                    points_conversion_threshold: 0
+                    redemption_expiry_minutes: 120
+                    allow_rating_in_feedback: true
+                    maximum_rating_in_feedback: 5
+                    checkins_earn: points
+                    gift_card_designs:
+                    - backgroud_image_url: IMAGE_URL_GOES_HERE
+                      card_type: virtual_gift_card
+                      name: Design One
+                      design_id: 11
+                    - backgroud_image_url: IMAGE_URL_GOES_HERE
+                      card_type: physical_gift_card
+                      name: Design Two
+                      design_id: 12
+                    locations:
+                    - address: ADDRESS_GOES_HERE
+                      brand: nil
+                      city: Ann Arbor
+                      country: United States
+                      external_store_id: ''
+                      latitude: '41.707145'
+                      location_id: 310956
+                      loc_email: ''
+                      longitude: '-93.582188'
+                      name: Ann Arbor
+                      online_order_url: ''
+                      phone_number: ''
+                      post_code: ' 48104'
+                      state: Michigan
+                      store_number: ' 4'
+                      store_tags: Ordering
+                      store_times:
+                      - day: Mon
+                        start_time: nil
+                        end_time: nil
+                      - day: Tue
+                        start_time: nil
+                        end_time: nil
+                      - day: Wed
+                        start_time: nil
+                        end_time: nil
+                      - day: Thu
+                        start_time: nil
+                        end_time: nil
+                      - day: Fri
+                        start_time: nil
+                        end_time: nil
+                      - day: Sat
+                        start_time: nil
+                        end_time: nil
+                      - day: Sun
+                        start_time: nil
+                        end_time: nil
+                      time_zone: America/New_York
+                      updated_at: '2019-10-21T06:19:42-04:00'
+                      status: approved
+                      franchisee_id: 570
+                      ncr_store_id: ''
+                      enable_weekly_redemption_report: false
+                      checkin_evidenced_by: image
+                      guest_identity_code_type: qrcode
+                      alternate_store_number: UK@8907
+                      additional_url:
+                      - label: reservation
+                      - url: URL_GOES_HERE
+                      single_scan_type: single_scan_code
+                      hide_in_store_tipping: true
+                      hide_in_store_cc_payment: true
+                      hide_ssf_gift_card: true
+                      multiple_redemption_on_location: true
+                      guest_identification_type: restrict_pay_allow_lookup
+                    membership_levels:
+                    - background_image_url: ''
+                      points_multiplier: 1
+                      membership_level_id: 34
+                      name: Level 1
+                      description: · Free Gift 1 (or any entrée of equal or lesser value)
+                      maximum_points: 1000
+                      minimum_points: 0
+                      currency_earned: 10
+                      points_conversion_threshold: 1000
+                    - background_image_url: ''
+                      points_multiplier: 1
+                      membership_level_id: 35
+                      name: Level 2
+                      description: '· Receive $10 credit for every 1000 points earned
+
+                        · Unlock birthday offer
+
+                        · Unlock local offers'
+                      maximum_points: 3500
+                      minimum_points: 1000
+                      currency_earned: 10
+                      points_conversion_threshold: 1000
+                    - background_image_url: ''
+                      points_multiplier: 1
+                      membership_level_id: 36
+                      name: Level 3
+                      description: '· Receive $10 credit for every 1000 points earned
+
+                        · Unlock local premium offers'
+                      maximum_points: 6000
+                      minimum_points: 3500
+                      currency_earned: 10
+                      points_conversion_threshold: 1000
+                    - background_image_url: ''
+                      points_multiplier: 1
+                      membership_level_id: 38
+                      name: Level 4
+                      description: '· Receive $10 credit for every 1000 points earned.
+
+                        · Receive $50 catering credit.
+
+                        · Each 1000 points earned enters you into a sweepstakes.'
+                      maximum_points: 999999
+                      minimum_points: 6000
+                      currency_earned: 10
+                      points_conversion_threshold: 1000
+                    redeemables:
+                    - redeemable_image_url: IMAGE_URL_GOES_HERE
+                      redeemable_properties: null
+                      redeemable_id: 744
+                      name: Unlock Redeemable at 100 Points
+                      description: This offer is to be given when user completes 100 points. In order to display this on the app, 'Should be available as loyalty points based redemption?' should be set. If this is not set for an offer, it will not be used on the reward screen.
+                      points_required_to_redeem: 100
+                      meta_data: Tag1, Tag2, Tag3, Tag4, Tag5
+                    - redeemable_image_url: IMAGE_URL_GOES_HERE
+                      redeemable_properties: null
+                      redeemable_id: 745
+                      name: Unlock Redeemable at 200 Points
+                      description: This is the redeemable that gets unlocked at 200 points. When the redeemable is redeemed, it is actually the redemption of the reward balance itself.
+                      points_required_to_redeem: 200
+                      meta_data: Tag1, Tag3, Tag4
+                    games:
+                    - game_viral_message: ''
+                      name: Scratch N' Match
+                      images_on_card: 8
+                      scratch_valid_codes: ''
+                      game_type: Scratch n Match
+                      requires_code_validation: false
+                      game_id: 5
+                      gaming_levels:
+                      - extra_punchhs: 10
+                        redeemable_id: null
+                        level: 10 Points
+                      - extra_punchhs: 20
+                        redeemable_id: null
+                        level: 20 Points
+                      - extra_punchhs: 25
+                        redeemable_id: null
+                        level: 25 Points
+                      - extra_punchhs: 30
+                        redeemable_id: null
+                        level: 30 Points
+                      - extra_punchhs: 35
+                        redeemable_id: null
+                        level: 35 Points
+                      - extra_punchhs: 40
+                        redeemable_id: null
+                        level: 40 Points
+                      - extra_punchhs: 45
+                        redeemable_id: null
+                        level: 45 Points
+                      - extra_punchhs: 50
+                        redeemable_id: null
+                        level: 50 Points
+                    profile_field_questions:
+                    - answer_options: Coffee|Tea|Lemonade
+                      data_type: MCMA
+                      hint: The Menu Items that a guest likes.
+                      mandatory: true
+                      question: Beverages I like
+                      size: 3
+                      upf: upf0
+                      updatable: true
+                    - answer_options: ''
+                      data_type: MCMA
+                      hint: ''
+                      mandatory: false
+                      question: Movies I like
+                      size: 2
+                      upf: upf1
+                      updatable: true
+                    banking_rules:
+                    - banked_redeemable_id: '1474'
+                      banking_slab: 3000
+                      points_conversion_threshold: 1000
+                      currency_earned: ''
+                    - banked_redeemable_id: '1475'
+                      banking_slab: 8000
+                      points_conversion_threshold: 2000
+                      currency_earned: ''
+                    - banked_redeemable_id: '1476'
+                      banking_slab: 16000
+                      points_conversion_threshold: 4000
+                      currency_earned: ''
+                    - banked_redeemable_id: '1477'
+                      banking_slab: 30000
+                      points_conversion_threshold: 5000
+                      currency_earned: ''
+                    base_redeemable:
+                      name: Base Redeemable
+                      description: Descriptive text about the base redeemable
+                      image_url: IMAGE_URL_GOES_HERE
+                      redeemable_properties: null
+                      meta_data: Tag1, Tag2, Tag3, Tag4, Tag5
+                    payment_credential:
+                      adapter_code: par_payment
+                      enable_recurring_payments: true
+                      enable_passcode_for_payment: true
+                    subscriptions:
+                      subscription_cancellation_reasons:
+                      - component_code: Price
+                        cancellation_reason_id: 1
+                        cancellation_reason: It is expensive
+                      - component_code: 'Cancel '
+                        cancellation_reason_id: 3
+                        cancellation_reason: Reason
+                      - component_code: code
+                        cancellation_reason_id: 6
+                        cancellation_reason: reason
+                      enable_cancellation_feedback: true
+                      cancellation_feedback_placeholder: Enter Additional Feedback If Any
+                      payment_disclaimer_text: This is payment disclaimer text.
+                      terms_and_conditions: These are terms and conditions.
+                    subscription_enabled: true
+                    subscriptions_payment_credential:
+                      adapter_code: par_payment
+                      enable_recurring_payments: false
+                    auto_select_strategy: subscription,offer
+                    allow_guest_to_raise_reactivation: true
+                    enable_gift_card_purchase: true
+                    enable_gift_card_reload: true
+                    enable_gift_card_transfer: true
+                    enable_gift_card_gifting: true
+                    enable_gift_card_consolidation: true
+                    enable_gift_card_sharing: true
+                    create_empty_gift_cards: true
+                    show_gift_card_history: true
+                    delete_gift_card_after_consolidation: true
+                    gift_card_default_amounts:
+                      gift_card_purchase_amounts_options:
+                        gift_card_purchase_amount_1: 0
+                        gift_card_purchase_amount_2: 0
+                        gift_card_purchase_amount_3: 20
+                      gift_card_purchase_default_option: 20
+                      gift_card_reload_amounts_options:
+                        gift_card_reload_amount_1: 3
+                        gift_card_reload_amount_2: 3
+                        gift_card_reload_amount_3: 3
+                      gift_card_reload_default_option: 3
+                      gift_card_auto_reload_amounts_options:
+                        gift_card_auto_reload_amount_1: 100
+                        gift_card_auto_reload_amount_2: 2
+                        gift_card_auto_reload_amount_3: 3
+                      gift_card_auto_reload_default_option: 2
+                      balance_threshold_amounts_options:
+                        balance_threshold_amount_1: 123
+                        balance_threshold_amount_2: 1
+                        balance_threshold_amount_3: 1
+                      balance_threshold_default_option: 1
+                    preferred_gift_cards:
+                    - physical_gift_card
+                    multiple_redemptions:
+                      exclude_interoperability_strategy_between:
+                      - offer|loyalty
+                      - loyalty|pre_purchased
+                      - promo_coupon|offer
+                      - pre_purchased|promo_coupon
+                      auto_unlock_duration: 100
+                      discount_processing_strategy: date_of_expiry
+                      processing_priority_by_discount_type:
+                      - reward
+                      allow_multiple_redemption_on_item: true
+                      allow_qualifying_items_reused: true
+                      auto_redemption: true
+                      auto_redemption_discounts:
+                      - offer
+                      - subscription
+                      enable_auto_unlock: true
+                      enable_discount_locking: true
+                      max_redemptions_in_transaction: 20
+                      processing_priority_by_acquisition_type:
+                      - code: offer
+                        priority: 1
+                        multiplication_factor: 20
+                      - code: loyalty
+                        priority: 2
+                        multiplication_factor: 10
+                      - code: promo_coupon
+                        priority: 3
+                        multiplication_factor: 5
+                      - code: pre_purchased
+                        priority: 4
+                        multiplication_factor: 4
+                    multiple_redemptions_enabled: true
+                    cancel_redemption: true
+                    ios_guest_account_deactivation: true
+                    android_guest_account_deactivation: true
+                    ios_guest_account_deletion: direct
+                    android_guest_account_deletion: email
+                    guest_account_deletion_request_email:
+                    - to: test@example.com
+                    - subject: '{{{program_name}}} - Account Deletion'
+                    - body: Please delete the account for {{{email}}} in the {{{program_name}}} program.
+                    app_feedback_url: URL_GOES_HERE
+                    accessibility_url: URL_GOES_HERE
+                    enable_advance_auth: true
+                    enable_guest_challenge_opt_in: true
+                    enable_guest_challenge_opt_out: true
+                    enable_loyalty_identification_at_drive_thru: true
+                    drive_thru_location_level_strategy: true
+                    enable_drive_thru_pay: true
+                    enable_subscription_taxation_support: true
+                    enable_pargames_integration: true
+                    enable_save_points_for_swag: true
+                    p2p_authentication_type: email_password_authentication
+                    enable_points_transfer: true
+                    enable_currency_transfer: false
+                    enable_rewards_transfer: false
+                    membership_tier_boost: disabled
+                    enable_passkeys: true
+                    login_mode: preferred
+                    enable_external_idp: false
+                    gis:
+                      enable_advance_auth: true
+                      enable_basic_auth: true
+                      enable_facebook_login: true
+                      enable_google_login: true
+                      enable_apple_login: false
+                      passkeys_enabled: true
+                      external_idp_enabled: false
+                      login_mode: preferred
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Error:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                      code:
+                        type: number
+      summary: Program Meta
+      description: 'Provides complete information about a business, including locations, redeemables, program type, related gift cards, etc.
+
+
+        >Any update made to the configuration in the Punchh platform will be reflected in the response after 15 minutes, instead of in real time, in order to improve the response time.'
+      operationId: mobile_program_meta_API
+      tags:
+      - Meta & Version
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: 2617bed9b0e8e
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                exclude_locations:
+                  type: boolean
+                  x-stoplight:
+                    id: qtb58wgcww1p0
+                  description: Include this parameter in the API call to exclude locations from the API response. Currently, if the exclude_locations parameter is present in the request body, the API will send the locations array as an empty array in the response body regardless of whether the value is true or false. For the API to return the locations for the business in the response body, the exclude_locations parameter must be omitted from the request body.
+                  default: true
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_KEY_GOES_HERE
+  /api2/mobile/version_notes:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  note:
+                    type: object
+                    description: Message that can be shown to the user
+                  force_upgrade:
+                    type: boolean
+                    description: Whether to force the user to upgrade to this version or not. If a value of "true" is returned, the user will be forced to not use the app until it is updated to this version.
+                  notification_style:
+                    type: string
+                    enum:
+                    - local_notification
+                    - popup
+                    description: 'Possible values are:
+
+                      - "local_notification" - action taken that can be customized in the app
+
+                      - "popup" - can be displayed as an alert in the app'
+              examples:
+                default:
+                  value:
+                    note: This is the first version of the app!!
+                    force_upgrade: false
+                    notification_style: local_notification
+      summary: Version Notes
+      description: Returns the details of a particular version of the app of a business
+      operationId: mobile_version_note
+      tags:
+      - Meta & Version
+      parameters:
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/signature'
+      x-stoplight:
+        id: c2b5b5db47e9a
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                version:
+                  type: string
+                  description: App version
+                os:
+                  type: string
+                  description: Operating system (either "android" or "ios")
+                model:
+                  type: string
+                  description: "Model of the device that a user is using \n- iOS - https://cocoapods.org/?q=uidevice-hard\n- Android - https://developer.android.com/reference/android/os/Build.html"
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_KEY_GOES_HERE
+                  version: VERSION_GOES_HERE
+                  os: ios
+                  model: MODEL_GOES_HERE
+  /api2/mobile/batch_api:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    response_status_code:
+                      type: integer
+                      description: Numeric status code (e.g., 200, 400, 401, etc.)
+                    http_verb:
+                      type: string
+                      description: Operation type (e.g., get, put, patch, etc.)
+                    uri:
+                      type: string
+                      description: Target URI for requests
+                    body:
+                      type: string
+              examples:
+                default:
+                  value:
+                  - response_status_code: 0
+                    http_verb: put
+                    uri: URI_GOES_HERE
+                    body: string
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  code:
+                    type: integer
+      summary: Making Batch Requests
+      description: Batching allows you to pass instructions for several operations in a single HTTP request. Punchh will process each of your API calls sequentially / in parallel (to be decided). Once all operations have been completed, a consolidated response will be passed back to you.
+      operationId: mobile_making_batch_requests
+      tags:
+      - Meta & Version
+      parameters:
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/Authorization'
+      x-private: true
+      x-stoplight:
+        id: 311413e35153f
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                batch:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      http_verb:
+                        type: string
+                        description: Operation type (e.g., get, put, patch, etc.)
+                      uri:
+                        type: string
+                        description: Target URI for requests
+                show_headers_in_response:
+                  type: boolean
+                  description: If set to "true", it returns the headers of each API call in the batch. Disabled by default
+                access_token:
+                  type: string
+                  x-stoplight:
+                    id: 3ix8sjr1oznke
+                  description: Access token of the user
+              required:
+              - client
+            examples:
+              default:
+                value:
+                  client: CLIENT_KEY_GOES_HERE
+                  access_token: ACCESS_TOKEN_GOES_HERE
+                  batch:
+                  - http_verb: get
+                    uri: URI_GOES_HERE
+                  show_headers_in_response: false
+        description: ''
+components:
+  schemas:
+    Membership-Levels:
+      type: array
+      items:
+        type: object
+        properties:
+          background_image_url:
+            type: string
+            description: URL of the image that can be displayed in the app. As the URL may change with the membership level, the image can be changed accordingly.
+          points_multiplier:
+            type: number
+            format: float
+            description: Factor (rate) with which points accumulate for a user. For example, if the points multiplier for a particular membership level is 1, the user will get 1 point for every $1 spent. If the points multiplier is 2, the user will get 2 points for every $1 spent.
+          membership_level_id:
+            type: integer
+            description: Unique ID of the membership level
+          name:
+            type: string
+            description: Membership level name that is displayed in the app
+          description:
+            type: string
+            description: Description of a particular membership level. This can be displayed in the app (e.g., "Earn twice the points for every dollar you spend.")
+          maximum_points:
+            type: integer
+            description: Upper threshold of a membership level in terms of points
+          minimum_points:
+            type: integer
+            description: Lower threshold of a membership level in terms of points
+          currency_earned:
+            type: number
+            description: When accumulated points reach the `points_conversion_threshold`, they are converted to a dollar value defined by `currency_earned`. A value of 10 means that accumulated points will be converted to banked rewards in batches of $10.
+            format: float
+          points_conversion_threshold:
+            type: integer
+            description: Number of points required to get converted to banked rewards
+      x-examples: []
+      title: Membership Levels (Array Object)
+      x-stoplight:
+        id: f51be9319f856
+      description: The object contains details about each membership tier in a loyalty program
+    subscription:
+      type: object
+      description: 'The object contains details related to subscription configurations, including subscription cancellation reasons for the business. The subscription cancellation reasons are configured in the Punchh platform under Wallet and Passes > Subscription Cancellation Reasons.
+
+
+        Note: If the option to enable meta cache update on request <!--Cockpit > Dashboard Miscellaneous Config--> is not enabled in the Punchh platform, the API will not return any subscription cancellation reasons in the Program Meta API response. Contact your Punchh representative to update this Punchh platform configuration.'
+      title: Subscriptions (Object)
+      x-examples:
+        application/json:
+          subscriptions:
+            subscription_cancellation_reasons:
+            - component_code: Price
+              cancellation_reason_id: 1
+              cancellation_reason: It is expensive
+            - component_code: 'Cancel '
+              cancellation_reason_id: 3
+              cancellation_reason: Reason
+            - component_code: code
+              cancellation_reason_id: 6
+              cancellation_reason: reason
+            enable_cancellation_feedback: true
+            cancellation_feedback_placeholder: Enter Additional Feedback If Any
+            payment_disclaimer_text: This is payment disclaimer text.
+            terms_and_conditions: These are terms and conditions.
+      properties:
+        subscription_cancellation_reasons:
+          type: array
+          description: Different cancellation reasons that the business has configured and guests can select from within the mobile app when cancelling a subscription
+          items:
+            type: object
+            properties:
+              component_code:
+                type: string
+                description: This is the business-defined component code, which reflects the category of a cancellation reason. This may or may not be shown on the mobile app per the discretion of the business.
+              cancellation_reason_id:
+                type: integer
+                description: System-generated unique ID of the business-defined cancellation reason
+              cancellation_reason:
+                type: string
+                description: Cancellation reason as configured by the business
+        enable_cancellation_feedback:
+          type: boolean
+          description: 'Whether feedback will be collected when guests cancel a subscription or not '
+        cancellation_feedback_placeholder:
+          type: string
+          description: This is the cancellation feedback placeholder, which can be used by app developers as the title/label/placeholder text while capturing subjective feedback from guests when they cancel a subscription.
+        payment_disclaimer_text:
+          type: string
+          description: Payment disclaimer text as configured in the Punchh platform
+        terms_and_conditions:
+          type: string
+          description: Terms and conditions text as configured in the Punchh platform
+      x-stoplight:
+        id: 111a77a646d9e
+    profile_field_questions-Object:
+      type: array
+      items:
+        type: object
+        properties:
+          question:
+            type: string
+            description: Question that can be displayed to a user in the app
+          answer_options:
+            type: string
+            description: Answer options that can be displayed to a user for a question in the app
+          data_type:
+            type: string
+            description: 'Data type of answers that can be accepted for a question. The values can be:
+
+
+              - SINGLE_LINE : "text",
+
+              - MULTIPLE_LINE : "text",
+
+              - DATE_TIME => "datetime-local"
+
+              - NUMBER => "number",
+
+              - EMAIL => "email",
+
+              - PHONE => "tel",
+
+              - RATING => "range",
+
+              - MCMA => "multiple-select", <br>This type can accept multiple answers for a multiple-choice question.
+
+              - MCSA => "select", <br>This type can accept only a single answer for a multiple-choice question.'
+          hint:
+            type: string
+            description: Hint that can be displayed for a question to help users answer it
+          mandatory:
+            type: boolean
+            description: A true value indicates that it is mandatory to answer the question.
+          size:
+            type: integer
+            description: Maximum number of options that can be provided in the answer set
+          upf:
+            type: string
+            description: User profile code or question code. Answers are given by the user while filling in the user profile. The user submits answers to profile field questions that are configured in the Punchh platform. A total of 25 answers can be submitted. The keys range from ''upf0'' to ''upf24''. Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+          updatable:
+            type: boolean
+            description: A true value indicates that the answers can be updated.
+      title: Profile Field Questions (Array Object)
+      x-stoplight:
+        id: f347f00a28a60
+      description: ''
+    subscriptions_payment_credential:
+      title: Subscriptions Payment Credential (Object)
+      x-stoplight:
+        id: 3xx7c32hkevh7
+      type: object
+      description: 'Subscription-related payment details if a business uses Punchh''s native payment integration with payment processors to support subscription-related payments
+
+
+        Note: If the business chooses not to use Punchh''s native integration with payment processors, the [Program Meta](/docs/dev-portal-mobile/2617bed9b0e8e-program-meta-api) API does not return the `subscriptions_payment_credential` object in the API response.'
+      x-examples:
+        application/json:
+          adapter_code: par_payment
+          enable_recurring_payments: false
+      properties:
+        adapter_code:
+          type: string
+          description: Code of the payment processor that will be used by the business for subscription-related payments. Possible values are no_adapter and par_payment.
+        enable_recurring_payments:
+          type: boolean
+          description: Whether recurring payments capability is enabled for the business or not
+    redeemable:
+      type: array
+      items:
+        type: object
+        properties:
+          redeemable_image_url:
+            type: string
+            description: URL of the image displayed in the app to depict the redeemable
+          redeemable_properties:
+            type: array
+            description: Properties such as "Merchandise", "Food Item", etc. can be added to a particular redeemable.
+            items:
+              type: string
+          redeemable_id:
+            type: integer
+            description: Unique ID that identifies a redeemable in the system
+          name:
+            type: string
+            description: Name of the redeemable
+          description:
+            type: string
+            description: A description of the redeemable that appears in the app. This can be used to persuade users to redeem.
+          points_required_to_redeem:
+            type: integer
+            description: Number of points required to redeem a particular redeemable
+          meta_data:
+            type: string
+            description: Metadata that can be added to a redeemable. This will be returned only if it is configured in the Punchh platform. The maximum length is 255 characters.
+      title: Redeemable (Array Object)
+      x-stoplight:
+        id: 7658402f497c2
+      description: Lists the redeemables and their details defined in the Punchh system
+    banking_rules-Object:
+      type: array
+      title: Banking Rules (Array Object)
+      items:
+        type: object
+        properties:
+          banked_redeemable_id:
+            type: string
+            description: ID of the redeemable that is banked by the user as per the defined banking rules
+          banking_slab:
+            type: integer
+            description: Banking slabs define the different intervals of earning.
+          points_conversion_threshold:
+            type: integer
+            description: Points conversion thresholds are the sub-levels within a particular slab at which banking occurs.
+          currency_earned:
+            type: string
+            description: Value of currency that is banked by the user as per the defined banking rules
+      x-stoplight:
+        id: ce2fab6db84eb
+    base_redeemable-Object:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the base redeemable
+        description:
+          type: string
+          description: A description of the redeemable that appears in the app. This can be used to persuade users to redeem.
+        image_url:
+          type: string
+          description: URL of the image displayed in the app to depict the redeemable
+        redeemable_properties:
+          type: array
+          description: Properties such as "Merchandise", "Food Item", etc. can be added to a particular redeemable.
+          items:
+            type: string
+        meta_data:
+          type: string
+          description: Metadata that can be added to a redeemable. This can be used to program mobile apps to have a certain behavior when specific data are received from the server. This can be configured in the Punchh platform. The maximum length is 255 characters.
+      description: 'A base redeemable is used to provide identity to intangible entities, such as a completed card in a visit-based business. For example, in a visit-based business the configuration of a completed card (such as expiry, etc.) is picked from the base redeemable. '
+      title: Base Redeemable (Object)
+      x-stoplight:
+        id: c9d4a439024c8
+    multiple-redemptions:
+      title: Multiple Redemptions (Object)
+      x-stoplight:
+        id: pc040hb7vwe08
+      type: object
+      description: Lists the Punchh platform settings for multiple redemptions for the business. This object is returned in the API response if the `multiple_redemptions_enabled` response parameter is set to true in the Program Meta API for the business.
+      properties:
+        auto_redemption:
+          type: boolean
+          x-stoplight:
+            id: o9qvner9yfrsi
+          description: Indicates whether auto-redemption of discounts is enabled for the business
+        enable_discount_locking:
+          type: boolean
+          x-stoplight:
+            id: qgflsm4wta2ic
+          description: Indicates whether reward locking on the transaction is enabled for the business
+        enable_auto_unlock:
+          type: boolean
+          x-stoplight:
+            id: 8czj7kyivckcc
+          description: Indicates whether auto-unlocking of the guest account after a time interval is enabled for the business
+        max_redemptions_in_transaction:
+          type: integer
+          x-stoplight:
+            id: 6advmswmvdfee
+          description: Maximum number of discounts that can be applied in a single transaction
+        auto_redemption_discounts:
+          type: array
+          x-stoplight:
+            id: 8vimqhjjjfo63
+          description: 'Discount categories eligible for the auto-application of discounts. Possible values: offer, subscription, fuel_reward, discount_amount'
+          items:
+            x-stoplight:
+              id: 9au9bp5c76wzf
+            type: string
+        allow_multiple_redemption_on_item:
+          type: boolean
+          x-stoplight:
+            id: t09lybhqu48zz
+          description: Indicates whether multiple discounts can be stacked on a menu item for the business
+        allow_qualifying_items_reused:
+          type: boolean
+          x-stoplight:
+            id: di92haxdegs17
+          description: Indicates whether the reuse of qualifier items for the application of multiple discounts is enabled for the business
+        discount_processing_strategy:
+          type: string
+          x-stoplight:
+            id: 462rf5g1dao5n
+          description: 'Condition that determines the order in which discounts are applied to a transaction. Possible value: date_of_expiry'
+        processing_priority_by_discount_type:
+          type: array
+          x-stoplight:
+            id: a894wxabxbr46
+          description: 'Determines the order in which discounts are applied to a transaction based on the discount type. Possible values: reward, promo_coupon, subscription, discount_amount'
+          items:
+            x-stoplight:
+              id: c89kmd7mxprz9
+            type: string
+        processing_priority_by_acquisition_type:
+          type: array
+          x-stoplight:
+            id: 14x90y5zeya2s
+          description: Determines the order in which discounts are applied to a transaction based on the acquisition type
+          items:
+            x-stoplight:
+              id: 27pnqeartgdiw
+            type: object
+            properties:
+              code:
+                type: string
+                x-stoplight:
+                  id: gahvrtmoowfyw
+                description: 'Type of acquisition. Possible values: loyalty, pre_purchased, offer, promo_coupon'
+              priority:
+                type: integer
+                x-stoplight:
+                  id: ioc5j5tvdxipf
+                description: Order in which a discount of an acquisition type is applied in a transaction (lower numbers indicate higher priority)
+              multiplication_factor:
+                type: integer
+                x-stoplight:
+                  id: 9n1uxziyivb1q
+                description: Maximum number of discount units per category that can be applied in a transaction
+        exclude_interoperability_strategy_between:
+          type: array
+          x-stoplight:
+            id: f1rp7wsenihj8
+          description: 'Defines the rules for excluding interoperability between discounts of different acquisition types. The parameter value is a pair of pipe-separated values that specify which discounts from an acquisition type cannot be combined with discounts from another acquisition type. For example, the parameter value `offer|loyalty` means an offer discount cannot be combined with a loyalty discount at the time of redemption. Possible values are any combination of the following: loyalty, pre_purchased, offer, promo_coupon'
+          items:
+            x-stoplight:
+              id: 3ydk20bk8j8fc
+            type: string
+        auto_unlock_duration:
+          type: integer
+          x-stoplight:
+            id: ioqqb1t3mfdkv
+          description: Time interval (in minutes) after which a guest account will be automatically unlocked for a transaction
+    Locations:
+      type: array
+      x-examples:
+        Example:
+        - address: ADDRESS_GOES_HERE
+          brand: nil
+          city: Ann Arbor
+          country: United States
+          external_store_id: ''
+          latitude: '41.707145'
+          location_id: 310956
+          loc_email: ''
+          longitude: '-93.582188'
+          name: Ann Arbor
+          online_order_url: ''
+          phone_number: ''
+          post_code: ' 48104'
+          state: Michigan
+          store_number: ' 4'
+          store_tags: Ordering
+          store_times:
+          - day: Mon
+            start_time: nil
+            end_time: nil
+          - day: Tue
+            start_time: nil
+            end_time: nil
+          - day: Wed
+            start_time: nil
+            end_time: nil
+          - day: Thu
+            start_time: nil
+            end_time: nil
+          - day: Fri
+            start_time: nil
+            end_time: nil
+          - day: Sat
+            start_time: nil
+            end_time: nil
+          - day: Sun
+            start_time: nil
+            end_time: nil
+          time_zone: America/New_York
+          updated_at: '2019-10-21T06:19:42-04:00'
+          status: approved
+          franchisee_id: 570
+          ncr_store_id: ''
+          enable_daily_redemption_report: false
+          enable_weekly_redemption_report: false
+          checkin_evidenced_by: image
+          guest_identity_code_type: qrcode
+      title: Locations (Array Object)
+      description: 'Returns a list of business locations. Each location object within the Locations array contains information about a specific business location. '
+      x-internal: false
+      x-stoplight:
+        id: c1e917a05275b
+      items:
+        type: object
+        properties:
+          address:
+            type: string
+            description: Full address of a particular business location
+          brand:
+            type: string
+            description: Brand name of a subcategory of a business. A parent business may own multiple brands under one umbrella company. For example, Yum! Brands, Inc. owns KFC, Pizza Hut, and Taco Bell.
+          city:
+            type: string
+            description: City of a particular business location
+          country:
+            type: string
+            description: Country of a particular business location
+          external_store_id:
+            type: string
+            description: External identifier configured in the Punchh platform under location attributes via Store Locations > All Store Locations > [choose location] > POS > External POS Store Identifier
+          latitude:
+            type: number
+            description: Latitude coordinate of a particular business location
+            format: float
+          location_id:
+            type: integer
+            description: Unique ID of a particular business location. This is generated by Punchh.
+          longitude:
+            type: number
+            description: Longitude coordinate of a particular business location
+            format: float
+          name:
+            type: string
+            description: Name of a particular business location
+          phone_number:
+            type: string
+            description: Phone number of a particular business location
+          loc_mail:
+            type: string
+            description: Email address of a particular business location
+          post_code:
+            type: string
+            description: Zip code of a particular business location
+          state:
+            type: string
+            description: State where a particular business is located
+          store_number:
+            type: string
+            description: The store number where the check-in occurred
+          store_tags:
+            type: string
+            description: Tags that provide additional details about a particular business location
+          store_times:
+            type: array
+            description: Returns details about the business hours of particular location
+            items:
+              type: object
+              properties:
+                day:
+                  type: string
+                  description: Day of week when a store is open for business
+                start_time:
+                  type: string
+                  description: Time of day when a store opens
+                  format: time
+                end_time:
+                  type: string
+                  description: Time of day when a store closes
+                  format: time
+          time_zone:
+            type: string
+            description: Time zone in which the business is located
+          updated_at:
+            type: string
+            format: date-time
+            description: Date/time the when location was last updated in the system, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+          status:
+            type: string
+            description: Whether the location is enabled for check-ins or not. `approved` means enabled for check-ins, and `disapproved` means disabled for check-ins.
+          franchisee_id:
+            type: integer
+            description: Unique ID of the franchisee who owns the location. This is generated by Punchh.
+          enable_weekly_redemption_report:
+            type: boolean
+            description: Enables sharing the weekly redemption report to the location email (applicable only for the franchisee model)
+          checkin_evidenced_by:
+            type: string
+            description: The method of check-in used by a user (e.g., barcode, qr_code, receipt_image, etc.). A blank string indicates the default value of the business.
+          guest_identity_code_type:
+            type: string
+            description: The POS scanner type used to identify the user at the POS (e.g., barcode, qr_code, etc.). A blank string indicates the default value of the business.
+          enable_pos_monitoring:
+            type: boolean
+            description: Whether POS monitoring has been enabled for the location or not. This is used by the POS integration team members.
+          generate_barcodes:
+            type: boolean
+            description: Whether barcodes are generated on the receipt or not
+          alternate_store_number:
+            type: string
+            x-stoplight:
+              id: k1wmwag5ki6i9
+            description: Alphanumeric alternate store identifier for a specific location, as provided by the business. This information is configured in the Punchh platform under Store Locations > All Store Locations > [choose location] > Location > Alternate Store Number/Identifier.
+          additional_url:
+            type: array
+            x-stoplight:
+              id: vpig2ui4hrfxs
+            items:
+              x-stoplight:
+                id: 3xo8afl94lww1
+              type: object
+              properties:
+                label:
+                  type: string
+                  x-stoplight:
+                    id: zqjxlm5hwc1l8
+                  description: Label for the additional URL.
+                url:
+                  type: string
+                  x-stoplight:
+                    id: n654fpo983ucb
+                  description: Custom URL configured for the additional URL. This URL can link to a location-specific brand webpage, such as catering information, discounts, private events, reservations, or other custom content beyond the standard call, order, and directions links. This information is configured in the Punchh platform under Store Locations > All Store Locations > [choose location] > Mobile App.
+          single_scan_type:
+            type: string
+            x-stoplight:
+              id: yyr95bc0qpv8u
+            description: "Determines the type of code the mobile app should display for completing a single-scan transaction at a specific POS location. Possible values:\n- none: No scan code is displayed or used. \n- short_token: A short code (deprecated)\n- long_token: A longer code (deprecated)\n- single_scan_code: A specific code generated for a one-time scan transaction. See [Single Scan Flow](https://developers.partech.com/docs/dev-portal-pos/54e5a71a7205c-single-scan-flow)"
+          hide_in_store_tipping:
+            type: boolean
+            x-stoplight:
+              id: 0197dpgz884wh
+            description: Determines whether the mobile app should hide the tip option for Single-Scan Flow at a location. Only applies to businesses that have enabled in-store tipping via Single-Scan Flow.
+            default: false
+          hide_in_store_cc_payment:
+            type: boolean
+            x-stoplight:
+              id: ni7rmm0ouoz5x
+            description: Determines whether the mobile app should hide the option to pay with a credit card (CC) for Single-Scan Flow at a location. Only applies to businesses that have enabled in-store credit card payment via Single-Scan Flow
+            default: false
+          hide_ssf_gift_card:
+            type: boolean
+            x-stoplight:
+              id: 05psjinz5w99p
+            description: Determines whether the mobile app should hide the option to pay with a gift card for Single-Scan Flow at a location. Only applies to businesses that have enabled gift card payment via Single-Scan Flow.
+            default: false
+          multiple_redemption_on_location:
+            type: boolean
+            x-stoplight:
+              id: 2nh7ev8pc1w2e
+            description: Indicates whether the multiple redemptions feature is enabled for a particular location. You can access this setting for a location on the Punchh platform under Store Locations > All Store Locations > [choose location] > Location > Allow Location for Multiple Redemption.
+          guest_identification_type:
+            type: string
+            description: "Indicates whether loyalty users can be identified using a short code at locations that do not support the single scan flow. Possible values: \n- When set to restrict_pay_allow_lookup, the location supports user lookup using a short code, and SSF-based payments are disabled. \n- When set to restrict_lookup, user lookup using a short code is not allowed.\nContact your Punchh representative to update this Punchh platform configuration.\n"
+    gift-card-default-amounts:
+      title: Gift Card Default Amounts (Object)
+      x-stoplight:
+        id: lgdqs5iworoa5
+      type: object
+      x-examples: []
+      description: 'The object provides default values for gift card purchase amount options, reload amount options, auto-reload amount options, and balance threshold amount options, as well as their respective default selections. '
+      properties:
+        gift_card_purchase_amounts_options:
+          type: object
+          x-stoplight:
+            id: vkx0gyk0megkr
+          description: Contains a set of predefined purchase amount options that users can select when purchasing a gift card. Each option within this object provides a specific amount, offering users convenient choices without requiring manual input.
+          properties:
+            gift_card_purchase_amount_1:
+              type: integer
+              x-stoplight:
+                id: 3zbksxqoyqydk
+              description: First option for the amount a user can choose when purchasing a gift card. Contact your Punchh representative to update this Punchh platform configuration.
+            gift_card_purchase_amount_2:
+              type: integer
+              x-stoplight:
+                id: tnxg2grbqzep5
+              description: Second option for the amount a user can choose when purchasing a gift card. Contact your Punchh representative to update this Punchh platform configuration.
+            gift_card_purchase_amount_3:
+              type: integer
+              x-stoplight:
+                id: 211ka1ebfmgri
+              description: Third option for the amount a user can choose when purchasing a gift card. Contact your Punchh representative to update this Punchh platform configuration.
+        gift_card_purchase_default_option:
+          type: integer
+          x-stoplight:
+            id: uw99n6g4erbhn
+          description: Default selected amount, if the user does not choose an option, for gift card purchases from the available purchase amount options. Contact your Punchh representative to update this Punchh platform configuration.
+        gift_card_reload_amounts_options:
+          type: object
+          x-stoplight:
+            id: elo6lm7b90nqw
+          description: Contains a set of predefined amount options that users can select when reloading a gift card. Each option within this object provides a specific amount, offering users convenient choices without requiring manual input.
+          properties:
+            gift_card_reload_amount_1:
+              type: integer
+              x-stoplight:
+                id: p2cx85bibekkn
+              description: First option for reloading a gift card with a specified amount. Contact your Punchh representative to update this Punchh platform configuration.
+            gift_card_reload_amount_2:
+              type: integer
+              x-stoplight:
+                id: uvbz3awkfu5gn
+              description: Second option for reloading a gift card with a specified amount. Contact your Punchh representative to update this Punchh platform configuration.
+            gift_card_reload_amount_3:
+              type: integer
+              x-stoplight:
+                id: ei06dgkg6tits
+              description: Third option for reloading a gift card with a specified amount. Contact your Punchh representative to update this Punchh platform configuration.
+        gift_card_reload_default_option:
+          type: integer
+          x-stoplight:
+            id: ml5kfyatlyku6
+          description: Default selected amount, if the user does not choose an option, for reloading a gift card from the available reload amount options. Contact your Punchh representative to update this Punchh platform configuration.
+        gift_card_auto_reload_amounts_options:
+          type: object
+          x-stoplight:
+            id: hrvjsd7mlziab
+          description: Contains a set of predefined amount options that users can select when setting up auto-reload for their gift card in the mobile app. Each option within this object provides a specific amount, offering users convenient choices without requiring manual input.
+          properties:
+            gift_card_auto_reload_amount_1:
+              type: integer
+              x-stoplight:
+                id: m39x0bsvkg5nv
+              description: First option for the amount a user can set for automatic reloading of a gift card. Contact your Punchh representative to update this Punchh platform configuration.
+            gift_card_auto_reload_amount_2:
+              type: integer
+              x-stoplight:
+                id: 6afwvs012sovr
+              description: Second option for the amount a user can set for automatic reloading of a gift card. Contact your Punchh representative to update this Punchh platform configuration.
+            gift_card_auto_reload_amount_3:
+              type: integer
+              x-stoplight:
+                id: qubb30lezgdki
+              description: Third option for the amount a user can set for automatic reloading of a gift card. Contact your Punchh representative to update this Punchh platform configuration.
+        gift_card_auto_reload_default_option:
+          type: integer
+          x-stoplight:
+            id: sh0csaujqb3fr
+          description: Default selected amount, if the user does not choose an option, for auto-reloading a gift card from the available auto-reload amount options. Contact your Punchh representative to update this Punchh platform configuration.
+        balance_threshold_amounts_options:
+          type: object
+          x-stoplight:
+            id: 9ec0vk4od29km
+          description: Contains a set of predefined amount options that users can select when setting a threshold amount for auto-reloading their gift card in the mobile app. Each option within this object specifies an amount, offering users convenient choices without requiring manual input.
+          properties:
+            balance_threshold_amount_1:
+              type: integer
+              x-stoplight:
+                id: z98owwml05omg
+              description: First option for the threshold balance amount. When set, a gift card is eligible to be auto-reloaded if its balance is less than this threshold amount. Contact your Punchh representative to update this Punchh platform configuration.
+            balance_threshold_amount_2:
+              type: integer
+              x-stoplight:
+                id: uibtdpafa7otf
+              description: Second option for the threshold balance amount. When set, a gift card is eligible to be auto-reloaded if its balance is less than this threshold amount. Contact your Punchh representative to update this Punchh platform configuration.
+            balance_threshold_amount_3:
+              type: integer
+              x-stoplight:
+                id: phezshfaz8d6f
+              description: Third option for the threshold balance amount. When set, a gift card is eligible to be auto-reloaded if its balance is less than this threshold amount. Contact your Punchh representative to update this Punchh platform configuration.
+        balance_threshold_default_option:
+          type: integer
+          x-stoplight:
+            id: j2lzekoj66fzk
+          description: Default selected threshold balance amount from the available balance threshold amount options for auto-reloading a gift card. Contact your Punchh representative to update this Punchh platform configuration.
+    payment_credential:
+      title: Payment Credential (Object)
+      x-stoplight:
+        id: yz9yasmzl1jck
+      type: object
+      description: Contains settings related to the payment adapter, recurring payment type, and passcode
+      x-examples:
+        application/json:
+          adapter_code: ADAPTER_CODE_GOES_HERE
+          enable_recurring_payments: true
+          enable_passcode_for_payment: true
+      properties:
+        adapter_code:
+          type: string
+          description: Name of the payment processor/gateway. Valid value is par_payment.
+        enable_recurring_payments:
+          type: boolean
+          description: Whether a business has enabled recurring payments for the selected payment adapter
+        enable_passcode_for_payment:
+          type: boolean
+          description: Whether a business has enabled the passcode for payments
+  parameters:
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
+x-stoplight:
+  id: bf6eddb435209
+x-ext-urls: {}

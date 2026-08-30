@@ -1,0 +1,273 @@
+openapi: 3.2.0
+info:
+  title: Mobile Single Scan Code API
+  version: '1.0'
+  contact:
+    name: Punchh Dev Support
+    url: https://developers.punchh.com
+  description: 'Punchh provides a robust platform for offering loyalty programs to customers. When a business integrates its back-end with the Punchh server, the Punchh APIs become instrumental in executing loyalty programs for enrolled customers, primarily via business-branded mobile apps and websites tailored by Punchh.
+
+
+    To establish integration with the Punchh APIs, you need to understand how they are invoked and what responses are returned by the Punchh server. You can call APIs using any suitable API test client, such as Postman. Thus, the response to every API call made in Postman under a chosen environment (in app and/or platform) is reflected in the app and/or platform.'
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: Single Scan Code
+paths:
+  /api2/mobile/single_scan_tokens:
+    parameters: []
+    post:
+      parameters:
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/User-Agent'
+      - $ref: '#/components/parameters/punchh-app-device-id'
+      - $ref: '#/components/parameters/Authorization'
+      summary: Generate Single Scan Code or Short Code
+      description: "This API facilitates the single-scan flow functionality, allowing a user to generate a single-scan code from the mobile app for making a payment, redeeming a discount, adding a tip, or any combination of these in a single transaction at the POS. The API returns a single scan code containing a UUID string in the response. \n\nFor more information, see [Single Scan Flow](/docs/dev-portal-pos/54e5a71a7205c-single-scan-flow).\n\n**Note**: This mobile API endpoint (`POST {server-name}/api2/mobile/single_scan_tokens`) is the same as the mobile API endpoint used to [generate a one-time passcode (OTP) for use with Redemptions 2.0](/docs/dev-portal-mobile/apis/mobile-redemptions-2-0-new-api/post/api2/mobile/single_scan_tokens). When using this API with Redemptions 2.0, the following offers parameters must NOT be included with the request body:\n- `reward_id`\n- `redeemable_id`\n- `banked_reward_amount`\n- `coupon`\n- `redeemable_card_count`\n- `subscription_id`\n\n### Loyalty Short Code Flow\n\nThis API also supports the loyalty short code flow for drive-thru identification and payment. The loyalty identification at drive-thru, single scan flow and drive-thru payment using short code payment (using SSF) must be enabled for the business to allow payments using the short code.\n\nThe API accepts two additional parameters in the request body: a boolean parameter, `short_code`, and `location_id` to generate a short code. \n\nWhen the `short_code` parameter is set to `true`, the API generates a short alphanumeric code along with a single scan code. The single scan code is not returned in the API response for the loyalty short code flow. It is stored in the Punchh backend and associated with the short code.\n\nUsers can share the short code verbally at the drive-thru window for faster account look-up at the POS. \n\nIn addition to the short code, the API response also includes the `location_id` for which the short code is generated, `expiring_at`, which indicates when the short code expires, and `new_short_code_generated`, which indicates whether a new short code has been generated.\n\nWhen `short_code` is set to false, the API follows the legacy single scan token flow and returns only a single scan code for transactions.\n\nContact your Punchh representative to update these Punchh platform configuration.\n\nWhen the POS calls the [User Look-up API](https://developers.partech.com/docs/dev-portal-pos/apis/pos-api/tag/point-of-sale/get/api/pos/users/search) with the short code, Punchh retrieves the single scan code associated with the short code to look up the user, the rewards, and the payment selected by the user when generating the short code. The User Look-up API includes the `single_scan_code` in the response, which the POS can use for further actions such as check-in, redemptions, and payments.\n\n**Configuration Resolution Logic**\n\nSingle scan code generation follows this configuration priority:\n1. Location-level single scan flow configuration.\n2. If not configured at location level, the business-level single scan flow configuration is evaluated.\n\n**When `short_code` = `true`:**\n- The system checks whether the short code and single scan flow are enabled for the location.\n- If not configured at the location level, the business-level configuration is evaluated.\n- If neither the location nor the business has the required short code and single scan flow configurations enabled, the API returns a 422 feature-disabled error. If the `location_id` value is invalid or missing in the request, the API returns a missing location ID error.\n\n**When `short_code` = `false`:**\n- The legacy single scan code flow is triggered and a `single_scan_code` is returned.\n- The token type is selected based on the location-level configuration (if present), otherwise business-level configuration is used."
+      operationId: mobile_gen_ssc
+      tags:
+      - Single Scan Code
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  single_scan_code:
+                    type: string
+                    description: Single scan code of the user to be used in the single scan flow at the POS
+                  expires_in:
+                    type: string
+                    format: date-time
+                    description: Date/time when the single scan code expires and can no longer be used at the POS, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+                  created_at:
+                    type: string
+                    format: date-time
+                    description: Date/time when the single scan code was created in the system, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+                  short_code:
+                    type: string
+                    description: Short alphanumeric code for drive-thru identification. Returned when the `short_code` request parameter is set to true.
+                  location_id:
+                    type: number
+                    description: ID of the location for which the short code is requested. Returned when the `short_code` request parameter is set to true.
+                  new_short_code_generated:
+                    type: boolean
+                    description: Indicates whether a new short code is generated for the single scan code. Returned when the `short_code` request parameter is true. When `new_short_code_generated` is true, a new short code is generated and assigned to the single scan code; when false, a previously active short code is reassigned to a new single scan code. Note that, in the loyalty short code flow, the single scan code is not returned in the API response.
+                  expiring_at:
+                    type: string
+                    format: date-time
+                    description: Date/time when the short code expires and can no longer be used at the drive-thru, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format. This parameter is returned when the `short_code` request parameter is set to true.
+              examples:
+                Response Example:
+                  value:
+                    single_scan_code: SINGLE_SCAN_CODE_GOES_HERE
+                    expires_in: '2022-06-08T10:19:52Z'
+                    created_at: '2022-06-08T10:14:52Z'
+                Short Code Response:
+                  value:
+                    short_code: JII8
+                    location_id: 12345
+                    expiring_at: '2026-02-13T11:44:11+05:30'
+                    new_short_code_generated: true
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      missing_required_param:
+                        type: string
+              examples:
+                'Response Example: Bad Request (blank client field)':
+                  value:
+                    errors:
+                      missing_required_param_name: Required parameter missing or the value is empty
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      unauthorized:
+                        type: array
+                        items:
+                          type: string
+              examples:
+                'Response Example: Unauthorized Request (Incorrect client value)':
+                  value:
+                    errors:
+                      unknown_client:
+                      - Client ID is incorrect. Please check client param or contact us
+                Unauthorized (invalid or missing access token):
+                  value:
+                    errors:
+                      unauthorized:
+                      - An active access token must be used to query information about the current user.
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: string
+              examples:
+                Response Example (invalid payment_type value):
+                  value:
+                    errors: Invalid Payment Type
+                Short code feature disabled for location:
+                  value:
+                    errors: This feature is currently turned off for this location. Please reach out to the Punchh Support team for more information.
+                Missing location_id for short code:
+                  value:
+                    errors: While requesting for short code, Location Id is mandatory.
+      x-stoplight:
+        id: 1b70514f6ead9
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                payment_type:
+                  type: string
+                  description: Payment type selected by the user when generating the single scan code. Valid values are `GiftCard`, `CreditCard`, or `recurring`. The payment type is recurring when the user selects a saved payment card from the mobile application for payments.
+                gift_card_uuid:
+                  type: string
+                  description: The user's gift card number. Required if the payment type is gift card.
+                transaction_token:
+                  type: string
+                  description: Unique digital identifier/token of the user's credit card, or UUID of the saved payment card if the payment type is recurring. Required if the payment type is credit card or recurring.
+                reward_id:
+                  type: string
+                  description: Unique ID of a reward, or a comma-separated list of reward IDs if multiple rewards are selected by the user for redemption
+                redeemable_id:
+                  type: string
+                  description: Unique ID of a redeemable, or a comma-separated list of redeemable IDs if multiple redeemables are selected by the user for redemption
+                subscription_id:
+                  type: string
+                  x-stoplight:
+                    id: jz57t3l1413j4
+                  description: Unique ID of a subscription, or a comma-separated list of subscription IDs if multiple subscriptions are selected by the user for redemption
+                banked_reward_amount:
+                  type: string
+                  description: Amount of banked currency selected by the user for redemption
+                coupon:
+                  type: string
+                  description: User-specific dynamically generated unique coupon codes that the POS system automatically applies in a single scan, or a comma-separated list of unique coupons if multiple coupons are selected by the user for redemption
+                redeemable_card_count:
+                  type: string
+                  description: Number of redeemable cards selected by the user for redemption
+                tip:
+                  type: string
+                  description: Amount that the user selected as a tip
+                short_code:
+                  type: boolean
+                  description: Indicates whether short code flow should be used. When set to `true`, the API follows the short code flow and returns a short code for drive-thru identification and payment. When set to `false`, the API follows the legacy single scan token generation flow and returns only a single scan code for transactions. Contact your Punchh representative to update this Punchh platform configuration.
+                location_id:
+                  type: number
+                  description: ID of the location for which the short code is requested. Required when `short_code` is `true` for short code and single scan code generation.
+              required:
+              - client
+            examples:
+              Credit Card:
+                value:
+                  client: CLIENT_GOES_HERE
+                  payment_type: CreditCard
+                  transaction_token: TRANSACTION_TOKEN_GOES_HERE
+                  redeemable_id: REDEEMABLE_ID_GOES_HERE
+                  reward_id: REWARD_ID_GOES_HERE
+                  subscription_id: SUBSCRIPTION_ID_GOES_HERE
+                  coupon: COUPON_CODE_GOES_HERE
+                  tip: '1'
+              Gift Card:
+                value:
+                  client: CLIENT_GOES_HERE
+                  payment_type: GiftCard
+                  gift_card_uuid: GIFT_CARD_UUID_GOES_HERE
+                  reward_id: REWARD_ID_GOES_HERE
+                  coupon: COUPON_CODE_GOES_HERE
+                  redeemable_card_count: '2'
+                  tip: '1'
+              Recurring:
+                value:
+                  client: CLIENT_GOES_HERE
+                  payment_type: recurring
+                  transaction_token: SAVED_CARD_UUID_GOES_HERE
+                  reward_id: REWARD_ID_GOES_HERE
+              Short Code (Drive-Thru):
+                value:
+                  client: CLIENT_GOES_HERE
+                  payment_type: GiftCard
+                  gift_card_uuid: GIFT_CARD_UUID_GOES_HERE
+                  reward_id: REWARD_ID_GOES_HERE
+                  short_code: true
+                  location_id: 12345
+components:
+  parameters:
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
+    punchh-app-device-id:
+      schema:
+        type: string
+        default: APP_DEVICE_ID_GOES_HERE
+      name: punchh-app-device-id
+      in: header
+      required: true
+      description: The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.
+x-stoplight:
+  id: bf6eddb435209
+x-ext-urls: {}

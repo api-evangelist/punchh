@@ -1,0 +1,1805 @@
+openapi: 3.2.0
+info:
+  title: Punchh Locations API
+  version: '1.0'
+  description: 'Operations tagged Locations across 2 of this provider''s published API definitions: punchh-mobile-api-openapi.yml, punchh-platform-functions-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://SERVER_NAME_GOES_HERE.punchh.com
+tags:
+- name: Locations
+paths:
+  /api2/mobile/locations/configuration:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  log_level:
+                    type: string
+                    description: 'Log level (0-6) of the location:
+
+
+                      0 - None - no logs generated
+
+
+                      1 - System - system level logs
+
+
+                      2 - Error - any error from API or system errors
+
+
+                      3 - Warning - app level or system level warning
+
+
+                      4 - Information - app level logs
+
+
+                      5 - Request - logs for all request data
+
+
+                      6 - Response - logs for all request and response details'
+                  print_barcodes:
+                    type: string
+                    description: Set to 1 if the program type of the business is points unlock redeemables. If this is 1, banked_rewards_mode and visits_mode will be 0.
+                  short_key:
+                    type: string
+                    description: Short location access key by which the location is accessible
+                  diagnostics:
+                    type: string
+                    description: Should be `1` if the location has diagnostic logs; else it should be `0`
+                  header:
+                    type: string
+                    description: Header message of the location on the receipt
+                  trailer_1:
+                    type: string
+                    description: Line 1 of receipt message
+                  trailer_2:
+                    type: string
+                    description: Line 2 of receipt message
+                  trailer_3:
+                    type: string
+                    description: Line 3 of receipt message
+                  trailer_4:
+                    type: string
+                    description: Line 4 of receipt message
+                  trailer_5:
+                    type: string
+                    description: Line 5 of receipt message
+                  update_interval:
+                    type: string
+                    description: The time polling interval between the POS and Punchh is known as the update_interval (minutes).
+              examples:
+                default:
+                  value:
+                    log_level: '4'
+                    print_barcodes: '0'
+                    short_key: '0'
+                    diagnostics: '1'
+                    header: 'CAPAddicts Rewards '
+                    trailer_1: 'Bar code valid for 24 hours. '
+                    trailer_2: 'Visit URL_GOES_HERE '
+                    trailer_3: 'to download our mobile app! '
+                    trailer_4: ''
+                    trailer_5: ''
+                    update_interval: '60'
+        '401':
+          description: ''
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    errors:
+                      message: Access is denied due to invalid credentials.
+                      code: 401
+      summary: Location Configuration
+      operationId: mobile_location_configuration
+      tags:
+      - Locations
+      parameters:
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/User-Agent'
+      x-private: true
+      x-stoplight:
+        id: b7af184243f26
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                location_key:
+                  type: string
+                  description: Location key
+            examples:
+              default:
+                value:
+                  client: CLIENT_KEY_GOES_HERE
+                  location_key: LOCATION_KEY_GOES_HERE
+    servers:
+    - url: https://SERVER_NAME_GOES_HERE.punchh.com
+  /api2/mobile/locations/{location_key}/diagnostic_logs:
+    parameters:
+    - schema:
+        type: string
+      name: location_key
+      in: path
+      required: true
+      description: Location key
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                      code:
+                        type: integer
+              examples:
+                default:
+                  value:
+                    errors:
+                      message: Access is denied due to invalid credentials.
+                      code: 401
+      summary: Diagnostic Logs
+      x-private: true
+      operationId: mobile_diagnostic_logs
+      tags:
+      - Locations
+      parameters:
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: f2358033b6f88
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                terminals:
+                  type: integer
+                  description: Number of terminals for diagnostic logs
+                location_id:
+                  type: integer
+                  description: Location ID
+                terminal:
+                  type: integer
+                  description: Number of terminal for diagnostic logs
+                language:
+                  type: string
+                  description: Language of diagnostic logs (e.g., `en`)
+                mac_address:
+                  type: string
+                  description: Mac address of diagnostic logs
+                receipt_datetime:
+                  type: string
+                  description: Date/time when the receipt was created
+                pos_type:
+                  type: string
+                  description: Type of POS (e.g., `aloha`)
+                description:
+                  type: string
+                  description: Description of diagnostic logs
+            examples:
+              default:
+                value:
+                  client: CLIENT_KEY_GOES_HERE
+                  terminals: 123
+                  location_id: 12345
+                  terminal: 12345
+                  language: LANGUAGE_GOES_HERE
+                  mac_address: MAC_ADDRESS_GOES_HERE
+                  receipt_datetime: RECEIPT_DATETIME_GOES_HERE
+                  pos_type: POS_TYPE_GOES_HERE
+                  description: DESCRIPTION_GOES_HERE
+    servers:
+    - url: https://SERVER_NAME_GOES_HERE.punchh.com
+  /api2/mobile/locations/search:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  location_id:
+                    type: integer
+                    description: Location ID
+                  pos_scanner_type:
+                    type: string
+                    description: Type of POS scanner used at the location
+              examples:
+                default:
+                  value:
+                    location_id: 43535
+                    pos_scanner_type: barcode
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                      code:
+                        type: integer
+              examples:
+                default:
+                  value:
+                    errors:
+                      message: Access is denied due to invalid credentials.
+                      code: 401
+      x-private: true
+      summary: Search Locations
+      operationId: mobile_search_locations
+      tags:
+      - Locations
+      parameters:
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/signature'
+      - $ref: '#/components/parameters/User-Agent'
+      x-stoplight:
+        id: 9f3efef0afc6b
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client:
+                  type: string
+                  description: OAuth client ID provided by the business
+                latitude:
+                  type: string
+                  description: Latitude coordinate of the location
+                longitude:
+                  type: string
+                  description: Longitude coordinate of the location
+                gps_accuracy:
+                  type: string
+                  description: GPS accuracy of the location
+                name_like:
+                  type: string
+                  description: Alias name of the location
+                max:
+                  type: string
+                  description: Maximum redemption amount at the location
+            examples:
+              default:
+                value:
+                  client: CLIENT_KEY_GOES_HERE
+                  latitude: LATITUDE_GOES_HERE
+                  longitude: LONGITUDE_GOES_HERE
+                  gps_accuracy: GPS_ACCURACY_GOES_HERE
+                  name_like: NAME_LIKE_GOES_HERE
+                  max: MAXIMUM_REDEMPTION_AMOUNT_GOES_HERE
+        description: ''
+    servers:
+    - url: https://SERVER_NAME_GOES_HERE.punchh.com
+  /api2/dashboard/locations:
+    get:
+      responses:
+        '200':
+          $ref: '#/components/responses/locations-object'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      client:
+                        type: string
+              examples:
+                default:
+                  value:
+                    errors:
+                      client: Required parameter missing or the value is empty.
+        '401':
+          $ref: '#/components/responses/401-unauthorized'
+      summary: Get Locations List
+      description: Returns a list of locations and their details. The `page` and `per` request parameters determine the page(s) returned and the number of locations returned per page.
+      operationId: dashboard_get_location_list
+      tags:
+      - Locations
+      parameters:
+      - $ref: '#/components/parameters/authorization-header'
+      - schema:
+          type: string
+          default: '306082'
+        in: query
+        name: location_id
+        required: true
+        description: Unique ID of a particular location. This is generated by Punchh. If both `location_id` and `store_number` are provided, `location_id` will be given priority.
+      - schema:
+          type: string
+        in: query
+        name: store_number
+        description: Unique store number provided by the business. If both `location_id` and `store_number` are provided, `location_id` will be given priority.
+      - schema:
+          type: integer
+          default: 1
+        in: query
+        name: page
+        description: Page number. If this parameter is not provided with the request, the default is to return all. If `page` is specified, only that page will be returned using the value of `per` as the number of locations returned on that page.
+      - schema:
+          type: integer
+          default: 25
+        in: query
+        name: per
+        description: Number of locations per page. If `per` is not specified, the default is 25.
+      x-stoplight:
+        id: 8b8d1f327d630
+    post:
+      responses:
+        '200':
+          $ref: '#/components/responses/locations-object'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  status:
+                    type: string
+                    x-stoplight:
+                      id: p1u7l5eyuc9k0
+              examples:
+                A null value passed in the url parameter in the additional_url array object:
+                  value:
+                    error: 'Required parameter missing or the value is empty: additional_url_3'
+                Required parameter missing:
+                  value:
+                    error: 'Required parameter missing or the value is empty: location'
+                Invalid JSON:
+                  value:
+                    status: 400
+                    error: data was not valid JSON
+        '401':
+          $ref: '#/components/responses/401-unauthorized'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    x-stoplight:
+                      id: 52wiu7ve9pe4h
+              examples:
+                Additional URL label not configured in Punchh platform:
+                  value:
+                    errors:
+                      additional_url: Given additional URL label is not present in the business configuration.
+                An invalid URL is passed in additional_url array object:
+                  value:
+                    base:
+                    - Reservation URL is an invalid URL
+      summary: Create Location
+      description: "Creates a location in the database\n\n### Permissions Requirement\nAn admin account with Business Manager permission is required. Accounts without required permission will receive a 302 error response.\n\n#### Need help with permissions? \nReach out to your Punchh representative. \n\n#### Need a Punchh admin account? \nYour business will already have an admin with the necessary permissions to create an additional account if needed. If additional help is needed, your Punchh representative can assist."
+      operationId: dashboard_create_location
+      tags:
+      - Locations
+      parameters:
+      - $ref: '#/components/parameters/authorization-header'
+      - $ref: '#/components/parameters/content-type'
+      - $ref: '#/components/parameters/accept'
+      x-stoplight:
+        id: 8613cc1d7011c
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                location:
+                  type: object
+                  properties:
+                    address:
+                      type: string
+                      description: Full address of a particular business location
+                    city:
+                      type: string
+                      description: City of a particular business location
+                    country:
+                      type: string
+                      description: Country of a particular business location
+                    external_store_id:
+                      type: string
+                      description: External POS identifier configured in the Punchh platform under location attributes via Store Locations > All Store Locations > [choose location] > POS > External POS Store Identifier
+                    latitude:
+                      type: number
+                      description: Latitude coordinate of a particular business location
+                      format: float
+                    longitude:
+                      type: number
+                      description: Longitude coordinate of a particular business location
+                      format: float
+                    name:
+                      type: string
+                      description: Name of a particular business location
+                    phone_number:
+                      type: string
+                      description: Phone number of a particular business location
+                    loc_email:
+                      type: string
+                      description: Email address of a particular business location
+                    post_code:
+                      type: string
+                      description: Zip code of a particular business location
+                    state:
+                      type: string
+                      description: State where a particular business is located
+                    store_number:
+                      type: string
+                      description: Unique store number of a particular location, as provided by the business
+                    location_groups:
+                      type: array
+                      description: Contains the ID and name of all location groups to which a location belongs. A location in business can belong to multiple location groups.
+                      items:
+                        type: object
+                        properties:
+                          location_group_id:
+                            type: string
+                            description: Unique ID that identifies a location group for the business. This ID is assigned to the location group at the time of creation.
+                    store_tags:
+                      type: string
+                      description: Tags that provide additional details about a particular business location
+                    location_extra_attributes:
+                      type: object
+                      description: Additional information about the location
+                      properties:
+                        brand:
+                          type: string
+                          description: Brand name of a subcategory of a business. A parent business may own multiple brands under one umbrella company. For example, Yum! Brands, Inc. owns KFC, Pizza Hut, and Taco Bell.
+                        store_times:
+                          type: array
+                          description: Business hours of a particular location
+                          items:
+                            type: object
+                            properties:
+                              day:
+                                type: string
+                                description: Day of week when a store is open for business
+                              start_time:
+                                type: string
+                                description: Time of day when a store opens
+                              end_time:
+                                type: string
+                                description: Time of day when a store closes
+                        additional_url:
+                          type: array
+                          x-stoplight:
+                            id: 8n46yip7lir3e
+                          items:
+                            x-stoplight:
+                              id: r7lxikgkqc8xn
+                            type: object
+                            properties:
+                              label:
+                                type: string
+                                x-stoplight:
+                                  id: suynyomesoxdc
+                                description: Label for the additional URL. This additional URL label must be configured for the business in the Punchh platform; otherwise, the API will return an error. Contact your Punchh representative for more information about this Punchh platform configuration.
+                              url:
+                                type: string
+                                x-stoplight:
+                                  id: 1v2oirhxsjofv
+                                description: 'Custom URL configured for the additional URL. This URL can link to a location-specific brand webpage, such as catering information, discounts, private events, reservations, or other custom content beyond the standard call, order, and directions links. Note: The API returns an error if you pass a null value in the parameter. This information is added to the Punchh platform under Store Locations > All Store Locations > [choose location] > Mobile App.'
+                        alternate_store_number:
+                          type: string
+                          x-stoplight:
+                            id: kirpq5cyfae1s
+                          description: Alphanumeric alternate store identifier for a specific location, as provided by the business. Punchh does not validate that they are unique across each location. This information is added to the Punchh platform under Store Locations > All Store Locations > [choose location] > Location > Alternate Store Number/Identifier.
+                        enable_multiple_redemptions:
+                          type: boolean
+                          x-stoplight:
+                            id: oke04os31yo1b
+                          description: 'Enables processing of multiple redemptions for a location. Possible values: true, false. A value of true means multiple redemptions are allowed. This setting is configured in the Punchh platform under Store Locations > All Store Locations > [Choose a location] > Location > Allow Location for Multiple Redemption.'
+                    time_zone:
+                      type: string
+                      description: Time zone in which the business is located
+                    validation_type:
+                      type: string
+                      description: The method of check-in used by a user (e.g., barcode, qr_code, receipt_image, etc.). A blank string indicates the default value of the business.
+                    franchisee_id:
+                      type: integer
+                      description: Unique ID of the franchisee who owns the location. This ID is generated by Punchh.
+                    ncr_store_id:
+                      type: string
+                      x-stoplight:
+                        id: vc07yjtvsfqed
+                      description: This is required only for businesses that use NCR Silver. This value can be mapped against the location ID or store number of the location.
+                    enable_weekly_redemption_report:
+                      type: boolean
+                      x-stoplight:
+                        id: 86tmm12ampuxf
+                      description: Enables sharing the weekly redemption report to the location email (applicable only for the franchisee model)
+            examples:
+              location:
+                value:
+                  address: ADDRESS_GOES_HERE
+                  city: Mountain View
+                  country: United States
+                  external_store_id: 46ede9b5-287c-4ac5-84f4-86cb0927c96d
+                  latitude: 37.406658
+                  longitude: -122.109061
+                  name: Headquarter
+                  phone_number: '1111111111'
+                  loc_email: test@example.com
+                  post_code: '94040'
+                  state: California
+                  store_number: ABCDXYZ
+                  location_groups:
+                  - location_group_id: '2051'
+                  - location_group_id: '2052'
+                  - location_group_id: '2053'
+                  store_tags: WiFi,DriveThru,GiftCard
+                  location_extra_attributes:
+                    brand: Punchh
+                    alternate_store_number: UK@8907
+                    enable_multiple_redemptions: true
+                    additional_url:
+                    - label: reservation
+                      url: URL_GOES_HERE
+                    store_times:
+                    - day: Mon
+                      start_time: 5:30 AM
+                      end_time: 7:00 PM
+                    - day: Tue
+                      start_time: 5:30 AM
+                      end_time: 8:00 PM
+                    - day: Wed
+                      start_time: 5:30 AM
+                      end_time: 8:00 PM
+                    - day: Thu
+                      start_time: 5:30 AM
+                      end_time: 8:00 PM
+                    - day: Fri
+                      start_time: 5:30 AM
+                      end_time: 8:00 PM
+                    - day: Sat
+                      start_time: 6:30 AM
+                      end_time: 8:00 PM
+                    - day: Sun
+                      start_time: 6:30 AM
+                      end_time: 6:00 PM
+                  time_zone: America/Los_Angeles
+                  validation_type: qrcode
+                  franchisee_id: 1234
+                  enable_weekly_redemption_report: false
+        description: ''
+    patch:
+      responses:
+        '200':
+          $ref: '#/components/responses/locations-object'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    x-stoplight:
+                      id: hvz641m9mar4x
+              examples:
+                Invalid JSON:
+                  value:
+                    status: 400
+                    error: data was not valid JSON
+                Required parameter missing:
+                  value:
+                    error: 'Required parameter missing or the value is empty: location'
+                A null value passed in the url parameter in the additional_url array object:
+                  value:
+                    error: 'Required parameter missing or the value is empty: additional_url_(array number)'
+        '401':
+          $ref: '#/components/responses/401-unauthorized'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    x-stoplight:
+                      id: wphk9ft06qxyg
+              examples:
+                An invalid URL is passed in additional_url array:
+                  value:
+                    base:
+                    - Reservation URL is an invalid URL
+                Additional URL label not configured in Punchh platform:
+                  value:
+                    errors:
+                      additional_url: Given additional URL label is not present in the business configuration.
+      summary: Update Location
+      description: Edits a location in the database
+      parameters:
+      - $ref: '#/components/parameters/authorization-header'
+      - $ref: '#/components/parameters/accept'
+      - $ref: '#/components/parameters/content-type'
+      operationId: dashboard_update_location
+      tags:
+      - Locations
+      x-stoplight:
+        id: 74736d5611d92
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                location_id:
+                  type: integer
+                  description: Unique of a particular location. Either `location_id` or `store_number` should be provided. If both are provided, `store_number` will be given priority.
+                store_number:
+                  type: string
+                  description: Unique store number provided by the business. Either `location_id` or `store_number` should be provided. If both are provided, `store_number` will be given priority.
+                location:
+                  type: object
+                  properties:
+                    address:
+                      type: string
+                      description: Full address of a particular business location
+                    city:
+                      type: string
+                      description: City of a particular business location
+                    country:
+                      type: string
+                      description: Country of a particular business location
+                    external_store_id:
+                      type: string
+                      description: External POS identifier configured in the Punchh platform under location attributes via Store Locations > All Store Locations > [choose location] > POS > External POS Store Identifier.
+                    latitude:
+                      type: number
+                      description: Latitude coordinate of a particular business location
+                      format: float
+                    longitude:
+                      type: number
+                      description: Longitude coordinate of a particular business location
+                      format: float
+                    name:
+                      type: string
+                      description: Name of a particular business location
+                    phone_number:
+                      type: string
+                      description: Phone number of a particular business location
+                    location_groups:
+                      type: array
+                      description: Contains the ID and name of all location groups to which a location belongs. A location in business can belong to multiple location groups.
+                      items:
+                        type: object
+                        properties:
+                          location_group_id:
+                            type: string
+                            description: Unique ID that identifies a location group for the business. This ID is assigned to the location group at the time of creation.
+                    store_tags:
+                      type: string
+                      description: Tags that provide additional details about a particular business location
+                    location_extra_attributes:
+                      type: object
+                      description: Additional information about the location
+                      properties:
+                        brand:
+                          type: string
+                          description: Brand name of a subcategory of a business. A parent business may own multiple brands under one umbrella company. For example, Yum! Brands, Inc. owns KFC, Pizza Hut, and Taco Bell.
+                        store_times:
+                          type: array
+                          description: Business hours of a particular location
+                          items:
+                            type: object
+                            properties:
+                              day:
+                                type: string
+                                description: Day of week when a store is open for business
+                              start_time:
+                                type: string
+                                description: Time of day when a store opens
+                              end_time:
+                                type: string
+                                description: Time of day when a store closes
+                        online_order_url:
+                          type: string
+                          description: Online ordering URL of a particular business location
+                        ' additional_url':
+                          type: array
+                          x-stoplight:
+                            id: yotebzzvgcolv
+                          items:
+                            x-stoplight:
+                              id: fsga27oktsddh
+                            type: object
+                            properties:
+                              label:
+                                type: string
+                                x-stoplight:
+                                  id: ue6vv7t7w1o4t
+                                description: Label for the additional URL. This additional URL label must be configured for the business in the Punchh platform; otherwise, the API will return an error. Contact your Punchh representative for more information about this Punchh platform configuration.
+                              url:
+                                type: string
+                                x-stoplight:
+                                  id: dxs424weyvhyv
+                                description: Custom URL configured for the additional URL. This URL can link to a location-specific brand webpage, such as catering information, discounts, private events, reservations, or other custom content beyond the standard call, order, and directions links. This information is added to the Punchh platform under Store Locations > All Store Locations > [choose location] > Mobile App.
+                        alternate_store_number:
+                          type: string
+                          x-stoplight:
+                            id: km7yd9xrz15dz
+                          description: Alphanumeric alternate store identifier for a specific location, as provided by the business. Punchh does not validate that they are unique across each location. This information is added to the Punchh platform under Store Locations > All Store Locations > [choose location] > Location > Alternate Store Number/Identifier.
+                        enable_multiple_redemptions:
+                          type: boolean
+                          x-stoplight:
+                            id: hm8mjc8uqse8v
+                          description: 'Enables processing of multiple redemptions for a location. Possible values: true, false. A value of true means multiple redemptions are allowed. This setting is configured in the Punchh platform under Store Locations > All Store Locations > [Choose a location] > Location > Allow Location for Multiple Redemption.'
+                    time_zone:
+                      type: string
+                      description: Time zone in which the business is located
+                    generate_barcodes:
+                      type: boolean
+                      description: Whether barcodes are generated on the receipt or not
+                    loc_email:
+                      type: string
+                      description: Email address of a particular business location
+                    post_code:
+                      type: string
+                      description: Zip code of a particular business location
+                    state:
+                      type: string
+                      description: State where a particular business is located
+                    status:
+                      type: string
+                      description: 'Whether the location is enabled for check-ins or not. `approved`: Enabled for check-ins. `disapproved`: Disabled for check-ins.'
+                    franchise_id:
+                      type: integer
+                      description: Unique ID of the franchisee who owns the location. This ID is generated by Punchh.
+                    ncr_store_id:
+                      type: string
+                      description: This is required only for businesses that use NCR Silver. This value can be mapped against the location ID or store number of the location.
+                enable_weekly_redemption_report:
+                  description: Enables sharing the weekly redemption report to the location email (applicable only for the franchisee model)
+                  type: boolean
+            examples:
+              default:
+                value:
+                  location_id: 306248
+                  store_number: ABCDXYZ
+                  location:
+                    address: ADDRESS_GOES_HERE
+                    city: Mountain View
+                    country: United States
+                    external_store_id: 46ede9b5-287c-4ac5-84f4-86cb0927c96d
+                    latitude: 37.406658
+                    longitude: -122.109061
+                    name: Headquarter7
+                    phone_number: '1111111111'
+                    location_groups:
+                    - location_group_id: '2051'
+                    - location_group_id: '2052'
+                    - location_group_id: '2053'
+                    loc_email: test@example.com
+                    post_code: '94040'
+                    state: California
+                    store_tags: WiFi,DriveThru,GiftCard
+                    location_extra_attributes:
+                      brand: Punchh
+                      online_order_url: https://example.com
+                      alternate_store_number: UK@8907
+                      enable_multiple_redemptions: true
+                      additional_url:
+                      - label: reservation
+                        url: https://example1.com
+                      store_times:
+                      - day: Mon
+                        start_time: 5:30 AM
+                        end_time: 7:00 PM
+                      - day: Tue
+                        start_time: 5:30 AM
+                        end_time: 8:00 PM
+                      - day: Wed
+                        start_time: 5:30 AM
+                        end_time: 8:00 PM
+                      - day: Thu
+                        start_time: 5:30 AM
+                        end_time: 8:00 PM
+                      - day: Fri
+                        start_time: 5:30 AM
+                        end_time: 8:00 PM
+                      - day: Sat
+                        start_time: 6:30 AM
+                        end_time: 8:00 PM
+                      - day: Sun
+                        start_time: 6:30 AM
+                        end_time: 6:00 PM
+                    time_zone: America/Los_Angeles
+                    generate_barcodes: true
+    delete:
+      responses:
+        '204':
+          description: A successful response is a blank response with HTTP status code 204.
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/401-unauthorized'
+      summary: Delete Location
+      description: Deletes a business location from the database
+      operationId: dashboard_delete_location
+      tags:
+      - Locations
+      parameters:
+      - $ref: '#/components/parameters/authorization-header'
+      x-stoplight:
+        id: f3dd8a2ae9d4e
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                location_id:
+                  type: integer
+                  description: Unique ID of a particular location. This is generated by Punchh.
+                store_number:
+                  type: string
+                  description: Unique store number provided by the business
+            examples:
+              default:
+                value:
+                  location_id: 306248
+                  store_number: ABCDXYZ
+    servers:
+    - url: https://SERVER_NAME_GOES_HERE.punchh.com
+  /api2/dashboard/location_groups:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    location_group_id:
+                      type: integer
+                      description: Unique ID that identifies a location group for the business. This ID is assigned to the location group at the time of creation.
+                    name:
+                      type: string
+                      description: Name of the location group that is assigned by the admin who created it
+                    locations:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          location_id:
+                            type: integer
+                            description: Unique ID of a particular location. This is generated by Punchh.
+                          store_number:
+                            type: string
+                            description: Unique store number provided by the business
+              examples:
+                default:
+                  value:
+                  - location_group_id: 1234
+                    name: Group 1
+                    locations:
+                    - location_id: 312301
+                      store_number: 005806
+                    - location_id: 312302
+                      store_number: 028462
+                  - location_group_id: 1235
+                    name: Group 2
+                    locations:
+                    - location_id: 312303
+                      store_number: 005807
+                    - location_id: 312304
+                      store_number: 028463
+        '401':
+          $ref: '#/components/responses/401-unauthorized'
+      summary: Get Location Group List
+      description: Returns a list of all location groups in the business, including details about the specific locations in each location group. A location in a business can belong to multiple location groups.
+      operationId: dashboard_get_location_group_list
+      tags:
+      - Locations
+      parameters:
+      - $ref: '#/components/parameters/authorization-header'
+      - schema:
+          type: string
+        in: query
+        name: location_group_id
+        description: Unique ID that identifies a location group for the business. This ID is assigned to the location group at the time of creation.
+      x-stoplight:
+        id: 68e83bb9538b3
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  location_group_id:
+                    type: integer
+                    description: Unique ID that identifies a location group for the business. This ID is assigned to the location group at the time of creation.
+                  name:
+                    type: string
+                    description: Name of the location group that is assigned by the admin who created it
+                  locations:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        location_id:
+                          type: integer
+                          description: Unique ID of a particular location. This is generated by Punchh.
+                        store_number:
+                          type: string
+                          description: Unique store number provided by the business
+              examples:
+                default:
+                  value:
+                    location_group_id: 2142
+                    name: Location Group 1
+                    locations:
+                    - location_id: 312362
+                      store_number: '317111'
+        '401':
+          $ref: '#/components/responses/401-unauthorized'
+      summary: Create Location Group
+      description: Creates a location group with one location. More locations can be included by using the [Add Location to Location Group](/docs/dev-portal-platform-functions/13dd7ab9d1483-add-location-to-location-group) API.
+      operationId: dashboard_create_location_group
+      tags:
+      - Locations
+      parameters:
+      - $ref: '#/components/parameters/authorization-header'
+      x-stoplight:
+        id: 8953dba5c68a3
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the location group
+                store_number:
+                  type: string
+                  description: Unique store number provided by the business
+                location_id:
+                  type: string
+                  description: Unique ID of a particular location. This is generated by Punchh.
+            examples:
+              default:
+                value:
+                  name: Location Group 1
+                  store_number: '317111'
+                  location_id: '312362'
+    delete:
+      responses:
+        '204':
+          description: A successful response is a blank response with HTTP status code 204.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/401-unauthorized'
+      summary: Delete Location Group
+      description: Deletes a location group. Deleting a location group does not delete the locations that make up the location group.
+      operationId: dashboard_delete_location_group
+      tags:
+      - Locations
+      parameters:
+      - $ref: '#/components/parameters/authorization-header'
+      x-stoplight:
+        id: 21afa37b6b92f
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                location_group_id:
+                  type: string
+                  description: ID of the location group that the business admin can access
+            examples:
+              default:
+                value:
+                  location_group_id: '2142'
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  location_group_id:
+                    type: integer
+                    description: Unique ID that identifies a location group for the business. This ID is assigned to the location group at the time of creation.
+                  name:
+                    type: string
+                    description: Name of the location group that is assigned by the admin who created it
+                  locations:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        location_id:
+                          type: integer
+                          description: Unique ID of a particular location. This is generated by Punchh.
+                        store_number:
+                          type: string
+                          description: Unique store number provided by the business
+              examples:
+                default:
+                  value:
+                    location_group_id: 2140
+                    name: UpdatedGroupName
+                    locations:
+                    - location_id: 312362
+                      store_number: '317111'
+        '401':
+          $ref: '#/components/responses/401-unauthorized'
+      summary: Update Location Group
+      description: Updates the name of an existing location group
+      operationId: dashboard_update_location_group
+      tags:
+      - Locations
+      parameters:
+      - $ref: '#/components/parameters/authorization-header'
+      x-stoplight:
+        id: 38c6714be45aa
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                location_group_id:
+                  type: string
+                  description: Unique ID that identifies a location group for the business. This ID is assigned to the location group at the time of creation.
+                name:
+                  type: string
+                  description: Name of the location group that is assigned by the admin who created it
+            examples:
+              default:
+                value:
+                  location_group_id: '2140'
+                  name: CurrentGroupName
+    servers:
+    - url: https://SERVER_NAME_GOES_HERE.punchh.com
+  /api2/dashboard/location_groups/add_location:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  location_group_id:
+                    type: integer
+                    description: Unique ID that identifies a location group for the business. This ID is assigned to the location group at the time of creation.
+                  name:
+                    type: string
+                    description: Name of the location group that is assigned by the admin who created it
+                  locations:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        location_id:
+                          type: integer
+                          description: Unique ID of a particular location. This is generated by Punchh.
+                        store_number:
+                          type: string
+                          description: Unique store number provided by the business
+              examples:
+                default:
+                  value:
+                    location_group_id: 2140
+                    name: Group 1
+                    locations:
+                    - location_id: 312350
+                      store_number: '316864'
+                    - location_id: 312362
+                      store_number: '317111'
+        '401':
+          $ref: '#/components/responses/401-unauthorized'
+      summary: Add Location to Location Group
+      description: Adds a location to an existing location group
+      operationId: dashboard_add_location_to_location_group
+      tags:
+      - Locations
+      parameters:
+      - $ref: '#/components/parameters/authorization-header'
+      x-stoplight:
+        id: 13dd7ab9d1483
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                location_group_id:
+                  type: string
+                  description: Unique ID that identifies a location group for the business. This ID is assigned to the location group at the time of creation.
+                store_number:
+                  type: string
+                  description: Unique store number provided by the business
+                location_id:
+                  type: string
+                  description: Unique ID of a particular location. This is generated by Punchh.
+            examples:
+              default:
+                value:
+                  location_group_id: '2140'
+                  store_number: '317111'
+                  location_id: '312362'
+    servers:
+    - url: https://SERVER_NAME_GOES_HERE.punchh.com
+  /api2/dashboard/location_groups/remove_location:
+    delete:
+      responses:
+        '204':
+          description: A successful response is a blank response with HTTP status code 204.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          $ref: '#/components/responses/401-unauthorized'
+      summary: Delete Location From a Location Group
+      description: Removes a location from a location group. This does not delete the location from the business.
+      operationId: dashboard_delete_from_location_group
+      tags:
+      - Locations
+      parameters:
+      - $ref: '#/components/parameters/authorization-header'
+      x-stoplight:
+        id: dae38f54c04df
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                location_group_id:
+                  type: string
+                  description: ID of the location group that the business admin can access
+                store_number:
+                  type: string
+                  description: Unique store number provided by the business
+                location_id:
+                  type: string
+                  description: Unique ID of a particular location. This is generated by Punchh.
+            examples:
+              default:
+                value:
+                  location_group_id: '2140'
+                  store_number: '317111'
+                  location_id: '312362'
+    servers:
+    - url: https://SERVER_NAME_GOES_HERE.punchh.com
+  /api2/dashboard/business_admins/authorizations:
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  admin_id:
+                    type: integer
+                    description: ID of the admin whose permissions were updated
+                  email:
+                    type: string
+                    description: Email address of the admin whose permissions were updated
+                  first_name:
+                    type: string
+                    description: First name of the admin whose permissions were updated
+                  last_name:
+                    type: string
+                    description: Last name of the admin whose permissions were updated
+                  timezone:
+                    type: string
+                    description: Time zone of the admin whose permissions were updated
+                  role_id:
+                    type: integer
+                    description: Role ID of the admin whose permissions were updated
+                  accessible_locations:
+                    type: object
+                    properties:
+                      location_ids:
+                        type: array
+                        description: Location IDs to which the admin was granted access
+                        items:
+                          type: integer
+                      store_numbers:
+                        type: array
+                        description: Store numbers to which the admin was granted access
+                        items:
+                          type: string
+                  accessible_location_groups:
+                    type: object
+                    properties:
+                      location_group_id:
+                        type: integer
+                        description: ID of the location group to which the admin was granted access
+                      name:
+                        type: string
+                        description: Name of the location group to which the admin was granted access
+              examples:
+                default:
+                  value:
+                    admin_id: 3803
+                    email: test@example.com
+                    first_name: FIRST_NAME_GOES_HERE
+                    last_name: LAST_NAME_GOES_HERE
+                    timezone: America/Los_Angeles
+                    role_id: 10
+                    accessible_locations:
+                      location_ids:
+                      - 542
+                      - 3940
+                      store_numbers:
+                      - s10
+                      - w12
+                    accessible_location_groups:
+                      location_group_id: 45
+                      name: East Cost
+      summary: Allow Admin To Access a Location or Location Group
+      operationId: dashboard_allow_admin_to access_particular_location
+      tags:
+      - Locations
+      parameters:
+      - $ref: '#/components/parameters/authorization-header'
+      - $ref: '#/components/parameters/accept'
+      - $ref: '#/components/parameters/content-type'
+      x-private: true
+      x-stoplight:
+        id: 7abaae5b58d6a
+      description: Updates the permission settings of an admin user to allow the admin to access a store number, location, or location group
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                admin_id:
+                  type: string
+                  description: ID of the admin whose permissions will be updated
+                business_admins:
+                  type: object
+                  properties:
+                    accessible_store_numbers:
+                      type: array
+                      description: Permits the admin to access a given store number. If both location ID and store number are provided, store number will be given priority.
+                      items:
+                        type: string
+                    accessible_location_group_ids:
+                      type: array
+                      description: Permits the admin to access a given location group ID. If other attributes are provided (e.g., location ID and store number), location group ID will be given priority.
+                      items:
+                        type: integer
+                    accessible_location_id:
+                      type: integer
+                      description: Permits the admin to access a given location ID. If both location ID and store number are provided, store number will be given priority.
+            examples:
+              default:
+                value:
+                  admin_id: '3803'
+                  business_admins:
+                    accessible_store_numbers:
+                    - s10
+                    - w12
+                    accessible_location_group_ids:
+                    - 45
+    delete:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  admin_id:
+                    type: integer
+                    description: ID of the admin whose permissions were updated
+                  email:
+                    type: string
+                    description: Email address of the admin whose permissions were updated
+                  first_name:
+                    type: string
+                    description: First name of the admin whose permissions were updated
+                  last_name:
+                    type: string
+                    description: Last name of the admin whose permissions were updated
+                  timezone:
+                    type: string
+                    description: Time zone of the admin whose permissions were updated
+                  role_id:
+                    type: integer
+                    description: Role ID of the admin whose permissions were updated
+                  accessible_locations:
+                    type: object
+                    properties:
+                      location_ids:
+                        type: array
+                        description: Location IDs to which access was revoked
+                        items:
+                          type: integer
+                      store_numbers:
+                        type: array
+                        description: Store numbers to which access was revoked
+                        items:
+                          type: string
+                  accessible_location_groups:
+                    type: object
+                    properties:
+                      location_group_id:
+                        type: integer
+                        description: ID of the location group to which access was revoked
+                      name:
+                        type: string
+                        description: Name of the location group to which access was revoked
+              examples:
+                default:
+                  value:
+                    admin_id: 3803
+                    email: test@example.com
+                    first_name: FIRST_NAME_GOES_HERE
+                    last_name: LAST_NAME_GOES_HERE
+                    timezone: America/Los_Angeles
+                    role_id: 10
+                    accessible_locations:
+                      location_ids:
+                      - 542
+                      - 3940
+                      store_numbers:
+                      - s10
+                      - w12
+                    accessible_location_groups:
+                      location_group_id: 45
+                      name: East Cost
+      summary: Revoke Admin Access From a Location or Location Group
+      x-private: true
+      tags:
+      - Locations
+      operationId: dashboard_revoke_admin_to access_particular_location
+      parameters:
+      - $ref: '#/components/parameters/accept'
+      - $ref: '#/components/parameters/authorization-header'
+      - $ref: '#/components/parameters/content-type'
+      x-stoplight:
+        id: 025784998dc8f
+      description: Updates the permission settings of an admin user to remove the admin's access to a store number, location, or location group
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                admin_id:
+                  type: string
+                  description: ID of the admin whose permissions will be updated
+                business_admins:
+                  type: object
+                  properties:
+                    accessible_store_number:
+                      type: string
+                      description: Revokes the admin's access to a given store number. If both location ID and store number are provided, store number will be given priority.
+                    accessible_location_group_ids:
+                      type: array
+                      description: Revokes the admin's access to a given location group ID. If other attributes are provided (e.g., location ID and store number), location group ID will be given priority.
+                      items:
+                        type: integer
+                    accessible_location_id:
+                      type: integer
+                      description: Revokes the admin's access to a given location ID. If both location ID and store number are provided, store number will be given priority.
+            examples:
+              default:
+                value:
+                  admin_id: '3803'
+                  business_admins:
+                    accessible_store_number: s10
+                    accessible_location_group_ids:
+                    - 45
+    servers:
+    - url: https://SERVER_NAME_GOES_HERE.punchh.com
+  /api2/dashboard/locations/destroy_async:
+    delete:
+      responses:
+        '202':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Response:
+                  value:
+                    accepted: Queued for deletion
+      summary: Delete Location Async
+      description: Puts a location in the queue to be deleted from the database
+      operationId: dashboard_delete_location_async
+      tags:
+      - Locations
+      parameters:
+      - $ref: '#/components/parameters/authorization-header'
+      x-stoplight:
+        id: 0d5bfb1f0cc52
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                location_id:
+                  type: integer
+                  description: Unique ID of a particular location. This is generated by Punchh.
+                store_number:
+                  type: string
+                  description: Unique store number provided by the business
+              required:
+              - location_id
+            examples:
+              Request:
+                value:
+                  location_id: 306248
+                  store_number: '317111'
+    servers:
+    - url: https://SERVER_NAME_GOES_HERE.punchh.com
+components:
+  parameters:
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
+    accept:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Accept
+      description: Advertises which content types the client is able to understand
+      required: true
+    authorization-header:
+      schema:
+        type: string
+        default: Bearer BUSINESS_ADMIN_KEY_GOES_HERE
+      name: Authorization
+      in: header
+      description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
+      required: true
+    content-type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+  responses:
+    locations-object:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            description: Returns details about each configured location of a business
+            properties:
+              address:
+                type: string
+                description: Full address of a particular business location
+              brand:
+                type: string
+                description: Brand name of a subcategory of a business. A parent business may own multiple brands under one umbrella company. For example, Yum! Brands, Inc. owns KFC, Pizza Hut, and Taco Bell.
+              city:
+                type: string
+                description: City of a particular business location
+              country:
+                type: string
+                description: Country of a particular business location
+              external_store_id:
+                type: string
+                description: External POS identifier configured in the Punchh platform under location attributes via Store Locations > All Store Locations > [choose location] > POS > External POS Store Identifier
+              latitude:
+                type: number
+                description: Latitude coordinate of a particular business location
+                format: float
+              location_id:
+                type: integer
+                description: Unique ID of a particular business location. This is generated by Punchh.
+              longitude:
+                type: number
+                description: Longitude coordinate of a particular business location
+                format: float
+              name:
+                type: string
+                description: Name of a particular business location
+              online_order_url:
+                type: string
+                description: Online ordering URL of a particular business location
+              phone_number:
+                type: string
+                description: Phone number of a particular business location
+              loc_email:
+                type: string
+                description: Email address of a particular business location
+              post_code:
+                type: string
+                description: Zip code of a particular business location
+              state:
+                type: string
+                description: State where a particular business is located
+              store_number:
+                type: string
+                description: Unique store number of a particular location, as provided by the business
+              store_tags:
+                type: string
+                description: Tags that provide additional details about a particular business location
+              store_times:
+                type: array
+                description: Business hours of a particular location
+                items:
+                  type: object
+                  properties:
+                    day:
+                      type: string
+                      description: Day of week when a store is open for business
+                    start_time:
+                      type: string
+                      description: Time of day when a store opens
+                    end_time:
+                      type: string
+                      description: Time of day when a store closes
+              time_zone:
+                type: string
+                description: Time zone in which the business is located
+              updated_at:
+                type: string
+                description: Date/time when the location was last updated in system, in [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) format
+              status:
+                type: string
+                description: Whether the location is enabled for check-ins or not. `approved` means enabled for check-ins, and `disapproved` means disabled for check-ins.
+              franchisee_id:
+                type: integer
+                description: Unique ID of the franchisee who owns the location. This ID is generated by Punchh.
+              enable_weekly_redemption_report:
+                type: boolean
+                description: Enables sharing the weekly redemption report to the location email (applicable only for the franchisee model)
+              checkin_evidenced_by:
+                type: string
+                description: The method of check-in used by a user (e.g., barcode, qr_code, receipt_image, etc.). A blank string indicates the default value of the business.
+              guest_identity_code_type:
+                type: string
+                description: The POS scanner type used to identify the user at the POS (e.g., barcode, qr_code, etc.). A blank string indicates the default value of the business.
+              enable_pos_monitoring:
+                type: boolean
+                description: Whether POS monitoring has been enabled for the location or not. This is used by the POS integration team members.
+              generate_barcodes:
+                type: boolean
+                description: Whether barcodes are generated on the receipt or not
+              location_groups:
+                type: array
+                description: Contains the ID and name of all location groups to which a location belongs. A location in business can belong to multiple location groups.
+                items:
+                  type: object
+                  properties:
+                    location_group_id:
+                      type: integer
+                      description: Unique ID that identifies a location group for the business. This ID is assigned to the location group at the time of creation.
+                    name:
+                      type: string
+                      description: Name of the location group that is assigned by the admin who created it
+              alternate_store_number:
+                type: string
+                x-stoplight:
+                  id: yrqjaw9nn3m7u
+                description: Alphanumeric alternate store identifier for a specific location, as provided by the business. Punchh does not validate that they are unique across each location. This information is added to the Punchh platform under Store Locations > All Store Locations > [choose location] > Location > Alternate Store Number/Identifier.
+              additional_url:
+                type: array
+                x-stoplight:
+                  id: 8xs51ynvff6aq
+                items:
+                  x-stoplight:
+                    id: laqyybjwnjky6
+                  type: object
+                  properties:
+                    label:
+                      type: string
+                      x-stoplight:
+                        id: u3cdftsr96bwi
+                      description: Label for the additional URL. This additional URL label must be configured for the business in the Punchh platform. Contact your Punchh representative for more information about this Punchh platform configuration setting.
+                    url:
+                      type: string
+                      x-stoplight:
+                        id: w3b6raho9dmsx
+                      description: Custom URL configured for the additional URL. This URL can link to a location-specific brand webpage, such as catering information, discounts, private events, reservations, or other custom content beyond the standard call, order, and directions links. This information is added to the Punchh platform under Store Locations > All Store Locations > [choose location] > Mobile App.
+              multiple_redemption_on_location:
+                type: boolean
+                x-stoplight:
+                  id: 12x0db87gpvet
+                description: Indicates whether processing of multiple redemptions is enabled for the location. A value of true means multiple redemptions are allowed.
+          examples:
+            default:
+              value:
+                address: ADDRESS_GOES_HERE
+                brand: Punchh
+                city: Mountain View
+                country: United States
+                external_store_id: 46ede9b5-287c-4ac5-84f4-86cb0927c96d
+                latitude: '37.406756'
+                location_id: 306095
+                longitude: '-122.109125'
+                name: Punchh Test Location 1
+                online_order_url: URL_GOES_HERE
+                phone_number: 1111111111
+                loc_email: test@example.com
+                post_code: '94040'
+                state: California
+                store_number: 01011-00002
+                store_tags: WiFi,DriveThru,GiftCard,Rewards
+                store_times:
+                - day: Mon
+                  start_time: 6:30 AM
+                  end_time: 11:00 PM
+                - day: Tue
+                  start_time: 6:30 AM
+                  end_time: 11:00 PM
+                - day: Wed
+                  start_time: 6:30 AM
+                  end_time: 11:00 PM
+                - day: Thu
+                  start_time: 6:30 AM
+                  end_time: 11:00 PM
+                - day: Fri
+                  start_time: 6:30 AM
+                  end_time: 11:00 PM
+                - day: Sat
+                  start_time: 6:30 AM
+                  end_time: 1:00 AM
+                - day: Sun
+                  start_time: 6:30 AM
+                  end_time: 1:00 AM
+                time_zone: America/Los_Angeles
+                updated_at: '2016-08-04T11:06:04Z'
+                status: approved
+                franchisee_id: 1234
+                enable_weekly_redemption_report: false
+                checkin_evidenced_by: barcode
+                guest_identity_code_type: barcode
+                enable_pos_monitoring: true
+                generate_barcodes: true
+                location_groups:
+                - location_group_id: 2051
+                  name: Location Group A
+                - location_group_id: 2052
+                  name: Location Group B
+                - location_group_id: 2053
+                  name: Location Group C
+                alternate_store_number: UK@8907
+                multiple_redemption_on_location: true
+                additional_url:
+                - label: reservation
+                  url: URL_GOES_HERE
+    401-unauthorized:
+      description: 'A business admin key is missing or invalid. A request header in the following format is needed to make the request:
+
+
+        `Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE`'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+          examples:
+            default:
+              value:
+                error: You need to sign in or sign up before continuing.
+x-refined-from:
+- punchh-mobile-api-openapi.yml
+- punchh-platform-functions-api-openapi.yml
+x-stoplight:
+  id: bf6eddb435209
+x-ext-urls: {}
