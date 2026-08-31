@@ -249,6 +249,8 @@ apis:
   humanURL: https://developers.partech.com/docs/dev-portal-mobile
   baseURL: https://{server_name}.punchh.com
   tags:
+  - Authentication
+  tags_raw:
   - Auth
   properties:
   - type: OpenAPI
@@ -3682,6 +3684,8 @@ apis:
   humanURL: https://developers.partech.com/docs/dev-portal-mobile
   baseURL: https://{server_name}.punchh.com
   tags:
+  - Notification
+  tags_raw:
   - Notifications
   properties:
   - type: OpenAPI
@@ -4342,6 +4346,8 @@ apis:
   humanURL: https://developers.partech.com/docs/dev-portal-mobile
   baseURL: https://{server_name}.punchh.com
   tags:
+  - Point-of-Sale
+  tags_raw:
   - Point Of Sale
   properties:
   - type: OpenAPI
@@ -5794,6 +5800,8 @@ apis:
   humanURL: https://developers.partech.com/docs/dev-portal-mobile
   baseURL: https://{server_name}.punchh.com
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
