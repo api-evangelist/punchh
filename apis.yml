@@ -1176,6 +1176,8 @@ apis:
   humanURL: https://developers.partech.com/docs/dev-portal-mobile
   baseURL: https://{server_name}.punchh.com
   tags:
+  - Check-in
+  tags_raw:
   - Check-ins
   properties:
   - type: OpenAPI
@@ -3024,6 +3026,8 @@ apis:
   humanURL: https://developers.partech.com/docs/dev-portal-mobile
   baseURL: https://{server_name}.punchh.com
   tags:
+  - Location
+  tags_raw:
   - Locations
   properties:
   - type: OpenAPI
