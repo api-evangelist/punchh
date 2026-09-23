@@ -69,7 +69,27 @@ paths:
 
             '
       summary: Save Points for Swag
-      description: "In Points Convert to Currency or Points Convert to Rewards loyalty programs, loyalty users earn points on every purchase. By default, these points are automatically converted (\"banked\") into rewards or currency. However, some loyalty users may prefer to accumulate their points and redeem them for swag instead.\n\nThis API lets loyalty users manage their \"Save Points for Swag\" preference from the mobile app. When the \"Save Points for Swag\" feature is enabled for the brand, loyalty users can opt in or out of the feature and set a points threshold. Points accumulated up to this threshold are reserved for swag redemption, while points earned above the threshold are automatically converted into rewards or currency. This gives loyalty users flexibility in how they use their points. If a loyalty user no longer wants to save points for swag, they can update their preference to opt out.\n\n## Prerequisite\n\nBefore processing the request, the API verifies that the \"Save Points for Swag\" feature is enabled for the brand on the Punchh platform. If the feature is not enabled, the API returns an appropriate error code and message. \n\n**Note**: Contact your Punchh representative to update this Punchh platform configuration.\n\nOn success, the API responds with a **200 OK** status.\n<!--Cockpit > Redemptions > Redemptions Properties > Allow members to save points for swag redemption-->\n\nSee [Get User Save Points for Swag](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1user_banking_preferences/get), [Fetch Available User Swag](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1user_merch/get), [Redeem Swag](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1swag_redemptions/post), and [Get Swag Shipping Details](https://developers.partech.com/docs/dev-portal-platform-functions/apis/platform-functions-api/tag/swag/get/api2/dashboard/swag_shipping_details).\n"
+      description: 'In Points Convert to Currency or Points Convert to Rewards loyalty programs, loyalty users earn points on every purchase. By default, these points are automatically converted ("banked") into rewards or currency. However, some loyalty users may prefer to accumulate their points and redeem them for swag instead.
+
+
+        This API lets loyalty users manage their "Save Points for Swag" preference from the mobile app. When the "Save Points for Swag" feature is enabled for the brand, loyalty users can opt in or out of the feature and set a points threshold. Points accumulated up to this threshold are reserved for swag redemption, while points earned above the threshold are automatically converted into rewards or currency. This gives loyalty users flexibility in how they use their points. If a loyalty user no longer wants to save points for swag, they can update their preference to opt out.
+
+
+        ## Prerequisite
+
+
+        Before processing the request, the API verifies that the "Save Points for Swag" feature is enabled for the brand on the Punchh platform. If the feature is not enabled, the API returns an appropriate error code and message.
+
+
+        **Note**: Contact your Punchh representative to update this Punchh platform configuration.
+
+
+        On success, the API responds with a **200 OK** status.
+
+        Redemptions > Redemptions Properties > Allow members to save points for swag redemption-->
+
+
+        See Get User Save Points for Swag, Fetch Available User Swag, Redeem Swag, and Get Swag Shipping Details.'
       operationId: mobile_update_user_banking_preferences
       tags:
       - Swag
@@ -131,7 +151,7 @@ paths:
 
         - The business must support banked point debit.
 
-        <!--Cockpit > Redemptions > Redemptions Properties > Allow members to save points for swag redemption-->
+        Redemptions > Redemptions Properties > Allow members to save points for swag redemption-->
 
 
         If either condition is not met, the endpoint returns a 422 Unprocessable Entity error.
@@ -140,7 +160,7 @@ paths:
         **Note**: Contact your Punchh representative to update this Punchh platform configuration.
 
 
-        See [Save Points for Swag](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1user_banking_preferences/put), [Fetch Available User Swag](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1user_merch/get), [Redeem Swag](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1swag_redemptions/post), and [Get Swag Shipping Details](https://developers.partech.com/docs/dev-portal-platform-functions/apis/platform-functions-api/tag/swag/get/api2/dashboard/swag_shipping_details).'
+        See Save Points for Swag, Fetch Available User Swag, Redeem Swag, and Get Swag Shipping Details.'
       operationId: mobile_get_user_banking_preferences
       tags:
       - Swag
@@ -289,7 +309,7 @@ paths:
       description: 'The Swag Redemption API allows an authenticated loyalty member to redeem saved loyalty points for a branded swag item. The API handles the full redemption flow end-to-end — including eligibility checks, point deduction, inventory decrement, reward creation, and optional shipping detail capture.
 
 
-        See [Get User Save Points for Swag](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1user_banking_preferences/get), [Fetch Available User Swag](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1user_merch/get), [Save Points for Swag](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1user_banking_preferences/put), and [Get Swag Shipping Details](https://developers.partech.com/docs/dev-portal-platform-functions/apis/platform-functions-api/tag/swag/get/api2/dashboard/swag_shipping_details).'
+        See Get User Save Points for Swag, Fetch Available User Swag, Save Points for Swag, and Get Swag Shipping Details.'
       operationId: mobile_create_swag_redemption
       tags:
       - Swag
@@ -439,7 +459,7 @@ paths:
       description: 'Retrieves all available swag items that the authenticated user can view or redeem using their loyalty points. The response includes item details such as name, image, point cost, availability window, and fulfilment method. Results are paginated. Only items available in inventory are returned in the response.
 
 
-        See [Get User Save Points for Swag](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1user_banking_preferences/get), [Save Points for Swag](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1user_banking_preferences/put), [Redeem Swag](/docs/dev-portal-mobile/apis/mobile-api/paths/~1api2~1mobile~1swag_redemptions/post), and [Get Swag Shipping Details](https://developers.partech.com/docs/dev-portal-platform-functions/apis/platform-functions-api/tag/swag/get/api2/dashboard/swag_shipping_details).'
+        See Get User Save Points for Swag, Save Points for Swag, Redeem Swag, and Get Swag Shipping Details.'
       operationId: mobile_fetch_available_user_merch
       tags:
       - Swag
@@ -592,7 +612,7 @@ paths:
         - Only swag redemptions with shipping details are returned.
 
 
-        See [Get User Save Points for Swag](https://developers.partech.com/docs/dev-portal-mobile/apis/mobile-api/tag/swag/get/api2/mobile/user_banking_preferences), [Save Points for Swag](https://developers.partech.com/docs/dev-portal-mobile/apis/mobile-api/tag/swag/put/api2/mobile/user_banking_preferences), [Fetch Available User Swag](https://developers.partech.com/docs/dev-portal-mobile/apis/mobile-api/tag/swag/get/api2/mobile/user_merch), and [Redeem Swag](https://developers.partech.com/docs/dev-portal-mobile/apis/mobile-api/tag/swag/post/api2/mobile/swag_redemptions)'
+        See Get User Save Points for Swag, Save Points for Swag, Fetch Available User Swag, and Redeem Swag'
       operationId: dashboard_get_swag_shipping_details
       tags:
       - Swag
@@ -865,21 +885,6 @@ paths:
     - url: https://SERVER_NAME_GOES_HERE.punchh.com
 components:
   parameters:
-    Accept-Language:
-      schema:
-        type: string
-        default: en
-      name: Accept-Language
-      in: header
-      description: Preferred language
-    signature:
-      schema:
-        type: string
-        default: '{{$$.env.signature}}'
-      name: x-pch-digest
-      in: header
-      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
-      required: true
     User-Agent:
       schema:
         type: string
@@ -887,6 +892,22 @@ components:
       in: header
       name: User-Agent
       description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    punchh-app-device-id:
+      schema:
+        type: string
+        default: APP_DEVICE_ID_GOES_HERE
+      name: punchh-app-device-id
+      in: header
+      required: true
+      description: The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
       required: true
     Content-Type:
       schema:
@@ -904,29 +925,28 @@ components:
       in: header
       description: Advertises which content types the client is able to understand
       required: true
-    Authorization:
+    signature:
       schema:
         type: string
-        default: Bearer ACCESS_TOKEN_GOES_HERE
-      name: Authorization
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
       in: header
-      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
       required: true
-    punchh-app-device-id:
+    Accept-Language:
       schema:
         type: string
-        default: APP_DEVICE_ID_GOES_HERE
-      name: punchh-app-device-id
+        default: en
+      name: Accept-Language
       in: header
-      required: true
-      description: The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.
-    accept:
+      description: Preferred language
+    content-type:
       schema:
         type: string
         default: application/json
+      name: Content-Type
       in: header
-      name: Accept
-      description: Advertises which content types the client is able to understand
+      description: Set this header to <b>application/json</b>.
       required: true
     authorization-header:
       schema:
@@ -936,13 +956,13 @@ components:
       in: header
       description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
       required: true
-    content-type:
+    accept:
       schema:
         type: string
         default: application/json
-      name: Content-Type
       in: header
-      description: Set this header to <b>application/json</b>.
+      name: Accept
+      description: Advertises which content types the client is able to understand
       required: true
 x-refined-from:
 - punchh-mobile-api-openapi.yml

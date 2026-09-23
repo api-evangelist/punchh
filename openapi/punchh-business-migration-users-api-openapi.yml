@@ -617,7 +617,7 @@ paths:
         '401':
           $ref: '#/components/responses/401-unauthorized'
       summary: Update Business Migration User
-      description: Updates a business migration user in the Punchh system. The user attributes in the [Create Business Migration User](/docs/dev-portal-platform-functions/apis/platform-functions-api/paths/~1api2~1dashboard~1migration_users/post) API can be updated by invoking the Update Business Migration User API. Append the value of the `migration_user_id` parameter to the endpoint path.
+      description: Updates a business migration user in the Punchh system. The user attributes in the Create Business Migration User API can be updated by invoking the Update Business Migration User API. Append the value of the `migration_user_id` parameter to the endpoint path.
       operationId: dashboard_update_business_migration_user
       tags:
       - Business Migration Users
@@ -841,7 +841,9 @@ paths:
       responses:
         '200':
           description: OK
-      description: 'Allows you to upload a list of business migration users along with their details using a CSV file. See the [Create Business Migration User](/docs/dev-portal-platform-functions/apis/platform-functions-api/paths/~1api2~1dashboard~1migration_users/post) API for details about the user attributes that can be uploaded in the CSV file. <br>These are the maximum values that can be included per user in the business migration user CSV file:
+      description: 'Allows you to upload a list of business migration users along with their details using a CSV file. See the Create Business Migration User API for details about the user attributes that can be uploaded in the CSV file.
+
+        These are the maximum values that can be included per user in the business migration user CSV file:
 
         - Gift card: 15
 
@@ -859,13 +861,13 @@ paths:
         Note: This feature is designed for new brands onboarding to Punchh. If the brand is already live with Punchh, this feature will not add significant value to their operations.
 
 
-        <b>Permission Required</b>
+        Permission Required
 
 
         A user account with the Business Admin role is required.
 
 
-        <b>Sample CSV File Format</b>
+        Sample CSV File Format
 
 
         In the CSV file, the attributes are added in columns, and each row will contain the values for these attributes for each user. The following image shows the format for the CSV file (not all user attributes are shown in this example).
@@ -881,13 +883,13 @@ paths:
 
         ```
 
-        <b>Bulk Upload Business Migration Users via Punchh Platform</b>
+        Bulk Upload Business Migration Users via Punchh Platform
 
 
-        The bulk upload feature for migrating business users is also available from the Punchh platform. See the "Bulk Business Migration User Upload" section in [Awaiting Migration](https://support.punchh.com/s/article/Awaiting-Migration) on the Punchh Support Portal for more information.
+        The bulk upload feature for migrating business users is also available from the Punchh platform. See the "Bulk Business Migration User Upload" section in Awaiting Migration on the Punchh Support Portal for more information.
 
 
-        Note: To view the Punchh product documentation on the Punchh Support Portal, you must log in to a Punchh platform production environment. If you already have access to a production environment, follow the instructions [here](https://support.punchh.com/s/article/How-do-I-access-the-Punchh-Support-Portal-Single-Sign-On) to access the Punchh Support Portal.'
+        Note: To view the Punchh product documentation on the Punchh Support Portal, you must log in to a Punchh platform production environment. If you already have access to a production environment, follow the instructions here to access the Punchh Support Portal.'
       parameters:
       - $ref: '#/components/parameters/accept'
       - $ref: '#/components/parameters/content-type'
@@ -927,6 +929,48 @@ paths:
                   import_file_url: CSV_FILE_PATH_GOES_HERE
         description: "The requests for this API endpoint are passed using form data, as shown in the following examples.\n\n<b>Sample Request for Bulk Uploading Business Migration Users Using a Local CSV File</b>\n\n```curl\ncurl --request POST \\\n--url https://server_name_goes_here.punchh.com/api2/dashboard/migration_users/bulk_bmu_upload \\\n--header 'Accept: application/json' \\\n--header 'Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE' \\\n--header 'Content-Type: application/json' \\\n--form 'name=\"BMU804\"' \\\n--form 'bulk_guest_activity_file=@\"CSV_FILE_PATH_GOES_HERE\"'\n``` \n<b>Sample Request for Bulk Uploading Business Migration Users Using a CSV File URL</b>\n```curl\ncurl --request POST \\\n--url https://server_name_goes_here.punchh.com/api2/dashboard/migration_users/bulk_bmu_upload \\\n--header 'Accept: application/json' \\\n--header 'Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE' \\\n--header 'Content-Type: application/json' \\\n--form 'name=\"BMU805\"' \\\n--form 'bulk_guest_activity_file=\"CSV_FILE_PATH_GOES_HERE\"'\n```"
 components:
+  parameters:
+    authorization-header:
+      schema:
+        type: string
+        default: Bearer BUSINESS_ADMIN_KEY_GOES_HERE
+      name: Authorization
+      in: header
+      description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
+      required: true
+    content-type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    accept:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Accept
+      description: Advertises which content types the client is able to understand
+      required: true
+  responses:
+    401-unauthorized:
+      description: 'A business admin key is missing or invalid. A request header in the following format is needed to make the request:
+
+
+        `Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE`'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+          examples:
+            default:
+              value:
+                error: You need to sign in or sign up before continuing.
   schemas:
     loyalty-cards:
       title: Loyalty Cards (Array Object)
@@ -958,48 +1002,6 @@ components:
             default: YYYY-MM-DD
             examples:
             - '2023-02-03'
-  parameters:
-    accept:
-      schema:
-        type: string
-        default: application/json
-      in: header
-      name: Accept
-      description: Advertises which content types the client is able to understand
-      required: true
-    authorization-header:
-      schema:
-        type: string
-        default: Bearer BUSINESS_ADMIN_KEY_GOES_HERE
-      name: Authorization
-      in: header
-      description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
-      required: true
-    content-type:
-      schema:
-        type: string
-        default: application/json
-      name: Content-Type
-      in: header
-      description: Set this header to <b>application/json</b>.
-      required: true
-  responses:
-    401-unauthorized:
-      description: 'A business admin key is missing or invalid. A request header in the following format is needed to make the request:
-
-
-        `Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE`'
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
-          examples:
-            default:
-              value:
-                error: You need to sign in or sign up before continuing.
 x-stoplight:
   id: 9820bbd2e8ee1
 x-ext-urls: {}

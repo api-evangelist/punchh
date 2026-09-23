@@ -6,7 +6,7 @@ info:
 servers:
 - url: https://SERVER_NAME_GOES_HERE.punchh.com
 tags:
-- name: Check-in
+- name: Check In
 paths:
   /api/auth/checkins/online_order:
     post:
@@ -88,7 +88,7 @@ paths:
       - $ref: '#/components/parameters/User-Agent'
       - $ref: '#/components/parameters/Authorization'
       tags:
-      - Check-in
+      - Check In
       x-stoplight:
         id: f1943957e38b4
       requestBody:
@@ -246,7 +246,7 @@ paths:
       - $ref: '#/components/parameters/Authorization'
       - $ref: '#/components/parameters/User-Agent'
       tags:
-      - Check-in
+      - Check In
       x-stoplight:
         id: 386045cf184bc
       requestBody:
@@ -378,7 +378,7 @@ paths:
       - $ref: '#/components/parameters/Authorization'
       - $ref: '#/components/parameters/User-Agent'
       tags:
-      - Check-in
+      - Check In
       x-stoplight:
         id: 25514e759947a
       requestBody:
@@ -506,7 +506,7 @@ paths:
         '400':
           description: ''
       summary: Create Loyalty Check-in (OLD)
-      description: 'NOTE: This is an old endpoint. Use [this endpoint](/docs/dev-portal-online-ordering/f1943957e38b4-grant-loyalty-checkin-against-given-receipt) instead.
+      description: 'NOTE: This is an old endpoint. Use this endpoint instead.
 
 
         Creates a loyalty check-in by store number'
@@ -520,7 +520,7 @@ paths:
       - $ref: '#/components/parameters/User-Agent'
       x-internal: false
       tags:
-      - Check-in
+      - Check In
       x-stoplight:
         id: c1a797cf02da6
       requestBody:
@@ -604,7 +604,7 @@ paths:
       - $ref: '#/components/parameters/Authorization'
       - $ref: '#/components/parameters/User-Agent'
       tags:
-      - Check-in
+      - Check In
       x-stoplight:
         id: 65a6130a73c7b
       requestBody:
@@ -740,12 +740,15 @@ paths:
                   value:
                     errors:
                       phone_uniqueness_disabled: Phone number uniqueness is disabled, you can’t search using the phone
-      description: "Creates a loyalty check-in for an order against a receipt when the user’s access token or authentication token is not available at the time of creating the check-in in the Punchh system -- for example, in the case of future-dated orders. The user is identified using email address, phone number, or user ID, with user ID given top priority if multiple look-up parameters are passed in the API. \n\nPhone number will work only if it is set up as a unique parameter in the Punchh platform. The option to validate the uniqueness of phone number across guests must be enabled. Contact your Punchh representative to update this Punchh platform configuration. <!-- Cockpit > Guests > Guest Validation -->"
+      description: 'Creates a loyalty check-in for an order against a receipt when the user’s access token or authentication token is not available at the time of creating the check-in in the Punchh system -- for example, in the case of future-dated orders. The user is identified using email address, phone number, or user ID, with user ID given top priority if multiple look-up parameters are passed in the API.
+
+
+        Phone number will work only if it is set up as a unique parameter in the Punchh platform. The option to validate the uniqueness of phone number across guests must be enabled. Contact your Punchh representative to update this Punchh platform configuration. Guests > Guest Validation -->'
       parameters:
       - $ref: '#/components/parameters/authorization-header'
       - $ref: '#/components/parameters/content-type'
       tags:
-      - Check-in
+      - Check In
       requestBody:
         content:
           application/json:
@@ -902,13 +905,6 @@ paths:
     - url: https://SERVER_NAME_GOES_HERE.punchh.com
 components:
   parameters:
-    accept_language:
-      schema:
-        type: string
-        default: en
-      in: header
-      name: Accept-Language
-      description: Set to the language you are using.
     User-Agent:
       schema:
         type: string
@@ -917,14 +913,14 @@ components:
       in: header
       required: true
       description: For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).
-    content_type:
+    Authorization:
       schema:
         type: string
-        default: application/json
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
       in: header
-      name: Content-Type
-      description: Set this header to **application/json**.
       required: true
+      description: You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
     Accept:
       schema:
         type: string
@@ -932,6 +928,14 @@ components:
       in: header
       name: Accept
       description: Advertises which content types the client is able to understand
+      required: true
+    content_type:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Content-Type
+      description: Set this header to **application/json**.
       required: true
     Signature:
       schema:
@@ -941,14 +945,13 @@ components:
       name: x-pch-digest
       description: The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call
       required: true
-    Authorization:
+    accept_language:
       schema:
         type: string
-        default: Bearer ACCESS_TOKEN_GOES_HERE
-      name: Authorization
+        default: en
       in: header
-      required: true
-      description: You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      name: Accept-Language
+      description: Set to the language you are using.
     authorization-header:
       schema:
         type: string

@@ -173,7 +173,7 @@ paths:
         '401':
           $ref: '#/components/responses/401-unauthorized'
       summary: Enroll Guests via WiFi
-      description: Enrolls guests for eClub using WiFi as the acquisition channel.  If both `location_id` and `store_number` are provided, `store_number` will be preferred.
+      description: Enrolls guests for eClub using WiFi as the acquisition channel. If both `location_id` and `store_number` are provided, `store_number` will be preferred.
       operationId: dashboard_enroll_guests_for_wifi
       tags:
       - WiFi Acquisition
@@ -246,21 +246,6 @@ paths:
     - url: https://SERVER_NAME_GOES_HERE.punchh.com
 components:
   parameters:
-    Accept-Language:
-      schema:
-        type: string
-        default: en
-      name: Accept-Language
-      in: header
-      description: Preferred language
-    signature:
-      schema:
-        type: string
-        default: '{{$$.env.signature}}'
-      name: x-pch-digest
-      in: header
-      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
-      required: true
     User-Agent:
       schema:
         type: string
@@ -285,6 +270,21 @@ components:
       in: header
       description: Advertises which content types the client is able to understand
       required: true
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
     authorization-header:
       schema:
         type: string
@@ -294,6 +294,22 @@ components:
       description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
       required: true
   schemas:
+    profile_field_answers:
+      title: Profile Field Answers (Object)
+      x-stoplight:
+        id: lme68mm8va3zz
+      type: object
+      properties:
+        upf0:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+        upf1:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+        upf2:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+      description: Answers given by the user while filling in the user profile. The user submits answers to profile field questions that are configured in the Punchh platform. A total of 25 answers can be submitted. The keys range from 'upf0' to 'upf24'. If questions have multiple answers, the values should be separated by a | character (pipe).
     User-object:
       type: object
       description: Includes details about the users who are registered on a particular business
@@ -516,22 +532,6 @@ components:
             id: kbj7omjru7mry
           format: date-time
           description: Date and time when the user became a loyalty member
-    profile_field_answers:
-      title: Profile Field Answers (Object)
-      x-stoplight:
-        id: lme68mm8va3zz
-      type: object
-      properties:
-        upf0:
-          type: string
-          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
-        upf1:
-          type: string
-          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
-        upf2:
-          type: string
-          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
-      description: Answers given by the user while filling in the user profile. The user submits answers to profile field questions that are configured in the Punchh platform. A total of 25 answers can be submitted. The keys range from 'upf0' to 'upf24'. If questions have multiple answers, the values should be separated by a | character (pipe).
   responses:
     401-unauthorized:
       description: 'A business admin key is missing or invalid. A request header in the following format is needed to make the request:

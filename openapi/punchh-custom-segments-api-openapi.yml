@@ -502,7 +502,22 @@ paths:
               schema:
                 type: object
                 properties: {}
-      description: "This API allows you to add users in bulk to a custom segment by uploading a CSV file that contains a list of users and their details. The uploaded file must be a CSV file. \n\nThe CSV file will have two columns: \"user_id\" and \"email\". The \"user_id\" column contains all user IDs that need to be added to the custom segment. Either email or user ID should be passed in the CSV file. If both email and user ID values are provided in the CSV file, the look-up process for adding user IDs to the custom segment will use both the \"email\" and \"user_id\" fields to identify the guests to be added.\n\nOnce the uploaded CSV file is processed, you will receive a response file on the registered email ID with details of success/failure against each entry, along with validation errors if applicable.\n\nThe changes you request through this API call may not take effect immediately. Instead, they are queued up and processed in the order they were received, depending on the availability of resources to process the requests. All changes made via this API are reflected in the audit logs.\n\nThis API can be triggered only in limited time slots defined by Punchh. The time slot designated by Punchh for this operation is from 9:30 PM EST to 5:30 AM EST. Requests triggered outside of the defined time slot will be rejected.\n\n<b>Permission required</b>: Admin account with Business Manager permission. Accounts without required permission will receive a 302 error response. "
+      description: 'This API allows you to add users in bulk to a custom segment by uploading a CSV file that contains a list of users and their details. The uploaded file must be a CSV file.
+
+
+        The CSV file will have two columns: "user_id" and "email". The "user_id" column contains all user IDs that need to be added to the custom segment. Either email or user ID should be passed in the CSV file. If both email and user ID values are provided in the CSV file, the look-up process for adding user IDs to the custom segment will use both the "email" and "user_id" fields to identify the guests to be added.
+
+
+        Once the uploaded CSV file is processed, you will receive a response file on the registered email ID with details of success/failure against each entry, along with validation errors if applicable.
+
+
+        The changes you request through this API call may not take effect immediately. Instead, they are queued up and processed in the order they were received, depending on the availability of resources to process the requests. All changes made via this API are reflected in the audit logs.
+
+
+        This API can be triggered only in limited time slots defined by Punchh. The time slot designated by Punchh for this operation is from 9:30 PM EST to 5:30 AM EST. Requests triggered outside of the defined time slot will be rejected.
+
+
+        Permission required: Admin account with Business Manager permission. Accounts without required permission will receive a 302 error response.'
       parameters:
       - $ref: '#/components/parameters/accept'
       - $ref: '#/components/parameters/authorization-header'
@@ -569,7 +584,7 @@ paths:
         This API can be triggered only in limited time slots defined by Punchh. The time slot designated by Punchh for this operation is from 9:30 PM EST to 5:30 AM EST. Requests triggered outside of the defined time slot will be rejected.
 
 
-        <b>Permission required</b>: Admin account with Business Manager permission. Accounts without required permission will receive a 302 error response. '
+        Permission required: Admin account with Business Manager permission. Accounts without required permission will receive a 302 error response.'
       parameters:
       - $ref: '#/components/parameters/accept'
       - $ref: '#/components/parameters/authorization-header'
@@ -657,16 +672,16 @@ paths:
       description: 'Adds users in bulk to a custom list segment using their email addresses and IDs. This API supports both sync and async modes. It validates the provided email addresses and IDs, returning a list of invalid identifiers that are neither valid integer IDs nor valid email addresses.
 
 
-        <b>Async Mode</b><br>
+        Async Mode
+
 
         Async, or asynchronous, mode is the preferred method for using this API. In this mode, the API processes the users'' email addresses and IDs provided in the request in the background. You can specify up to 1,000 user identifiers (email addresses and IDs) per API call.
 
 
-        <b>Sync Mode</b><br>
+        Sync Mode
 
-        Sync, or synchronous, mode is an alternative method for using this API. In this mode, the API processes the users'' email addresses and IDs provided in the request and immediately attaches them to the segment. This mode is slower and subject to rate limits to ensure system stability and prevent overload. You can include up to 100 user identifiers (email addresses and IDs) per API call.
 
-        '
+        Sync, or synchronous, mode is an alternative method for using this API. In this mode, the API processes the users'' email addresses and IDs provided in the request and immediately attaches them to the segment. This mode is slower and subject to rate limits to ensure system stability and prevent overload. You can include up to 100 user identifiers (email addresses and IDs) per API call.'
       parameters:
       - $ref: '#/components/parameters/accept'
       - $ref: '#/components/parameters/authorization-header'
@@ -722,14 +737,6 @@ paths:
         description: ''
 components:
   parameters:
-    accept:
-      schema:
-        type: string
-        default: application/json
-      in: header
-      name: Accept
-      description: Advertises which content types the client is able to understand
-      required: true
     authorization-header:
       schema:
         type: string
@@ -737,6 +744,14 @@ components:
       name: Authorization
       in: header
       description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
+      required: true
+    accept:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Accept
+      description: Advertises which content types the client is able to understand
       required: true
   responses:
     401-unauthorized:

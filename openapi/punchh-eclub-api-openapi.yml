@@ -52,7 +52,27 @@ paths:
                   value:
                     message: Invalid source! Please check configuration for valid source.
       summary: eClub Guest Upload
-      description: "Allows you to upload a list of eClub guests along with their details\n\n#### eClub Update\nUse the eClub Guest Upload API to update the user information as well. The eClub user information that can be updated and other eClub settings are configured in the Punchh platform. This determines which parameters in the `user` object can be updated. The eClub user information can also be updated manually via the Punchh platform. Contact your Punchh representative to update these Punchh platform configuration settings. <!-- Cockpit > eClub Configuration -->\n\n**Note:** \n\n1\\. If the \"Explicit-Opt in\" flag is enabled, `marketing_email_subscription` is a required parameter. The value can be 0 / 1 / true / false. The values 'true' and 'false' are string, and 0 and 1 can be a string or an integer.\n\n2\\. If the business has “source” defined in the Punchh platform, only the source configured in the Punchh platform is considered valid in the API request and the user is created. If a “source” that is not configured for the business is passed in the API request, an error message is returned. If no “source” is passed, the user gets created (as an earlier functionality) as it is a non-mandatory parameter. <!-- Whitelabel > iFrame Configuration > eClub Widget -->\n\n3\\. If `active_registration` is sent as 'false' but `send_compliance_sms` is sent as 'true' in the API request, this call will be treated as a bulk upload and no campaigns or compliance/opt-in SMS will be triggered for the user uploaded through this API call.\n\n4\\. Either `email` or `phone` can be sent in the API request. The schema indicates that both are required; however if one is sent, then the other is not required."
+      description: 'Allows you to upload a list of eClub guests along with their details
+
+
+        #### eClub Update
+
+        Use the eClub Guest Upload API to update the user information as well. The eClub user information that can be updated and other eClub settings are configured in the Punchh platform. This determines which parameters in the `user` object can be updated. The eClub user information can also be updated manually via the Punchh platform. Contact your Punchh representative to update these Punchh platform configuration settings. eClub Configuration -->
+
+
+        **Note:**
+
+
+        1\. If the "Explicit-Opt in" flag is enabled, `marketing_email_subscription` is a required parameter. The value can be 0 / 1 / true / false. The values ''true'' and ''false'' are string, and 0 and 1 can be a string or an integer.
+
+
+        2\. If the business has “source” defined in the Punchh platform, only the source configured in the Punchh platform is considered valid in the API request and the user is created. If a “source” that is not configured for the business is passed in the API request, an error message is returned. If no “source” is passed, the user gets created (as an earlier functionality) as it is a non-mandatory parameter. iFrame Configuration > eClub Widget -->
+
+
+        3\. If `active_registration` is sent as ''false'' but `send_compliance_sms` is sent as ''true'' in the API request, this call will be treated as a bulk upload and no campaigns or compliance/opt-in SMS will be triggered for the user uploaded through this API call.
+
+
+        4\. Either `email` or `phone` can be sent in the API request. The schema indicates that both are required; however if one is sent, then the other is not required.'
       operationId: dashboard_eclub_guest_upload
       parameters:
       - $ref: '#/components/parameters/authorization-header'
@@ -170,13 +190,13 @@ paths:
         description: ''
 components:
   parameters:
-    accept:
+    content-type:
       schema:
         type: string
         default: application/json
+      name: Content-Type
       in: header
-      name: Accept
-      description: Advertises which content types the client is able to understand
+      description: Set this header to <b>application/json</b>.
       required: true
     authorization-header:
       schema:
@@ -186,13 +206,13 @@ components:
       in: header
       description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
       required: true
-    content-type:
+    accept:
       schema:
         type: string
         default: application/json
-      name: Content-Type
       in: header
-      description: Set this header to <b>application/json</b>.
+      name: Accept
+      description: Advertises which content types the client is able to understand
       required: true
   responses:
     401-unauthorized:

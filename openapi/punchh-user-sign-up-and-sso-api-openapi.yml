@@ -2,7 +2,10 @@ openapi: 3.2.0
 info:
   title: Online Ordering and SSO User Sign-up and SSO API
   version: '1.0'
-  description: "The Punchh SSO API endpoints provide user-management functions such as login, registration, forgot password, and connect with Facebook for users on the Punchh loyalty platform. You can also fetch user-specific information such as rewards or point balances. \n\nThe Punchh Online Ordering API endpoints enable users to earn and redeem rewards for online orders."
+  description: 'The Punchh SSO API endpoints provide user-management functions such as login, registration, forgot password, and connect with Facebook for users on the Punchh loyalty platform. You can also fetch user-specific information such as rewards or point balances.
+
+
+    The Punchh Online Ordering API endpoints enable users to earn and redeem rewards for online orders.'
   contact:
     name: Punchh Dev Support
     url: https://developers.punchh.com
@@ -422,9 +425,7 @@ paths:
             }'
       summary: Log in With Email and Password
       operationId: sso_login
-      description: 'Log in a user with the user''s email address and password information.
-
-        '
+      description: Log in a user with the user's email address and password information.
       parameters:
       - $ref: '#/components/parameters/Signature'
       - $ref: '#/components/parameters/content_type'
@@ -710,10 +711,10 @@ paths:
                     error: invalid_request
                     error_description: The request is missing a required parameter, includes an unsupported parameter value, or is otherwise malformed.
       summary: Get SSO Token
-      description: 'Retrieves a client instance-level access token from your redirect URI after a successful user login through the Punchh-hosted authentication form. After you retrieve the client-level access token from this endpoint, supply it to the [Fetch User Information](/docs/dev-portal-online-ordering/b3A6NTAyODQ5NzA-fetch-user-information) API to retrieve a user-level authentication or access token. You can then use that user-level token to authenticate API calls for the remainder of the user''s session.
+      description: 'Retrieves a client instance-level access token from your redirect URI after a successful user login through the Punchh-hosted authentication form. After you retrieve the client-level access token from this endpoint, supply it to the Fetch User Information API to retrieve a user-level authentication or access token. You can then use that user-level token to authenticate API calls for the remainder of the user''s session.
 
 
-        **Note:** This endpoint is the second step in a multi-step authorization process. For more information, see [SSO Flow for Web and Mobile](/docs/dev-portal-online-ordering/9a41534336c87-sso-flow-for-web-and-mobile#step-2).'
+        **Note:** This endpoint is the second step in a multi-step authorization process. For more information, see SSO Flow for Web and Mobile.'
       operationId: oauth_token
       parameters:
       - $ref: '#/components/parameters/Accept'
@@ -1630,9 +1631,9 @@ paths:
         The following must be configured for the business in the Punchh platform to make a successful call to the API:
 
 
-        * Google sign-in must be enabled. <!-- Cockpit > Guests > Miscellaneous Config -->
+        * Google sign-in must be enabled. Guests > Miscellaneous Config -->
 
-        * Google web client ID, Google iOS client ID / Google Andriod client ID, and Google web client secret must be specified. <!-- Whitelabel > Services > Google Sign-in -->
+        * Google web client ID, Google iOS client ID / Google Andriod client ID, and Google web client secret must be specified. Services > Google Sign-in -->
 
 
         Contact your Punchh representative to update these configurations.'
@@ -1744,13 +1745,6 @@ paths:
                   age_verified_status: true
 components:
   parameters:
-    accept_language:
-      schema:
-        type: string
-        default: en
-      in: header
-      name: Accept-Language
-      description: Set to the language you are using.
     User-Agent:
       schema:
         type: string
@@ -1759,6 +1753,14 @@ components:
       in: header
       required: true
       description: For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Accept
+      description: Advertises which content types the client is able to understand
+      required: true
     content_type:
       schema:
         type: string
@@ -1775,14 +1777,13 @@ components:
       name: x-pch-digest
       description: The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call
       required: true
-    Accept:
+    accept_language:
       schema:
         type: string
-        default: application/json
+        default: en
       in: header
-      name: Accept
-      description: Advertises which content types the client is able to understand
-      required: true
+      name: Accept-Language
+      description: Set to the language you are using.
   schemas:
     User-object-mobile:
       type: object
@@ -1930,6 +1931,83 @@ components:
           x-stoplight:
             id: y7uqfq1lsr35c
           description: 'Whether or not the user has undergone age verification by Koupon Media. Possible values: true, false. The value is set to true if the user''s age is verified by Koupon Media; otherwise, it is set to false. The response returns this parameter in sign-in, sign-up, and user update APIs if Koupon Media is selected as the age verification adapter for the business in the Punchh platform. Contact your Punchh representative to update this configuration. '
+    user-relations:
+      title: User Relations (Array Object)
+      x-stoplight:
+        id: ut0ic50qnqmhq
+      type: array
+      items:
+        x-stoplight:
+          id: s8m992rimfngd
+        type: object
+        properties:
+          id:
+            type: integer
+            x-stoplight:
+              id: hwhbkrukhoown
+            description: Unique ID of the relationship
+          name:
+            type: string
+            x-stoplight:
+              id: 2fmpih7siw5sc
+            description: Name of the relative
+          relation:
+            type: string
+            x-stoplight:
+              id: 7hqerbd50q2gx
+            description: Relation to the user. Valid values are "spouse" and "kid".
+          birthday:
+            type: string
+            x-stoplight:
+              id: knsdt60v0v4ef
+            format: date
+            enum:
+            - YYYY-MM-DD
+            description: Birthday of the relative
+      description: The object contains information about the relationship details of a user, for example, spouse and kid information. If the user account does not have relationship details, the API returns an empty user_relations object in the response.
+    profile_field_answers:
+      type: object
+      description: Answers given by the user while filling in the user profile. The user submits answers to profile field questions that are configured in the Punchh platform. A total of 25 answers can be submitted. The keys range from 'upf0' to 'upf24'. If questions have multiple answers, the values should be separated by a | character (pipe).
+      title: Profile Field Answers (Object)
+      properties:
+        upf0:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+        upf1:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+        upf2:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+      x-stoplight:
+        id: 232889e28c1c8
+    Access_token-object:
+      type: object
+      description: An access token`is needed to identify the user making the API request.
+      title: Access Token (Object)
+      x-stoplight:
+        id: 9ead861cdb7e6
+      properties:
+        token:
+          type: string
+          description: App-specific access token of the given user.
+        seconds_to_expire:
+          type: integer
+          description: Number of seconds after which the token expires. A NULL value for this parameter means the token does not expire.
+        revoked_at:
+          type: string
+          description: Date and time when the token was created in the system in [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) format. A NULL value for this parameter means the token has not been revoked yet.
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+        refresh_token:
+          type: string
+          description: Refresh token that the client application can use to get a new access token
+        scopes:
+          type: array
+          description: Actions or data the bearer of the token is allowed to perform or access
+          items:
+            type: string
     user-object:
       type: object
       title: User (Object)
@@ -2111,83 +2189,6 @@ components:
           description: 'Whether or not the user has undergone age verification by Koupon Media. Possible Values: true, false. The value is set to true if the user''s age is verified by Koupon Media; otherwise, it is set to false. The response returns this parameter in sign-in, sign-up, and user update APIs if Koupon Media is selected as the age verification adapter for the business in the Punchh platform. Contact your Punchh representative to update this configuration. '
       required:
       - email
-    profile_field_answers:
-      type: object
-      description: Answers given by the user while filling in the user profile. The user submits answers to profile field questions that are configured in the Punchh platform. A total of 25 answers can be submitted. The keys range from 'upf0' to 'upf24'. If questions have multiple answers, the values should be separated by a | character (pipe).
-      title: Profile Field Answers (Object)
-      properties:
-        upf0:
-          type: string
-          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
-        upf1:
-          type: string
-          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
-        upf2:
-          type: string
-          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
-      x-stoplight:
-        id: 232889e28c1c8
-    Access_token-object:
-      type: object
-      description: An access token`is needed to identify the user making the API request.
-      title: Access Token (Object)
-      x-stoplight:
-        id: 9ead861cdb7e6
-      properties:
-        token:
-          type: string
-          description: App-specific access token of the given user.
-        seconds_to_expire:
-          type: integer
-          description: Number of seconds after which the token expires. A NULL value for this parameter means the token does not expire.
-        revoked_at:
-          type: string
-          description: Date and time when the token was created in the system in [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) format. A NULL value for this parameter means the token has not been revoked yet.
-          enum:
-          - YYYY-MM-DDThh:mm:ssZ
-          format: date-time
-        refresh_token:
-          type: string
-          description: Refresh token that the client application can use to get a new access token
-        scopes:
-          type: array
-          description: Actions or data the bearer of the token is allowed to perform or access
-          items:
-            type: string
-    user-relations:
-      title: User Relations (Array Object)
-      x-stoplight:
-        id: ut0ic50qnqmhq
-      type: array
-      items:
-        x-stoplight:
-          id: s8m992rimfngd
-        type: object
-        properties:
-          id:
-            type: integer
-            x-stoplight:
-              id: hwhbkrukhoown
-            description: Unique ID of the relationship
-          name:
-            type: string
-            x-stoplight:
-              id: 2fmpih7siw5sc
-            description: Name of the relative
-          relation:
-            type: string
-            x-stoplight:
-              id: 7hqerbd50q2gx
-            description: Relation to the user. Valid values are "spouse" and "kid".
-          birthday:
-            type: string
-            x-stoplight:
-              id: knsdt60v0v4ef
-            format: date
-            enum:
-            - YYYY-MM-DD
-            description: Birthday of the relative
-      description: The object contains information about the relationship details of a user, for example, spouse and kid information. If the user account does not have relationship details, the API returns an empty user_relations object in the response.
 x-stoplight:
   id: 73bbc35439926
 x-ext-urls: {}

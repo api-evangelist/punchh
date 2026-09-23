@@ -5,14 +5,11 @@ info:
   contact:
     name: Punchh Dev Support
     url: https://developers.punchh.com
-  description: 'Punchh provides a robust platform for offering loyalty programs to customers. When a business integrates its back-end with the Punchh server, the Punchh APIs become instrumental in executing loyalty programs for enrolled customers, primarily via business-branded mobile apps and websites tailored by Punchh.
-
-
-    To establish integration with the Punchh APIs, you need to understand how they are invoked and what responses are returned by the Punchh server. You can call APIs using any suitable API test client, such as Postman. Thus, the response to every API call made in Postman under a chosen environment (in app and/or platform) is reflected in the app and/or platform.'
+  description: Punchh provides a robust platform for offering loyalty programs to customers.
 servers:
 - url: https://SERVER_NAME_GOES_HERE.punchh.com
 tags:
-- name: Check-ins
+- name: Check Ins
 paths:
   /api2/mobile/checkins/barcode:
     post:
@@ -120,7 +117,7 @@ paths:
       x-stoplight:
         id: e1805d58af142
       tags:
-      - Check-ins
+      - Check Ins
       requestBody:
         content:
           application/json:
@@ -304,7 +301,7 @@ paths:
       x-stoplight:
         id: 351a504277f3b
       tags:
-      - Check-ins
+      - Check Ins
       requestBody:
         content:
           application/json:
@@ -444,7 +441,7 @@ paths:
       x-stoplight:
         id: eebe5e52f84d3
       tags:
-      - Check-ins
+      - Check Ins
       requestBody:
         content:
           application/json:
@@ -563,7 +560,7 @@ paths:
       x-stoplight:
         id: c7e74b4a278eb
       tags:
-      - Check-ins
+      - Check Ins
       requestBody:
         content:
           application/json:
@@ -759,7 +756,7 @@ paths:
       x-stoplight:
         id: 1ac8c60c0b08d
       tags:
-      - Check-ins
+      - Check Ins
       requestBody:
         content:
           application/json:
@@ -923,7 +920,7 @@ paths:
       x-stoplight:
         id: 2d7bc9f034998
       tags:
-      - Check-ins
+      - Check Ins
       requestBody:
         content:
           application/json:
@@ -949,55 +946,137 @@ paths:
                   client: CLIENT_GOES_HERE
                   transaction_id: TRANSACTION_ID_GOES_HERE
 components:
+  parameters:
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    punchh-app-device-id:
+      schema:
+        type: string
+        default: APP_DEVICE_ID_GOES_HERE
+      name: punchh-app-device-id
+      in: header
+      required: true
+      description: The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
   schemas:
-    Checkin:
+    account-balance-details:
       type: object
-      title: Check-in (Object)
+      title: Account Balance Details (Object)
       x-stoplight:
-        id: 4bae7b81b0f8a
+        id: 2a0aec02b7738
       properties:
-        created_at:
-          type: string
-          description: Date/time when the check-in was created in the system, in [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) format
-        external_uid:
-          type: string
-          description: External unique identifier of the check-in
-        checkin_id:
+        banked_currency:
+          type: number
+          format: float
+          description: Value of the currency that a user has available. A "null" value indicates that the business does not support banking of points into currency.
+        checkins_on_current_card:
           type: integer
-          description: ID of the loyalty check-in made by the user
-        pending_points:
+          description: "A card gets completed after a user does a configured number of check-ins. \nFor example, if a business configuration requires 7 check-ins to complete a card, and a user does only 3 check-ins, the value of this parameter will be 3."
+        current_membership_level_id:
+          description: Unique ID of the current membership level of a user
           type: integer
-          description: Number of pending points
-        pending_refresh:
-          type: boolean
-          description: Whether check-in is pending refresh or not
-        points_earned:
-          type: integer
-          description: Number of points earned in the loyalty check-in
-        bar_code:
+        current_membership_level_expiring_on:
           type: string
-          description: Barcode printed on the receipt
-        current_membership_level:
-          type: string
-          description: Membership level of the user
-          x-nullable: true
-        first_checkin:
-          type:
-          - string
-          - boolean
-          description: Whether it is the first check-in at the business or not
-        location_id:
-          type: integer
-          description: ID of the location associated with the loyalty check-in
-        store_number:
-          type: string
-          description: The store number where the check-in occurred
-        expiring_on:
-          type: string
+          description: If a business has a rolling expiry of membership levels, a particular membership level will expire after a period that is configured in the Punchh platform. A "null" value indicates that the business does not have a rolling expiry of membership levels.
+          enum:
+          - YYYY-MM-DD
           format: date
-          description: Date when points earned in the loyalty check-in will expire
-          examples:
-          - '2024-03-13'
+        expiring_banked_currency (Deprecated):
+          type: number
+          format: float
+          description: If a business has expiring banked currency configured in the Punchh platform, the banked currency will expire in a FIFO (first-in, first-out) pattern. This returns the value of the banked currency that will expire. A "null" value indicates that the business is not configured to support expiring banked currency.
+        banked_currency_expiring_on (Deprecated):
+          type: string
+          description: If a business is configured to support expiring banked currency, this returns the date on which it will expire. A "null" value indicates that the business is not configured to support expiring banked currency.
+          enum:
+          - YYYY-MM-DD
+          format: date
+        pending_points:
+          type: number
+          format: float
+          description: Points of a user that are in the pending state after a check-in. They are not added to the user's account before finalization. See [Pending Points Feature Overview](/docs/dev-portal-pos/ZG9jOjUwMjgzOTAz-pending-points-feature-overview) for details.
+        redeemed_cards:
+          type: integer
+          description: The number of cards that a user has redeemed in the user's lifetime
+        total_loyalty_visits:
+          type: integer
+          description: Total of the visits that a user has earned by doing loyalty check-ins and those visits that were migrated from an older loyalty program (if a business had an older loyalty program and wants to migrate its users to Punchh's loyalty program)
+          x-nullable: true
+        unredeemed_cards:
+          type: integer
+          description: Total unredeemed cards available to a user
+          x-nullable: true
+        current_membership_level_name:
+          type: string
+          description: Current membership level of the user
+          x-nullable: true
+        lifetime_points:
+          type: number
+          format: float
+          description: Sum of all loyalty points earned by a user from the time the user signed up
+        redeemable_points:
+          type: number
+          format: float
+          description: 'The total of all loyalty points earned by a user that satisfy all of the following conditions:
+
+            * approved
+
+            * non-pending
+
+            * unexpired'
+        unbanked_points:
+          type: number
+          format: float
+          description: For a business that allows banking of points, this value represents the number of points the user has and has not banked yet. For example, if a business configuration requires 100 points to be banked to $10, and a user has accumulated 55 points, this value will be 55. When the user earns another 45 points, the user will be banked to $10 and this value will then become 0.
+        membership_qualification_points:
+          type: integer
+          x-stoplight:
+            id: gq5ah9naehygk
+          description: 'The value of points earned toward progress across membership tiers. This is related to the migration strategy that allows businesses to "Consider Only Initial Points for Tier Migration". Currently, support for this parameter is limited to program type Points Unlock Redeemables, Membership Re-evaluation Strategy: Reset Based on Points Earned and Account Re-evaluation Strategy of Guest Inactivity.'
     redemption_details:
       type: object
       description: 'Returns the details of a redemption done by a user
@@ -1079,6 +1158,54 @@ components:
       title: Redemption Details (Object)
       x-stoplight:
         id: bc87eb1cec331
+    Checkin:
+      type: object
+      title: Check-in (Object)
+      x-stoplight:
+        id: 4bae7b81b0f8a
+      properties:
+        created_at:
+          type: string
+          description: Date/time when the check-in was created in the system, in [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) format
+        external_uid:
+          type: string
+          description: External unique identifier of the check-in
+        checkin_id:
+          type: integer
+          description: ID of the loyalty check-in made by the user
+        pending_points:
+          type: integer
+          description: Number of pending points
+        pending_refresh:
+          type: boolean
+          description: Whether check-in is pending refresh or not
+        points_earned:
+          type: integer
+          description: Number of points earned in the loyalty check-in
+        bar_code:
+          type: string
+          description: Barcode printed on the receipt
+        current_membership_level:
+          type: string
+          description: Membership level of the user
+          x-nullable: true
+        first_checkin:
+          type:
+          - string
+          - boolean
+          description: Whether it is the first check-in at the business or not
+        location_id:
+          type: integer
+          description: ID of the location associated with the loyalty check-in
+        store_number:
+          type: string
+          description: The store number where the check-in occurred
+        expiring_on:
+          type: string
+          format: date
+          description: Date when points earned in the loyalty check-in will expire
+          examples:
+          - '2024-03-13'
     rewards:
       type: array
       description: Contains information about the available rewards of the user
@@ -1194,136 +1321,6 @@ components:
             x-stoplight:
               id: supgkji7b6rag
             description: Whether the offer is enabled for auto-redemption or not
-    account-balance-details:
-      type: object
-      title: Account Balance Details (Object)
-      x-stoplight:
-        id: 2a0aec02b7738
-      properties:
-        banked_currency:
-          type: number
-          format: float
-          description: Value of the currency that a user has available. A "null" value indicates that the business does not support banking of points into currency.
-        checkins_on_current_card:
-          type: integer
-          description: "A card gets completed after a user does a configured number of check-ins. \nFor example, if a business configuration requires 7 check-ins to complete a card, and a user does only 3 check-ins, the value of this parameter will be 3."
-        current_membership_level_id:
-          description: Unique ID of the current membership level of a user
-          type: integer
-        current_membership_level_expiring_on:
-          type: string
-          description: If a business has a rolling expiry of membership levels, a particular membership level will expire after a period that is configured in the Punchh platform. A "null" value indicates that the business does not have a rolling expiry of membership levels.
-          enum:
-          - YYYY-MM-DD
-          format: date
-        expiring_banked_currency (Deprecated):
-          type: number
-          format: float
-          description: If a business has expiring banked currency configured in the Punchh platform, the banked currency will expire in a FIFO (first-in, first-out) pattern. This returns the value of the banked currency that will expire. A "null" value indicates that the business is not configured to support expiring banked currency.
-        banked_currency_expiring_on (Deprecated):
-          type: string
-          description: If a business is configured to support expiring banked currency, this returns the date on which it will expire. A "null" value indicates that the business is not configured to support expiring banked currency.
-          enum:
-          - YYYY-MM-DD
-          format: date
-        pending_points:
-          type: number
-          format: float
-          description: Points of a user that are in the pending state after a check-in. They are not added to the user's account before finalization. See [Pending Points Feature Overview](/docs/dev-portal-pos/ZG9jOjUwMjgzOTAz-pending-points-feature-overview) for details.
-        redeemed_cards:
-          type: integer
-          description: The number of cards that a user has redeemed in the user's lifetime
-        total_loyalty_visits:
-          type: integer
-          description: Total of the visits that a user has earned by doing loyalty check-ins and those visits that were migrated from an older loyalty program (if a business had an older loyalty program and wants to migrate its users to Punchh's loyalty program)
-          x-nullable: true
-        unredeemed_cards:
-          type: integer
-          description: Total unredeemed cards available to a user
-          x-nullable: true
-        current_membership_level_name:
-          type: string
-          description: Current membership level of the user
-          x-nullable: true
-        lifetime_points:
-          type: number
-          format: float
-          description: Sum of all loyalty points earned by a user from the time the user signed up
-        redeemable_points:
-          type: number
-          format: float
-          description: 'The total of all loyalty points earned by a user that satisfy all of the following conditions:
-
-            * approved
-
-            * non-pending
-
-            * unexpired'
-        unbanked_points:
-          type: number
-          format: float
-          description: For a business that allows banking of points, this value represents the number of points the user has and has not banked yet. For example, if a business configuration requires 100 points to be banked to $10, and a user has accumulated 55 points, this value will be 55. When the user earns another 45 points, the user will be banked to $10 and this value will then become 0.
-        membership_qualification_points:
-          type: integer
-          x-stoplight:
-            id: gq5ah9naehygk
-          description: 'The value of points earned toward progress across membership tiers. This is related to the migration strategy that allows businesses to "Consider Only Initial Points for Tier Migration". Currently, support for this parameter is limited to program type Points Unlock Redeemables, Membership Re-evaluation Strategy: Reset Based on Points Earned and Account Re-evaluation Strategy of Guest Inactivity.'
-  parameters:
-    signature:
-      schema:
-        type: string
-        default: '{{$$.env.signature}}'
-      name: x-pch-digest
-      in: header
-      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
-      required: true
-    Accept-Language:
-      schema:
-        type: string
-        default: en
-      name: Accept-Language
-      in: header
-      description: Preferred language
-    User-Agent:
-      schema:
-        type: string
-        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
-      in: header
-      name: User-Agent
-      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
-      required: true
-    Content-Type:
-      schema:
-        type: string
-        default: application/json
-      name: Content-Type
-      in: header
-      description: Set this header to <b>application/json</b>.
-      required: true
-    Accept:
-      schema:
-        type: string
-        default: application/json
-      name: Accept
-      in: header
-      description: Advertises which content types the client is able to understand
-      required: true
-    Authorization:
-      schema:
-        type: string
-        default: Bearer ACCESS_TOKEN_GOES_HERE
-      name: Authorization
-      in: header
-      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
-      required: true
-    punchh-app-device-id:
-      schema:
-        type: string
-        default: APP_DEVICE_ID_GOES_HERE
-      name: punchh-app-device-id
-      in: header
-      required: true
-      description: The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.
 x-stoplight:
   id: bf6eddb435209
 x-ext-urls: {}

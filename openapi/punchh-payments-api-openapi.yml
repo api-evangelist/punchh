@@ -35,7 +35,7 @@ paths:
                   value:
                     token: TOKEN_GOES_HERE
       summary: Fetch Client Token
-      description: 'Returns a secure client token that can be used for different services, such as gift cards, online ordering, etc. '
+      description: Returns a secure client token that can be used for different services, such as gift cards, online ordering, etc.
       operationId: mobile_fetch_client_token
       tags:
       - Payments
@@ -196,7 +196,7 @@ paths:
       description: 'Enables a user to generate a token for a payment card. The user can use the PAR Pay token to purchase gift cards, reload gift cards, generate a single scan code, etc. The API response presents a web page showing fields for entering payment card details. Once this HTML is submitted with proper card details, it will return a token.
 
 
-        To generate a token, PAR Payments must be configured in the Punchh platform for the business to enable integration services. Once integration services are enabled, the platform can be configured to enable recurring payments for the payment processor. Contact your Punchh representative to update this Punchh platform configuration. <!--Cockpit > Dashboard > Miscellaneous Config > Enable Integration Services?--><!--Whitelabel > Integration Services-->'
+        To generate a token, PAR Payments must be configured in the Punchh platform for the business to enable integration services. Once integration services are enabled, the platform can be configured to enable recurring payments for the payment processor. Contact your Punchh representative to update this Punchh platform configuration. Dashboard > Miscellaneous Config > Enable Integration Services?--> Integration Services-->'
       parameters:
       - $ref: '#/components/parameters/Accept'
       - $ref: '#/components/parameters/Authorization'
@@ -415,7 +415,25 @@ paths:
       tags:
       - Payments
       summary: Create Payment
-      description: "The Create Payment API commits the payment via the PAR Payment Services Gateway.\n\nFor more information, see: [Creating Payment](/docs/dev-portal-pos/fc53c158c75c6-pos-payments#creating-payments)\n\n### Headers\n\n#### `Token token`\nThe Location API key from the Punchh platform located under **Store Locations** > **All Store Locations** > **[Choose your location]** > **POS tab** > **Location key**\n#### `btoken`\nThe API key for the business, located in the Punchh platform. **Note:** This can be obtained only from Punchh administrators (e.g., Customer Success Manager). \n\n_For assistance with any API keys, reach out to your Punchh Customer Success Manager (CSM) or Implementation Manager (if applicable)._\n"
+      description: 'The Create Payment API commits the payment via the PAR Payment Services Gateway.
+
+
+        For more information, see: Creating Payment
+
+
+        ### Headers
+
+
+        #### `Token token`
+
+        The Location API key from the Punchh platform located under **Store Locations** > **All Store Locations** > **[Choose your location]** > **POS tab** > **Location key**
+
+        #### `btoken`
+
+        The API key for the business, located in the Punchh platform. **Note:** This can be obtained only from Punchh administrators (e.g., Customer Success Manager).
+
+
+        _For assistance with any API keys, reach out to your Punchh Customer Success Manager (CSM) or Implementation Manager (if applicable)._'
       operationId: pos_create_payment_ssf
       parameters:
       - schema:
@@ -690,7 +708,25 @@ paths:
                 default:
                   value:
                     error: Invalid payment type
-      description: "The Update Payment Status API updates the payment status in the Punchh platform after the POS marks the payment as complete. \n\nFor more information, see: [Updating Payment Status](/docs/dev-portal-pos/fc53c158c75c6-pos-payments#updating-payments)\n\n### Headers\n\n#### `Token token` \nThe Location API key from the Punchh platform located under **Store Locations** > **All Store Locations** > **[Choose your location]** > **POS tab** > **Location key**\n#### `btoken`\nThe API key for the business, located in the Punchh platform. **Note:** This can be obtained only from Punchh administrators (e.g., Customer Success Manager). \n\n_For assistance with any API keys, reach out to your Punchh Customer Success Manager (CSM) or Implementation Manager (if applicable)._\n"
+      description: 'The Update Payment Status API updates the payment status in the Punchh platform after the POS marks the payment as complete.
+
+
+        For more information, see: Updating Payment Status
+
+
+        ### Headers
+
+
+        #### `Token token`
+
+        The Location API key from the Punchh platform located under **Store Locations** > **All Store Locations** > **[Choose your location]** > **POS tab** > **Location key**
+
+        #### `btoken`
+
+        The API key for the business, located in the Punchh platform. **Note:** This can be obtained only from Punchh administrators (e.g., Customer Success Manager).
+
+
+        _For assistance with any API keys, reach out to your Punchh Customer Success Manager (CSM) or Implementation Manager (if applicable)._'
       summary: Update Payment Status
       operationId: pos_update_payments
       tags:
@@ -830,7 +866,25 @@ paths:
       operationId: pos_void_payments
       tags:
       - Payments
-      description: "The Void/Cancel Payments API voids the payment request. \n\nFor more information, see: [Voiding Payments](/docs/dev-portal-pos/additional-topics/pos-payments#voiding-payment)\n\n### Headers\n\n#### `Token token`\nThe Location API key from the Punchh platform located under **Store Locations** > **All Store Locations** > **[Choose your location]** > **POS tab** > **Location key** \n#### `btoken`\nThe API key for the business, located in the Punchh platform. **Note:** This can be obtained only from Punchh administrators (e.g., Customer Success Manager). \n\n_For assistance with any API keys, reach out to your Punchh Customer Success Manager (CSM) or Implementation Manager (if applicable)._"
+      description: 'The Void/Cancel Payments API voids the payment request.
+
+
+        For more information, see: Voiding Payments
+
+
+        ### Headers
+
+
+        #### `Token token`
+
+        The Location API key from the Punchh platform located under **Store Locations** > **All Store Locations** > **[Choose your location]** > **POS tab** > **Location key**
+
+        #### `btoken`
+
+        The API key for the business, located in the Punchh platform. **Note:** This can be obtained only from Punchh administrators (e.g., Customer Success Manager).
+
+
+        _For assistance with any API keys, reach out to your Punchh Customer Success Manager (CSM) or Implementation Manager (if applicable)._'
       parameters:
       - schema:
           type: string
@@ -1018,7 +1072,26 @@ paths:
         '422':
           description: '"Incorrect reference_id"'
       summary: Get Payment Status
-      description: "The Get Payment Status API retrieves the correct status and response message to know how to handle the next step (e.g., success--apply payment, cancel--payment cancelled by user, etc.). \n\nFor more information, see: [Getting Payment Status](/docs/dev-portal-pos/fc53c158c75c6-pos-payments#getting-payment-status)\n\n### Headers\n\n#### `Token token` \nThe Location API key from the Punchh platform located under **Store Locations** > **All Store Locations** > [**Choose your location**] > **POS tab** > **Location key**\n\n#### `btoken`\nThe API key for the business, located in the Punchh platform. **Note:** This can be obtained only from Punchh administrators (e.g., Customer Success Manager). \n\n_For assistance with any API keys, reach out to your Punchh Customer Success Manager (CSM) or Implementation Manager (if applicable)._\n"
+      description: 'The Get Payment Status API retrieves the correct status and response message to know how to handle the next step (e.g., success--apply payment, cancel--payment cancelled by user, etc.).
+
+
+        For more information, see: Getting Payment Status
+
+
+        ### Headers
+
+
+        #### `Token token`
+
+        The Location API key from the Punchh platform located under **Store Locations** > **All Store Locations** > [**Choose your location**] > **POS tab** > **Location key**
+
+
+        #### `btoken`
+
+        The API key for the business, located in the Punchh platform. **Note:** This can be obtained only from Punchh administrators (e.g., Customer Success Manager).
+
+
+        _For assistance with any API keys, reach out to your Punchh Customer Success Manager (CSM) or Implementation Manager (if applicable)._'
       tags:
       - Payments
       operationId: pos_get_payments_status
@@ -1147,7 +1220,26 @@ paths:
                     updated_at: '2021-02-08T05:40:09Z'
                     payment_transaction_id: TRANSACTION_ID_GOES_HERE
                     card_type: VIC
-      description: "After an accepted/processed payment, you can use the Refund Payments API to refund the payment. \n\nFor more information, see [Refunding Payment](/docs/dev-portal-pos/additional-topics/pos-payments#refunding-payment)\n\n### Headers\n\n#### `Token token` \nThe Location API key from the Punchh platform located under **Store Locations** > **All Store Locations** > [**Choose your location**] > **POS tab** > **Location key**\n\n#### `btoken`\nThe API key for the business, located in the Punchh platform. Note: This can be obtained only from Punchh administrators (e.g., Customer Success Manager).\n\n_For assistance with any API keys, reach out to your Punchh Customer Success Manager (CSM) or Implementation Manager (if applicable)._\t"
+      description: 'After an accepted/processed payment, you can use the Refund Payments API to refund the payment.
+
+
+        For more information, see Refunding Payment
+
+
+        ### Headers
+
+
+        #### `Token token`
+
+        The Location API key from the Punchh platform located under **Store Locations** > **All Store Locations** > [**Choose your location**] > **POS tab** > **Location key**
+
+
+        #### `btoken`
+
+        The API key for the business, located in the Punchh platform. Note: This can be obtained only from Punchh administrators (e.g., Customer Success Manager).
+
+
+        _For assistance with any API keys, reach out to your Punchh Customer Success Manager (CSM) or Implementation Manager (if applicable)._'
       operationId: pos_refund_payments
       tags:
       - Payments
@@ -1202,21 +1294,6 @@ paths:
     - url: https://SERVER_NAME_GOES_HERE.punchh.com
 components:
   parameters:
-    Accept-Language:
-      schema:
-        type: string
-        default: en
-      name: Accept-Language
-      in: header
-      description: Preferred language
-    signature:
-      schema:
-        type: string
-        default: '{{$$.env.signature}}'
-      name: x-pch-digest
-      in: header
-      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
-      required: true
     User-Agent:
       schema:
         type: string
@@ -1224,6 +1301,14 @@ components:
       in: header
       name: User-Agent
       description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
       required: true
     Content-Type:
       schema:
@@ -1241,14 +1326,21 @@ components:
       in: header
       description: Advertises which content types the client is able to understand
       required: true
-    Authorization:
+    signature:
       schema:
         type: string
-        default: Bearer ACCESS_TOKEN_GOES_HERE
-      name: Authorization
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
       in: header
-      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
       required: true
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
   schemas:
     menu_items:
       type: array

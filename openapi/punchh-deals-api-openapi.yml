@@ -2,7 +2,10 @@ openapi: 3.2.0
 info:
   title: Online Ordering and SSO Deals API
   version: '1.0'
-  description: "The Punchh SSO API endpoints provide user-management functions such as login, registration, forgot password, and connect with Facebook for users on the Punchh loyalty platform. You can also fetch user-specific information such as rewards or point balances. \n\nThe Punchh Online Ordering API endpoints enable users to earn and redeem rewards for online orders."
+  description: 'The Punchh SSO API endpoints provide user-management functions such as login, registration, forgot password, and connect with Facebook for users on the Punchh loyalty platform. You can also fetch user-specific information such as rewards or point balances.
+
+
+    The Punchh Online Ordering API endpoints enable users to earn and redeem rewards for online orders.'
   contact:
     name: Punchh Dev Support
     url: https://developers.punchh.com
@@ -214,13 +217,6 @@ paths:
         description: ''
 components:
   parameters:
-    accept_language:
-      schema:
-        type: string
-        default: en
-      in: header
-      name: Accept-Language
-      description: Set to the language you are using.
     User-Agent:
       schema:
         type: string
@@ -229,6 +225,22 @@ components:
       in: header
       required: true
       description: For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      required: true
+      description: You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Accept
+      description: Advertises which content types the client is able to understand
+      required: true
     content_type:
       schema:
         type: string
@@ -245,22 +257,13 @@ components:
       name: x-pch-digest
       description: The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call
       required: true
-    Accept:
+    accept_language:
       schema:
         type: string
-        default: application/json
+        default: en
       in: header
-      name: Accept
-      description: Advertises which content types the client is able to understand
-      required: true
-    Authorization:
-      schema:
-        type: string
-        default: Bearer ACCESS_TOKEN_GOES_HERE
-      name: Authorization
-      in: header
-      required: true
-      description: You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      name: Accept-Language
+      description: Set to the language you are using.
   schemas:
     deals:
       type: array

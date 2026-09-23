@@ -5,10 +5,7 @@ info:
   contact:
     name: Punchh Dev Support
     url: https://developers.punchh.com
-  description: 'Punchh provides a robust platform for offering loyalty programs to customers. When a business integrates its back-end with the Punchh server, the Punchh APIs become instrumental in executing loyalty programs for enrolled customers, primarily via business-branded mobile apps and websites tailored by Punchh.
-
-
-    To establish integration with the Punchh APIs, you need to understand how they are invoked and what responses are returned by the Punchh server. You can call APIs using any suitable API test client, such as Postman. Thus, the response to every API call made in Postman under a chosen environment (in app and/or platform) is reflected in the app and/or platform.'
+  description: Punchh provides a robust platform for offering loyalty programs to customers.
 servers:
 - url: https://SERVER_NAME_GOES_HERE.punchh.com
 tags:
@@ -1237,99 +1234,6 @@ paths:
         description: ''
 components:
   schemas:
-    Membership-Levels:
-      type: array
-      items:
-        type: object
-        properties:
-          background_image_url:
-            type: string
-            description: URL of the image that can be displayed in the app. As the URL may change with the membership level, the image can be changed accordingly.
-          points_multiplier:
-            type: number
-            format: float
-            description: Factor (rate) with which points accumulate for a user. For example, if the points multiplier for a particular membership level is 1, the user will get 1 point for every $1 spent. If the points multiplier is 2, the user will get 2 points for every $1 spent.
-          membership_level_id:
-            type: integer
-            description: Unique ID of the membership level
-          name:
-            type: string
-            description: Membership level name that is displayed in the app
-          description:
-            type: string
-            description: Description of a particular membership level. This can be displayed in the app (e.g., "Earn twice the points for every dollar you spend.")
-          maximum_points:
-            type: integer
-            description: Upper threshold of a membership level in terms of points
-          minimum_points:
-            type: integer
-            description: Lower threshold of a membership level in terms of points
-          currency_earned:
-            type: number
-            description: When accumulated points reach the `points_conversion_threshold`, they are converted to a dollar value defined by `currency_earned`. A value of 10 means that accumulated points will be converted to banked rewards in batches of $10.
-            format: float
-          points_conversion_threshold:
-            type: integer
-            description: Number of points required to get converted to banked rewards
-      x-examples: []
-      title: Membership Levels (Array Object)
-      x-stoplight:
-        id: f51be9319f856
-      description: The object contains details about each membership tier in a loyalty program
-    subscription:
-      type: object
-      description: 'The object contains details related to subscription configurations, including subscription cancellation reasons for the business. The subscription cancellation reasons are configured in the Punchh platform under Wallet and Passes > Subscription Cancellation Reasons.
-
-
-        Note: If the option to enable meta cache update on request <!--Cockpit > Dashboard Miscellaneous Config--> is not enabled in the Punchh platform, the API will not return any subscription cancellation reasons in the Program Meta API response. Contact your Punchh representative to update this Punchh platform configuration.'
-      title: Subscriptions (Object)
-      x-examples:
-        application/json:
-          subscriptions:
-            subscription_cancellation_reasons:
-            - component_code: Price
-              cancellation_reason_id: 1
-              cancellation_reason: It is expensive
-            - component_code: 'Cancel '
-              cancellation_reason_id: 3
-              cancellation_reason: Reason
-            - component_code: code
-              cancellation_reason_id: 6
-              cancellation_reason: reason
-            enable_cancellation_feedback: true
-            cancellation_feedback_placeholder: Enter Additional Feedback If Any
-            payment_disclaimer_text: This is payment disclaimer text.
-            terms_and_conditions: These are terms and conditions.
-      properties:
-        subscription_cancellation_reasons:
-          type: array
-          description: Different cancellation reasons that the business has configured and guests can select from within the mobile app when cancelling a subscription
-          items:
-            type: object
-            properties:
-              component_code:
-                type: string
-                description: This is the business-defined component code, which reflects the category of a cancellation reason. This may or may not be shown on the mobile app per the discretion of the business.
-              cancellation_reason_id:
-                type: integer
-                description: System-generated unique ID of the business-defined cancellation reason
-              cancellation_reason:
-                type: string
-                description: Cancellation reason as configured by the business
-        enable_cancellation_feedback:
-          type: boolean
-          description: 'Whether feedback will be collected when guests cancel a subscription or not '
-        cancellation_feedback_placeholder:
-          type: string
-          description: This is the cancellation feedback placeholder, which can be used by app developers as the title/label/placeholder text while capturing subjective feedback from guests when they cancel a subscription.
-        payment_disclaimer_text:
-          type: string
-          description: Payment disclaimer text as configured in the Punchh platform
-        terms_and_conditions:
-          type: string
-          description: Terms and conditions text as configured in the Punchh platform
-      x-stoplight:
-        id: 111a77a646d9e
     profile_field_questions-Object:
       type: array
       items:
@@ -1382,58 +1286,27 @@ components:
       x-stoplight:
         id: f347f00a28a60
       description: ''
-    subscriptions_payment_credential:
-      title: Subscriptions Payment Credential (Object)
+    payment_credential:
+      title: Payment Credential (Object)
       x-stoplight:
-        id: 3xx7c32hkevh7
+        id: yz9yasmzl1jck
       type: object
-      description: 'Subscription-related payment details if a business uses Punchh''s native payment integration with payment processors to support subscription-related payments
-
-
-        Note: If the business chooses not to use Punchh''s native integration with payment processors, the [Program Meta](/docs/dev-portal-mobile/2617bed9b0e8e-program-meta-api) API does not return the `subscriptions_payment_credential` object in the API response.'
+      description: Contains settings related to the payment adapter, recurring payment type, and passcode
       x-examples:
         application/json:
-          adapter_code: par_payment
-          enable_recurring_payments: false
+          adapter_code: ADAPTER_CODE_GOES_HERE
+          enable_recurring_payments: true
+          enable_passcode_for_payment: true
       properties:
         adapter_code:
           type: string
-          description: Code of the payment processor that will be used by the business for subscription-related payments. Possible values are no_adapter and par_payment.
+          description: Name of the payment processor/gateway. Valid value is par_payment.
         enable_recurring_payments:
           type: boolean
-          description: Whether recurring payments capability is enabled for the business or not
-    redeemable:
-      type: array
-      items:
-        type: object
-        properties:
-          redeemable_image_url:
-            type: string
-            description: URL of the image displayed in the app to depict the redeemable
-          redeemable_properties:
-            type: array
-            description: Properties such as "Merchandise", "Food Item", etc. can be added to a particular redeemable.
-            items:
-              type: string
-          redeemable_id:
-            type: integer
-            description: Unique ID that identifies a redeemable in the system
-          name:
-            type: string
-            description: Name of the redeemable
-          description:
-            type: string
-            description: A description of the redeemable that appears in the app. This can be used to persuade users to redeem.
-          points_required_to_redeem:
-            type: integer
-            description: Number of points required to redeem a particular redeemable
-          meta_data:
-            type: string
-            description: Metadata that can be added to a redeemable. This will be returned only if it is configured in the Punchh platform. The maximum length is 255 characters.
-      title: Redeemable (Array Object)
-      x-stoplight:
-        id: 7658402f497c2
-      description: Lists the redeemables and their details defined in the Punchh system
+          description: Whether a business has enabled recurring payments for the selected payment adapter
+        enable_passcode_for_payment:
+          type: boolean
+          description: Whether a business has enabled the passcode for payments
     banking_rules-Object:
       type: array
       title: Banking Rules (Array Object)
@@ -1454,30 +1327,118 @@ components:
             description: Value of currency that is banked by the user as per the defined banking rules
       x-stoplight:
         id: ce2fab6db84eb
-    base_redeemable-Object:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the base redeemable
-        description:
-          type: string
-          description: A description of the redeemable that appears in the app. This can be used to persuade users to redeem.
-        image_url:
-          type: string
-          description: URL of the image displayed in the app to depict the redeemable
-        redeemable_properties:
-          type: array
-          description: Properties such as "Merchandise", "Food Item", etc. can be added to a particular redeemable.
-          items:
-            type: string
-        meta_data:
-          type: string
-          description: Metadata that can be added to a redeemable. This can be used to program mobile apps to have a certain behavior when specific data are received from the server. This can be configured in the Punchh platform. The maximum length is 255 characters.
-      description: 'A base redeemable is used to provide identity to intangible entities, such as a completed card in a visit-based business. For example, in a visit-based business the configuration of a completed card (such as expiry, etc.) is picked from the base redeemable. '
-      title: Base Redeemable (Object)
+    gift-card-default-amounts:
+      title: Gift Card Default Amounts (Object)
       x-stoplight:
-        id: c9d4a439024c8
+        id: lgdqs5iworoa5
+      type: object
+      x-examples: []
+      description: 'The object provides default values for gift card purchase amount options, reload amount options, auto-reload amount options, and balance threshold amount options, as well as their respective default selections. '
+      properties:
+        gift_card_purchase_amounts_options:
+          type: object
+          x-stoplight:
+            id: vkx0gyk0megkr
+          description: Contains a set of predefined purchase amount options that users can select when purchasing a gift card. Each option within this object provides a specific amount, offering users convenient choices without requiring manual input.
+          properties:
+            gift_card_purchase_amount_1:
+              type: integer
+              x-stoplight:
+                id: 3zbksxqoyqydk
+              description: First option for the amount a user can choose when purchasing a gift card. Contact your Punchh representative to update this Punchh platform configuration.
+            gift_card_purchase_amount_2:
+              type: integer
+              x-stoplight:
+                id: tnxg2grbqzep5
+              description: Second option for the amount a user can choose when purchasing a gift card. Contact your Punchh representative to update this Punchh platform configuration.
+            gift_card_purchase_amount_3:
+              type: integer
+              x-stoplight:
+                id: 211ka1ebfmgri
+              description: Third option for the amount a user can choose when purchasing a gift card. Contact your Punchh representative to update this Punchh platform configuration.
+        gift_card_purchase_default_option:
+          type: integer
+          x-stoplight:
+            id: uw99n6g4erbhn
+          description: Default selected amount, if the user does not choose an option, for gift card purchases from the available purchase amount options. Contact your Punchh representative to update this Punchh platform configuration.
+        gift_card_reload_amounts_options:
+          type: object
+          x-stoplight:
+            id: elo6lm7b90nqw
+          description: Contains a set of predefined amount options that users can select when reloading a gift card. Each option within this object provides a specific amount, offering users convenient choices without requiring manual input.
+          properties:
+            gift_card_reload_amount_1:
+              type: integer
+              x-stoplight:
+                id: p2cx85bibekkn
+              description: First option for reloading a gift card with a specified amount. Contact your Punchh representative to update this Punchh platform configuration.
+            gift_card_reload_amount_2:
+              type: integer
+              x-stoplight:
+                id: uvbz3awkfu5gn
+              description: Second option for reloading a gift card with a specified amount. Contact your Punchh representative to update this Punchh platform configuration.
+            gift_card_reload_amount_3:
+              type: integer
+              x-stoplight:
+                id: ei06dgkg6tits
+              description: Third option for reloading a gift card with a specified amount. Contact your Punchh representative to update this Punchh platform configuration.
+        gift_card_reload_default_option:
+          type: integer
+          x-stoplight:
+            id: ml5kfyatlyku6
+          description: Default selected amount, if the user does not choose an option, for reloading a gift card from the available reload amount options. Contact your Punchh representative to update this Punchh platform configuration.
+        gift_card_auto_reload_amounts_options:
+          type: object
+          x-stoplight:
+            id: hrvjsd7mlziab
+          description: Contains a set of predefined amount options that users can select when setting up auto-reload for their gift card in the mobile app. Each option within this object provides a specific amount, offering users convenient choices without requiring manual input.
+          properties:
+            gift_card_auto_reload_amount_1:
+              type: integer
+              x-stoplight:
+                id: m39x0bsvkg5nv
+              description: First option for the amount a user can set for automatic reloading of a gift card. Contact your Punchh representative to update this Punchh platform configuration.
+            gift_card_auto_reload_amount_2:
+              type: integer
+              x-stoplight:
+                id: 6afwvs012sovr
+              description: Second option for the amount a user can set for automatic reloading of a gift card. Contact your Punchh representative to update this Punchh platform configuration.
+            gift_card_auto_reload_amount_3:
+              type: integer
+              x-stoplight:
+                id: qubb30lezgdki
+              description: Third option for the amount a user can set for automatic reloading of a gift card. Contact your Punchh representative to update this Punchh platform configuration.
+        gift_card_auto_reload_default_option:
+          type: integer
+          x-stoplight:
+            id: sh0csaujqb3fr
+          description: Default selected amount, if the user does not choose an option, for auto-reloading a gift card from the available auto-reload amount options. Contact your Punchh representative to update this Punchh platform configuration.
+        balance_threshold_amounts_options:
+          type: object
+          x-stoplight:
+            id: 9ec0vk4od29km
+          description: Contains a set of predefined amount options that users can select when setting a threshold amount for auto-reloading their gift card in the mobile app. Each option within this object specifies an amount, offering users convenient choices without requiring manual input.
+          properties:
+            balance_threshold_amount_1:
+              type: integer
+              x-stoplight:
+                id: z98owwml05omg
+              description: First option for the threshold balance amount. When set, a gift card is eligible to be auto-reloaded if its balance is less than this threshold amount. Contact your Punchh representative to update this Punchh platform configuration.
+            balance_threshold_amount_2:
+              type: integer
+              x-stoplight:
+                id: uibtdpafa7otf
+              description: Second option for the threshold balance amount. When set, a gift card is eligible to be auto-reloaded if its balance is less than this threshold amount. Contact your Punchh representative to update this Punchh platform configuration.
+            balance_threshold_amount_3:
+              type: integer
+              x-stoplight:
+                id: phezshfaz8d6f
+              description: Third option for the threshold balance amount. When set, a gift card is eligible to be auto-reloaded if its balance is less than this threshold amount. Contact your Punchh representative to update this Punchh platform configuration.
+        balance_threshold_default_option:
+          type: integer
+          x-stoplight:
+            id: j2lzekoj66fzk
+          description: Default selected threshold balance amount from the available balance threshold amount options for auto-reloading a gift card. Contact your Punchh representative to update this Punchh platform configuration.
     multiple-redemptions:
       title: Multiple Redemptions (Object)
       x-stoplight:
@@ -1577,6 +1538,45 @@ components:
           x-stoplight:
             id: ioqqb1t3mfdkv
           description: Time interval (in minutes) after which a guest account will be automatically unlocked for a transaction
+    Membership-Levels:
+      type: array
+      items:
+        type: object
+        properties:
+          background_image_url:
+            type: string
+            description: URL of the image that can be displayed in the app. As the URL may change with the membership level, the image can be changed accordingly.
+          points_multiplier:
+            type: number
+            format: float
+            description: Factor (rate) with which points accumulate for a user. For example, if the points multiplier for a particular membership level is 1, the user will get 1 point for every $1 spent. If the points multiplier is 2, the user will get 2 points for every $1 spent.
+          membership_level_id:
+            type: integer
+            description: Unique ID of the membership level
+          name:
+            type: string
+            description: Membership level name that is displayed in the app
+          description:
+            type: string
+            description: Description of a particular membership level. This can be displayed in the app (e.g., "Earn twice the points for every dollar you spend.")
+          maximum_points:
+            type: integer
+            description: Upper threshold of a membership level in terms of points
+          minimum_points:
+            type: integer
+            description: Lower threshold of a membership level in terms of points
+          currency_earned:
+            type: number
+            description: When accumulated points reach the `points_conversion_threshold`, they are converted to a dollar value defined by `currency_earned`. A value of 10 means that accumulated points will be converted to banked rewards in batches of $10.
+            format: float
+          points_conversion_threshold:
+            type: integer
+            description: Number of points required to get converted to banked rewards
+      x-examples: []
+      title: Membership Levels (Array Object)
+      x-stoplight:
+        id: f51be9319f856
+      description: The object contains details about each membership tier in a loyalty program
     Locations:
       type: array
       x-examples:
@@ -1785,148 +1785,137 @@ components:
           guest_identification_type:
             type: string
             description: "Indicates whether loyalty users can be identified using a short code at locations that do not support the single scan flow. Possible values: \n- When set to restrict_pay_allow_lookup, the location supports user lookup using a short code, and SSF-based payments are disabled. \n- When set to restrict_lookup, user lookup using a short code is not allowed.\nContact your Punchh representative to update this Punchh platform configuration.\n"
-    gift-card-default-amounts:
-      title: Gift Card Default Amounts (Object)
+    redeemable:
+      type: array
+      items:
+        type: object
+        properties:
+          redeemable_image_url:
+            type: string
+            description: URL of the image displayed in the app to depict the redeemable
+          redeemable_properties:
+            type: array
+            description: Properties such as "Merchandise", "Food Item", etc. can be added to a particular redeemable.
+            items:
+              type: string
+          redeemable_id:
+            type: integer
+            description: Unique ID that identifies a redeemable in the system
+          name:
+            type: string
+            description: Name of the redeemable
+          description:
+            type: string
+            description: A description of the redeemable that appears in the app. This can be used to persuade users to redeem.
+          points_required_to_redeem:
+            type: integer
+            description: Number of points required to redeem a particular redeemable
+          meta_data:
+            type: string
+            description: Metadata that can be added to a redeemable. This will be returned only if it is configured in the Punchh platform. The maximum length is 255 characters.
+      title: Redeemable (Array Object)
       x-stoplight:
-        id: lgdqs5iworoa5
-      type: object
-      x-examples: []
-      description: 'The object provides default values for gift card purchase amount options, reload amount options, auto-reload amount options, and balance threshold amount options, as well as their respective default selections. '
-      properties:
-        gift_card_purchase_amounts_options:
-          type: object
-          x-stoplight:
-            id: vkx0gyk0megkr
-          description: Contains a set of predefined purchase amount options that users can select when purchasing a gift card. Each option within this object provides a specific amount, offering users convenient choices without requiring manual input.
-          properties:
-            gift_card_purchase_amount_1:
-              type: integer
-              x-stoplight:
-                id: 3zbksxqoyqydk
-              description: First option for the amount a user can choose when purchasing a gift card. Contact your Punchh representative to update this Punchh platform configuration.
-            gift_card_purchase_amount_2:
-              type: integer
-              x-stoplight:
-                id: tnxg2grbqzep5
-              description: Second option for the amount a user can choose when purchasing a gift card. Contact your Punchh representative to update this Punchh platform configuration.
-            gift_card_purchase_amount_3:
-              type: integer
-              x-stoplight:
-                id: 211ka1ebfmgri
-              description: Third option for the amount a user can choose when purchasing a gift card. Contact your Punchh representative to update this Punchh platform configuration.
-        gift_card_purchase_default_option:
-          type: integer
-          x-stoplight:
-            id: uw99n6g4erbhn
-          description: Default selected amount, if the user does not choose an option, for gift card purchases from the available purchase amount options. Contact your Punchh representative to update this Punchh platform configuration.
-        gift_card_reload_amounts_options:
-          type: object
-          x-stoplight:
-            id: elo6lm7b90nqw
-          description: Contains a set of predefined amount options that users can select when reloading a gift card. Each option within this object provides a specific amount, offering users convenient choices without requiring manual input.
-          properties:
-            gift_card_reload_amount_1:
-              type: integer
-              x-stoplight:
-                id: p2cx85bibekkn
-              description: First option for reloading a gift card with a specified amount. Contact your Punchh representative to update this Punchh platform configuration.
-            gift_card_reload_amount_2:
-              type: integer
-              x-stoplight:
-                id: uvbz3awkfu5gn
-              description: Second option for reloading a gift card with a specified amount. Contact your Punchh representative to update this Punchh platform configuration.
-            gift_card_reload_amount_3:
-              type: integer
-              x-stoplight:
-                id: ei06dgkg6tits
-              description: Third option for reloading a gift card with a specified amount. Contact your Punchh representative to update this Punchh platform configuration.
-        gift_card_reload_default_option:
-          type: integer
-          x-stoplight:
-            id: ml5kfyatlyku6
-          description: Default selected amount, if the user does not choose an option, for reloading a gift card from the available reload amount options. Contact your Punchh representative to update this Punchh platform configuration.
-        gift_card_auto_reload_amounts_options:
-          type: object
-          x-stoplight:
-            id: hrvjsd7mlziab
-          description: Contains a set of predefined amount options that users can select when setting up auto-reload for their gift card in the mobile app. Each option within this object provides a specific amount, offering users convenient choices without requiring manual input.
-          properties:
-            gift_card_auto_reload_amount_1:
-              type: integer
-              x-stoplight:
-                id: m39x0bsvkg5nv
-              description: First option for the amount a user can set for automatic reloading of a gift card. Contact your Punchh representative to update this Punchh platform configuration.
-            gift_card_auto_reload_amount_2:
-              type: integer
-              x-stoplight:
-                id: 6afwvs012sovr
-              description: Second option for the amount a user can set for automatic reloading of a gift card. Contact your Punchh representative to update this Punchh platform configuration.
-            gift_card_auto_reload_amount_3:
-              type: integer
-              x-stoplight:
-                id: qubb30lezgdki
-              description: Third option for the amount a user can set for automatic reloading of a gift card. Contact your Punchh representative to update this Punchh platform configuration.
-        gift_card_auto_reload_default_option:
-          type: integer
-          x-stoplight:
-            id: sh0csaujqb3fr
-          description: Default selected amount, if the user does not choose an option, for auto-reloading a gift card from the available auto-reload amount options. Contact your Punchh representative to update this Punchh platform configuration.
-        balance_threshold_amounts_options:
-          type: object
-          x-stoplight:
-            id: 9ec0vk4od29km
-          description: Contains a set of predefined amount options that users can select when setting a threshold amount for auto-reloading their gift card in the mobile app. Each option within this object specifies an amount, offering users convenient choices without requiring manual input.
-          properties:
-            balance_threshold_amount_1:
-              type: integer
-              x-stoplight:
-                id: z98owwml05omg
-              description: First option for the threshold balance amount. When set, a gift card is eligible to be auto-reloaded if its balance is less than this threshold amount. Contact your Punchh representative to update this Punchh platform configuration.
-            balance_threshold_amount_2:
-              type: integer
-              x-stoplight:
-                id: uibtdpafa7otf
-              description: Second option for the threshold balance amount. When set, a gift card is eligible to be auto-reloaded if its balance is less than this threshold amount. Contact your Punchh representative to update this Punchh platform configuration.
-            balance_threshold_amount_3:
-              type: integer
-              x-stoplight:
-                id: phezshfaz8d6f
-              description: Third option for the threshold balance amount. When set, a gift card is eligible to be auto-reloaded if its balance is less than this threshold amount. Contact your Punchh representative to update this Punchh platform configuration.
-        balance_threshold_default_option:
-          type: integer
-          x-stoplight:
-            id: j2lzekoj66fzk
-          description: Default selected threshold balance amount from the available balance threshold amount options for auto-reloading a gift card. Contact your Punchh representative to update this Punchh platform configuration.
-    payment_credential:
-      title: Payment Credential (Object)
+        id: 7658402f497c2
+      description: Lists the redeemables and their details defined in the Punchh system
+    subscriptions_payment_credential:
+      title: Subscriptions Payment Credential (Object)
       x-stoplight:
-        id: yz9yasmzl1jck
+        id: 3xx7c32hkevh7
       type: object
-      description: Contains settings related to the payment adapter, recurring payment type, and passcode
+      description: 'Subscription-related payment details if a business uses Punchh''s native payment integration with payment processors to support subscription-related payments
+
+
+        Note: If the business chooses not to use Punchh''s native integration with payment processors, the [Program Meta](/docs/dev-portal-mobile/2617bed9b0e8e-program-meta-api) API does not return the `subscriptions_payment_credential` object in the API response.'
       x-examples:
         application/json:
-          adapter_code: ADAPTER_CODE_GOES_HERE
-          enable_recurring_payments: true
-          enable_passcode_for_payment: true
+          adapter_code: par_payment
+          enable_recurring_payments: false
       properties:
         adapter_code:
           type: string
-          description: Name of the payment processor/gateway. Valid value is par_payment.
+          description: Code of the payment processor that will be used by the business for subscription-related payments. Possible values are no_adapter and par_payment.
         enable_recurring_payments:
           type: boolean
-          description: Whether a business has enabled recurring payments for the selected payment adapter
-        enable_passcode_for_payment:
+          description: Whether recurring payments capability is enabled for the business or not
+    base_redeemable-Object:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the base redeemable
+        description:
+          type: string
+          description: A description of the redeemable that appears in the app. This can be used to persuade users to redeem.
+        image_url:
+          type: string
+          description: URL of the image displayed in the app to depict the redeemable
+        redeemable_properties:
+          type: array
+          description: Properties such as "Merchandise", "Food Item", etc. can be added to a particular redeemable.
+          items:
+            type: string
+        meta_data:
+          type: string
+          description: Metadata that can be added to a redeemable. This can be used to program mobile apps to have a certain behavior when specific data are received from the server. This can be configured in the Punchh platform. The maximum length is 255 characters.
+      description: 'A base redeemable is used to provide identity to intangible entities, such as a completed card in a visit-based business. For example, in a visit-based business the configuration of a completed card (such as expiry, etc.) is picked from the base redeemable. '
+      title: Base Redeemable (Object)
+      x-stoplight:
+        id: c9d4a439024c8
+    subscription:
+      type: object
+      description: 'The object contains details related to subscription configurations, including subscription cancellation reasons for the business. The subscription cancellation reasons are configured in the Punchh platform under Wallet and Passes > Subscription Cancellation Reasons.
+
+
+        Note: If the option to enable meta cache update on request <!--Cockpit > Dashboard Miscellaneous Config--> is not enabled in the Punchh platform, the API will not return any subscription cancellation reasons in the Program Meta API response. Contact your Punchh representative to update this Punchh platform configuration.'
+      title: Subscriptions (Object)
+      x-examples:
+        application/json:
+          subscriptions:
+            subscription_cancellation_reasons:
+            - component_code: Price
+              cancellation_reason_id: 1
+              cancellation_reason: It is expensive
+            - component_code: 'Cancel '
+              cancellation_reason_id: 3
+              cancellation_reason: Reason
+            - component_code: code
+              cancellation_reason_id: 6
+              cancellation_reason: reason
+            enable_cancellation_feedback: true
+            cancellation_feedback_placeholder: Enter Additional Feedback If Any
+            payment_disclaimer_text: This is payment disclaimer text.
+            terms_and_conditions: These are terms and conditions.
+      properties:
+        subscription_cancellation_reasons:
+          type: array
+          description: Different cancellation reasons that the business has configured and guests can select from within the mobile app when cancelling a subscription
+          items:
+            type: object
+            properties:
+              component_code:
+                type: string
+                description: This is the business-defined component code, which reflects the category of a cancellation reason. This may or may not be shown on the mobile app per the discretion of the business.
+              cancellation_reason_id:
+                type: integer
+                description: System-generated unique ID of the business-defined cancellation reason
+              cancellation_reason:
+                type: string
+                description: Cancellation reason as configured by the business
+        enable_cancellation_feedback:
           type: boolean
-          description: Whether a business has enabled the passcode for payments
+          description: 'Whether feedback will be collected when guests cancel a subscription or not '
+        cancellation_feedback_placeholder:
+          type: string
+          description: This is the cancellation feedback placeholder, which can be used by app developers as the title/label/placeholder text while capturing subjective feedback from guests when they cancel a subscription.
+        payment_disclaimer_text:
+          type: string
+          description: Payment disclaimer text as configured in the Punchh platform
+        terms_and_conditions:
+          type: string
+          description: Terms and conditions text as configured in the Punchh platform
+      x-stoplight:
+        id: 111a77a646d9e
   parameters:
-    signature:
-      schema:
-        type: string
-        default: '{{$$.env.signature}}'
-      name: x-pch-digest
-      in: header
-      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
-      required: true
     User-Agent:
       schema:
         type: string
@@ -1934,6 +1923,14 @@ components:
       in: header
       name: User-Agent
       description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
       required: true
     Content-Type:
       schema:
@@ -1951,13 +1948,13 @@ components:
       in: header
       description: Advertises which content types the client is able to understand
       required: true
-    Authorization:
+    signature:
       schema:
         type: string
-        default: Bearer ACCESS_TOKEN_GOES_HERE
-      name: Authorization
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
       in: header
-      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
       required: true
 x-stoplight:
   id: bf6eddb435209

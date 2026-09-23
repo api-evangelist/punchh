@@ -320,7 +320,7 @@ paths:
       description: 'Creates feedback in the system based on the message and/or rating provided by a user when the user’s access token or authentication token is not available at the time of creating the feedback in the Punchh system. The user is identified using email address, phone number, or user ID, with user ID given top priority if multiple look-up parameters are passed in the API.
 
 
-        Phone number will work only if it is set up as a unique parameter in the Punchh platform. The option to validate the uniqueness of phone number across guests must be enabled. Contact your Punchh representative to update this Punchh platform configuration. <!-- Cockpit > Guests > Guest Validation -->'
+        Phone number will work only if it is set up as a unique parameter in the Punchh platform. The option to validate the uniqueness of phone number across guests must be enabled. Contact your Punchh representative to update this Punchh platform configuration. Guests > Guest Validation -->'
       tags:
       - Feedback
       requestBody:
@@ -498,21 +498,6 @@ paths:
     - url: https://SERVER_NAME_GOES_HERE.punchh.com
 components:
   parameters:
-    signature:
-      schema:
-        type: string
-        default: '{{$$.env.signature}}'
-      name: x-pch-digest
-      in: header
-      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
-      required: true
-    Accept-Language:
-      schema:
-        type: string
-        default: en
-      name: Accept-Language
-      in: header
-      description: Preferred language
     User-Agent:
       schema:
         type: string
@@ -520,6 +505,14 @@ components:
       in: header
       name: User-Agent
       description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
       required: true
     Content-Type:
       schema:
@@ -537,14 +530,21 @@ components:
       in: header
       description: Advertises which content types the client is able to understand
       required: true
-    Authorization:
+    signature:
       schema:
         type: string
-        default: Bearer ACCESS_TOKEN_GOES_HERE
-      name: Authorization
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
       in: header
-      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
       required: true
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
     authorization-header:
       schema:
         type: string

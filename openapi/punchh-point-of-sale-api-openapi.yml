@@ -120,7 +120,22 @@ paths:
                     visits_mode: '0'
                     multiple_redemption_on_location: true
       summary: Location Configuration
-      description: "Get the configuration for a location using a unique API key (i.e., location key).\n\nThis API call requires the API key as well as the business key to be sent in the HTTP Authorization header in the following format:\n\nAuthorization: Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE\n\nwhere \n\nLOCATION_KEY_GOES_HERE is the API key (which is unique for a location) and BUSINESS_KEY_GOES_HERE is the business key (which is unique for a business). \n\nSee cURL examples for more details.\n"
+      description: 'Get the configuration for a location using a unique API key (i.e., location key).
+
+
+        This API call requires the API key as well as the business key to be sent in the HTTP Authorization header in the following format:
+
+
+        Authorization: Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE
+
+
+        where
+
+
+        LOCATION_KEY_GOES_HERE is the API key (which is unique for a location) and BUSINESS_KEY_GOES_HERE is the business key (which is unique for a business).
+
+
+        See cURL examples for more details.'
       operationId: pos_location_config
       tags:
       - Point Of Sale
@@ -356,9 +371,7 @@ paths:
       description: 'Get information about business-level data, such as program type, platform configurations, list of redeemables (in case of points unlock redeemable program), etc.
 
 
-        >Any update made to the configuration in the platform will be reflected in the response after 15 minutes, instead of in real time, in order to improve the response time.
-
-        '
+        >Any update made to the configuration in the platform will be reflected in the response after 15 minutes, instead of in real time, in order to improve the response time.'
       x-stoplight:
         id: c6b60d909fe82
   /api/pos/users:
@@ -609,9 +622,7 @@ paths:
                     phone: '1111111111'
                     age_verified_status: true
       summary: Create New User
-      description: 'This API creates a new user account by using phone or email or card (at least one of them).
-
-        '
+      description: This API creates a new user account by using phone or email or card (at least one of them).
       operationId: pos_create_user
       tags:
       - Point Of Sale
@@ -1040,188 +1051,119 @@ paths:
         Note: User QR codes appear in three different ways, hence the three descriptions below.
 
 
-        <table border="0" cellpadding="0" cellspacing="0" width="756" style="border-collapse:collapse;table-layout:fixed;width:350pt">
+        Type
 
-        <colgroup><col width="224" style="mso-width-source:userset;mso-width-alt:7168;width:168pt"> <col width="161" style="mso-width-source:userset;mso-width-alt:5162;width:121pt"> <col width="160" style="mso-width-source:userset;mso-width-alt:5120;width:120pt"> <col width="211" style="mso-width-source:userset;mso-width-alt:6741;width:158pt"></colgroup>
+        Character Length
 
+        Character Type
 
-        <tbody>
+        How To Identify
 
 
-        <tr height="21" style="height:16.0pt">
+        Phone Number
 
-        <td height="21" class="xl67" width="224" style="height:16.0pt;width:168pt"><b>Type</b></td>
+        10
 
-        <td class="xl67" width="161" style="width:121pt"><b>Character Length</b></td>
+        Numeric
 
-        <td class="xl67" width="160" style="width:120pt"><b>Character Type</b></td>
+        10 digits
 
-        <td class="xl67" width="211" style="width:158pt"><b>How To Identify</b></td>
 
-        </tr>
+        Email
 
+        6-255
 
-        <tr height="21" style="height:16.0pt">
+        Alphanumeric
 
-        <td height="21" style="height:16.0pt">Phone Number</td>
+        String including @
 
-        <td class="xl65">10</td>
 
-        <td>Numeric</td>
+        User QR Code
 
-        <td>10 digits</td>
+        2-12
 
-        </tr>
+        Alphanumeric
 
+        Starts with "P"
 
-        <tr height="21" style="height:16.0pt">
 
-        <td height="21" style="height:16.0pt">Email</td>
+        13-512
 
-        <td class="xl65">6-255</td>
+        Alphanumeric
 
-        <td>Alphanumeric</td>
+        Starts and ends with "Punchh"
 
-        <td>String including @</td>
 
-        </tr>
+        8
 
+        Alphanumeric
 
-        <tr height="21" style="height:16.0pt">
+        Starts with "S"
 
-        <td height="21" style="height:16.0pt">User QR Code</td>
 
-        <td class="xl65">2-12</td>
+        Single Scan Code
 
-        <td>Alphanumeric</td>
+        6-34
 
-        <td>Starts with "P"</td>
+        Alphanumeric
 
-        </tr>
+        Hexadecimal digits
 
 
-        <tr height="21" style="height:16.0pt">
+        Redemption Code
 
-        <td height="21" style="height:16.0pt"></td>
+        7
 
-        <td class="xl65">13-512</td>
+        Numeric
 
-        <td>Alphanumeric</td>
+        7 digits
 
-        <td>Starts and ends with "Punchh"</td>
 
-        </tr>
+        Card Number
 
+        16
 
-        <tr height="21" style="height:16.0pt">
+        Numeric
 
-        <td height="21" style="height:16.0pt"></td>
+        16 digits
 
-        <td class="xl65">8</td>
 
-        <td>Alphanumeric</td>
+        Drive-Thru Short Code
 
-        <td>Starts with "S"</td>
+        4
 
-        </tr>
+        Numeric/
 
+        Alphanumeric
 
-        <tr height="21" style="height:16.0pt">
+        4 digits or string
 
-        <td height="21" style="height:16.0pt">Single Scan Code</td>
 
-        <td class="xl66">6-34</td>
+        Apple NFC Data
 
-        <td>Alphanumeric</td>
+        N/A
 
-        <td>Hexadecimal digits</td>
+        Alphanumeric
 
-        </tr>
+        Hexadecimal
 
 
-        <tr height="21" style="height:16.0pt">
+        NFC Token
 
-        <td height="21" style="height:16.0pt">Redemption Code</td>
+        N/A
 
-        <td class="xl65">7</td>
+        Alphanumeric
 
-        <td>Numeric</td>
+        Hexadecimal
 
-        <td>7 digits</td>
 
-        </tr>
+        Reward ID
 
+        11-20
 
-        <tr height="21" style="height:16.0pt">
+        Numeric
 
-        <td height="21" style="height:16.0pt">Card Number</td>
-
-        <td class="xl65">16</td>
-
-        <td>Numeric</td>
-
-        <td>16 digits</td>
-
-        </tr>
-
-
-        <tr height="21" style="height:16.0pt">
-
-        <td height="21" style="height:16.0pt">Drive-Thru Short Code</td>
-
-        <td class="xl65">4</td>
-
-        <td>Numeric/<br>Alphanumeric</td>
-
-        <td>4 digits or string</td>
-
-        </tr>
-
-
-        <tr height="21" style="height:16.0pt">
-
-        <td height="21" style="height:16.0pt">Apple NFC Data</td>
-
-        <td class="xl65">N/A</td>
-
-        <td>Alphanumeric</td>
-
-        <td>Hexadecimal</td>
-
-        </tr>
-
-
-        <tr height="21" style="height:16.0pt">
-
-        <td height="21" style="height:16.0pt">NFC Token</td>
-
-        <td class="xl65">N/A</td>
-
-        <td>Alphanumeric</td>
-
-        <td>Hexadecimal</td>
-
-        </tr>
-
-
-        <tr height="21" style="height:16.0pt">
-
-        <td height="21" style="height:16.0pt">Reward ID</td>
-
-        <td class="xl65">11-20</td>
-
-        <td>Numeric</td>
-
-        <td>N/A</td>
-
-        </tr>
-
-
-        </tbody>
-
-
-        </table>
-
+        N/A
 
 
         ## POS Single Scan Flow (SSF) User Look-up API
@@ -1233,7 +1175,7 @@ paths:
         This token is a UUID string, which is made up of alphanumeric characters and passed in the User Look-up API request in the single_scan_code parameter. The SSF token that is generated from the guest’s mobile app is used to look up the information required for processing the payment, such as the payment mode that the user selected for the purchase, the selected discount that the user wants to redeem, and the selected tip amount.
 
 
-        For more information, see [Single Scan Flow](/docs/dev-portal-pos/additional-topics/single-scan-flow).
+        For more information, see Single Scan Flow.
 
 
         ## User Look-up with Loyalty Short Code
@@ -1242,15 +1184,13 @@ paths:
         The Loyalty Short Code is generated in the mobile app. When only the guest identification using the short code at drive-thru is enabled for a business, the short code is used for loyalty identification only. When **Single Scan Flow (SSF)** and **Payment with Short Code using SSF** are also enabled, the short code is used for both loyalty identification and payment.
 
 
-        A short code used only for loyalty identification is generated using the [Generate a Drive-Thru Short Code API](https://developers.partech.com/docs/dev-portal-mobile/apis/mobile-api/tag/drive-thru/post/api2/mobile/drivethru_code). When the short code is used for look-up, the User Look-up API returns the user profile data, balance, and rewards in the response.
+        A short code used only for loyalty identification is generated using the Generate a Drive-Thru Short Code API. When the short code is used for look-up, the User Look-up API returns the user profile data, balance, and rewards in the response.
 
 
-        A short code used for both loyalty identification and payment is generated using [Generate Single Scan Code API](https://developers.partech.com/docs/dev-portal-mobile/apis/mobile-api/tag/single-scan-code/post/api2/mobile/single_scan_tokens). When the POS calls the User Look-up API with the short code (passed in the `drive_thru_code` parameter), Punchh uses the short code and the user ID mapped to it to retrieve the associated `single_scan_code`.
+        A short code used for both loyalty identification and payment is generated using Generate Single Scan Code API. When the POS calls the User Look-up API with the short code (passed in the `drive_thru_code` parameter), Punchh uses the short code and the user ID mapped to it to retrieve the associated `single_scan_code`.
 
 
-        Punchh then uses the `single_scan_code` to look up the user and returns it in the response, along with any rewards and payment information selected by the user when generating the short code from the mobile app. The POS can use the `single_scan_code` for check-in, redemptions, and payments.
-
-        '
+        Punchh then uses the `single_scan_code` to look up the user and returns it in the response, along with any rewards and payment information selected by the user when generating the short code from the mobile app. The POS can use the `single_scan_code` for check-in, redemptions, and payments.'
       operationId: pos_user_search
       tags:
       - Point Of Sale
@@ -1621,9 +1561,7 @@ paths:
                     user_digest: USER_DIGEST_GOES_HERE
                     zip_code: null
       summary: Create Check-in
-      description: 'Creates a check-in for a customer.
-
-        '
+      description: Creates a check-in for a customer.
       operationId: pos_checkin
       tags:
       - Point Of Sale
@@ -1941,7 +1879,40 @@ paths:
                   value:
                   - Invalid LocationKey
       operationId: receipt_details
-      description: "This API call requires the API key as well as the business key to be sent in the HTTP Authorization header in the following format:\n\nAuthorization: Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE\n\nwhere \n\nLOCATION_KEY_GOES_HERE is the API key (which is unique for a location) and BUSINESS_KEY_GOES_HERE is the business key (which is unique for a business). \n\nSee cURL examples for more details.   \n\n1\\. The receipt_details endpoint can store the same receipt multiple times. If the POS client sends the same receipt (same punchh_key, same location_key) many times, we store all the versions of that same receipt, provided that the time between HTTP requests is 1 second or more. However, if the same receipt is received via multiple HTTP calls in about the same time (less than 1 second), the last one overwrites the previous version of that receipt.\n\n2\\. The endpoint accepts parameters in JSON as well.\n\n3\\. “isl receipt details” endpoint for ALL transactions.\n\n4\\. “checkins” for registered Punchh users wanting credit at the register via email, phone, QR code, or card number\n\n5\\. All transactions generate the barcode / Punchh key.\n\n6\\. All transactions print a barcode (?) on the receipt with that Punchh key.\n\n7\\. In the event of a network outage, we expect data that was to be sent to the ISL and check-in endpoints to be queued and sent later. We do not expect the redemptions to work in that case as there is no way to receive the amount from Punchh.\n"
+      description: 'This API call requires the API key as well as the business key to be sent in the HTTP Authorization header in the following format:
+
+
+        Authorization: Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE
+
+
+        where
+
+
+        LOCATION_KEY_GOES_HERE is the API key (which is unique for a location) and BUSINESS_KEY_GOES_HERE is the business key (which is unique for a business).
+
+
+        See cURL examples for more details.
+
+
+        1\. The receipt_details endpoint can store the same receipt multiple times. If the POS client sends the same receipt (same punchh_key, same location_key) many times, we store all the versions of that same receipt, provided that the time between HTTP requests is 1 second or more. However, if the same receipt is received via multiple HTTP calls in about the same time (less than 1 second), the last one overwrites the previous version of that receipt.
+
+
+        2\. The endpoint accepts parameters in JSON as well.
+
+
+        3\. “isl receipt details” endpoint for ALL transactions.
+
+
+        4\. “checkins” for registered Punchh users wanting credit at the register via email, phone, QR code, or card number
+
+
+        5\. All transactions generate the barcode / Punchh key.
+
+
+        6\. All transactions print a barcode (?) on the receipt with that Punchh key.
+
+
+        7\. In the event of a network outage, we expect data that was to be sent to the ISL and check-in endpoints to be queued and sent later. We do not expect the redemptions to work in that case as there is no way to receive the amount from Punchh.'
       summary: Store Receipt Details From POS
       parameters:
       - schema:
@@ -2438,7 +2409,22 @@ paths:
                   value:
                   - User not found
       operationId: get-api-pos-users-balance
-      description: "The API fetches the account balance details of the user based on the program type of the business and different subscriptions if purchased by the user along with their benefits and discounts.  \n\nNote: \n\n1\\. The `net_balance`, `points_balance`, `net_debits`, `pending_points`, `total_credits`, `total_debits`, and `total_points_credits` parameters are applicable if the program type is Points unlock redeemables. \n\n2\\. The `total_redeemable_visits`, `total_visits`, and `unredeemed_cards` parameters are applicable if the program type is Visit-based. \n\n3\\. The `banked_rewards` parameter is applicable if the program type is Points convert to currency.\n\n4\\. The `banked_currency` and `balance` parameters are applicable if the program type is Points to Manual."
+      description: 'The API fetches the account balance details of the user based on the program type of the business and different subscriptions if purchased by the user along with their benefits and discounts.
+
+
+        Note:
+
+
+        1\. The `net_balance`, `points_balance`, `net_debits`, `pending_points`, `total_credits`, `total_debits`, and `total_points_credits` parameters are applicable if the program type is Points unlock redeemables.
+
+
+        2\. The `total_redeemable_visits`, `total_visits`, and `unredeemed_cards` parameters are applicable if the program type is Visit-based.
+
+
+        3\. The `banked_rewards` parameter is applicable if the program type is Points convert to currency.
+
+
+        4\. The `banked_currency` and `balance` parameters are applicable if the program type is Points to Manual.'
       parameters:
       - $ref: '#/components/parameters/Authorization'
       x-stoplight:
@@ -2467,16 +2453,149 @@ paths:
                   - subscription
         description: ''
 components:
-  parameters:
-    Authorization:
-      schema:
-        type: string
-        default: Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE
-      name: Authorization
-      in: header
-      required: true
-      description: This is a combination of unique API key as well as business key (UUID) as the Authorization header.
   schemas:
+    subscriptions:
+      title: Subscriptions (Array Object)
+      x-stoplight:
+        id: t2vrovoz4i5qv
+      type: array
+      description: This object is returned when the subscriptions feature is available for the business. In case a guest does not have active subscriptions, an empty object is returned.
+      x-examples:
+        example-1:
+          subscriptions:
+          - plan_name: free burger
+            pos_meta: VIP subs
+            subscription_id: 123
+      items:
+        x-stoplight:
+          id: 9jb37m7ysdquo
+        type: object
+        properties:
+          plan_name:
+            type: string
+            x-stoplight:
+              id: q2i09ubhdc6x8
+            description: Name of a subscription plan as provided by the Administrator when creating the subscription plan.
+          pos_meta:
+            type: string
+            x-stoplight:
+              id: 2b5gfv264ff03
+            description: Free form text field to support various subscription related business use cases at POS. The text field length is 24 characters.
+          subscription_id:
+            type: string
+            x-stoplight:
+              id: ru921jzzxw2ni
+            description: System-generated unique ID of the subscription that is issued to the guest.
+    selected_redeemables:
+      type: array
+      title: Selected Redeemables (Array Object)
+      description: This object is set for the single scan flow (SSF) for users that are on the Points Unlock Redeemables loyalty program. The `selected_redeemables` object shows one or more redeemables if the user would like to redeem them as part of the single scan flow. The user selects the redeemable(s) when generating the single scan code on the mobile application. If this value is set, trigger the redemption flow. See [Single Scan Flow](/docs/dev-portal-pos/additional-topics/single-scan-flow)
+      x-examples:
+        Example:
+        - id: ID_GOES_HERE
+          created_at: '2022-09-02T15:03:00Z'
+          updated_at: '2022-09-10T15:07:14Z'
+          status: activated
+          points: 10
+          discount_amount: null
+          name: By points
+          description: ''
+          redeemable_properties: ''
+          count: null
+          discount_type: redeemable
+          image: IMAGE_URL_GOES_HERE
+          end_date_tz: null
+          start_date_tz: null
+      x-stoplight:
+        id: 0c38c3d9e5b8b
+      items:
+        x-stoplight:
+          id: 0iocgq9bjb1ti
+        type: object
+        properties:
+          id:
+            type: integer
+            x-stoplight:
+              id: u4ug2539pji46
+            format: int64
+            description: Redeemable ID
+            minimum: -9007199254740991
+            maximum: 9007199254740991
+          name:
+            type: string
+            x-stoplight:
+              id: juk5daqg92fb4
+            description: Name of the redeemable
+          description:
+            type: string
+            x-stoplight:
+              id: hob5lq6qutwgh
+            description: Description that explains redeemable as configured in the Punchh platform
+          created_at:
+            type: string
+            x-stoplight:
+              id: oe8xkokoviah0
+            format: date-time
+            description: Date/time when the user was created in the system, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+          count:
+            type: integer
+            x-stoplight:
+              id: e3kxficl7751d
+            description: Number of redeemables selected by the user on the mobile app for redemption at POS.
+          start_date_tz:
+            type: string
+            x-stoplight:
+              id: jdjvuq7k4gffq
+            format: date-time
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+            description: Start date/time of the redeemable, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+          end_date_tz:
+            type: string
+            x-stoplight:
+              id: yl70yioadwhbw
+            format: date-time
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+            description: Expiry date/time of the redeemable, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+          updated_at:
+            type: string
+            x-stoplight:
+              id: w6hmji96h8cfl
+            format: date-time
+            description: Date/time when the redeemable was updated, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+          image:
+            type: string
+            x-stoplight:
+              id: f104xvt6ohqo0
+            description: Image URL of the redeemable
+          status:
+            type: string
+            x-stoplight:
+              id: 6vqg5l4ws2i1j
+            description: The redemption status of a redeemable. Currently, only the value "Unredeemed" will be returned. This signifies that the reward has not been redeemed by the user.
+          points:
+            type: integer
+            x-stoplight:
+              id: iqjaszco20c2j
+            description: Points associated with the redeemable
+          discount_amount:
+            type: integer
+            x-stoplight:
+              id: 0jpj0gtghotou
+            description: Discount amount associated with the redeemable
+          discount_type:
+            type: string
+            x-stoplight:
+              id: tck11epxxzkri
+            description: Type of discount. The value will be redeemable.
+          redeemable_properties:
+            type: string
+            x-stoplight:
+              id: r6m3agn4rough
+            description: Comma-separated values that provide additional details about a redeemable. For example, a redeemable could be a "Food_Item" or "Merchandise", etc. Can be configured for a business in the Punchh platform and attached to a redeemable. If no value is attached to a redeemable, a blank field will be returned.
     menu_items:
       type: array
       title: Menu Items (Array Object)
@@ -2554,6 +2673,105 @@ components:
         - menu_major_group
         - menu_family
         - serial_number
+    multiple-redemptions:
+      title: Multiple Redemptions (Object)
+      x-stoplight:
+        id: pmmem8gh940r7
+      type: object
+      description: Lists the Punchh platform settings for multiple redemptions for the business. This object is returned in the API response if the `multiple_redemptions_enabled` response parameter is set to true in the Program Meta API for the business.
+      properties:
+        auto_redemption:
+          type: boolean
+          x-stoplight:
+            id: dqiu3pr7t2iis
+          description: Indicates whether auto-redemption of discounts is enabled for the business
+        enable_discount_locking:
+          type: boolean
+          x-stoplight:
+            id: 87xke1u2q4q2j
+          description: Indicates whether reward locking on the transaction is enabled for the business
+        enable_auto_unlock:
+          type: boolean
+          x-stoplight:
+            id: 347agzkuud2hu
+          description: Indicates whether auto-unlocking of the guest account after a time interval is enabled for the business
+        max_redemptions_in_transaction:
+          type: integer
+          x-stoplight:
+            id: fdo71lexjzldo
+          description: Maximum number of discounts that can be applied in a single transaction
+        auto_redemption_discounts:
+          type: array
+          x-stoplight:
+            id: 43vrsvfj377ov
+          description: 'Discount categories eligible for the auto-application of discounts. Possible values: offer, subscription, fuel_reward, discount_amount'
+          items:
+            x-stoplight:
+              id: e6h8nv489mo4v
+            type: string
+        allow_multiple_redemption_on_item:
+          type: boolean
+          x-stoplight:
+            id: raauwtezy9njd
+          description: Indicates whether multiple discounts can be stacked on a menu item for the business
+        allow_qualifying_items_reused:
+          type: boolean
+          x-stoplight:
+            id: sa9em3fu5nt98
+          description: Indicates whether the reuse of qualifier items for the application of multiple discounts is enabled for the business
+        discount_processing_strategy:
+          type: string
+          x-stoplight:
+            id: kshs05y2fagbk
+          description: 'Condition that determines the order in which discounts are applied to a transaction. Possible value: date_of_expiry'
+        processing_priority_by_discount_type:
+          type: array
+          x-stoplight:
+            id: ccvzotvox36t0
+          description: 'Determines the order in which discounts are applied to a transaction based on the discount type. Possible values: reward, promo_coupon, subscription, discount_amount'
+          items:
+            x-stoplight:
+              id: quad9iz4zkk70
+            type: string
+        processing_priority_by_acquisition_type:
+          type: array
+          x-stoplight:
+            id: jmfde8aaimg3r
+          description: Determines the order in which discounts are applied to a transaction based on the acquisition type
+          items:
+            x-stoplight:
+              id: uln9f0hwe7qsc
+            type: object
+            properties:
+              code:
+                type: string
+                x-stoplight:
+                  id: 2lsboj0pv3n2y
+                description: 'Type of acquisition. Possible values: loyalty, pre_purchased, offer, promo_coupon'
+              priority:
+                type: integer
+                x-stoplight:
+                  id: rkqrtlh2rjpkr
+                description: Order in which a discount of an acquisition type is applied in a transaction (lower numbers indicate higher priority)
+              multiplication_factor:
+                type: integer
+                x-stoplight:
+                  id: y1ht5l2m3zf1z
+                description: Maximum number of discount units per category that can be applied in a transaction
+        exclude_interoperability_strategy_between:
+          type: array
+          x-stoplight:
+            id: 4bxctaba2zemp
+          description: 'Defines the rules for excluding interoperability between discounts of different acquisition types. The parameter value is a pair of pipe-separated values that specify which discounts from an acquisition type cannot be combined with discounts from another acquisition type. For example, the parameter value `offer|loyalty` means an offer discount cannot be combined with a loyalty discount at the time of redemption. Possible values are any combination of the following: loyalty, pre_purchased, offer, promo_coupon'
+          items:
+            x-stoplight:
+              id: 67oe65dgpud5o
+            type: string
+        auto_unlock_duration:
+          type: integer
+          x-stoplight:
+            id: i1o55yrysszfi
+          description: Time interval (in minutes) after which a guest account will be automatically unlocked for a transaction
     user_subscriptions:
       title: User Subscriptions (Array Object)
       x-stoplight:
@@ -2619,6 +2837,140 @@ components:
                       discount_type:
                         type: string
                         description: Discount type of discounting rule configured under the benefit
+    converted_category_balances:
+      type: array
+      title: Converted Category Balances (Array Object)
+      x-internal: false
+      x-stoplight:
+        id: 312d2f1c0a2d1
+      items:
+        x-stoplight:
+          id: ybdja8636otq1
+        type: object
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 98igz82l399a5
+            description: Name of the reward (e.g., Fun Cash, Fuel, Charity, etc.)
+          balance:
+            type: string
+            x-stoplight:
+              id: t1vdvli81llnz
+            description: Balance available for the user for this type of reward
+          discount_type:
+            type: string
+            x-stoplight:
+              id: 9jn5edlti8czo
+            description: 'Type of discount. Possible values are: “currency", "fuel_discount", or "charity” depending on the platform configuration.'
+    selected_subscriptions:
+      title: Selected Subscriptions (Array Object)
+      x-stoplight:
+        id: m3j5deilysjtb
+      type: array
+      description: This object is set only in the single scan flow (SSF). The `selected_subscriptions` array object shows one or more user-selected subscriptions if the user would like to redeem them as part of the single scan flow. The user selects the subscription(s) when generating the single scan code on the mobile application. See [Single Scan Flow](/docs/dev-portal-pos/additional-topics/single-scan-flow)
+      minItems: 1
+      items:
+        x-stoplight:
+          id: k28uw6it1fn1j
+        type: object
+        minProperties: 1
+        properties:
+          subscription_id:
+            type: number
+            x-stoplight:
+              id: zcz6lj0kj0o2e
+            description: System-generated unique ID of the subscription that is issued to the guest
+          start_time:
+            type: string
+            x-stoplight:
+              id: xdtgixd3k1zka
+            format: date-time
+            description: Date and time (in ISO 8601 format) from which this current subscription becomes active for a guest
+            minLength: 1
+          end_time:
+            type: string
+            x-stoplight:
+              id: hx644v50ybcsw
+            format: date-time
+            description: Date and time (in ISO 8601 format) until which this current subscription remains active for a guest
+            minLength: 1
+          external_plan_identifier:
+            type: string
+            x-stoplight:
+              id: cqfzj879fl406
+            description: UPC/SKU of the subscription plan as present on third-party applications of enterprise businesses and is configured on this subscription plan. This will be stored in the database, and the business can use it for analytics purposes. This value can be used to make the purchase of the subscription plan instead of using the “plan_id”.
+          plan_id:
+            type: number
+            x-stoplight:
+              id: d25wjlyacbhq6
+            description: System-generated unique ID of the plan against which this subscription is issued for the guest
+          cancelled_at:
+            type: string
+            x-stoplight:
+              id: 5ew4n5w6bki5d
+            format: date-time
+            description: Date and time (in ISO 8601 format) when the subscription is cancelled
+          name:
+            type: string
+            x-stoplight:
+              id: wiq7ag9q76ynh
+            description: 'Name of the subscription plan as provided by the admin at the time of subscription plan creation
+
+
+              Note: The subscription `name` is returned in the language specified in the Accept-Language request header, provided the name has been translated into the relevant language in the Punchh platform. If the translation is not available, then no value is returned for this parameter in the API response. For example, if the header specifies “fr” (French), the subscription name is returned in French only if a French translation is configured in the Punchh platform.'
+          description:
+            type: string
+            x-stoplight:
+              id: 0t16963b89xix
+            description: 'Text description of the subscription plan as configured by the admin on the subscription plan. This is used to explain the offerings of the subscription plan to guests.
+
+
+              Note: The subscription `description` is returned in the language specified in the Accept-Language request header, provided the description has been translated into the relevant language in the Punchh platform. If the translation is not available, then no value is returned for this parameter in the API response. For example, if the header specifies “fr” (French), the subscription description is returned in French only if a French translation for the description is configured in the Punchh platform.'
+          miscellaneous:
+            type: string
+            x-stoplight:
+              id: hqnkb0bhudeg4
+            description: 'Free-form text field that can be used by businesses to enter additional information or a JSON code snippet for greater customization in the mobile app
+
+
+              Note: The subscription `miscellaneous` information is returned in the language specified in the Accept-Language request header, provided it has been translated into the relevant language in the Punchh platform. If the translation is not available, then no value is returned for this parameter in the API response. For example, if the header specifies “fr” (French), the subscription miscellaneous information is returned in French only if a French translation for the miscellaneous is configured in the Punchh platform.'
+          status:
+            type: string
+            x-stoplight:
+              id: yfmzukli8w6qg
+            description: 'Subscriptions issued to a guest can have multiple statuses. Currently supported statuses are:
+
+              1. active: The subscription is active and the guest can enjoy the benefits until its `end_time`.
+
+              2. expired: The subscription is not renewed and expired. The end_time of the subscription is in the past, and it was not cancelled before its expiration.
+
+              3. soft_cancelled: The subscription is cancelled either by the guest or by an admin. The benefits remain valid until the `end_time`.
+
+              4. hard_cancelled: The subscription is cancelled by an admin and the benefits become invalid immediately from the time of cancellation.
+
+              5. renewed: The subscription is renewed.'
+    selected_discount_amount:
+      title: Selected Discount Amount (Object)
+      x-stoplight:
+        id: phfisykhrm5r5
+      type: object
+      description: This object is set for the single scan flow (SSF) for users who are on the Banked Rewards loyalty program. The `selected_discount_amount` object shows the banked currency amount if the user would like to redeem it as part of the single scan flow. The user selects the banked currency when generating the single scan code on the mobile application. If this value is set, trigger the redemption flow. See [Single Scan Flow](/docs/dev-portal-pos/additional-topics/single-scan-flow)
+      x-examples:
+        Example:
+          banked_currency: '2.2'
+          discount_type: DISCOUNT_AMOUNT_GOES_HERE
+      properties:
+        banked_currency:
+          type: string
+          x-stoplight:
+            id: 067b7baw2yu97
+          description: Banked currency amount that the user wants to redeem
+        discount_type:
+          type: string
+          x-stoplight:
+            id: rymdjxo0e0yh7
+          description: Type of discount. The value will be discount_amount
     selected_redeemables_card:
       type: array
       title: Selected Redeemable Cards (Array Object)
@@ -2731,105 +3083,6 @@ components:
             x-stoplight:
               id: p3a424r0k3lpy
             description: Comma-separated values that provide additional details about a redeemable. For example, a redeemable could be a "Food_Item" or "Merchandise", etc. Can be configured for a business in the Punchh platform and attached to a redeemable. If no value is attached to a redeemable, a blank field will be returned.
-    multiple-redemptions:
-      title: Multiple Redemptions (Object)
-      x-stoplight:
-        id: pmmem8gh940r7
-      type: object
-      description: Lists the Punchh platform settings for multiple redemptions for the business. This object is returned in the API response if the `multiple_redemptions_enabled` response parameter is set to true in the Program Meta API for the business.
-      properties:
-        auto_redemption:
-          type: boolean
-          x-stoplight:
-            id: dqiu3pr7t2iis
-          description: Indicates whether auto-redemption of discounts is enabled for the business
-        enable_discount_locking:
-          type: boolean
-          x-stoplight:
-            id: 87xke1u2q4q2j
-          description: Indicates whether reward locking on the transaction is enabled for the business
-        enable_auto_unlock:
-          type: boolean
-          x-stoplight:
-            id: 347agzkuud2hu
-          description: Indicates whether auto-unlocking of the guest account after a time interval is enabled for the business
-        max_redemptions_in_transaction:
-          type: integer
-          x-stoplight:
-            id: fdo71lexjzldo
-          description: Maximum number of discounts that can be applied in a single transaction
-        auto_redemption_discounts:
-          type: array
-          x-stoplight:
-            id: 43vrsvfj377ov
-          description: 'Discount categories eligible for the auto-application of discounts. Possible values: offer, subscription, fuel_reward, discount_amount'
-          items:
-            x-stoplight:
-              id: e6h8nv489mo4v
-            type: string
-        allow_multiple_redemption_on_item:
-          type: boolean
-          x-stoplight:
-            id: raauwtezy9njd
-          description: Indicates whether multiple discounts can be stacked on a menu item for the business
-        allow_qualifying_items_reused:
-          type: boolean
-          x-stoplight:
-            id: sa9em3fu5nt98
-          description: Indicates whether the reuse of qualifier items for the application of multiple discounts is enabled for the business
-        discount_processing_strategy:
-          type: string
-          x-stoplight:
-            id: kshs05y2fagbk
-          description: 'Condition that determines the order in which discounts are applied to a transaction. Possible value: date_of_expiry'
-        processing_priority_by_discount_type:
-          type: array
-          x-stoplight:
-            id: ccvzotvox36t0
-          description: 'Determines the order in which discounts are applied to a transaction based on the discount type. Possible values: reward, promo_coupon, subscription, discount_amount'
-          items:
-            x-stoplight:
-              id: quad9iz4zkk70
-            type: string
-        processing_priority_by_acquisition_type:
-          type: array
-          x-stoplight:
-            id: jmfde8aaimg3r
-          description: Determines the order in which discounts are applied to a transaction based on the acquisition type
-          items:
-            x-stoplight:
-              id: uln9f0hwe7qsc
-            type: object
-            properties:
-              code:
-                type: string
-                x-stoplight:
-                  id: 2lsboj0pv3n2y
-                description: 'Type of acquisition. Possible values: loyalty, pre_purchased, offer, promo_coupon'
-              priority:
-                type: integer
-                x-stoplight:
-                  id: rkqrtlh2rjpkr
-                description: Order in which a discount of an acquisition type is applied in a transaction (lower numbers indicate higher priority)
-              multiplication_factor:
-                type: integer
-                x-stoplight:
-                  id: y1ht5l2m3zf1z
-                description: Maximum number of discount units per category that can be applied in a transaction
-        exclude_interoperability_strategy_between:
-          type: array
-          x-stoplight:
-            id: 4bxctaba2zemp
-          description: 'Defines the rules for excluding interoperability between discounts of different acquisition types. The parameter value is a pair of pipe-separated values that specify which discounts from an acquisition type cannot be combined with discounts from another acquisition type. For example, the parameter value `offer|loyalty` means an offer discount cannot be combined with a loyalty discount at the time of redemption. Possible values are any combination of the following: loyalty, pre_purchased, offer, promo_coupon'
-          items:
-            x-stoplight:
-              id: 67oe65dgpud5o
-            type: string
-        auto_unlock_duration:
-          type: integer
-          x-stoplight:
-            id: i1o55yrysszfi
-          description: Time interval (in minutes) after which a guest account will be automatically unlocked for a transaction
     rewards:
       type: array
       title: Rewards (Array Object)
@@ -2937,350 +3190,6 @@ components:
             x-stoplight:
               id: sre1fwp6rs7gg
             description: Meta data that can be added to a redeemable. This will be returned only if it is configured in the Punchh platform. The maximum length is 255 characters.
-    subscriptions:
-      title: Subscriptions (Array Object)
-      x-stoplight:
-        id: t2vrovoz4i5qv
-      type: array
-      description: This object is returned when the subscriptions feature is available for the business. In case a guest does not have active subscriptions, an empty object is returned.
-      x-examples:
-        example-1:
-          subscriptions:
-          - plan_name: free burger
-            pos_meta: VIP subs
-            subscription_id: 123
-      items:
-        x-stoplight:
-          id: 9jb37m7ysdquo
-        type: object
-        properties:
-          plan_name:
-            type: string
-            x-stoplight:
-              id: q2i09ubhdc6x8
-            description: Name of a subscription plan as provided by the Administrator when creating the subscription plan.
-          pos_meta:
-            type: string
-            x-stoplight:
-              id: 2b5gfv264ff03
-            description: Free form text field to support various subscription related business use cases at POS. The text field length is 24 characters.
-          subscription_id:
-            type: string
-            x-stoplight:
-              id: ru921jzzxw2ni
-            description: System-generated unique ID of the subscription that is issued to the guest.
-    selected_subscriptions:
-      title: Selected Subscriptions (Array Object)
-      x-stoplight:
-        id: m3j5deilysjtb
-      type: array
-      description: This object is set only in the single scan flow (SSF). The `selected_subscriptions` array object shows one or more user-selected subscriptions if the user would like to redeem them as part of the single scan flow. The user selects the subscription(s) when generating the single scan code on the mobile application. See [Single Scan Flow](/docs/dev-portal-pos/additional-topics/single-scan-flow)
-      minItems: 1
-      items:
-        x-stoplight:
-          id: k28uw6it1fn1j
-        type: object
-        minProperties: 1
-        properties:
-          subscription_id:
-            type: number
-            x-stoplight:
-              id: zcz6lj0kj0o2e
-            description: System-generated unique ID of the subscription that is issued to the guest
-          start_time:
-            type: string
-            x-stoplight:
-              id: xdtgixd3k1zka
-            format: date-time
-            description: Date and time (in ISO 8601 format) from which this current subscription becomes active for a guest
-            minLength: 1
-          end_time:
-            type: string
-            x-stoplight:
-              id: hx644v50ybcsw
-            format: date-time
-            description: Date and time (in ISO 8601 format) until which this current subscription remains active for a guest
-            minLength: 1
-          external_plan_identifier:
-            type: string
-            x-stoplight:
-              id: cqfzj879fl406
-            description: UPC/SKU of the subscription plan as present on third-party applications of enterprise businesses and is configured on this subscription plan. This will be stored in the database, and the business can use it for analytics purposes. This value can be used to make the purchase of the subscription plan instead of using the “plan_id”.
-          plan_id:
-            type: number
-            x-stoplight:
-              id: d25wjlyacbhq6
-            description: System-generated unique ID of the plan against which this subscription is issued for the guest
-          cancelled_at:
-            type: string
-            x-stoplight:
-              id: 5ew4n5w6bki5d
-            format: date-time
-            description: Date and time (in ISO 8601 format) when the subscription is cancelled
-          name:
-            type: string
-            x-stoplight:
-              id: wiq7ag9q76ynh
-            description: 'Name of the subscription plan as provided by the admin at the time of subscription plan creation
-
-
-              Note: The subscription `name` is returned in the language specified in the Accept-Language request header, provided the name has been translated into the relevant language in the Punchh platform. If the translation is not available, then no value is returned for this parameter in the API response. For example, if the header specifies “fr” (French), the subscription name is returned in French only if a French translation is configured in the Punchh platform.'
-          description:
-            type: string
-            x-stoplight:
-              id: 0t16963b89xix
-            description: 'Text description of the subscription plan as configured by the admin on the subscription plan. This is used to explain the offerings of the subscription plan to guests.
-
-
-              Note: The subscription `description` is returned in the language specified in the Accept-Language request header, provided the description has been translated into the relevant language in the Punchh platform. If the translation is not available, then no value is returned for this parameter in the API response. For example, if the header specifies “fr” (French), the subscription description is returned in French only if a French translation for the description is configured in the Punchh platform.'
-          miscellaneous:
-            type: string
-            x-stoplight:
-              id: hqnkb0bhudeg4
-            description: 'Free-form text field that can be used by businesses to enter additional information or a JSON code snippet for greater customization in the mobile app
-
-
-              Note: The subscription `miscellaneous` information is returned in the language specified in the Accept-Language request header, provided it has been translated into the relevant language in the Punchh platform. If the translation is not available, then no value is returned for this parameter in the API response. For example, if the header specifies “fr” (French), the subscription miscellaneous information is returned in French only if a French translation for the miscellaneous is configured in the Punchh platform.'
-          status:
-            type: string
-            x-stoplight:
-              id: yfmzukli8w6qg
-            description: 'Subscriptions issued to a guest can have multiple statuses. Currently supported statuses are:
-
-              1. active: The subscription is active and the guest can enjoy the benefits until its `end_time`.
-
-              2. expired: The subscription is not renewed and expired. The end_time of the subscription is in the past, and it was not cancelled before its expiration.
-
-              3. soft_cancelled: The subscription is cancelled either by the guest or by an admin. The benefits remain valid until the `end_time`.
-
-              4. hard_cancelled: The subscription is cancelled by an admin and the benefits become invalid immediately from the time of cancellation.
-
-              5. renewed: The subscription is renewed.'
-    selected_discount_amount:
-      title: Selected Discount Amount (Object)
-      x-stoplight:
-        id: phfisykhrm5r5
-      type: object
-      description: This object is set for the single scan flow (SSF) for users who are on the Banked Rewards loyalty program. The `selected_discount_amount` object shows the banked currency amount if the user would like to redeem it as part of the single scan flow. The user selects the banked currency when generating the single scan code on the mobile application. If this value is set, trigger the redemption flow. See [Single Scan Flow](/docs/dev-portal-pos/additional-topics/single-scan-flow)
-      x-examples:
-        Example:
-          banked_currency: '2.2'
-          discount_type: DISCOUNT_AMOUNT_GOES_HERE
-      properties:
-        banked_currency:
-          type: string
-          x-stoplight:
-            id: 067b7baw2yu97
-          description: Banked currency amount that the user wants to redeem
-        discount_type:
-          type: string
-          x-stoplight:
-            id: rymdjxo0e0yh7
-          description: Type of discount. The value will be discount_amount
-    balance:
-      type: object
-      title: Balance (Object)
-      description: Account balance of the user
-      x-stoplight:
-        id: 2860cdb5c385a
-      properties:
-        banked_rewards:
-          type: string
-          x-stoplight:
-            id: s9azb7sq7v7a7
-          description: Banked rewards of the user account. This value is set only if the program type is banked rewards based; else it will be 0.
-        expired_membership_level:
-          type: string
-          x-stoplight:
-            id: 7ll6shmnyoq1k
-          description: Expired membership level
-          x-nullable: true
-        initial_visits:
-          type: integer
-          x-stoplight:
-            id: o56ro09d36949
-          description: Captures all of the visits that the guest made up to the time of migration
-        membership_level:
-          type: string
-          x-stoplight:
-            id: rbizsxqgeuvmv
-          description: Membership level of the user
-          x-nullable: true
-        membership_level_id:
-          type: string
-          x-stoplight:
-            id: 6imlg0oigvm61
-          description: Membership level ID of the user
-          x-nullable: true
-        net_balance:
-          type: number
-          x-stoplight:
-            id: xjqs7fj807lp3
-          description: Net available balance of the current account. This value always shows the available balance of the user, whether visits, banked rewards, or points.
-        net_debits:
-          type: number
-          x-stoplight:
-            id: 1esd934uke4fv
-          description: Net debits of the user
-        pending_points:
-          type: integer
-          x-stoplight:
-            id: uvygafo95ytjg
-          description: Pending points of the user
-        points_balance:
-          type: integer
-          x-stoplight:
-            id: 5xaa0f7l7b341
-          description: 'Returns the points balance of the user account. This value gets reset based on the point conversion value once reached, as configured in the Punchh platform.
-
-
-            Note: It will increase only as per points earned, and it resets once the threshold value is reached to convert points into currency or reward.'
-        signup_anniversary_day:
-          type: string
-          x-stoplight:
-            id: 5i2amz3lrt52e
-          description: Sign-up anniversary day of the current account
-        total_credits:
-          type: number
-          format: double
-          x-stoplight:
-            id: oi85i9hfuacvy
-          description: Total credits of the current account
-        total_debits:
-          type: string
-          x-stoplight:
-            id: rhkeop02nmk3x
-          description: Total debits of the current account
-        total_point_credits:
-          type: integer
-          x-stoplight:
-            id: zfegz75tgm5oy
-          description: Total points credits of the user
-        total_redeemable_visits:
-          type: integer
-          x-stoplight:
-            id: 6kdl323x4lq6c
-          description: Total redeemable visits of the user
-        total_visits:
-          type: integer
-          x-stoplight:
-            id: tionfl6ij3p87
-          description: Total number of loyalty visits
-        unredeemed_cards:
-          type: string
-          x-stoplight:
-            id: izzbyzykv9r7x
-          description: Number of unredeemed cards of a user. This value is set only if the program type is visit-based; else it will be 0.
-    selected_redeemables:
-      type: array
-      title: Selected Redeemables (Array Object)
-      description: This object is set for the single scan flow (SSF) for users that are on the Points Unlock Redeemables loyalty program. The `selected_redeemables` object shows one or more redeemables if the user would like to redeem them as part of the single scan flow. The user selects the redeemable(s) when generating the single scan code on the mobile application. If this value is set, trigger the redemption flow. See [Single Scan Flow](/docs/dev-portal-pos/additional-topics/single-scan-flow)
-      x-examples:
-        Example:
-        - id: ID_GOES_HERE
-          created_at: '2022-09-02T15:03:00Z'
-          updated_at: '2022-09-10T15:07:14Z'
-          status: activated
-          points: 10
-          discount_amount: null
-          name: By points
-          description: ''
-          redeemable_properties: ''
-          count: null
-          discount_type: redeemable
-          image: IMAGE_URL_GOES_HERE
-          end_date_tz: null
-          start_date_tz: null
-      x-stoplight:
-        id: 0c38c3d9e5b8b
-      items:
-        x-stoplight:
-          id: 0iocgq9bjb1ti
-        type: object
-        properties:
-          id:
-            type: integer
-            x-stoplight:
-              id: u4ug2539pji46
-            format: int64
-            description: Redeemable ID
-            minimum: -9007199254740991
-            maximum: 9007199254740991
-          name:
-            type: string
-            x-stoplight:
-              id: juk5daqg92fb4
-            description: Name of the redeemable
-          description:
-            type: string
-            x-stoplight:
-              id: hob5lq6qutwgh
-            description: Description that explains redeemable as configured in the Punchh platform
-          created_at:
-            type: string
-            x-stoplight:
-              id: oe8xkokoviah0
-            format: date-time
-            description: Date/time when the user was created in the system, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
-            enum:
-            - YYYY-MM-DDThh:mm:ssZ
-          count:
-            type: integer
-            x-stoplight:
-              id: e3kxficl7751d
-            description: Number of redeemables selected by the user on the mobile app for redemption at POS.
-          start_date_tz:
-            type: string
-            x-stoplight:
-              id: jdjvuq7k4gffq
-            format: date-time
-            enum:
-            - YYYY-MM-DDThh:mm:ssZ
-            description: Start date/time of the redeemable, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
-          end_date_tz:
-            type: string
-            x-stoplight:
-              id: yl70yioadwhbw
-            format: date-time
-            enum:
-            - YYYY-MM-DDThh:mm:ssZ
-            description: Expiry date/time of the redeemable, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
-          updated_at:
-            type: string
-            x-stoplight:
-              id: w6hmji96h8cfl
-            format: date-time
-            description: Date/time when the redeemable was updated, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
-          image:
-            type: string
-            x-stoplight:
-              id: f104xvt6ohqo0
-            description: Image URL of the redeemable
-          status:
-            type: string
-            x-stoplight:
-              id: 6vqg5l4ws2i1j
-            description: The redemption status of a redeemable. Currently, only the value "Unredeemed" will be returned. This signifies that the reward has not been redeemed by the user.
-          points:
-            type: integer
-            x-stoplight:
-              id: iqjaszco20c2j
-            description: Points associated with the redeemable
-          discount_amount:
-            type: integer
-            x-stoplight:
-              id: 0jpj0gtghotou
-            description: Discount amount associated with the redeemable
-          discount_type:
-            type: string
-            x-stoplight:
-              id: tck11epxxzkri
-            description: Type of discount. The value will be redeemable.
-          redeemable_properties:
-            type: string
-            x-stoplight:
-              id: r6m3agn4rough
-            description: Comma-separated values that provide additional details about a redeemable. For example, a redeemable could be a "Food_Item" or "Merchandise", etc. Can be configured for a business in the Punchh platform and attached to a redeemable. If no value is attached to a redeemable, a blank field will be returned.
     selected_rewards:
       type: array
       title: Selected Rewards (Array Object)
@@ -3387,32 +3296,6 @@ components:
             x-stoplight:
               id: a7hxwtxhwix0o
             description: Comma-separated values that provide additional details about a reward. For example, a redeemable could be a "Food_Item" or "Merchandise", etc. Can be configured for a business in the Punchh platform and attached to a redeemable. If no value is attached to a redeemable, a blank field will be returned.
-    converted_category_balances:
-      type: array
-      title: Converted Category Balances (Array Object)
-      x-internal: false
-      x-stoplight:
-        id: 312d2f1c0a2d1
-      items:
-        x-stoplight:
-          id: ybdja8636otq1
-        type: object
-        properties:
-          name:
-            type: string
-            x-stoplight:
-              id: 98igz82l399a5
-            description: Name of the reward (e.g., Fun Cash, Fuel, Charity, etc.)
-          balance:
-            type: string
-            x-stoplight:
-              id: t1vdvli81llnz
-            description: Balance available for the user for this type of reward
-          discount_type:
-            type: string
-            x-stoplight:
-              id: 9jn5edlti8czo
-            description: 'Type of discount. Possible values are: “currency", "fuel_discount", or "charity” depending on the platform configuration.'
     account_balance:
       title: Account Balance (Object)
       x-stoplight:
@@ -3539,6 +3422,109 @@ components:
             x-stoplight:
               id: yzmpjwxouf4sw
             description: Type of discount. The value will be redemption_code.
+    balance:
+      type: object
+      title: Balance (Object)
+      description: Account balance of the user
+      x-stoplight:
+        id: 2860cdb5c385a
+      properties:
+        banked_rewards:
+          type: string
+          x-stoplight:
+            id: s9azb7sq7v7a7
+          description: Banked rewards of the user account. This value is set only if the program type is banked rewards based; else it will be 0.
+        expired_membership_level:
+          type: string
+          x-stoplight:
+            id: 7ll6shmnyoq1k
+          description: Expired membership level
+          x-nullable: true
+        initial_visits:
+          type: integer
+          x-stoplight:
+            id: o56ro09d36949
+          description: Captures all of the visits that the guest made up to the time of migration
+        membership_level:
+          type: string
+          x-stoplight:
+            id: rbizsxqgeuvmv
+          description: Membership level of the user
+          x-nullable: true
+        membership_level_id:
+          type: string
+          x-stoplight:
+            id: 6imlg0oigvm61
+          description: Membership level ID of the user
+          x-nullable: true
+        net_balance:
+          type: number
+          x-stoplight:
+            id: xjqs7fj807lp3
+          description: Net available balance of the current account. This value always shows the available balance of the user, whether visits, banked rewards, or points.
+        net_debits:
+          type: number
+          x-stoplight:
+            id: 1esd934uke4fv
+          description: Net debits of the user
+        pending_points:
+          type: integer
+          x-stoplight:
+            id: uvygafo95ytjg
+          description: Pending points of the user
+        points_balance:
+          type: integer
+          x-stoplight:
+            id: 5xaa0f7l7b341
+          description: 'Returns the points balance of the user account. This value gets reset based on the point conversion value once reached, as configured in the Punchh platform.
+
+
+            Note: It will increase only as per points earned, and it resets once the threshold value is reached to convert points into currency or reward.'
+        signup_anniversary_day:
+          type: string
+          x-stoplight:
+            id: 5i2amz3lrt52e
+          description: Sign-up anniversary day of the current account
+        total_credits:
+          type: number
+          format: double
+          x-stoplight:
+            id: oi85i9hfuacvy
+          description: Total credits of the current account
+        total_debits:
+          type: string
+          x-stoplight:
+            id: rhkeop02nmk3x
+          description: Total debits of the current account
+        total_point_credits:
+          type: integer
+          x-stoplight:
+            id: zfegz75tgm5oy
+          description: Total points credits of the user
+        total_redeemable_visits:
+          type: integer
+          x-stoplight:
+            id: 6kdl323x4lq6c
+          description: Total redeemable visits of the user
+        total_visits:
+          type: integer
+          x-stoplight:
+            id: tionfl6ij3p87
+          description: Total number of loyalty visits
+        unredeemed_cards:
+          type: string
+          x-stoplight:
+            id: izzbyzykv9r7x
+          description: Number of unredeemed cards of a user. This value is set only if the program type is visit-based; else it will be 0.
+  parameters:
+    Authorization:
+      schema:
+        type: string
+        default: Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE
+      name: Authorization
+      in: header
+      required: true
+      description: This is a combination of unique API key as well as business key (UUID) as the Authorization header.
 x-stoplight:
   id: 7d3d29e919e4b
 x-ext-urls: {}

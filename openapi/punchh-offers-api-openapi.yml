@@ -5,10 +5,7 @@ info:
   contact:
     name: Punchh Dev Support
     url: https://developers.punchh.com
-  description: 'Punchh provides a robust platform for offering loyalty programs to customers. When a business integrates its back-end with the Punchh server, the Punchh APIs become instrumental in executing loyalty programs for enrolled customers, primarily via business-branded mobile apps and websites tailored by Punchh.
-
-
-    To establish integration with the Punchh APIs, you need to understand how they are invoked and what responses are returned by the Punchh server. You can call APIs using any suitable API test client, such as Postman. Thus, the response to every API call made in Postman under a chosen environment (in app and/or platform) is reflected in the app and/or platform.'
+  description: Punchh provides a robust platform for offering loyalty programs to customers.
 servers:
 - url: https://SERVER_NAME_GOES_HERE.punchh.com
 tags:
@@ -170,9 +167,9 @@ paths:
         - Via push notification on the phone screen. The value `app_open_via_push` is passed with the `event_type` parameter.
 
 
-        For more information about push notifications and payload based on different types of notifications, including platform configurations required to enable push notifications, see [Push Notifications](/docs/dev-portal-mobile/additional-topics/notifications-push).
+        For more information about push notifications and payload based on different types of notifications, including platform configurations required to enable push notifications, see Push Notifications.
 
-        Also, see [Notifications and Badges Count](/docs/dev-portal-mobile/additional-topics/notifications-badgecounts) for information about various use cases and best practices.'
+        Also, see Notifications and Badges Count for information about various use cases and best practices.'
       operationId: mobile_mark_read
       tags:
       - Offers
@@ -219,13 +216,6 @@ paths:
         description: ''
 components:
   parameters:
-    Accept-Language:
-      schema:
-        type: string
-        default: en
-      name: Accept-Language
-      in: header
-      description: Preferred language
     User-Agent:
       schema:
         type: string
@@ -234,13 +224,13 @@ components:
       name: User-Agent
       description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
       required: true
-    signature:
+    Authorization:
       schema:
         type: string
-        default: '{{$$.env.signature}}'
-      name: x-pch-digest
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
       in: header
-      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
       required: true
     Content-Type:
       schema:
@@ -258,49 +248,22 @@ components:
       in: header
       description: Advertises which content types the client is able to understand
       required: true
-    Authorization:
+    Accept-Language:
       schema:
         type: string
-        default: Bearer ACCESS_TOKEN_GOES_HERE
-      name: Authorization
+        default: en
+      name: Accept-Language
       in: header
-      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      description: Preferred language
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
       required: true
   schemas:
-    Coupons:
-      type: array
-      title: Coupons (Array Object)
-      items:
-        type: object
-        properties:
-          code:
-            type: string
-            description: Alphanumeric coupon code that a user must use to receive an offer
-          image_url:
-            type: string
-            description: URL of the image of the reward that will be displayed in the app
-          name:
-            type: string
-            description: Name of the coupon campaign through which the coupon was given to a user
-          description:
-            type: string
-            description: Description of the offer that will be available to a user after using the coupon code
-            x-nullable: true
-          start_date:
-            type: string
-            description: Coupon start date
-            enum:
-            - YYYY-MM-DD
-            format: date
-            x-nullable: true
-          end_date:
-            type: string
-            description: Coupon expiration date
-            enum:
-            - YYYY-MM-DD
-            format: date
-      x-stoplight:
-        id: 16135004ce2f7
     redemption_details:
       type: object
       description: 'Returns the details of a redemption done by a user
@@ -382,35 +345,6 @@ components:
       title: Redemption Details (Object)
       x-stoplight:
         id: bc87eb1cec331
-    Notifications:
-      type: array
-      description: Returns the details of the notifications received by a user. A maximum of 10 notifications will be fetched.
-      title: Notifications (Array Object)
-      items:
-        type: object
-        properties:
-          id:
-            type: integer
-            description: ID of the notification
-          kind:
-            type: string
-            description: 'Type of notification. There are three types of notifications that a user can receive: ''system'', ''campaign'', and ''news''.'
-          message:
-            type: string
-            description: Message sent to the user in the notification
-          read_at:
-            type: string
-            enum:
-            - YYYY-MM-DDThh:mm:ssZ
-            format: date-time
-            x-nullable: true
-          created_at:
-            type: string
-            enum:
-            - YYYY-MM-DDThh:mm:ssZ
-            format: date-time
-      x-stoplight:
-        id: c1638b1a83f29
     rewards:
       type: array
       description: Contains information about the available rewards of the user
@@ -526,6 +460,69 @@ components:
             x-stoplight:
               id: supgkji7b6rag
             description: Whether the offer is enabled for auto-redemption or not
+    Notifications:
+      type: array
+      description: Returns the details of the notifications received by a user. A maximum of 10 notifications will be fetched.
+      title: Notifications (Array Object)
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            description: ID of the notification
+          kind:
+            type: string
+            description: 'Type of notification. There are three types of notifications that a user can receive: ''system'', ''campaign'', and ''news''.'
+          message:
+            type: string
+            description: Message sent to the user in the notification
+          read_at:
+            type: string
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+            format: date-time
+            x-nullable: true
+          created_at:
+            type: string
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+            format: date-time
+      x-stoplight:
+        id: c1638b1a83f29
+    Coupons:
+      type: array
+      title: Coupons (Array Object)
+      items:
+        type: object
+        properties:
+          code:
+            type: string
+            description: Alphanumeric coupon code that a user must use to receive an offer
+          image_url:
+            type: string
+            description: URL of the image of the reward that will be displayed in the app
+          name:
+            type: string
+            description: Name of the coupon campaign through which the coupon was given to a user
+          description:
+            type: string
+            description: Description of the offer that will be available to a user after using the coupon code
+            x-nullable: true
+          start_date:
+            type: string
+            description: Coupon start date
+            enum:
+            - YYYY-MM-DD
+            format: date
+            x-nullable: true
+          end_date:
+            type: string
+            description: Coupon expiration date
+            enum:
+            - YYYY-MM-DD
+            format: date
+      x-stoplight:
+        id: 16135004ce2f7
 x-stoplight:
   id: bf6eddb435209
 x-ext-urls: {}

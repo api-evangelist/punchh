@@ -90,10 +90,10 @@ paths:
       description: 'The Force Redemption API allows administrators (e.g., restaurant managers, support staff, or corporate team members) to override normal redemption flows and manually or programmatically redeem an offer or promotion on behalf of a guest. This functionality is particularly useful in various customer support, operational, and exception-handling scenarios.
 
 
-        <b>Note</b>: The Force Redemption API is intended primarily for support-related scenarios where offers need to be redeemed on a limited scale. It should not be used for bulk expirations or large-scale force redemptions. For example, if a brand has distributed offers through a campaign and later runs out of stock for the promotion, this API should not be used to bulk-expire the offers already available to guests in order to discontinue the campaign.
+        Note: The Force Redemption API is intended primarily for support-related scenarios where offers need to be redeemed on a limited scale. It should not be used for bulk expirations or large-scale force redemptions. For example, if a brand has distributed offers through a campaign and later runs out of stock for the promotion, this API should not be used to bulk-expire the offers already available to guests in order to discontinue the campaign.
 
 
-        <b>Usage Limit</b>: Permissible usage is capped at 500 requests per minute (RPM), with a daily limit of up to 100,000 requests. If you need to process more than 100,000 requests in a single day, contact your Punchh representative.'
+        Usage Limit: Permissible usage is capped at 500 requests per minute (RPM), with a daily limit of up to 100,000 requests. If you need to process more than 100,000 requests in a single day, contact your Punchh representative.'
       requestBody:
         content:
           application/json:

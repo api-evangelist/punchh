@@ -165,9 +165,7 @@ paths:
                       invalid_email_password:
                       - Sorry, Invalid Email/Password.
       summary: Sign in
-      description: 'Logs a user into the app of a business and returns the user''s information in the response
-
-        '
+      description: Logs a user into the app of a business and returns the user's information in the response
       operationId: mobile_signin
       tags:
       - Users
@@ -311,7 +309,7 @@ paths:
                     message: Sending invalid Entity
                     code: 422
       summary: Log in With Facebook
-      description: 'This API is invoked when a user registers on a business app using Facebook ID, email address, first name, last name, etc. '
+      description: This API is invoked when a user registers on a business app using Facebook ID, email address, first name, last name, etc.
       tags:
       - Users
       operationId: mobile_connect_with_facebook
@@ -450,9 +448,7 @@ paths:
         This behavior occurs because Apple Sign-In is used only during the initial authentication process. Apple does not provide a callback or notification to Punchh when a user revokes access to the app.
 
 
-        As a result, the user remains signed in until their Punchh session expires or they explicitly log out of the app. If the user logs out and subsequently attempts to sign in again using Apple Sign-In, Apple will prompt the user to reauthorize the app to use the their Apple ID for authentication before the sign-in process can be completed.
-
-        '
+        As a result, the user remains signed in until their Punchh session expires or they explicitly log out of the app. If the user logs out and subsequently attempts to sign in again using Apple Sign-In, Apple will prompt the user to reauthorize the app to use the their Apple ID for authentication before the sign-in process can be completed.'
       operationId: mobile_login_with_apple
       tags:
       - Users
@@ -1121,7 +1117,19 @@ paths:
                       device_already_shared:
                       - Device already shared with maximum number of guests allowed.
       summary: Sign up / Register
-      description: "Registers a user's profile on the app of a business\n\nNote: If the business is using referral code, the actual `first_name` and `last_name` of the guest must be passed because the referral code will be generated using the `first_name`, `last_name`, and some random characters. Also, if you do not pass the `first_name` or the `last_name`, the API response may be delayed or time out. \n\n### Using Referral Code As Invite Code in the Sign-up Process\n\nWhen a user signs up using the Sign up / Register API, the API returns a referral code within the user object. The user can share this code with non-loyalty users to invite them to join the business loyalty program.\n\nWhen a referred user signs up and enters the shared referral code in the mobile app, this `referral_code` must be passed in the `invite_code` request parameter when calling the Sign up / Register API."
+      description: 'Registers a user''s profile on the app of a business
+
+
+        Note: If the business is using referral code, the actual `first_name` and `last_name` of the guest must be passed because the referral code will be generated using the `first_name`, `last_name`, and some random characters. Also, if you do not pass the `first_name` or the `last_name`, the API response may be delayed or time out.
+
+
+        ### Using Referral Code As Invite Code in the Sign-up Process
+
+
+        When a user signs up using the Sign up / Register API, the API returns a referral code within the user object. The user can share this code with non-loyalty users to invite them to join the business loyalty program.
+
+
+        When a referred user signs up and enters the shared referral code in the mobile app, this `referral_code` must be passed in the `invite_code` request parameter when calling the Sign up / Register API.'
       operationId: mobile_sign_up
       tags:
       - Users
@@ -2198,7 +2206,7 @@ paths:
                       invalid_access_token:
                       - 'Error: access_token not found or is incorrect! Valid access_token of the user required'
       summary: Create User Relation
-      description: "Creates a user relation in the system to indicate a user's relationship with another person. Valid relations that can be created are 'spouse' and 'kid'.\n\n "
+      description: Creates a user relation in the system to indicate a user's relationship with another person. Valid relations that can be created are 'spouse' and 'kid'.
       operationId: mobile_create_user_relation
       tags:
       - Users
@@ -3237,7 +3245,7 @@ paths:
                     auto_select: true
                     start_time: '2021-04-28T13:59:47+05:30'
       summary: List All Deals
-      description: 'Returns all available deals for a user. The `page` and `per_page` request parameters determine the page(s) returned and the number of deals returned per page. If the `per_page` parameter is not sent, the API returns up to 10 deals in the response.  '
+      description: Returns all available deals for a user. The `page` and `per_page` request parameters determine the page(s) returned and the number of deals returned per page. If the `per_page` parameter is not sent, the API returns up to 10 deals in the response.
       operationId: mobile_list_all_deals
       tags:
       - Users
@@ -3347,9 +3355,7 @@ paths:
                   value:
                     estimated_points: 100
       summary: Estimate Points Earning
-      description: 'Returns a prediction of how many points can be earned before submitting the transaction. The estimate is derived from the base earning rate of the business and does not account for special promotions or campaigns.
-
-        '
+      description: Returns a prediction of how many points can be earned before submitting the transaction. The estimate is derived from the base earning rate of the business and does not account for special promotions or campaigns.
       operationId: mobile_estimate_points
       tags:
       - Users
@@ -4022,12 +4028,12 @@ paths:
       description: 'Enables a business to display the number of points that are expiring each month for users in the mobile app. The API returns all future dates on which points are scheduled to expire.
 
 
-        <b>Prerequisite</b>
+        Prerequisite
 
 
         To make API calls, the backend flag "track_reward_banked_points" and the "Expires After" (unredeemed point expiry) option in the Punchh platform must be enabled for the business. If one or both are disabled in Punchh for your business, the API will return an error with this message: "Your current loyalty program configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue."
 
-        <!--Cockpit > Earnings > Checkin Expiry > Expires After-->
+        Earnings > Checkin Expiry > Expires After-->
 
 
         Note: This API is currently supported for "points convert to rewards" and "points unlock redeemables" loyalty programs.
@@ -4341,7 +4347,16 @@ paths:
                   value:
                     errors:
                     - Google ID token is not valid
-      description: "Enables mobile application users to log in using Google Sign-in. \n\nThe following must be configured for the business in the Punchh platform to make a successful call to the API:\n\n1\\. The Enable Google Sign-in option must be enabled in the Punchh platform. Contact your Punchh representative to update this Punchh platform configuration. <!--Cockpit > Guests > Miscellaneous Config--> \n\n2\\. Google Web Client ID, Google iOS Client ID / Google Andriod Client ID, and Google Web Client Secret must be specified in the Punchh platform. Contact your Punchh representative to update this Punchh platform configuration.<!--Whitelabel > Services > Google Sign-in-->"
+      description: 'Enables mobile application users to log in using Google Sign-in.
+
+
+        The following must be configured for the business in the Punchh platform to make a successful call to the API:
+
+
+        1\. The Enable Google Sign-in option must be enabled in the Punchh platform. Contact your Punchh representative to update this Punchh platform configuration. Guests > Miscellaneous Config-->
+
+
+        2\. Google Web Client ID, Google iOS Client ID / Google Andriod Client ID, and Google Web Client Secret must be specified in the Punchh platform. Contact your Punchh representative to update this Punchh platform configuration. Services > Google Sign-in-->'
       parameters:
       - $ref: '#/components/parameters/signature'
       - $ref: '#/components/parameters/Accept'
@@ -4484,7 +4499,22 @@ paths:
       - $ref: '#/components/parameters/signature'
       - $ref: '#/components/parameters/Accept-Language'
       - $ref: '#/components/parameters/Accept'
-      description: "Enables users to reactivate their deactivated profiles directly from the mobile app if 1) guests are allowed to raise reactivation requests via mobile app and iFrame <!--Cockpit > Guests > Guest Reactivation--> and 2) the admin indicates that a user profile is eligible for future activation when deactivating the user profile in the Punchh platform. \n\nThe API returns a 200 response and sends a reactivation email with the subject line \"Reactivate account instructions\" to the user. The email message will contain instructions on how to proceed with the reactivation process and a link to complete the reactivation request. When the user clicks the link, a message is sent to the Punchh server for account reactivation. A message is displayed to the user stating \"Your reactivation request has been received successfully. Please check the status in the next 24-48 hours.\"\n\nIf the phone number of the user is used for reactivation on the mobile app (applicable only when the phone number sign-up feature is enabled for the business), the user is prompted to enter the OTP (One-Time Password) sent to the user's phone number. After the user submits the OTP, the request for reactivating the user account is sent to the Punchh server. The sign-up feature can be enabled in the Punchh platform for new businesses. <!--Cockpit > Dashboard > Major Features > Enable Sign up via Phone Number-->\n\nIf email alerts are enabled for admins for all reactivation requests <!--Cockpit > Guests > Guest Reactivation--> and if at least one admin is selected, the admin will receive email alerts for each reactivation request raised by users. \n\nThe <b>Guests > Reactivation Requested</b> tab in the Punchh platform lists all pending requests for account reactivation. The business can manually approve all reactivation requests made through the mobile app via the Punchh platform or opt for automatic approval.\n\nNote: Contact your Punchh representative to update these Punchh platform configurations. "
+      description: 'Enables users to reactivate their deactivated profiles directly from the mobile app if 1) guests are allowed to raise reactivation requests via mobile app and iFrame Guests > Guest Reactivation--> and 2) the admin indicates that a user profile is eligible for future activation when deactivating the user profile in the Punchh platform.
+
+
+        The API returns a 200 response and sends a reactivation email with the subject line "Reactivate account instructions" to the user. The email message will contain instructions on how to proceed with the reactivation process and a link to complete the reactivation request. When the user clicks the link, a message is sent to the Punchh server for account reactivation. A message is displayed to the user stating "Your reactivation request has been received successfully. Please check the status in the next 24-48 hours."
+
+
+        If the phone number of the user is used for reactivation on the mobile app (applicable only when the phone number sign-up feature is enabled for the business), the user is prompted to enter the OTP (One-Time Password) sent to the user''s phone number. After the user submits the OTP, the request for reactivating the user account is sent to the Punchh server. The sign-up feature can be enabled in the Punchh platform for new businesses. Dashboard > Major Features > Enable Sign up via Phone Number-->
+
+
+        If email alerts are enabled for admins for all reactivation requests Guests > Guest Reactivation--> and if at least one admin is selected, the admin will receive email alerts for each reactivation request raised by users.
+
+
+        The Guests > Reactivation Requested tab in the Punchh platform lists all pending requests for account reactivation. The business can manually approve all reactivation requests made through the mobile app via the Punchh platform or opt for automatic approval.
+
+
+        Note: Contact your Punchh representative to update these Punchh platform configurations.'
       tags:
       - Users
       x-stoplight:
@@ -4812,7 +4842,67 @@ paths:
                   value:
                     error: Gift card(s) found! Please cashout/remove from account before deletion.
       summary: Delete a User
-      description: "Marks a deactivated user for deletion from the Punchh platform\n\n**Note**: Before deleting the user, deactivate the user via the [Deactivate a User API](/docs/dev-portal-platform-functions/b3A6NTAyODA0OTI-deactivate-a-user). \n\nThe number of days within which Punchh will delete a user can be configured for a business in the Punchh platform. The default value is set to 7 days. Contact your Punchh representative to update this configuration. After an API call is made to delete a user, the system waits for the configured number of days before actually deleting the user. For example, if the configured days to delete the user is 7 days, the system will delete the user on the 8th day (i.e., after waiting a full 7 days).\n<!-- Cockpit > Guests > Miscellaneous Config > User incinerate days-->\n\n\n**Note: Once a guest is marked for deletion, there is no API available to reverse the action.**\n\nWhen deleting a user, include one of the following deletion reasons: \n- delete_general\n- delete_test_data \n- anonymize_forget_me \n- anonymize_inactivity \n\nIf you don’t include a reason, the system does not fully delete the user’s data; instead it anonymizes the user's account email to \"@archive.com\" and retains the user's data. Although there are multiple reasons for both deletion and anonymization, the operation for each is the same. The reason is used solely for documentation and tracking purposes. \n\n### **Delete**\nDeletes the user and all associated transaction data permanently:\n\n* We recommend this option when deleting a test user or some other valid reason for also purging transaction history\n\n* 'General' and 'Test Data' sub-reasons have the same functionality.  It is important to provide the accurate reason for analysis purposes.\n\n**{\"reason\": \"delete_general\"}**\n*Use this option to permanately delete a guest account.*\n\n**{\"reason\": \"delete_test_data\"}**\n\n### **Anonymize**\n Deletes all of the user's PII (personally identifiable information), while keeping anonymized transaction data for reporting integrity.  This is in compliance with GDPR/CCPA standards:  \n * We recommend this option by default to keep accurate transaction history for valid guests while still respecting their privacy\n\n* 'Forget Me' and 'Inactivity' sub-reasons have the same functionality.  It is important to provide the accurate reason for analysis purposes.   \n\n**{\"reason\": \"anonymize_forget_me\"}**\n\n**{\"reason\": \"anonymize_inactivity\"}**"
+      description: 'Marks a deactivated user for deletion from the Punchh platform
+
+
+        **Note**: Before deleting the user, deactivate the user via the Deactivate a User API.
+
+
+        The number of days within which Punchh will delete a user can be configured for a business in the Punchh platform. The default value is set to 7 days. Contact your Punchh representative to update this configuration. After an API call is made to delete a user, the system waits for the configured number of days before actually deleting the user. For example, if the configured days to delete the user is 7 days, the system will delete the user on the 8th day (i.e., after waiting a full 7 days).
+
+        Guests > Miscellaneous Config > User incinerate days-->
+
+
+        **Note: Once a guest is marked for deletion, there is no API available to reverse the action.**
+
+
+        When deleting a user, include one of the following deletion reasons:
+
+        - delete_general
+
+        - delete_test_data
+
+        - anonymize_forget_me
+
+        - anonymize_inactivity
+
+
+        If you don’t include a reason, the system does not fully delete the user’s data; instead it anonymizes the user''s account email to "@archive.com" and retains the user''s data. Although there are multiple reasons for both deletion and anonymization, the operation for each is the same. The reason is used solely for documentation and tracking purposes.
+
+
+        ### **Delete**
+
+        Deletes the user and all associated transaction data permanently:
+
+
+        * We recommend this option when deleting a test user or some other valid reason for also purging transaction history
+
+
+        * ''General'' and ''Test Data'' sub-reasons have the same functionality. It is important to provide the accurate reason for analysis purposes.
+
+
+        **{"reason": "delete_general"}**
+
+        *Use this option to permanately delete a guest account.*
+
+
+        **{"reason": "delete_test_data"}**
+
+
+        ### **Anonymize**
+
+        Deletes all of the user''s PII (personally identifiable information), while keeping anonymized transaction data for reporting integrity. This is in compliance with GDPR/CCPA standards:
+
+        * We recommend this option by default to keep accurate transaction history for valid guests while still respecting their privacy
+
+
+        * ''Forget Me'' and ''Inactivity'' sub-reasons have the same functionality. It is important to provide the accurate reason for analysis purposes.
+
+
+        **{"reason": "anonymize_forget_me"}**
+
+
+        **{"reason": "anonymize_inactivity"}**'
       operationId: dashboard_delete_user
       tags:
       - Users
@@ -4859,7 +4949,7 @@ paths:
         Note: Due to fraud protections, guests are permitted to update their birthdays only once. Subsequent attempts to modify the birthday parameter using the API will fail. In such a case, even though the API returns a 200 response, the user''s birthday is not updated in Punchh.
 
 
-        If you are updating custom profile fields, see [Updating Custom Profile Fields With the Punchh Platform API](/docs/dev-portal-platform-functions/ebc7b58d69e82-updating-custom-profile-fields-with-the-punchh-platform-api) for details. '
+        If you are updating custom profile fields, see Updating Custom Profile Fields With the Punchh Platform API for details.'
       responses:
         '200':
           description: OK
@@ -5937,10 +6027,10 @@ paths:
                     errors:
                       phone_uniqueness_disabled: Phone number uniqueness is disabled, you can’t search using the phone
       operationId: get-api2-dashboard-users-info
-      description: 'This API lets you fetch a user’s information by user ID, phone number, or email address. You cannot search using phone number if phone number uniqueness is disabled. The option to validate the uniqueness of phone number across guests must be enabled in the Punchh platform. Contact your Punchh representative to update this Punchh platform configuration. <!-- Cockpit > Guests > Guest Validation -->
+      description: 'This API lets you fetch a user’s information by user ID, phone number, or email address. You cannot search using phone number if phone number uniqueness is disabled. The option to validate the uniqueness of phone number across guests must be enabled in the Punchh platform. Contact your Punchh representative to update this Punchh platform configuration. Guests > Guest Validation -->
 
 
-        The Punchh platform provides businesses an option to exclude a user’s personal information (e.g., birthday, city, state, email, etc.) from the response. This configuration is available in the Punchh platform. Fields selected from the <b>User PII Fields</b> drop-down list are excluded from the API response. Contact your Punchh representative to update this Punchh platform configuration. <!-- Cockpit > Guests > Miscellaneous Config -->'
+        The Punchh platform provides businesses an option to exclude a user’s personal information (e.g., birthday, city, state, email, etc.) from the response. This configuration is available in the Punchh platform. Fields selected from the User PII Fields drop-down list are excluded from the API response. Contact your Punchh representative to update this Punchh platform configuration. Guests > Miscellaneous Config -->'
       parameters:
       - $ref: '#/components/parameters/authorization-header'
       x-stoplight:
@@ -6145,6 +6235,460 @@ paths:
     - url: https://SERVER_NAME_GOES_HERE.punchh.com
 components:
   schemas:
+    background-content:
+      type: object
+      description: "This is the content that makes the background of the message.\n\n```json\n{\n    \"type\": \"image\",\n    \"url\": \"IMAGE_URL_GOES_HERE\",\n    \"alt_text\": \"Black Background Image\",\n    \"initial_frame\": \"\"\n}\n```"
+      title: Background Content (Object)
+      properties:
+        type:
+          type: string
+          description: The type of the background content. It can be an image or a color.
+        url:
+          type: string
+          description: The URL of the image that will be used as the background
+        alt_text:
+          type: string
+          description: Alternate text that appears if the app cannot render the background content of the message
+        initial_frame:
+          type: string
+          description: The initial frame or first frame is what appears behind the play button before a user taps it to start playing the video.
+      x-stoplight:
+        id: 80de922cbc5ff
+    response-menu-items:
+      title: Menu Items (Array Object)
+      x-stoplight:
+        id: lsmmevd84zcsf
+      type: array
+      items:
+        x-stoplight:
+          id: 12qjoo9ej1acb
+        type: object
+        properties:
+          item_name:
+            type: string
+            x-stoplight:
+              id: axqs34w91dcg6
+            description: Name of the menu item
+          item_qty:
+            type: string
+            x-stoplight:
+              id: tjf2haq05zi5g
+            description: Quantity ordered by the customer. If the item is a modifier (such as extra cheese on a pizza base item), the quantity reflects the total number of base items included. For example, if you have a pizza base item with a certain item ID and a quantity of two, and the pizzas each have an extra cheese modifier added to them, then the modifier quantity should be two to account for the modifier across both pizzas. This applies only to base items of the same ID. If different base items include the same modifier, you do not need to sum the modifiers.
+          item_amount:
+            type: number
+            x-stoplight:
+              id: uw5i7i1owa7zn
+            format: float
+            description: The total price of the line item or the amount of the discount that you applied to an item. In case of multiple quantities, this means the sum total of all item amounts. This value is always represented as a positive number, even when the item is a discount.
+          menu_item_type:
+            type: string
+            x-stoplight:
+              id: 3bhm3vrzg0m7y
+            description: 'The classification based on the item type:
+
+
+              M - Menu item ( + or - )
+
+
+              D - Discount (negative). Either internal or Punchh will always evaluate lines as ( - ) regardless of the sign assigned in the API call
+
+
+              S - Service item. Any item representing money received that is not a sale. For example, service charges, delivery fees, tips, purchase of gift cards/certificates, etc.
+
+
+              T - Tax item. Taxes of all sorts
+
+
+              P - Payment item. Visa, MasterCard, cash, gift card/certificate (when used to pay for the order)'
+          menu_item_id:
+            type: integer
+            x-stoplight:
+              id: 1p9gohm0bhxos
+            description: Unique identifier for the item
+          menu_family:
+            type: string
+            x-stoplight:
+              id: 75hzwgdhqqf2m
+            description: The family that the item belongs to. The family is the subcategory for the item. A blank value means the item does not belong to a family.
+          menu_major_group:
+            type: string
+            x-stoplight:
+              id: bfj7s8t3n78jk
+            description: The major group that the item belongs to. The major group is the parent category for the item. A blank value means the item does not belong to a major group.
+          serial_number:
+            type: string
+            x-stoplight:
+              id: 92xkqaijbrjds
+            description: A serialized number that differentiates distinct menu items on a receipt. The value identifies which items on the receipt are base items and which items are modifiers to the base items. For example, a main menu item (such as pizza) may have serial number "1.0", and the associated modifiers (such as "extra cheese", "olives", and "jalapenos") may have serial numbers "1.1", "1.2", and "1.3" respectively. Serialization is limited to one decimal point, so you can only modify the base item. You cannot modify a modifier with 1.x.x, and so on.
+      description: Returns a list of menu items in the API response
+    account-balance-details:
+      type: object
+      title: Account Balance Details (Object)
+      x-stoplight:
+        id: 2a0aec02b7738
+      properties:
+        banked_currency:
+          type: number
+          format: float
+          description: Value of the currency that a user has available. A "null" value indicates that the business does not support banking of points into currency.
+        checkins_on_current_card:
+          type: integer
+          description: "A card gets completed after a user does a configured number of check-ins. \nFor example, if a business configuration requires 7 check-ins to complete a card, and a user does only 3 check-ins, the value of this parameter will be 3."
+        current_membership_level_id:
+          description: Unique ID of the current membership level of a user
+          type: integer
+        current_membership_level_expiring_on:
+          type: string
+          description: If a business has a rolling expiry of membership levels, a particular membership level will expire after a period that is configured in the Punchh platform. A "null" value indicates that the business does not have a rolling expiry of membership levels.
+          enum:
+          - YYYY-MM-DD
+          format: date
+        expiring_banked_currency (Deprecated):
+          type: number
+          format: float
+          description: If a business has expiring banked currency configured in the Punchh platform, the banked currency will expire in a FIFO (first-in, first-out) pattern. This returns the value of the banked currency that will expire. A "null" value indicates that the business is not configured to support expiring banked currency.
+        banked_currency_expiring_on (Deprecated):
+          type: string
+          description: If a business is configured to support expiring banked currency, this returns the date on which it will expire. A "null" value indicates that the business is not configured to support expiring banked currency.
+          enum:
+          - YYYY-MM-DD
+          format: date
+        pending_points:
+          type: number
+          format: float
+          description: Points of a user that are in the pending state after a check-in. They are not added to the user's account before finalization. See [Pending Points Feature Overview](/docs/dev-portal-pos/ZG9jOjUwMjgzOTAz-pending-points-feature-overview) for details.
+        redeemed_cards:
+          type: integer
+          description: The number of cards that a user has redeemed in the user's lifetime
+        total_loyalty_visits:
+          type: integer
+          description: Total of the visits that a user has earned by doing loyalty check-ins and those visits that were migrated from an older loyalty program (if a business had an older loyalty program and wants to migrate its users to Punchh's loyalty program)
+          x-nullable: true
+        unredeemed_cards:
+          type: integer
+          description: Total unredeemed cards available to a user
+          x-nullable: true
+        current_membership_level_name:
+          type: string
+          description: Current membership level of the user
+          x-nullable: true
+        lifetime_points:
+          type: number
+          format: float
+          description: Sum of all loyalty points earned by a user from the time the user signed up
+        redeemable_points:
+          type: number
+          format: float
+          description: 'The total of all loyalty points earned by a user that satisfy all of the following conditions:
+
+            * approved
+
+            * non-pending
+
+            * unexpired'
+        unbanked_points:
+          type: number
+          format: float
+          description: For a business that allows banking of points, this value represents the number of points the user has and has not banked yet. For example, if a business configuration requires 100 points to be banked to $10, and a user has accumulated 55 points, this value will be 55. When the user earns another 45 points, the user will be banked to $10 and this value will then become 0.
+        membership_qualification_points:
+          type: integer
+          x-stoplight:
+            id: gq5ah9naehygk
+          description: 'The value of points earned toward progress across membership tiers. This is related to the migration strategy that allows businesses to "Consider Only Initial Points for Tier Migration". Currently, support for this parameter is limited to program type Points Unlock Redeemables, Membership Re-evaluation Strategy: Reset Based on Points Earned and Account Re-evaluation Strategy of Guest Inactivity.'
+    Event-details-object:
+      type: object
+      properties:
+        redemption_status:
+          type: string
+          description: 'Status of the redemption. The values returned can be:
+
+
+            - redeemable: The redemption can be redeemed at the POS.
+
+
+            - expired: The redemption has expired and becomes unusable for the user.
+
+
+            - honored: The redemption has already been processed successfully and redeemed by the user at a POS.
+
+
+            - cancelled: The redemption can be voided by a user by approaching the POS if a redemption is done by mistake and the user wants to cancel it.'
+        created_at:
+          type: string
+          description: Date/time when the redemption was created in the system
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+        redeemable_id:
+          type: integer
+          description: Unique ID of the redeemable
+        redeemable_name:
+          type: string
+          description: Name of the redeemable
+        redeemed_value:
+          type:
+          - 'null'
+          - number
+          description: 'For a business with banked currency, a currency value will be returned (e.g., 10 would mean $10).
+
+
+            For a business without banked currency, a points value will be returned (e.g., 10 would mean 10 points).'
+          format: float
+        redemption_image_url:
+          type: string
+          description: URL of the image displayed in the app to depict the redeemable
+        redemption_message:
+          type: string
+          description: A descriptive message that tells a user what the user has redeemed
+        updated_at:
+          type: string
+          description: Date/time at which the redemption was updated in the system
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+        redemption_id:
+          type: integer
+          description: Unique ID of the redemption that has been created
+        redemption_tracking_code:
+          type: string
+          description: Code that a user must submit at the POS to receive the redeemed reward
+        expiring_at:
+          type: string
+          description: Date/time when the redemption_tracking_code expires and the user cannot use it at the POS
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+      description: Returned in the response of the [User Account History](/docs/dev-portal-mobile/f340773e6bef7-user-account-history) API.
+      title: Event Details (Object)
+      x-stoplight:
+        id: a44caeddc8412
+    rewards:
+      type: array
+      description: Contains information about the available rewards of the user
+      title: Rewards (Array Object)
+      x-stoplight:
+        id: 593a939bbb6fa
+      items:
+        x-stoplight:
+          id: boujhknpz5coc
+        type: object
+        properties:
+          becomes_available_at:
+            type: string
+            x-stoplight:
+              id: im795luv5su27
+            description: Date/time at which the reward becomes redeemable by a user
+            format: date-time
+          campaign_type:
+            type: string
+            x-stoplight:
+              id: 7f6xlqvvehpqk
+            description: Type of campaign through which a user received a reward. Currently, the only possible value is "loyalty". A null value indicates that the user did not get the reward through a campaign.
+          created_at:
+            type: string
+            x-stoplight:
+              id: os20mdeoqfq3z
+            format: date-time
+            description: Date/time when the reward was created for a user in the system
+          description:
+            type: string
+            x-stoplight:
+              id: 6hg1xma6nl1w4
+            description: Description of the reward
+          discount_channel:
+            type: string
+            x-stoplight:
+              id: 0ti076e2v9ohc
+            description: 'Channels where the reward can be used. Possible values are:
+
+
+              - online_only - online orders
+
+              - offline_only - POS
+
+              - all - both'
+          discount_amount:
+            type: integer
+            x-stoplight:
+              id: e7waqx8jk4ulk
+            description: Discount amount associated with the reward
+          reward_image_url:
+            type: string
+            x-stoplight:
+              id: v0wl0df7rs844
+            description: URL of the image displayed in the app to depict the reward
+          name:
+            type: string
+            x-stoplight:
+              id: e2ho1o5jtdjin
+            description: Name of the reward
+          read_at:
+            type: string
+            x-stoplight:
+              id: p3uv2kyj3085t
+            format: date-time
+            description: Date/time when the reward notification was read by a user in the app
+          reward_properties:
+            type: string
+            x-stoplight:
+              id: v4jg31ks5gly0
+            description: Additional properties of the reward (e.g., "merchandise", "order ahead", "promo", etc.) that can be configured in the Punchh platform
+          store_numbers:
+            type: array
+            x-stoplight:
+              id: eu3v3y9m8zkxi
+            description: Store numbers of all locations where the reward can be redeemed. An empty array indicates that the reward can be redeemed at any location.
+            items:
+              x-stoplight:
+                id: 2cijorr4t6693
+              type: string
+          franchisee_id:
+            type: integer
+            x-stoplight:
+              id: aqdjczff8wolf
+            description: ID of the franchisee who credited the reward to the user's account. This could be done through a campaign or admin generosity.
+          meta_data:
+            type: string
+            x-stoplight:
+              id: zzj946kbbq1xw
+            description: Metadata that can be added to a redeemable. This will be returned only if it is configured in the Punchh platform. The maximum length is 255 characters.
+          redeemable_created_at:
+            type: string
+            x-stoplight:
+              id: mlwoe89xeubtv
+            format: date-time
+            description: Date/time when the redeemable was created in the Punchh platform
+          reward_id:
+            type: integer
+            x-stoplight:
+              id: rvc7fk1jyance
+            format: int64
+            description: Unique ID of the reward
+          expiring_at:
+            type: string
+            x-stoplight:
+              id: 40snv09u8jow8
+            description: Date/time when the reward expires
+            format: date-time
+          redemption_details:
+            $ref: '#/components/schemas/redemption_details'
+          auto_select:
+            type: boolean
+            x-stoplight:
+              id: supgkji7b6rag
+            description: Whether the offer is enabled for auto-redemption or not
+    cta:
+      type: array
+      items:
+        type: object
+        properties:
+          type:
+            type: string
+            description: 'Three possible values can be returned to the mobile client:
+
+              - web_link: The CTA button prompts the user to open the link in a web browser available on the mobile client.
+
+              - deep_link: The CTA button takes the user to a particular deep link specified in the app.
+
+              - drill_down: The CTA button opens the detailed view of the rich message received by the app.'
+          link:
+            type: string
+            description: 'The URL to which the user will be directed, depending on the type of the CTA
+
+              '
+          label:
+            type: string
+            description: 'The text that appears on the CTA button in the app
+
+              '
+          cta_type:
+            type: string
+            description: 'More than one CTA object can be returned to the app. The cta_type can have two possible values: primary and secondary. The primary CTA is higher priority and is the main CTA button. The secondary CTA can be something like a terms and conditions link that can be rendered appropriately in the app.'
+      description: "Short for call to action, a device designed to prompt an immediate response from a user\n\n```json\n[\n    {\n        \"type\": \"external_web_link\",\n        \"link\": \"URL_GOES_HERE\",\n        \"label\": \"More Details\",\n        \"cta_type\": \"primary\"\n    },\n    {\n        \"type\": \"external_web_link\",\n        \"link\": \"URL_GOES_HERE\",\n        \"label\": \"Terms & Conditions\",\n        \"cta_type\": \"secondary\"\n    }\n]\n```\n"
+      title: CTA (Array Object)
+      x-stoplight:
+        id: 80d7d22f4d11c
+    redemption_details:
+      type: object
+      description: 'Returns the details of a redemption done by a user
+
+        '
+      properties:
+        redemption_status:
+          type: string
+          description: 'Status of the redemption. The values returned can be:
+
+
+            - redeemable: The redemption can be redeemed at the POS.
+
+
+            - expired: The redemption has expired and becomes unusable for the user.
+
+
+            - honored: The redemption has already been processed successfully and redeemed by the user at a POS.
+
+
+            - cancelled: The redemption can be voided by a user by approaching the POS if a redemption is done by mistake and the user wants to cancel it.'
+        created_at:
+          type: string
+          description: 'Date/time when the redemption was created in the system
+
+            '
+        redeemable_id:
+          type: integer
+          description: 'Unique ID of the redeemable
+
+            '
+        redeemable_name:
+          type: string
+          description: 'Name of the redeemable
+
+            '
+        redeemed_value:
+          type: string
+          description: 'For a business with banked currency, a currency value will be returned (e.g., 10 would mean $10).
+
+
+            For a business without banked currency, a points value will be returned (e.g., 10 would mean 10 points).'
+        redemption_image_url:
+          type: string
+          description: 'URL of the image displayed in the app to depict the redeemable
+
+            '
+        redemption_message:
+          type: string
+          description: 'A descriptive message that tells a user what the user has redeemed
+
+            '
+        redeemable_description:
+          type: string
+          description: 'Description of the redeemable
+
+            '
+        updated_at:
+          type: string
+          description: 'Date/time at which the redemption was updated in the system
+
+            '
+        redemption_id:
+          type: integer
+          description: 'Unique ID of the redemption that has been created
+
+            '
+        redemption_tracking_code:
+          type: string
+          description: 'Code that a user must submit at the POS to receive the redeemed reward
+
+            '
+        expiring_at:
+          type: string
+          description: Date/time when the redemption_tracking_code expires and the user cannot use it at the POS
+        location_id:
+          type: integer
+          description: ID of the location associated with the with the redemption (where the redemption code is generated). If no location ID is provided, then the ID for the default location is returned.
+      title: Redemption Details (Object)
+      x-stoplight:
+        id: bc87eb1cec331
     Notifications:
       type: array
       description: Returns the details of the notifications received by a user. A maximum of 10 notifications will be fetched.
@@ -6174,6 +6718,101 @@ components:
             format: date-time
       x-stoplight:
         id: c1638b1a83f29
+    Coupons:
+      type: array
+      title: Coupons (Array Object)
+      items:
+        type: object
+        properties:
+          code:
+            type: string
+            description: Alphanumeric coupon code that a user must use to receive an offer
+          image_url:
+            type: string
+            description: URL of the image of the reward that will be displayed in the app
+          name:
+            type: string
+            description: Name of the coupon campaign through which the coupon was given to a user
+          description:
+            type: string
+            description: Description of the offer that will be available to a user after using the coupon code
+            x-nullable: true
+          start_date:
+            type: string
+            description: Coupon start date
+            enum:
+            - YYYY-MM-DD
+            format: date
+            x-nullable: true
+          end_date:
+            type: string
+            description: Coupon expiration date
+            enum:
+            - YYYY-MM-DD
+            format: date
+      x-stoplight:
+        id: 16135004ce2f7
+    Converted-Category-Balance:
+      type: array
+      title: Converted Category Balances (Array Object)
+      items:
+        type: object
+        properties:
+          category_id:
+            type: integer
+            description: Category ID
+          name:
+            type: string
+            description: Name of the reward
+          source_type:
+            type: string
+            description: Type of source used for conversion
+          source_value:
+            type: integer
+            description: Threshold value at which points get converted
+          converted_type:
+            type: string
+            description: This could be "currency", "fuel_discount", or "charity" depending on the platform configuration.
+          converted_value:
+            type: number
+            description: Multiplier for the converted type
+            format: float
+          balance:
+            type: integer
+            description: Balance available for the user for this type of reward
+      x-stoplight:
+        id: ba04d89cdeea7
+    user-relation-attribute:
+      title: User Relation Attributes (Object)
+      x-stoplight:
+        id: dtzj3oncqzeji
+      type: object
+      properties:
+        relation:
+          type: string
+          description: Relation to the user. Valid values are "spouse" and "kid".
+        name:
+          type: string
+          description: Name of the relative
+        birthday:
+          type: string
+          enum:
+          - YYYY-MM-DD
+          format: date
+          description: Birthday of the relative
+        created_at:
+          type: string
+          description: Date/time when the user’s relationship details were added to the Punchh system, in ISO 8601 format
+          format: date-time
+          examples:
+          - '2023-08-18T12:32:13Z'
+        updated_at:
+          type: string
+          format: date-time
+          description: Date/time when the user’s relationship details were updated in the Punchh system, in ISO 8601 format
+          examples:
+          - '2023-08-18T12:32:13Z'
+      description: Contains information about the relationship details of a user, for example, spouse and kid information. If the user account does not have relationship details, the API returns an empty object in the response.
     menu-items:
       type: array
       title: Menu Items (Array Object)
@@ -6250,6 +6889,41 @@ components:
         - menu_family
         - menu_major_group
         - serial_number
+    hero-content:
+      type: object
+      description: "This is the first visual content that a user encounters when the user views a rich message. This can be an image or a video.\n\n```json\n{\n    \"type\": \"image\",\n    \"url\": \"IMAGE_URL_GOES_HERE\",\n    \"alt_text\": \"Fries\",\n    \"initial_frame\": \"\"\n}\n```\n"
+      title: Hero Content (Object)
+      properties:
+        type:
+          type: string
+          description: Hero content can be an image or a video.
+        url:
+          type: string
+          description: The URL of the image/video that will be used as the hero content in a rich message
+        alt_text:
+          type: string
+          description: Alternate text that appears if the app cannot render the hero content of the message
+        initial_frame:
+          type: string
+          description: The initial frame or first frame is what appears behind the play button before a user taps it to start playing the video.
+      x-stoplight:
+        id: 4779761c509cd
+    profile_field_answers:
+      title: Profile Field Answers (Object)
+      x-stoplight:
+        id: lme68mm8va3zz
+      type: object
+      properties:
+        upf0:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+        upf1:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+        upf2:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+      description: Answers given by the user while filling in the user profile. The user submits answers to profile field questions that are configured in the Punchh platform. A total of 25 answers can be submitted. The keys range from 'upf0' to 'upf24'. If questions have multiple answers, the values should be separated by a | character (pipe).
     User-object:
       type: object
       description: Includes details about the users who are registered on a particular business
@@ -6472,354 +7146,6 @@ components:
             id: kbj7omjru7mry
           format: date-time
           description: Date and time when the user became a loyalty member
-    Event-details-object:
-      type: object
-      properties:
-        redemption_status:
-          type: string
-          description: 'Status of the redemption. The values returned can be:
-
-
-            - redeemable: The redemption can be redeemed at the POS.
-
-
-            - expired: The redemption has expired and becomes unusable for the user.
-
-
-            - honored: The redemption has already been processed successfully and redeemed by the user at a POS.
-
-
-            - cancelled: The redemption can be voided by a user by approaching the POS if a redemption is done by mistake and the user wants to cancel it.'
-        created_at:
-          type: string
-          description: Date/time when the redemption was created in the system
-          enum:
-          - YYYY-MM-DDThh:mm:ssZ
-          format: date-time
-        redeemable_id:
-          type: integer
-          description: Unique ID of the redeemable
-        redeemable_name:
-          type: string
-          description: Name of the redeemable
-        redeemed_value:
-          type:
-          - 'null'
-          - number
-          description: 'For a business with banked currency, a currency value will be returned (e.g., 10 would mean $10).
-
-
-            For a business without banked currency, a points value will be returned (e.g., 10 would mean 10 points).'
-          format: float
-        redemption_image_url:
-          type: string
-          description: URL of the image displayed in the app to depict the redeemable
-        redemption_message:
-          type: string
-          description: A descriptive message that tells a user what the user has redeemed
-        updated_at:
-          type: string
-          description: Date/time at which the redemption was updated in the system
-          enum:
-          - YYYY-MM-DDThh:mm:ssZ
-          format: date-time
-        redemption_id:
-          type: integer
-          description: Unique ID of the redemption that has been created
-        redemption_tracking_code:
-          type: string
-          description: Code that a user must submit at the POS to receive the redeemed reward
-        expiring_at:
-          type: string
-          description: Date/time when the redemption_tracking_code expires and the user cannot use it at the POS
-          enum:
-          - YYYY-MM-DDThh:mm:ssZ
-          format: date-time
-      description: Returned in the response of the [User Account History](/docs/dev-portal-mobile/f340773e6bef7-user-account-history) API.
-      title: Event Details (Object)
-      x-stoplight:
-        id: a44caeddc8412
-    redemption_details:
-      type: object
-      description: 'Returns the details of a redemption done by a user
-
-        '
-      properties:
-        redemption_status:
-          type: string
-          description: 'Status of the redemption. The values returned can be:
-
-
-            - redeemable: The redemption can be redeemed at the POS.
-
-
-            - expired: The redemption has expired and becomes unusable for the user.
-
-
-            - honored: The redemption has already been processed successfully and redeemed by the user at a POS.
-
-
-            - cancelled: The redemption can be voided by a user by approaching the POS if a redemption is done by mistake and the user wants to cancel it.'
-        created_at:
-          type: string
-          description: 'Date/time when the redemption was created in the system
-
-            '
-        redeemable_id:
-          type: integer
-          description: 'Unique ID of the redeemable
-
-            '
-        redeemable_name:
-          type: string
-          description: 'Name of the redeemable
-
-            '
-        redeemed_value:
-          type: string
-          description: 'For a business with banked currency, a currency value will be returned (e.g., 10 would mean $10).
-
-
-            For a business without banked currency, a points value will be returned (e.g., 10 would mean 10 points).'
-        redemption_image_url:
-          type: string
-          description: 'URL of the image displayed in the app to depict the redeemable
-
-            '
-        redemption_message:
-          type: string
-          description: 'A descriptive message that tells a user what the user has redeemed
-
-            '
-        redeemable_description:
-          type: string
-          description: 'Description of the redeemable
-
-            '
-        updated_at:
-          type: string
-          description: 'Date/time at which the redemption was updated in the system
-
-            '
-        redemption_id:
-          type: integer
-          description: 'Unique ID of the redemption that has been created
-
-            '
-        redemption_tracking_code:
-          type: string
-          description: 'Code that a user must submit at the POS to receive the redeemed reward
-
-            '
-        expiring_at:
-          type: string
-          description: Date/time when the redemption_tracking_code expires and the user cannot use it at the POS
-        location_id:
-          type: integer
-          description: ID of the location associated with the with the redemption (where the redemption code is generated). If no location ID is provided, then the ID for the default location is returned.
-      title: Redemption Details (Object)
-      x-stoplight:
-        id: bc87eb1cec331
-    hero-content:
-      type: object
-      description: "This is the first visual content that a user encounters when the user views a rich message. This can be an image or a video.\n\n```json\n{\n    \"type\": \"image\",\n    \"url\": \"IMAGE_URL_GOES_HERE\",\n    \"alt_text\": \"Fries\",\n    \"initial_frame\": \"\"\n}\n```\n"
-      title: Hero Content (Object)
-      properties:
-        type:
-          type: string
-          description: Hero content can be an image or a video.
-        url:
-          type: string
-          description: The URL of the image/video that will be used as the hero content in a rich message
-        alt_text:
-          type: string
-          description: Alternate text that appears if the app cannot render the hero content of the message
-        initial_frame:
-          type: string
-          description: The initial frame or first frame is what appears behind the play button before a user taps it to start playing the video.
-      x-stoplight:
-        id: 4779761c509cd
-    Converted-Category-Balance:
-      type: array
-      title: Converted Category Balances (Array Object)
-      items:
-        type: object
-        properties:
-          category_id:
-            type: integer
-            description: Category ID
-          name:
-            type: string
-            description: Name of the reward
-          source_type:
-            type: string
-            description: Type of source used for conversion
-          source_value:
-            type: integer
-            description: Threshold value at which points get converted
-          converted_type:
-            type: string
-            description: This could be "currency", "fuel_discount", or "charity" depending on the platform configuration.
-          converted_value:
-            type: number
-            description: Multiplier for the converted type
-            format: float
-          balance:
-            type: integer
-            description: Balance available for the user for this type of reward
-      x-stoplight:
-        id: ba04d89cdeea7
-    Coupons:
-      type: array
-      title: Coupons (Array Object)
-      items:
-        type: object
-        properties:
-          code:
-            type: string
-            description: Alphanumeric coupon code that a user must use to receive an offer
-          image_url:
-            type: string
-            description: URL of the image of the reward that will be displayed in the app
-          name:
-            type: string
-            description: Name of the coupon campaign through which the coupon was given to a user
-          description:
-            type: string
-            description: Description of the offer that will be available to a user after using the coupon code
-            x-nullable: true
-          start_date:
-            type: string
-            description: Coupon start date
-            enum:
-            - YYYY-MM-DD
-            format: date
-            x-nullable: true
-          end_date:
-            type: string
-            description: Coupon expiration date
-            enum:
-            - YYYY-MM-DD
-            format: date
-      x-stoplight:
-        id: 16135004ce2f7
-    background-content:
-      type: object
-      description: "This is the content that makes the background of the message.\n\n```json\n{\n    \"type\": \"image\",\n    \"url\": \"IMAGE_URL_GOES_HERE\",\n    \"alt_text\": \"Black Background Image\",\n    \"initial_frame\": \"\"\n}\n```"
-      title: Background Content (Object)
-      properties:
-        type:
-          type: string
-          description: The type of the background content. It can be an image or a color.
-        url:
-          type: string
-          description: The URL of the image that will be used as the background
-        alt_text:
-          type: string
-          description: Alternate text that appears if the app cannot render the background content of the message
-        initial_frame:
-          type: string
-          description: The initial frame or first frame is what appears behind the play button before a user taps it to start playing the video.
-      x-stoplight:
-        id: 80de922cbc5ff
-    user-relation-attribute:
-      title: User Relation Attributes (Object)
-      x-stoplight:
-        id: dtzj3oncqzeji
-      type: object
-      properties:
-        relation:
-          type: string
-          description: Relation to the user. Valid values are "spouse" and "kid".
-        name:
-          type: string
-          description: Name of the relative
-        birthday:
-          type: string
-          enum:
-          - YYYY-MM-DD
-          format: date
-          description: Birthday of the relative
-        created_at:
-          type: string
-          description: Date/time when the user’s relationship details were added to the Punchh system, in ISO 8601 format
-          format: date-time
-          examples:
-          - '2023-08-18T12:32:13Z'
-        updated_at:
-          type: string
-          format: date-time
-          description: Date/time when the user’s relationship details were updated in the Punchh system, in ISO 8601 format
-          examples:
-          - '2023-08-18T12:32:13Z'
-      description: Contains information about the relationship details of a user, for example, spouse and kid information. If the user account does not have relationship details, the API returns an empty object in the response.
-    response-menu-items:
-      title: Menu Items (Array Object)
-      x-stoplight:
-        id: lsmmevd84zcsf
-      type: array
-      items:
-        x-stoplight:
-          id: 12qjoo9ej1acb
-        type: object
-        properties:
-          item_name:
-            type: string
-            x-stoplight:
-              id: axqs34w91dcg6
-            description: Name of the menu item
-          item_qty:
-            type: string
-            x-stoplight:
-              id: tjf2haq05zi5g
-            description: Quantity ordered by the customer. If the item is a modifier (such as extra cheese on a pizza base item), the quantity reflects the total number of base items included. For example, if you have a pizza base item with a certain item ID and a quantity of two, and the pizzas each have an extra cheese modifier added to them, then the modifier quantity should be two to account for the modifier across both pizzas. This applies only to base items of the same ID. If different base items include the same modifier, you do not need to sum the modifiers.
-          item_amount:
-            type: number
-            x-stoplight:
-              id: uw5i7i1owa7zn
-            format: float
-            description: The total price of the line item or the amount of the discount that you applied to an item. In case of multiple quantities, this means the sum total of all item amounts. This value is always represented as a positive number, even when the item is a discount.
-          menu_item_type:
-            type: string
-            x-stoplight:
-              id: 3bhm3vrzg0m7y
-            description: 'The classification based on the item type:
-
-
-              M - Menu item ( + or - )
-
-
-              D - Discount (negative). Either internal or Punchh will always evaluate lines as ( - ) regardless of the sign assigned in the API call
-
-
-              S - Service item. Any item representing money received that is not a sale. For example, service charges, delivery fees, tips, purchase of gift cards/certificates, etc.
-
-
-              T - Tax item. Taxes of all sorts
-
-
-              P - Payment item. Visa, MasterCard, cash, gift card/certificate (when used to pay for the order)'
-          menu_item_id:
-            type: integer
-            x-stoplight:
-              id: 1p9gohm0bhxos
-            description: Unique identifier for the item
-          menu_family:
-            type: string
-            x-stoplight:
-              id: 75hzwgdhqqf2m
-            description: The family that the item belongs to. The family is the subcategory for the item. A blank value means the item does not belong to a family.
-          menu_major_group:
-            type: string
-            x-stoplight:
-              id: bfj7s8t3n78jk
-            description: The major group that the item belongs to. The major group is the parent category for the item. A blank value means the item does not belong to a major group.
-          serial_number:
-            type: string
-            x-stoplight:
-              id: 92xkqaijbrjds
-            description: A serialized number that differentiates distinct menu items on a receipt. The value identifies which items on the receipt are base items and which items are modifiers to the base items. For example, a main menu item (such as pizza) may have serial number "1.0", and the associated modifiers (such as "extra cheese", "olives", and "jalapenos") may have serial numbers "1.1", "1.2", and "1.3" respectively. Serialization is limited to one decimal point, so you can only modify the base item. You cannot modify a modifier with 1.x.x, and so on.
-      description: Returns a list of menu items in the API response
     UserBalanceMessages:
       type: object
       description: 'Returned in response to the [Fetch User Balance](/docs/dev-portal-mobile/fb962621d8f10-fetch-user-balance) API
@@ -6911,22 +7237,6 @@ components:
           - YYYY-MM-DDThh:mm:ssZ
           format: date-time
           description: Date/time when the message was deleted, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
-    profile_field_answers:
-      title: Profile Field Answers (Object)
-      x-stoplight:
-        id: lme68mm8va3zz
-      type: object
-      properties:
-        upf0:
-          type: string
-          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
-        upf1:
-          type: string
-          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
-        upf2:
-          type: string
-          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
-      description: Answers given by the user while filling in the user profile. The user submits answers to profile field questions that are configured in the Punchh platform. A total of 25 answers can be submitted. The keys range from 'upf0' to 'upf24'. If questions have multiple answers, the values should be separated by a | character (pipe).
     access_token-Object:
       type: object
       description: An access token is needed to identify the user making the API request.
@@ -6954,226 +7264,102 @@ components:
           description: Actions or data the bearer of the token is allowed to perform or access
           items:
             type: string
-    account-balance-details:
+    discount-details:
+      title: Discount Details (Object)
+      x-stoplight:
+        id: rxva1rbmaqhz3
       type: object
-      title: Account Balance Details (Object)
-      x-stoplight:
-        id: 2a0aec02b7738
+      description: List of a discount's defining attributes
       properties:
-        banked_currency:
-          type: number
-          format: float
-          description: Value of the currency that a user has available. A "null" value indicates that the business does not support banking of points into currency.
-        checkins_on_current_card:
-          type: integer
-          description: "A card gets completed after a user does a configured number of check-ins. \nFor example, if a business configuration requires 7 check-ins to complete a card, and a user does only 3 check-ins, the value of this parameter will be 3."
-        current_membership_level_id:
-          description: Unique ID of the current membership level of a user
-          type: integer
-        current_membership_level_expiring_on:
-          type: string
-          description: If a business has a rolling expiry of membership levels, a particular membership level will expire after a period that is configured in the Punchh platform. A "null" value indicates that the business does not have a rolling expiry of membership levels.
-          enum:
-          - YYYY-MM-DD
-          format: date
-        expiring_banked_currency (Deprecated):
-          type: number
-          format: float
-          description: If a business has expiring banked currency configured in the Punchh platform, the banked currency will expire in a FIFO (first-in, first-out) pattern. This returns the value of the banked currency that will expire. A "null" value indicates that the business is not configured to support expiring banked currency.
-        banked_currency_expiring_on (Deprecated):
-          type: string
-          description: If a business is configured to support expiring banked currency, this returns the date on which it will expire. A "null" value indicates that the business is not configured to support expiring banked currency.
-          enum:
-          - YYYY-MM-DD
-          format: date
-        pending_points:
-          type: number
-          format: float
-          description: Points of a user that are in the pending state after a check-in. They are not added to the user's account before finalization. See [Pending Points Feature Overview](/docs/dev-portal-pos/ZG9jOjUwMjgzOTAz-pending-points-feature-overview) for details.
-        redeemed_cards:
-          type: integer
-          description: The number of cards that a user has redeemed in the user's lifetime
-        total_loyalty_visits:
-          type: integer
-          description: Total of the visits that a user has earned by doing loyalty check-ins and those visits that were migrated from an older loyalty program (if a business had an older loyalty program and wants to migrate its users to Punchh's loyalty program)
-          x-nullable: true
-        unredeemed_cards:
-          type: integer
-          description: Total unredeemed cards available to a user
-          x-nullable: true
-        current_membership_level_name:
-          type: string
-          description: Current membership level of the user
-          x-nullable: true
-        lifetime_points:
-          type: number
-          format: float
-          description: Sum of all loyalty points earned by a user from the time the user signed up
-        redeemable_points:
-          type: number
-          format: float
-          description: 'The total of all loyalty points earned by a user that satisfy all of the following conditions:
-
-            * approved
-
-            * non-pending
-
-            * unexpired'
-        unbanked_points:
-          type: number
-          format: float
-          description: For a business that allows banking of points, this value represents the number of points the user has and has not banked yet. For example, if a business configuration requires 100 points to be banked to $10, and a user has accumulated 55 points, this value will be 55. When the user earns another 45 points, the user will be banked to $10 and this value will then become 0.
-        membership_qualification_points:
-          type: integer
+        table:
+          type: object
           x-stoplight:
-            id: gq5ah9naehygk
-          description: 'The value of points earned toward progress across membership tiers. This is related to the migration strategy that allows businesses to "Consider Only Initial Points for Tier Migration". Currently, support for this parameter is limited to program type Points Unlock Redeemables, Membership Re-evaluation Strategy: Reset Based on Points Earned and Account Re-evaluation Strategy of Guest Inactivity.'
-    cta:
-      type: array
-      items:
-        type: object
-        properties:
-          type:
-            type: string
-            description: 'Three possible values can be returned to the mobile client:
-
-              - web_link: The CTA button prompts the user to open the link in a web browser available on the mobile client.
-
-              - deep_link: The CTA button takes the user to a particular deep link specified in the app.
-
-              - drill_down: The CTA button opens the detailed view of the rich message received by the app.'
-          link:
-            type: string
-            description: 'The URL to which the user will be directed, depending on the type of the CTA
-
-              '
-          label:
-            type: string
-            description: 'The text that appears on the CTA button in the app
-
-              '
-          cta_type:
-            type: string
-            description: 'More than one CTA object can be returned to the app. The cta_type can have two possible values: primary and secondary. The primary CTA is higher priority and is the main CTA button. The secondary CTA can be something like a terms and conditions link that can be rendered appropriately in the app.'
-      description: "Short for call to action, a device designed to prompt an immediate response from a user\n\n```json\n[\n    {\n        \"type\": \"external_web_link\",\n        \"link\": \"URL_GOES_HERE\",\n        \"label\": \"More Details\",\n        \"cta_type\": \"primary\"\n    },\n    {\n        \"type\": \"external_web_link\",\n        \"link\": \"URL_GOES_HERE\",\n        \"label\": \"Terms & Conditions\",\n        \"cta_type\": \"secondary\"\n    }\n]\n```\n"
-      title: CTA (Array Object)
-      x-stoplight:
-        id: 80d7d22f4d11c
-    rewards:
-      type: array
-      description: Contains information about the available rewards of the user
-      title: Rewards (Array Object)
-      x-stoplight:
-        id: 593a939bbb6fa
-      items:
-        x-stoplight:
-          id: boujhknpz5coc
-        type: object
-        properties:
-          becomes_available_at:
-            type: string
-            x-stoplight:
-              id: im795luv5su27
-            description: Date/time at which the reward becomes redeemable by a user
-            format: date-time
-          campaign_type:
-            type: string
-            x-stoplight:
-              id: 7f6xlqvvehpqk
-            description: Type of campaign through which a user received a reward. Currently, the only possible value is "loyalty". A null value indicates that the user did not get the reward through a campaign.
-          created_at:
-            type: string
-            x-stoplight:
-              id: os20mdeoqfq3z
-            format: date-time
-            description: Date/time when the reward was created for a user in the system
-          description:
-            type: string
-            x-stoplight:
-              id: 6hg1xma6nl1w4
-            description: Description of the reward
-          discount_channel:
-            type: string
-            x-stoplight:
-              id: 0ti076e2v9ohc
-            description: 'Channels where the reward can be used. Possible values are:
-
-
-              - online_only - online orders
-
-              - offline_only - POS
-
-              - all - both'
-          discount_amount:
-            type: integer
-            x-stoplight:
-              id: e7waqx8jk4ulk
-            description: Discount amount associated with the reward
-          reward_image_url:
-            type: string
-            x-stoplight:
-              id: v0wl0df7rs844
-            description: URL of the image displayed in the app to depict the reward
-          name:
-            type: string
-            x-stoplight:
-              id: e2ho1o5jtdjin
-            description: Name of the reward
-          read_at:
-            type: string
-            x-stoplight:
-              id: p3uv2kyj3085t
-            format: date-time
-            description: Date/time when the reward notification was read by a user in the app
-          reward_properties:
-            type: string
-            x-stoplight:
-              id: v4jg31ks5gly0
-            description: Additional properties of the reward (e.g., "merchandise", "order ahead", "promo", etc.) that can be configured in the Punchh platform
-          store_numbers:
-            type: array
-            x-stoplight:
-              id: eu3v3y9m8zkxi
-            description: Store numbers of all locations where the reward can be redeemed. An empty array indicates that the reward can be redeemed at any location.
-            items:
+            id: q5ugq90vwp3fe
+          properties:
+            item_id:
+              type: integer
               x-stoplight:
-                id: 2cijorr4t6693
+                id: q0zoshosrwuvz
+              description: Unique id that identifies the Offer (e.g., Redeemable, Subscription)
+            name:
               type: string
-          franchisee_id:
-            type: integer
-            x-stoplight:
-              id: aqdjczff8wolf
-            description: ID of the franchisee who credited the reward to the user's account. This could be done through a campaign or admin generosity.
-          meta_data:
-            type: string
-            x-stoplight:
-              id: zzj946kbbq1xw
-            description: Metadata that can be added to a redeemable. This will be returned only if it is configured in the Punchh platform. The maximum length is 255 characters.
-          redeemable_created_at:
-            type: string
-            x-stoplight:
-              id: mlwoe89xeubtv
-            format: date-time
-            description: Date/time when the redeemable was created in the Punchh platform
-          reward_id:
-            type: integer
-            x-stoplight:
-              id: rvc7fk1jyance
-            format: int64
-            description: Unique ID of the reward
-          expiring_at:
-            type: string
-            x-stoplight:
-              id: 40snv09u8jow8
-            description: Date/time when the reward expires
-            format: date-time
-          redemption_details:
-            $ref: '#/components/schemas/redemption_details'
-          auto_select:
-            type: boolean
-            x-stoplight:
-              id: supgkji7b6rag
-            description: Whether the offer is enabled for auto-redemption or not
+              x-stoplight:
+                id: 8g5axmtdwcvkt
+              description: Name or title of the reward, redeemable, subscription plan, or coupon
+            campaign_name:
+              type: string
+              x-stoplight:
+                id: campaign-name-field
+              description: Name of the campaign through which the guest received the offer.
+            image:
+              type: string
+              x-stoplight:
+                id: 9zidu1mbqdt67
+              description: URL to an image of the reward, redeemable, subscription plan, or coupon
+            base_amount:
+              type: number
+              format: float
+              x-stoplight:
+                id: 9lscu2e9fl32d
+              description: Refers to the base discount amount associated with the reward, coupon, or redeemable. For example, if a reward gives "$1 off", base_amount would be 1.
+            prompt_text_short:
+              type: string
+              x-stoplight:
+                id: 0bndl20vfjr6w
+              description: Short description/prompt associated with a discount in the Punchh platform, defined when creating or editing the discount. For example, Get $1 off your next order!
+            prompt_text_long:
+              type: string
+              x-stoplight:
+                id: gyjcvvt20vyct
+              description: Detailed description/prompt associated with a discount in the Punchh platform, defined when creating or editing the discount
+            description:
+              type: string
+              x-stoplight:
+                id: xp0vseok1xb16
+              description: Description that explains the Punchh discount (reward, coupon, etc.) as configured in the Punchh platform
+            item_properties:
+              type: string
+              x-stoplight:
+                id: z0ktgiwo0upd8
+              description: Comma-separated values that provide additional details about a redeemable. For example, a redeemable could be a "Food_Item" or "Merchandise", etc. Can be configured for a business in the Punchh platform and attached to a redeemable. If no value is attached to a redeemable, a blank field will be returned.
+            created_at:
+              type: string
+              x-stoplight:
+                id: 5ojnp0gfl1l6j
+              format: date-time
+              description: Date/time when the Punchh discount (reward, coupon, etc.) was created, in YYYY-MM-DDThh:mm:ss format
+            meta_detail:
+              type: string
+              x-stoplight:
+                id: caticn653jn1r
+              description: Meta data configured for the redeemable. The response returns a value only if it is configured in the Punchh platform when creating or editing the discount.
+            start_date_tz:
+              type: string
+              x-stoplight:
+                id: ahienw7ej9ma6
+              format: date-time
+              description: Start date/time of the Punchh discount (reward, coupon, etc.) in ISO 8601 format in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+            end_date_tz:
+              type: string
+              x-stoplight:
+                id: spo8qnwl5hr6o
+              format: date-time
+              description: Expiry date/time of the Punchh discount (reward, coupon, etc.) in ISO 8601 format in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+            auto_select:
+              type: boolean
+              x-stoplight:
+                id: 7c1nyhmbzp0rm
+              description: 'Indicates whether the offer is enabled for auto-redemption. Possible values: true or false'
+            max_applicable_quantity:
+              type: integer
+              x-stoplight:
+                id: q2ix233kve30m
+              description: 'The maximum quantity that can be discounted. Note: This parameter is returned for offers related to Price Rollback, Target Price for Bundle, and Target Price for Bundle (Advanced).'
+            points:
+              type: integer
+              x-stoplight:
+                id: bwc2me1ki4epk
+              description: Points associated with the redeemable
     user-info:
       title: User Info (Object)
       x-stoplight:
@@ -7502,6 +7688,93 @@ components:
           description: 'Whether or not the user has undergone age verification by Koupon Media. Possible Values: true, false. The value is set to true if the user''s age is verified by Koupon Media; otherwise, it is set to false. The response returns this parameter in sign-in, sign-up, and user update APIs if Koupon Media is selected as the age verification adapter for the business in the Punchh platform. Contact your Punchh representative to update this Punchh platform configuration setting. '
         subscriptions:
           $ref: '#/components/schemas/subscriptions'
+    discounts-applied:
+      title: Discounts Applied (Object)
+      x-stoplight:
+        id: 3pbtryawksdq0
+      type: object
+      description: Contains details of the discounts applied to a transaction
+      properties:
+        redemption_id:
+          type: integer
+          x-stoplight:
+            id: 4qh1k67mcwbam
+          description: 'Unique ID associated with the redemption. Save this in your system for future reference. Note: In case of coupons or promos, the redemption_id returned would be same as the redemption_code.'
+        discount_type:
+          type: string
+          x-stoplight:
+            id: lbwco580f3kfl
+          description: 'The discount type can be any one of these values: reward || redeemable || banked_reward || redemption_code || subscription.'
+        discount_id:
+          type: integer
+          x-stoplight:
+            id: 3stwfl5xyy9ob
+          description: Unique ID that identifies the discount (e.g., reward_id, redeemable_id, redemption_code, coupon_code)
+        discount_value:
+          type: string
+          x-stoplight:
+            id: rhbdqn7zil2no
+          description: The value of the discount in currency applied to the transaction. This value is set for users on the “Points Convert to Currency” loyalty program. The default value is 0 if the user has not selected any amount to redeem or has no currency in the loyalty account. The parameter returns a “null” value for a business that does not support banking of points into currency.
+        discounts_details:
+          $ref: '#/components/schemas/discount-details'
+    subscriptions:
+      title: Subscriptions (Array Object)
+      x-stoplight:
+        id: ua2meoyk2vql9
+      type: array
+      description: Contains information about different subscriptions issued to the user. This object is returned when the subscriptions feature is available for the business. If a user does not have active subscriptions, the API returns an empty object in the response.
+      x-examples:
+        application/json:
+        - plan_name: free burger
+          pos_meta: VIP subs
+          subscription_id: 123
+      items:
+        type: object
+        properties:
+          plan_name:
+            type: string
+            description: Name of the subscription plan as provided by an admin at the time of subscription plan creation
+          pos_meta:
+            type: string
+            description: Free-form text field to support various subscription-related business use cases at POS. The text field length is 24 characters.
+          subscription_id:
+            type: string
+            description: System-generated unique ID of the subscription plan that is issued for a user
+    user-relation-attributes:
+      title: User Relation Attributes (Array Object)
+      x-stoplight:
+        id: 0cy8krzi1660q
+      type: array
+      x-examples:
+        application/json:
+          id: 111111111
+          relation: spouse
+          name: FIRST_NAME_GOES_HERE LAST_NAME_GOES_HERE
+          birthday: '1999-01-01'
+          created_at: '2023-08-18T12:32:13Z'
+          updated_at: '2023-08-18T12:32:13Z'
+      description: Contains information about the relationship details of a user, for example, spouse and kid information. If the user account does not have relationship details, the API returns an empty object in the response.
+      items:
+        type: object
+        properties:
+          id:
+            type: number
+            format: date-time
+            x-stoplight:
+              id: siwx79u7bfhpf
+            description: ID that identifies the relationship
+          relation:
+            type: string
+            description: Relation to the user. Valid values are "spouse" and "kid".
+          name:
+            type: string
+            description: Name of the relative
+          birthday:
+            type: string
+            description: Birthday of the relative
+            enum:
+            - YYYY-MM-DD
+            format: date
     User:
       title: User (Object)
       x-stoplight:
@@ -7700,41 +7973,6 @@ components:
           x-stoplight:
             id: gre7jhjy7jbxl
           description: 'Whether or not the user has undergone age verification by Koupon Media. Possible Values: true, false. The value is set to true if the user''s age is verified by Koupon Media; otherwise, it is set to false. The response returns this parameter in sign-in, sign-up, and user update APIs if Koupon Media is selected as the age verification adapter for the business in the Punchh platform. Contact your Punchh representative to update this Punchh platform configuration setting. '
-    user-relation-attributes:
-      title: User Relation Attributes (Array Object)
-      x-stoplight:
-        id: 0cy8krzi1660q
-      type: array
-      x-examples:
-        application/json:
-          id: 111111111
-          relation: spouse
-          name: FIRST_NAME_GOES_HERE LAST_NAME_GOES_HERE
-          birthday: '1999-01-01'
-          created_at: '2023-08-18T12:32:13Z'
-          updated_at: '2023-08-18T12:32:13Z'
-      description: Contains information about the relationship details of a user, for example, spouse and kid information. If the user account does not have relationship details, the API returns an empty object in the response.
-      items:
-        type: object
-        properties:
-          id:
-            type: number
-            format: date-time
-            x-stoplight:
-              id: siwx79u7bfhpf
-            description: ID that identifies the relationship
-          relation:
-            type: string
-            description: Relation to the user. Valid values are "spouse" and "kid".
-          name:
-            type: string
-            description: Name of the relative
-          birthday:
-            type: string
-            description: Birthday of the relative
-            enum:
-            - YYYY-MM-DD
-            format: date
     user-input:
       title: User Input (Object)
       x-stoplight:
@@ -8050,29 +8288,6 @@ components:
           meta_data:
             type: string
             description: Meta data information added to a redeemable. The API returns this parameter only if meta data information is provided for the redeemable in the Punchh platform. The maximum length is 255 characters.
-    subscriptions:
-      title: Subscriptions (Array Object)
-      x-stoplight:
-        id: ua2meoyk2vql9
-      type: array
-      description: Contains information about different subscriptions issued to the user. This object is returned when the subscriptions feature is available for the business. If a user does not have active subscriptions, the API returns an empty object in the response.
-      x-examples:
-        application/json:
-        - plan_name: free burger
-          pos_meta: VIP subs
-          subscription_id: 123
-      items:
-        type: object
-        properties:
-          plan_name:
-            type: string
-            description: Name of the subscription plan as provided by an admin at the time of subscription plan creation
-          pos_meta:
-            type: string
-            description: Free-form text field to support various subscription-related business use cases at POS. The text field length is 24 characters.
-          subscription_id:
-            type: string
-            description: System-generated unique ID of the subscription plan that is issued for a user
     balance:
       type: object
       title: Balance (Object)
@@ -8153,147 +8368,7 @@ components:
         unredeemed_cards:
           type: integer
           description: Number of unredeemed cards of the user. This value is set only if the program type is visit-based; else it will be 0.
-    discount-details:
-      title: Discount Details (Object)
-      x-stoplight:
-        id: rxva1rbmaqhz3
-      type: object
-      description: List of a discount's defining attributes
-      properties:
-        table:
-          type: object
-          x-stoplight:
-            id: q5ugq90vwp3fe
-          properties:
-            item_id:
-              type: integer
-              x-stoplight:
-                id: q0zoshosrwuvz
-              description: Unique id that identifies the Offer (e.g., Redeemable, Subscription)
-            name:
-              type: string
-              x-stoplight:
-                id: 8g5axmtdwcvkt
-              description: Name or title of the reward, redeemable, subscription plan, or coupon
-            campaign_name:
-              type: string
-              x-stoplight:
-                id: campaign-name-field
-              description: Name of the campaign through which the guest received the offer.
-            image:
-              type: string
-              x-stoplight:
-                id: 9zidu1mbqdt67
-              description: URL to an image of the reward, redeemable, subscription plan, or coupon
-            base_amount:
-              type: number
-              format: float
-              x-stoplight:
-                id: 9lscu2e9fl32d
-              description: Refers to the base discount amount associated with the reward, coupon, or redeemable. For example, if a reward gives "$1 off", base_amount would be 1.
-            prompt_text_short:
-              type: string
-              x-stoplight:
-                id: 0bndl20vfjr6w
-              description: Short description/prompt associated with a discount in the Punchh platform, defined when creating or editing the discount. For example, Get $1 off your next order!
-            prompt_text_long:
-              type: string
-              x-stoplight:
-                id: gyjcvvt20vyct
-              description: Detailed description/prompt associated with a discount in the Punchh platform, defined when creating or editing the discount
-            description:
-              type: string
-              x-stoplight:
-                id: xp0vseok1xb16
-              description: Description that explains the Punchh discount (reward, coupon, etc.) as configured in the Punchh platform
-            item_properties:
-              type: string
-              x-stoplight:
-                id: z0ktgiwo0upd8
-              description: Comma-separated values that provide additional details about a redeemable. For example, a redeemable could be a "Food_Item" or "Merchandise", etc. Can be configured for a business in the Punchh platform and attached to a redeemable. If no value is attached to a redeemable, a blank field will be returned.
-            created_at:
-              type: string
-              x-stoplight:
-                id: 5ojnp0gfl1l6j
-              format: date-time
-              description: Date/time when the Punchh discount (reward, coupon, etc.) was created, in YYYY-MM-DDThh:mm:ss format
-            meta_detail:
-              type: string
-              x-stoplight:
-                id: caticn653jn1r
-              description: Meta data configured for the redeemable. The response returns a value only if it is configured in the Punchh platform when creating or editing the discount.
-            start_date_tz:
-              type: string
-              x-stoplight:
-                id: ahienw7ej9ma6
-              format: date-time
-              description: Start date/time of the Punchh discount (reward, coupon, etc.) in ISO 8601 format in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
-            end_date_tz:
-              type: string
-              x-stoplight:
-                id: spo8qnwl5hr6o
-              format: date-time
-              description: Expiry date/time of the Punchh discount (reward, coupon, etc.) in ISO 8601 format in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
-            auto_select:
-              type: boolean
-              x-stoplight:
-                id: 7c1nyhmbzp0rm
-              description: 'Indicates whether the offer is enabled for auto-redemption. Possible values: true or false'
-            max_applicable_quantity:
-              type: integer
-              x-stoplight:
-                id: q2ix233kve30m
-              description: 'The maximum quantity that can be discounted. Note: This parameter is returned for offers related to Price Rollback, Target Price for Bundle, and Target Price for Bundle (Advanced).'
-            points:
-              type: integer
-              x-stoplight:
-                id: bwc2me1ki4epk
-              description: Points associated with the redeemable
-    discounts-applied:
-      title: Discounts Applied (Object)
-      x-stoplight:
-        id: 3pbtryawksdq0
-      type: object
-      description: Contains details of the discounts applied to a transaction
-      properties:
-        redemption_id:
-          type: integer
-          x-stoplight:
-            id: 4qh1k67mcwbam
-          description: 'Unique ID associated with the redemption. Save this in your system for future reference. Note: In case of coupons or promos, the redemption_id returned would be same as the redemption_code.'
-        discount_type:
-          type: string
-          x-stoplight:
-            id: lbwco580f3kfl
-          description: 'The discount type can be any one of these values: reward || redeemable || banked_reward || redemption_code || subscription.'
-        discount_id:
-          type: integer
-          x-stoplight:
-            id: 3stwfl5xyy9ob
-          description: Unique ID that identifies the discount (e.g., reward_id, redeemable_id, redemption_code, coupon_code)
-        discount_value:
-          type: string
-          x-stoplight:
-            id: rhbdqn7zil2no
-          description: The value of the discount in currency applied to the transaction. This value is set for users on the “Points Convert to Currency” loyalty program. The default value is 0 if the user has not selected any amount to redeem or has no currency in the loyalty account. The parameter returns a “null” value for a business that does not support banking of points into currency.
-        discounts_details:
-          $ref: '#/components/schemas/discount-details'
   parameters:
-    Content-Type:
-      schema:
-        type: string
-        default: application/json
-      name: Content-Type
-      in: header
-      description: Set this header to <b>application/json</b>.
-      required: true
-    Accept-Language:
-      schema:
-        type: string
-        default: en
-      name: Accept-Language
-      in: header
-      description: Preferred language
     User-Agent:
       schema:
         type: string
@@ -8301,22 +8376,6 @@ components:
       in: header
       name: User-Agent
       description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
-      required: true
-    Accept:
-      schema:
-        type: string
-        default: application/json
-      name: Accept
-      in: header
-      description: Advertises which content types the client is able to understand
-      required: true
-    Authorization:
-      schema:
-        type: string
-        default: Bearer ACCESS_TOKEN_GOES_HERE
-      name: Authorization
-      in: header
-      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
       required: true
     punchh-app-device-id:
       schema:
@@ -8326,6 +8385,29 @@ components:
       in: header
       required: true
       description: The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
     signature:
       schema:
         type: string
@@ -8334,13 +8416,21 @@ components:
       in: header
       description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
       required: true
-    accept:
+    Accept:
       schema:
         type: string
         default: application/json
-      in: header
       name: Accept
+      in: header
       description: Advertises which content types the client is able to understand
+      required: true
+    authorization-header:
+      schema:
+        type: string
+        default: Bearer BUSINESS_ADMIN_KEY_GOES_HERE
+      name: Authorization
+      in: header
+      description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
       required: true
     content-type:
       schema:
@@ -8350,13 +8440,13 @@ components:
       in: header
       description: Set this header to <b>application/json</b>.
       required: true
-    authorization-header:
+    accept:
       schema:
         type: string
-        default: Bearer BUSINESS_ADMIN_KEY_GOES_HERE
-      name: Authorization
+        default: application/json
       in: header
-      description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
+      name: Accept
+      description: Advertises which content types the client is able to understand
       required: true
   responses:
     401-unauthorized:

@@ -110,7 +110,16 @@ paths:
                 default:
                   value:
                   - Given reward is not accessible for this guest
-      description: "Redeems a card, reward, redeemable, or discount specified in the `discount_type` parameter against a receipt.\n\nPunchh evaluates eligibility during the Possible Redemptions call using the receipt details provided (item name, price, quantity, identifiers, etc.). During the Create Online Redemption API call, Punchh revalidates the same receipt to ensure the qualifying conditions are still met before honoring the redemption. \n\nIf any item attributes change between the two calls, Punchh may be unable to match the qualifying items, which can cause the Create Online Redemption API call to fail or return a different result—even if the Possible Redemptions call was successful.\n\n**NOTE**: **When processing a redemption, DO NOT include the `query` parameter in the API request.** Use this parameter only to check for possible redemptions. "
+      description: 'Redeems a card, reward, redeemable, or discount specified in the `discount_type` parameter against a receipt.
+
+
+        Punchh evaluates eligibility during the Possible Redemptions call using the receipt details provided (item name, price, quantity, identifiers, etc.). During the Create Online Redemption API call, Punchh revalidates the same receipt to ensure the qualifying conditions are still met before honoring the redemption.
+
+
+        If any item attributes change between the two calls, Punchh may be unable to match the qualifying items, which can cause the Create Online Redemption API call to fail or return a different result—even if the Possible Redemptions call was successful.
+
+
+        **NOTE**: **When processing a redemption, DO NOT include the `query` parameter in the API request.** Use this parameter only to check for possible redemptions.'
       summary: Create Online Redemption (Redemptions 1.0)
       operationId: sso_create_online_redemption
       parameters:
@@ -254,7 +263,7 @@ paths:
         '422':
           description: Sending invalid Entity
       summary: Fetch Redemption Code (Redemptions 1.0)
-      description: 'This endpoint generates an internal tracking code, which can be used to [look up a user on the POS system](/docs/dev-portal-pos/b3A6NTAyODM5MTc-user-lookup-and-fetch-balance) and [redeem the selected reward or banked currency at the POS](/docs/dev-portal-pos/4aa6c9741c85d-create-redemption-redemptions-1-0). To generate an internal tracking code via this endpoint, you must supply either a reward ID in the **reward_id** parameter or a value for the banked currency to redeem in the **redeemed_points** parameter. While the internal tracking code is active, the selected reward or banked currency value is eligible for redemption at the POS using the value of the internal tracking code as the **redemption_code** in the [POS Redemption API endpoint](/docs/dev-portal-pos/4aa6c9741c85d-create-redemption-redemptions-1-0).
+      description: 'This endpoint generates an internal tracking code, which can be used to look up a user on the POS system and redeem the selected reward or banked currency at the POS. To generate an internal tracking code via this endpoint, you must supply either a reward ID in the **reward_id** parameter or a value for the banked currency to redeem in the **redeemed_points** parameter. While the internal tracking code is active, the selected reward or banked currency value is eligible for redemption at the POS using the value of the internal tracking code as the **redemption_code** in the POS Redemption API endpoint.
 
 
         >User authentication required
@@ -348,7 +357,7 @@ paths:
       description: 'Voids a processed redemption. After a redemption is voided successfully, the offer tied to the redemption is returned to the guest''s account.
 
 
-        <b>Note</b>: The Void Redemption API allows you to cancel a redemption without any time restrictions for most types of redemptions. However, for coupons and promos, redemptions can only be voided within 24 hours of the redemption process.'
+        Note: The Void Redemption API allows you to cancel a redemption without any time restrictions for most types of redemptions. However, for coupons and promos, redemptions can only be voided within 24 hours of the redemption process.'
       operationId: sso_void_processed_redemption
       parameters:
       - $ref: '#/components/parameters/Signature'
@@ -697,7 +706,7 @@ paths:
 
         - The business can configure the auto-redemption strategy.
 
-        - If a discount expires after being added to the discount basket, it is removed from the discount basket. When you make a call to the API, it validates the discounts added to the discount basket. If one or more discounts are found to be honored, expired, perished, or archived, the API returns an error message indicating that these discounts cannot be honored. The API lists the invalid discounts in the `discount_basket_items` object with a message stating that the discount is invalid and returns a null value in the `discount_details` object.
+        - If a discount expires after being added to the discount basket, it is removed from the discount basket. When you make a call to the API, it validates the discounts added to the discount basket. If one or more discounts are found to be honored, expired, perished, or archived, the API returns an error message indicating that these discounts cannot be honored. The API lists the invalid discounts in the `discount_basket_items` object with a message stating that the discount is invalid and returns a null value in the `discount_details` object.
 
 
         **Note**: Auto-redemption currently supports only subscriptions and non-points-based rewards.'
@@ -928,7 +937,7 @@ paths:
 
         - The Punchh system will not have any validation based on points adjustments as discounts are added.
 
-        - When a guest adds multiple discounts, and one is invalid for some reason, the entire request will fail with an error message. The guest will then be required to remove the invalid discount and resubmit. '
+        - When a guest adds multiple discounts, and one is invalid for some reason, the entire request will fail with an error message. The guest will then be required to remove the invalid discount and resubmit.'
       summary: Add Selection to Discount Basket (Redemptions 2.0)
       operationId: sso_create_online_redemption
       parameters:
@@ -1709,7 +1718,32 @@ paths:
               schema:
                 type: object
                 properties: {}
-      description: "Evaluates the validity of all inputs and commits the redemption. \n\nPunchh evaluates eligibility during the Possible Redemptions call using the receipt details provided (item name, price, quantity, identifiers, etc.). During the Batch Redemption Process call, Punchh revalidates the same receipt to ensure the qualifying conditions are still met before honoring the redemption. \n\nIf any item attributes change between the two calls, Punchh may be unable to match the qualifying items, which can cause the Batch Redemption Process call to fail or return a different result—even if the Possible Redemptions call was successful.\n\n<b>NOTE: When processing a redemption, DO NOT include the `query` parameter in the API request.</b> Use this parameter only to check for possible redemptions.\n\nAdditional behavior:\n - For orders placed for a future date, the guest’s loyalty account balance is evaluated on the order commit date (sysdate), not on the scheduled pickup or delivery date.\n - Locks the user's discount basket using a unique identifier `external_uid` generated by your application for the transaction when reward locking is enabled in the Punchh platform for the business. Locking the discount basket prevents other channels from creating simultaneous transactions or modifying the discount basket. See [Discount Basket Locking Developer Guide](/docs/dev-portal-developer-resources/d7b83074c9f23-redemptions-2-0-discount-basket-locking). You must log in to the developer portal to access the developer guide.\n\nWhen the Batch Redemption Process API commits the redemption, one of the following actions may occur based on the discount type:\n - Loyalty points are deducted from the guest account when `discount_type` = \"redeemable\" or \"card_completion\"\n - The reward is debited from the guest account when `discount_type` = \"reward\"\n - Banked rewards / currency are deducted from the guest’s loyalty account when `discount_type` = \"discount_amount\""
+      description: 'Evaluates the validity of all inputs and commits the redemption.
+
+
+        Punchh evaluates eligibility during the Possible Redemptions call using the receipt details provided (item name, price, quantity, identifiers, etc.). During the Batch Redemption Process call, Punchh revalidates the same receipt to ensure the qualifying conditions are still met before honoring the redemption.
+
+
+        If any item attributes change between the two calls, Punchh may be unable to match the qualifying items, which can cause the Batch Redemption Process call to fail or return a different result—even if the Possible Redemptions call was successful.
+
+
+        NOTE: When processing a redemption, DO NOT include the `query` parameter in the API request. Use this parameter only to check for possible redemptions.
+
+
+        Additional behavior:
+
+        - For orders placed for a future date, the guest’s loyalty account balance is evaluated on the order commit date (sysdate), not on the scheduled pickup or delivery date.
+
+        - Locks the user''s discount basket using a unique identifier `external_uid` generated by your application for the transaction when reward locking is enabled in the Punchh platform for the business. Locking the discount basket prevents other channels from creating simultaneous transactions or modifying the discount basket. See Discount Basket Locking Developer Guide. You must log in to the developer portal to access the developer guide.
+
+
+        When the Batch Redemption Process API commits the redemption, one of the following actions may occur based on the discount type:
+
+        - Loyalty points are deducted from the guest account when `discount_type` = "redeemable" or "card_completion"
+
+        - The reward is debited from the guest account when `discount_type` = "reward"
+
+        - Banked rewards / currency are deducted from the guest’s loyalty account when `discount_type` = "discount_amount"'
       summary: Batch Redemption Process (Redemptions 2.0)
       operationId: sso_create_online_redemption
       parameters:
@@ -1883,7 +1917,7 @@ paths:
               schema:
                 type: object
                 properties: {}
-      description: 'Voids the complete discount basket. The value of `redemption_ref` must be appended to the URL path. You can get the `redemption_ref` value from the [Get Active Discount Basket](/docs/dev-portal-online-ordering/apis/oo-redemptions-2-0-new-api/paths/~1api~1auth~1discounts~1active/get) API response.
+      description: 'Voids the complete discount basket. The value of `redemption_ref` must be appended to the URL path. You can get the `redemption_ref` value from the Get Active Discount Basket API response.
 
 
         Example:
@@ -3173,7 +3207,7 @@ paths:
                       message:
                       - Your current loyalty program configuration does not support this feature. Please connect with your Customer Success representative for resolution of the issue.
                       code: disabled_feature
-      description: "This API returns the subscriptions attached to a guest's profile. While the response can be filtered based on \"status\" and \"past_subscriptions\", the default response will include subscriptions that are either \"active\" or \"soft_cancelled\" and have their end time in the future.\n  "
+      description: This API returns the subscriptions attached to a guest's profile. While the response can be filtered based on "status" and "past_subscriptions", the default response will include subscriptions that are either "active" or "soft_cancelled" and have their end time in the future.
       parameters:
       - $ref: '#/components/parameters/Accept_2'
       - $ref: '#/components/parameters/Accept-Language'
@@ -3295,7 +3329,7 @@ paths:
         Note: If the option to enable meta cache update on request is not enabled in the Punchh platform, then the API won''t return any subscription cancellation reasons in the Subscription Meta API response.
 
 
-        <!-- Cockpit > Dashboard Miscellaneous Config > Enable meta cache update on request -->
+        Dashboard Miscellaneous Config > Enable meta cache update on request -->
 
 
         Contact your Punchh representative to update this configuration.'
@@ -3320,6 +3354,42 @@ paths:
     - url: https://SERVER_NAME_GOES_HERE.punchh.com
 components:
   schemas:
+    discount_distribution_items:
+      type: array
+      title: Discount Distribution Items (Array Object)
+      description: 'An array containing details of how the applied discount is distributed across individual menu items. Each object represents one line item that receives a portion of the discount.
+
+        '
+      items:
+        type: object
+        properties:
+          item_name:
+            type: string
+            description: Name of the discounted menu item as it displays in the POS catalog
+          menu_item_id:
+            type: string
+            description: Unique identifier that your POS system uses for the discounted menu item
+          item_qty:
+            type: number
+            description: Quantity associated with the discounted item.
+          item_amount:
+            type: number
+            description: A negative amount that indicates a reduction in price. The sum of all `item_amount` values across the array equals the total discount applied.
+          menu_item_type:
+            type: string
+            description: 'The classification of the item.
+
+
+              R - Redemption Discount item (negative). The `menu_item_type` attribute will always be set to "R" to indicate that it is a redemption-related discount. If a user redeemed a reward giving $3 off, the response may include a line with `menu_item_type` as "R" and `item_amount` as -3.'
+          menu_major_group:
+            type: string
+            description: The major group that the discounted item belongs to
+          menu_family:
+            type: string
+            description: The family that the discounted item belongs to
+          serial_number:
+            type: number
+            description: A serialized number that differentiates distinct items on the check. The value in the field identifies which items on the check are base items and which items are modifiers to the base items. For example, a main menu item (such as pizza) may have serial number 1.0, and the associated modifiers (such as "extra cheese", "olives", and "jalapenos") may have serial numbers 1.1, 1.2, and 1.3 respectively.
     menu_items:
       type: array
       title: Menu Items (Array Object)
@@ -3387,42 +3457,6 @@ components:
         - menu_family
         - menu_major_group
         - serial_number
-    discount_distribution_items:
-      type: array
-      title: Discount Distribution Items (Array Object)
-      description: 'An array containing details of how the applied discount is distributed across individual menu items. Each object represents one line item that receives a portion of the discount.
-
-        '
-      items:
-        type: object
-        properties:
-          item_name:
-            type: string
-            description: Name of the discounted menu item as it displays in the POS catalog
-          menu_item_id:
-            type: string
-            description: Unique identifier that your POS system uses for the discounted menu item
-          item_qty:
-            type: number
-            description: Quantity associated with the discounted item.
-          item_amount:
-            type: number
-            description: A negative amount that indicates a reduction in price. The sum of all `item_amount` values across the array equals the total discount applied.
-          menu_item_type:
-            type: string
-            description: 'The classification of the item.
-
-
-              R - Redemption Discount item (negative). The `menu_item_type` attribute will always be set to "R" to indicate that it is a redemption-related discount. If a user redeemed a reward giving $3 off, the response may include a line with `menu_item_type` as "R" and `item_amount` as -3.'
-          menu_major_group:
-            type: string
-            description: The major group that the discounted item belongs to
-          menu_family:
-            type: string
-            description: The family that the discounted item belongs to
-          serial_number:
-            type: number
-            description: A serialized number that differentiates distinct items on the check. The value in the field identifies which items on the check are base items and which items are modifiers to the base items. For example, a main menu item (such as pizza) may have serial number 1.0, and the associated modifiers (such as "extra cheese", "olives", and "jalapenos") may have serial numbers 1.1, 1.2, and 1.3 respectively.
     Menu-items:
       title: Menu Items (Array Object)
       x-stoplight:
@@ -3490,6 +3524,60 @@ components:
             x-stoplight:
               id: opx6xr7o23r4i
             description: A serialized number that differentiates distinct menu items on a receipt. The value identifies which items on the receipt are base items and which items are modifiers to the base items. For example, a main menu item (such as pizza) may have serial number "1.0", and the associated modifiers (such as "extra cheese", "olives", and "jalapenos") may have serial numbers "1.1", "1.2", and "1.3" respectively. Serialization is limited to one decimal point, so you can only modify the base item. You cannot modify a modifier with 1.x.x, and so on.
+    line_items:
+      title: Line Items (Array Object)
+      x-stoplight:
+        id: ij9mvwtn03jof
+      type: array
+      description: List of line items
+      x-examples:
+        Example:
+        - item_name: coffee
+          item_qty: 1
+          amount: 10
+          item_type: M
+          item_id: 330
+          item_family: '10'
+          item_group: gp
+          serial_number: 1
+      items:
+        type: object
+        properties:
+          item_name:
+            type: string
+            description: Item name
+          item_qty:
+            type: integer
+            description: The input of item quantity which reflects the specified number of items ordered
+          amount:
+            type: number
+            format: float
+            description: Total item amount. In case of multiple quantities, this is the sum total of all item amounts.
+          item_type:
+            type: string
+            description: "M - Menu item ( + or - )\n\nS - Service item. Any item representing money received that is not a sale. For example: service charges, delivery fees, tips, purchase of gift cards/certificates, etc. In the case of a single scan flow, send a menu item with the service menu item type for the selected tip amount. \n\n<b>Note</b>: We do not recommend sending the following menu item types in this API call. Instead, send them in the [Create Loyalty Check-in](/docs/dev-portal-online-ordering/f1943957e38b4-create-loyalty-check-in) and [Update Loyalty Check-in](/docs/dev-portal-online-ordering/386045cf184bc-update-loyalty-check-in) API calls.\n\nD - Discount (negative). Either internal or Punchh will always evaluate lines as ( - ) regardless of the sign assigned in the API call. We do not recommend sending any line item types set to D in any multiple Redemptions 2.0 requests. If any items with line item type D are sent in these requests, the business will require additional configuration for all offers to filter out the line item type D. See the [Qualification Criteria](https://support.punchh.com/s/article/Qualification-Criteria) article on the Support Portal. <br><br>Note: To view the Punchh product documentation on the Punchh Support Portal, you must log in to a Punchh platform production environment. If you already have access to a production environment, follow the instructions [here](https://support.punchh.com/s/article/How-do-I-access-the-Punchh-Support-Portal-Single-Sign-On) to access the Punchh Support Portal.\n\nT - Tax item. Taxes of all sorts\n\nP - Payment item. Visa, MasterCard, cash, gift card/certificate (when used to pay for the order)\n\nFor example, if a business offers a $2 discount on a $10 burger, send the burger as $8 ($10 - $2) in the API request. These discounts should be sent as line item type D in the Check-in or Update API call."
+          item_id:
+            type: integer
+            description: Item ID
+          item_family:
+            type: string
+            description: Item family is required if the menu family is categorized for the item. For more information, see [How To Send Menu Items to Punchh](/docs/dev-portal-online-ordering/5277d762b8c6d-how-to-send-menu-items-to-punchh#structure-of-menu-item-data).
+          item_group:
+            type: string
+            description: Item group is required if menu_major_group is categorized for the item. For more information, see [How To Send Menu Items to Punchh](/docs/dev-portal-online-ordering/5277d762b8c6d-how-to-send-menu-items-to-punchh#structure-of-menu-item-data).
+          serial_number:
+            type: number
+            format: float
+            description: Serial numbers are assigned to menu items on a receipt. A main menu item (such as pizza) may have serial number "1.0", and the associated modifiers (such as "Extra Cheese", "Olives", and "Jalapenos") may have serial numbers "1.1", "1.2", and "1.3" respectively. The numbering explains that particular items are modifiers associated with the main item.
+        required:
+        - item_name
+        - item_qty
+        - amount
+        - item_type
+        - item_id
+        - item_family
+        - item_group
+        - serial_number
     discount_details:
       title: Discount Details (Object)
       x-stoplight:
@@ -3583,100 +3671,6 @@ components:
           x-stoplight:
             id: 8a7wbw8b7d76w
           description: 'The maximum quantity that can be discounted. Note: This parameter is returned for offers related to Price Rollback, Target Price for Bundle, and Target Price for Bundle (Advanced).'
-    discount_basket_items:
-      title: Discount Basket Items (Array Object)
-      x-stoplight:
-        id: 3a95e69093e06
-      type: array
-      description: List of discounts. In the case of the [Auto Redemption](/docs/dev-portal-online-ordering/d3e1d4293ad65-auto-redemption-redemptions-2-0) and [Get Active Discount Basket](/docs/dev-portal-online-ordering/1d4f01cf7aa32-get-active-discount-basket-redemptions-2-0) APIs, the object lists invalid discounts with a message stating that the discount is invalid.
-      x-examples:
-        Example:
-        - discount_basket_item_id: 4699
-          discount_type: reward
-          discount_id: 131
-          discount_value: null
-          created_at: '2024-01-25T10:03:48Z'
-      items:
-        type: object
-        properties:
-          discount_basket_item_id:
-            type: integer
-            description: Unique identifier of selection
-          discount_type:
-            type: string
-            description: Discount type (e.g., reward, redeemable, etc.)
-          discount_id:
-            type: string
-            description: Discount ID
-          discount_value:
-            type: number
-            format: float
-            description: Value of the currency that a user wants to redeem. This value is set for users on the “Points Convert to Currency” loyalty program. The default value is 0 if the user has not selected any amount to redeem or has no currency in the loyalty account. The parameter returns a “null” value for a business that does not support banking of points into currency.
-          created_at:
-            type: string
-            format: date-time
-            description: Date/time when the discount was selected, in YYYY-MM-DDThh:mm:ss format
-          message:
-            type: string
-            x-stoplight:
-              id: 8ho23rz6fjjfq
-            description: Error message for invalid discount. If a discount is found to be honored, expired, perished, or archived, the API returns an error message in the parameter for the discount indicating that the discount is invalid.
-          discount_details:
-            $ref: '#/components/schemas/discount_details'
-    line_items:
-      title: Line Items (Array Object)
-      x-stoplight:
-        id: ij9mvwtn03jof
-      type: array
-      description: List of line items
-      x-examples:
-        Example:
-        - item_name: coffee
-          item_qty: 1
-          amount: 10
-          item_type: M
-          item_id: 330
-          item_family: '10'
-          item_group: gp
-          serial_number: 1
-      items:
-        type: object
-        properties:
-          item_name:
-            type: string
-            description: Item name
-          item_qty:
-            type: integer
-            description: The input of item quantity which reflects the specified number of items ordered
-          amount:
-            type: number
-            format: float
-            description: Total item amount. In case of multiple quantities, this is the sum total of all item amounts.
-          item_type:
-            type: string
-            description: "M - Menu item ( + or - )\n\nS - Service item. Any item representing money received that is not a sale. For example: service charges, delivery fees, tips, purchase of gift cards/certificates, etc. In the case of a single scan flow, send a menu item with the service menu item type for the selected tip amount. \n\n<b>Note</b>: We do not recommend sending the following menu item types in this API call. Instead, send them in the [Create Loyalty Check-in](/docs/dev-portal-online-ordering/f1943957e38b4-create-loyalty-check-in) and [Update Loyalty Check-in](/docs/dev-portal-online-ordering/386045cf184bc-update-loyalty-check-in) API calls.\n\nD - Discount (negative). Either internal or Punchh will always evaluate lines as ( - ) regardless of the sign assigned in the API call. We do not recommend sending any line item types set to D in any multiple Redemptions 2.0 requests. If any items with line item type D are sent in these requests, the business will require additional configuration for all offers to filter out the line item type D. See the [Qualification Criteria](https://support.punchh.com/s/article/Qualification-Criteria) article on the Support Portal. <br><br>Note: To view the Punchh product documentation on the Punchh Support Portal, you must log in to a Punchh platform production environment. If you already have access to a production environment, follow the instructions [here](https://support.punchh.com/s/article/How-do-I-access-the-Punchh-Support-Portal-Single-Sign-On) to access the Punchh Support Portal.\n\nT - Tax item. Taxes of all sorts\n\nP - Payment item. Visa, MasterCard, cash, gift card/certificate (when used to pay for the order)\n\nFor example, if a business offers a $2 discount on a $10 burger, send the burger as $8 ($10 - $2) in the API request. These discounts should be sent as line item type D in the Check-in or Update API call."
-          item_id:
-            type: integer
-            description: Item ID
-          item_family:
-            type: string
-            description: Item family is required if the menu family is categorized for the item. For more information, see [How To Send Menu Items to Punchh](/docs/dev-portal-online-ordering/5277d762b8c6d-how-to-send-menu-items-to-punchh#structure-of-menu-item-data).
-          item_group:
-            type: string
-            description: Item group is required if menu_major_group is categorized for the item. For more information, see [How To Send Menu Items to Punchh](/docs/dev-portal-online-ordering/5277d762b8c6d-how-to-send-menu-items-to-punchh#structure-of-menu-item-data).
-          serial_number:
-            type: number
-            format: float
-            description: Serial numbers are assigned to menu items on a receipt. A main menu item (such as pizza) may have serial number "1.0", and the associated modifiers (such as "Extra Cheese", "Olives", and "Jalapenos") may have serial numbers "1.1", "1.2", and "1.3" respectively. The numbering explains that particular items are modifiers associated with the main item.
-        required:
-        - item_name
-        - item_qty
-        - amount
-        - item_type
-        - item_id
-        - item_family
-        - item_group
-        - serial_number
     qualified_items:
       title: Qualified Items (Array Object)
       x-stoplight:
@@ -3722,6 +3716,46 @@ components:
             type: string
             format: float
             description: Serial numbers are assigned to menu items on a receipt. A main menu item (such as pizza) may have serial number "1.0", and the associated modifiers (such as "Extra Cheese", "Olives", and "Jalapenos") may have serial numbers "1.1", "1.2", and "1.3" respectively. The numbering explains that particular items are modifiers associated with the main item.
+    discount_basket_items:
+      title: Discount Basket Items (Array Object)
+      x-stoplight:
+        id: 3a95e69093e06
+      type: array
+      description: List of discounts. In the case of the [Auto Redemption](/docs/dev-portal-online-ordering/d3e1d4293ad65-auto-redemption-redemptions-2-0) and [Get Active Discount Basket](/docs/dev-portal-online-ordering/1d4f01cf7aa32-get-active-discount-basket-redemptions-2-0) APIs, the object lists invalid discounts with a message stating that the discount is invalid.
+      x-examples:
+        Example:
+        - discount_basket_item_id: 4699
+          discount_type: reward
+          discount_id: 131
+          discount_value: null
+          created_at: '2024-01-25T10:03:48Z'
+      items:
+        type: object
+        properties:
+          discount_basket_item_id:
+            type: integer
+            description: Unique identifier of selection
+          discount_type:
+            type: string
+            description: Discount type (e.g., reward, redeemable, etc.)
+          discount_id:
+            type: string
+            description: Discount ID
+          discount_value:
+            type: number
+            format: float
+            description: Value of the currency that a user wants to redeem. This value is set for users on the “Points Convert to Currency” loyalty program. The default value is 0 if the user has not selected any amount to redeem or has no currency in the loyalty account. The parameter returns a “null” value for a business that does not support banking of points into currency.
+          created_at:
+            type: string
+            format: date-time
+            description: Date/time when the discount was selected, in YYYY-MM-DDThh:mm:ss format
+          message:
+            type: string
+            x-stoplight:
+              id: 8ho23rz6fjjfq
+            description: Error message for invalid discount. If a discount is found to be honored, expired, perished, or archived, the API returns an error message in the parameter for the discount indicating that the discount is invalid.
+          discount_details:
+            $ref: '#/components/schemas/discount_details'
     Subscription-Cancellation-Reasons:
       title: Subscription Cancellation Reasons
       x-stoplight:
@@ -3763,6 +3797,22 @@ components:
       in: header
       required: true
       description: For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      required: true
+      description: You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Accept
+      description: Advertises which content types the client is able to understand
+      required: true
     content_type:
       schema:
         type: string
@@ -3779,22 +3829,6 @@ components:
       name: x-pch-digest
       description: The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call
       required: true
-    Accept:
-      schema:
-        type: string
-        default: application/json
-      in: header
-      name: Accept
-      description: Advertises which content types the client is able to understand
-      required: true
-    Authorization:
-      schema:
-        type: string
-        default: Bearer ACCESS_TOKEN_GOES_HERE
-      name: Authorization
-      in: header
-      required: true
-      description: You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
     accept_language:
       schema:
         type: string
@@ -3802,14 +3836,13 @@ components:
       in: header
       name: Accept-Language
       description: 'Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. '
-    Accept-Language:
+    x-pch-digest:
       schema:
         type: string
-        default: en
-      name: Accept-Language
+      name: x-pch-digest
       in: header
-      required: false
-      description: 'Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. '
+      required: true
+      description: Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)
     Content-Type:
       schema:
         type: string
@@ -3825,13 +3858,14 @@ components:
       in: header
       required: true
       description: Advertises which content types the client can understand
-    x-pch-digest:
+    Accept-Language:
       schema:
         type: string
-      name: x-pch-digest
+        default: en
+      name: Accept-Language
       in: header
-      required: true
-      description: Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)
+      required: false
+      description: 'Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. '
 x-refined-from:
 - punchh-online-ordering-redemptions-legacy-openapi.yml
 - punchh-online-ordering-redemptions-v2-openapi.yml

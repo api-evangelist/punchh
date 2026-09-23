@@ -2,7 +2,10 @@ openapi: 3.2.0
 info:
   title: Online Ordering and SSO Rewards API
   version: '1.0'
-  description: "The Punchh SSO API endpoints provide user-management functions such as login, registration, forgot password, and connect with Facebook for users on the Punchh loyalty platform. You can also fetch user-specific information such as rewards or point balances. \n\nThe Punchh Online Ordering API endpoints enable users to earn and redeem rewards for online orders."
+  description: 'The Punchh SSO API endpoints provide user-management functions such as login, registration, forgot password, and connect with Facebook for users on the Punchh loyalty platform. You can also fetch user-specific information such as rewards or point balances.
+
+
+    The Punchh Online Ordering API endpoints enable users to earn and redeem rewards for online orders.'
   contact:
     name: Punchh Dev Support
     url: https://developers.punchh.com
@@ -29,9 +32,7 @@ paths:
                   value:
                     estimated_points: 46
       summary: Estimate Loyalty Points Earning
-      description: 'Returns a prediction of how many points can be earned before submitting the transaction. The estimate is derived from the base earning rate of the business and does not account for special promotions or campaigns.
-
-        '
+      description: Returns a prediction of how many points can be earned before submitting the transaction. The estimate is derived from the base earning rate of the business and does not account for special promotions or campaigns.
       operationId: sso_estimate_loyalty_points_earning
       parameters:
       - $ref: '#/components/parameters/Signature'
@@ -403,62 +404,48 @@ paths:
                   authentication_token: AUTHENTICATION_TOKEN_GOES_HERE
                   client: CLIENT_GOES_HERE
 components:
+  parameters:
+    User-Agent:
+      schema:
+        type: string
+        default: Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type
+      name: User-Agent
+      in: header
+      required: true
+      description: For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      required: true
+      description: You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Accept
+      description: Advertises which content types the client is able to understand
+      required: true
+    content_type:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Content-Type
+      description: Set this header to **application/json**.
+      required: true
+    Signature:
+      schema:
+        type: string
+        default: SIGNATURE_GOES_HERE
+      in: header
+      name: x-pch-digest
+      description: The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call
+      required: true
   schemas:
-    Redeemables-Attributes:
-      type: array
-      items:
-        type: object
-        properties:
-          applicable_as_loyalty_redemption:
-            type: boolean
-            description: Applicable on loyalty
-          redeemable_properties:
-            type: string
-            description: Comma-separated values that provide additional details about a redeemable. For example, a redeemable could be "Food Item" or "Merchandise", etc. These can be configured for a business in the Punchh platform and attached to a redeemable. If no value is attached to a redeemable, a blank field will be returned.
-          discount_amount:
-            type: integer
-            description: Amount of discount on the reward
-          discount_channel:
-            type: string
-            description: 'Can accept any one of the following values:
-
-              - all - discountable everywhere
-
-              - online_only - online orders only
-
-              - offline_only - in store only'
-          expire_redemption_code_with_reward_end_date:
-            type:
-            - boolean
-            - 'null'
-            description: Whether the redemption code expires with the expiry of the reward
-          id:
-            type: integer
-            description: Identification of the reward
-          image:
-            type: string
-            description: Image of the redeemable item
-          points:
-            type: integer
-            description: Total number of points required for redemption
-          redeemable_id:
-            type: integer
-            description: Identification of the redeemable item
-          redemption_expiry:
-            type: integer
-            description: Expiry of the redemption, in minutes
-          thumb_image:
-            type: string
-            description: Thumbnail image of the redeemable item
-          name:
-            type: string
-            description: Name of the redeemable item
-          description:
-            type: string
-            description: Description of the redeemable item
-      title: Redeemables Attributes (Object)
-      x-stoplight:
-        id: 173597e963ebd
     menu_items:
       type: array
       items:
@@ -506,35 +493,6 @@ components:
       title: Menu Items (Object)
       x-stoplight:
         id: e8647930d00a4
-    Notifications:
-      type: array
-      description: Returns the details of the notifications received by a user. A maximum of 10 notifications will be fetched.
-      items:
-        type: object
-        properties:
-          id:
-            type: integer
-            description: ID of the notification
-          kind:
-            type: string
-            description: 'Type of notification. There are three types of notifications that a user can receive: ''system'', ''campaign'', and ''news''.'
-          message:
-            type: string
-            description: Message sent to the user in the notification
-          read_at:
-            type: string
-            enum:
-            - YYYY-MM-DDThh:mm:ssZ
-            format: date-time
-            x-nullable: true
-          created_at:
-            type: string
-            enum:
-            - YYYY-MM-DDThh:mm:ssZ
-            format: date-time
-      title: Notifications (Object)
-      x-stoplight:
-        id: ba4734ac30a93
     Rewards-Attribute:
       type: array
       items:
@@ -622,47 +580,90 @@ components:
       title: Rewards Attributes (Object)
       x-stoplight:
         id: b56f79b98e3cd
-  parameters:
-    User-Agent:
-      schema:
-        type: string
-        default: Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type
-      name: User-Agent
-      in: header
-      required: true
-      description: For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).
-    content_type:
-      schema:
-        type: string
-        default: application/json
-      in: header
-      name: Content-Type
-      description: Set this header to **application/json**.
-      required: true
-    Signature:
-      schema:
-        type: string
-        default: SIGNATURE_GOES_HERE
-      in: header
-      name: x-pch-digest
-      description: The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call
-      required: true
-    Accept:
-      schema:
-        type: string
-        default: application/json
-      in: header
-      name: Accept
-      description: Advertises which content types the client is able to understand
-      required: true
-    Authorization:
-      schema:
-        type: string
-        default: Bearer ACCESS_TOKEN_GOES_HERE
-      name: Authorization
-      in: header
-      required: true
-      description: You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+    Redeemables-Attributes:
+      type: array
+      items:
+        type: object
+        properties:
+          applicable_as_loyalty_redemption:
+            type: boolean
+            description: Applicable on loyalty
+          redeemable_properties:
+            type: string
+            description: Comma-separated values that provide additional details about a redeemable. For example, a redeemable could be "Food Item" or "Merchandise", etc. These can be configured for a business in the Punchh platform and attached to a redeemable. If no value is attached to a redeemable, a blank field will be returned.
+          discount_amount:
+            type: integer
+            description: Amount of discount on the reward
+          discount_channel:
+            type: string
+            description: 'Can accept any one of the following values:
+
+              - all - discountable everywhere
+
+              - online_only - online orders only
+
+              - offline_only - in store only'
+          expire_redemption_code_with_reward_end_date:
+            type:
+            - boolean
+            - 'null'
+            description: Whether the redemption code expires with the expiry of the reward
+          id:
+            type: integer
+            description: Identification of the reward
+          image:
+            type: string
+            description: Image of the redeemable item
+          points:
+            type: integer
+            description: Total number of points required for redemption
+          redeemable_id:
+            type: integer
+            description: Identification of the redeemable item
+          redemption_expiry:
+            type: integer
+            description: Expiry of the redemption, in minutes
+          thumb_image:
+            type: string
+            description: Thumbnail image of the redeemable item
+          name:
+            type: string
+            description: Name of the redeemable item
+          description:
+            type: string
+            description: Description of the redeemable item
+      title: Redeemables Attributes (Object)
+      x-stoplight:
+        id: 173597e963ebd
+    Notifications:
+      type: array
+      description: Returns the details of the notifications received by a user. A maximum of 10 notifications will be fetched.
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            description: ID of the notification
+          kind:
+            type: string
+            description: 'Type of notification. There are three types of notifications that a user can receive: ''system'', ''campaign'', and ''news''.'
+          message:
+            type: string
+            description: Message sent to the user in the notification
+          read_at:
+            type: string
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+            format: date-time
+            x-nullable: true
+          created_at:
+            type: string
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+            format: date-time
+      title: Notifications (Object)
+      x-stoplight:
+        id: ba4734ac30a93
 x-stoplight:
   id: 73bbc35439926
 x-ext-urls: {}
