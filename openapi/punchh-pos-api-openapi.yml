@@ -2430,7 +2430,7 @@ paths:
 
         - Banked rewards / currency are deducted from the guest’s loyalty account when `discount_type` = "discount_amount"'
       summary: Batch Redemption Process (Redemptions 2.0)
-      operationId: sso_create_online_redemption
+      operationId: postApiPosBatchRedemptions
       parameters:
       - $ref: '#/components/parameters/content_type'
       - $ref: '#/components/parameters/User-Agent'
@@ -2539,6 +2539,8 @@ paths:
         description: ''
       tags:
       - POS
+      x-operation-id-source: normalized
+      x-operation-id-original: sso_create_online_redemption
     servers:
     - url: https://SERVER_NAME_GOES_HERE.punchh.com
   /api/pos/batch_redemptions/{redemption_ref}:
@@ -2840,6 +2842,76 @@ paths:
     - url: https://SERVER_NAME_GOES_HERE.punchh.com
 components:
   schemas:
+    qualified_menu_items:
+      type: array
+      title: Qualified Menu Items (Array Object)
+      description: This object returns one or more menu items qualified for a discount.
+      x-examples: []
+      x-stoplight:
+        id: 5321db99857ae
+      items:
+        x-stoplight:
+          id: l1xykymczeamf
+        type: object
+        properties:
+          item_name:
+            type: string
+            x-stoplight:
+              id: zacqmcv3q7nwe
+            description: Name of the menu item as it displays in the POS catalog
+          menu_item_id:
+            type: string
+            x-stoplight:
+              id: 2dwa9nl08uk61
+            description: Unique identifier that your POS system uses for the item
+          item_qty:
+            type: number
+            x-stoplight:
+              id: x65h46ufy18kg
+            description: Quantity ordered by the customer. If the item is a modifier (such as extra cheese on a pizza base item), the quantity reflects the total number of base items included. For example, if you have a pizza base item with a certain item ID and a quantity of two, and the pizzas each have an extra cheese modifier added to them, then the modifier quantity should be two to account for the modifier across both pizzas. This applies only to base items of the same ID. If different base items include the same modifier, the modifiers are not added.
+          item_amount:
+            type: number
+            x-stoplight:
+              id: 3nc0pqyw74tx0
+            description: The total price of the line item or the amount of the discount that you applied to an item. In case of multiple quantities, this means the sum total of all item amounts. This value is always a positive number, even when the item is a discount.
+          menu_item_type:
+            type: string
+            x-stoplight:
+              id: 9rga2on21ieb4
+            description: 'The classification of the item. Displays one from the following types based on the item:
+
+
+              M - Menu item ( + or - )
+
+
+              D - Discount (negative). Either internal or Punchh will always evaluate lines as ( - ) regardless of the sign assigned in the API call
+
+
+              R - Redemption Discount item (negative). If a user redeemed a reward giving $3 off, the response may include a line with menu_item_type: "R" and item_amount: -3.
+
+
+              S - Service item. Any item representing money received that is not a sale. For example, service charges, delivery fees, tips, purchase of gift cards/certificates, etc. In the case of single scan flow, send a menu item with service menu item type for the selected tip amount.
+
+
+              T - Tax item. Taxes of all sorts
+
+
+              P - Payment item. Visa, MasterCard, cash, gift card/certificate (when used to pay for the order)'
+          menu_major_group:
+            type: string
+            x-stoplight:
+              id: ufz9uhzle8h7b
+            description: The major group that the item belongs to. The major group is the parent category for the item. The parameter can be empty if no value is passed in the parameter in the request.
+          menu_family:
+            type: string
+            x-stoplight:
+              id: vdvynsceoe4hq
+            description: The family that the item belongs to. The family is the subcategory for the item. The parameter can be empty if no value is passed in the parameter in the request.
+          serial_number:
+            type: string
+            x-stoplight:
+              id: a0swb24g3yl16
+            description: A serialized number that differentiates distinct items on the check. The value in the field identifies which items on the check are base items and which items are modifiers to the base items. For example, a main menu item (such as pizza) may have serial number "1.0", and the associated modifiers (such as "extra cheese", "olives", and "jalapenos") may have serial numbers "1.1", "1.2", and "1.3" respectively.
     discount_distribution_items:
       type: array
       title: Discount Distribution Items (Array Object)
@@ -2963,76 +3035,6 @@ components:
         - menu_major_group
         - menu_family
         - serial_number
-    qualified_menu_items:
-      type: array
-      title: Qualified Menu Items (Array Object)
-      description: This object returns one or more menu items qualified for a discount.
-      x-examples: []
-      x-stoplight:
-        id: 5321db99857ae
-      items:
-        x-stoplight:
-          id: l1xykymczeamf
-        type: object
-        properties:
-          item_name:
-            type: string
-            x-stoplight:
-              id: zacqmcv3q7nwe
-            description: Name of the menu item as it displays in the POS catalog
-          menu_item_id:
-            type: string
-            x-stoplight:
-              id: 2dwa9nl08uk61
-            description: Unique identifier that your POS system uses for the item
-          item_qty:
-            type: number
-            x-stoplight:
-              id: x65h46ufy18kg
-            description: Quantity ordered by the customer. If the item is a modifier (such as extra cheese on a pizza base item), the quantity reflects the total number of base items included. For example, if you have a pizza base item with a certain item ID and a quantity of two, and the pizzas each have an extra cheese modifier added to them, then the modifier quantity should be two to account for the modifier across both pizzas. This applies only to base items of the same ID. If different base items include the same modifier, the modifiers are not added.
-          item_amount:
-            type: number
-            x-stoplight:
-              id: 3nc0pqyw74tx0
-            description: The total price of the line item or the amount of the discount that you applied to an item. In case of multiple quantities, this means the sum total of all item amounts. This value is always a positive number, even when the item is a discount.
-          menu_item_type:
-            type: string
-            x-stoplight:
-              id: 9rga2on21ieb4
-            description: 'The classification of the item. Displays one from the following types based on the item:
-
-
-              M - Menu item ( + or - )
-
-
-              D - Discount (negative). Either internal or Punchh will always evaluate lines as ( - ) regardless of the sign assigned in the API call
-
-
-              R - Redemption Discount item (negative). If a user redeemed a reward giving $3 off, the response may include a line with menu_item_type: "R" and item_amount: -3.
-
-
-              S - Service item. Any item representing money received that is not a sale. For example, service charges, delivery fees, tips, purchase of gift cards/certificates, etc. In the case of single scan flow, send a menu item with service menu item type for the selected tip amount.
-
-
-              T - Tax item. Taxes of all sorts
-
-
-              P - Payment item. Visa, MasterCard, cash, gift card/certificate (when used to pay for the order)'
-          menu_major_group:
-            type: string
-            x-stoplight:
-              id: ufz9uhzle8h7b
-            description: The major group that the item belongs to. The major group is the parent category for the item. The parameter can be empty if no value is passed in the parameter in the request.
-          menu_family:
-            type: string
-            x-stoplight:
-              id: vdvynsceoe4hq
-            description: The family that the item belongs to. The family is the subcategory for the item. The parameter can be empty if no value is passed in the parameter in the request.
-          serial_number:
-            type: string
-            x-stoplight:
-              id: a0swb24g3yl16
-            description: A serialized number that differentiates distinct items on the check. The value in the field identifies which items on the check are base items and which items are modifiers to the base items. For example, a main menu item (such as pizza) may have serial number "1.0", and the associated modifiers (such as "extra cheese", "olives", and "jalapenos") may have serial numbers "1.1", "1.2", and "1.3" respectively.
     line_items:
       title: Line Items (Array Object)
       x-stoplight:
@@ -3260,22 +3262,6 @@ components:
           discount_details:
             $ref: '#/components/schemas/discount_details'
   parameters:
-    User-Agent:
-      schema:
-        type: string
-        default: IntegratorName/IntegrationType/VersionNumber
-      name: User-Agent
-      in: header
-      required: true
-      description: For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).
-    Authorization:
-      schema:
-        type: string
-        default: Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE
-      name: Authorization
-      in: header
-      required: true
-      description: This is a combination of unique API location key as well as business key (UUID) as the Authorization header.
     Accept:
       schema:
         type: string
@@ -3299,6 +3285,22 @@ components:
       in: header
       name: Accept-Language
       description: 'Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.'
+    User-Agent:
+      schema:
+        type: string
+        default: IntegratorName/IntegrationType/VersionNumber
+      name: User-Agent
+      in: header
+      required: true
+      description: For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).
+    Authorization:
+      schema:
+        type: string
+        default: Token token=LOCATION_KEY_GOES_HERE, btoken=BUSINESS_KEY_GOES_HERE
+      name: Authorization
+      in: header
+      required: true
+      description: This is a combination of unique API location key as well as business key (UUID) as the Authorization header.
 x-refined-from:
 - punchh-pos-redemptions-legacy-openapi.yml
 - punchh-pos-redemptions-v2-openapi.yml

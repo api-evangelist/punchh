@@ -706,13 +706,13 @@ paths:
                   wants_notify_for_campaign_approval_email: true
 components:
   parameters:
-    content-type:
+    accept:
       schema:
         type: string
         default: application/json
-      name: Content-Type
       in: header
-      description: Set this header to <b>application/json</b>.
+      name: Accept
+      description: Advertises which content types the client is able to understand
       required: true
     authorization-header:
       schema:
@@ -722,13 +722,13 @@ components:
       in: header
       description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
       required: true
-    accept:
+    content-type:
       schema:
         type: string
         default: application/json
+      name: Content-Type
       in: header
-      name: Accept
-      description: Advertises which content types the client is able to understand
+      description: Set this header to <b>application/json</b>.
       required: true
   responses:
     401-unauthorized:

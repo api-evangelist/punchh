@@ -939,7 +939,7 @@ paths:
 
         - When a guest adds multiple discounts, and one is invalid for some reason, the entire request will fail with an error message. The guest will then be required to remove the invalid discount and resubmit.'
       summary: Add Selection to Discount Basket (Redemptions 2.0)
-      operationId: sso_create_online_redemption
+      operationId: postApiAuthDiscountsSelect
       parameters:
       - $ref: '#/components/parameters/Signature'
       - $ref: '#/components/parameters/content_type'
@@ -1005,6 +1005,8 @@ paths:
         description: ''
       tags:
       - Auth
+      x-operation-id-source: normalized
+      x-operation-id-original: sso_create_online_redemption
     servers:
     - url: https://SERVER_NAME_GOES_HERE.punchh.com
   /api/auth/discounts/unselect:
@@ -1745,7 +1747,7 @@ paths:
 
         - Banked rewards / currency are deducted from the guest’s loyalty account when `discount_type` = "discount_amount"'
       summary: Batch Redemption Process (Redemptions 2.0)
-      operationId: sso_create_online_redemption
+      operationId: postApiAuthBatchRedemptions
       parameters:
       - $ref: '#/components/parameters/Signature'
       - $ref: '#/components/parameters/content_type'
@@ -1856,6 +1858,8 @@ paths:
         description: ''
       tags:
       - Auth
+      x-operation-id-source: normalized
+      x-operation-id-original: sso_create_online_redemption
     servers:
     - url: https://SERVER_NAME_GOES_HERE.punchh.com
   /api/auth/batch_redemptions/{redemption_ref}:
@@ -2330,7 +2334,7 @@ paths:
       - Auth
     post:
       summary: Purchase Subscription
-      operationId: post-api-auth-subscriptions
+      operationId: postApiAuthSubscriptions
       responses:
         '200':
           description: OK
@@ -2614,6 +2618,8 @@ paths:
         description: ''
       tags:
       - Auth
+      x-operation-id-source: normalized
+      x-operation-id-original: post-api-auth-subscriptions
     servers:
     - url: https://SERVER_NAME_GOES_HERE.punchh.com
   /api/auth/subscriptions/cancel:
@@ -3354,42 +3360,6 @@ paths:
     - url: https://SERVER_NAME_GOES_HERE.punchh.com
 components:
   schemas:
-    discount_distribution_items:
-      type: array
-      title: Discount Distribution Items (Array Object)
-      description: 'An array containing details of how the applied discount is distributed across individual menu items. Each object represents one line item that receives a portion of the discount.
-
-        '
-      items:
-        type: object
-        properties:
-          item_name:
-            type: string
-            description: Name of the discounted menu item as it displays in the POS catalog
-          menu_item_id:
-            type: string
-            description: Unique identifier that your POS system uses for the discounted menu item
-          item_qty:
-            type: number
-            description: Quantity associated with the discounted item.
-          item_amount:
-            type: number
-            description: A negative amount that indicates a reduction in price. The sum of all `item_amount` values across the array equals the total discount applied.
-          menu_item_type:
-            type: string
-            description: 'The classification of the item.
-
-
-              R - Redemption Discount item (negative). The `menu_item_type` attribute will always be set to "R" to indicate that it is a redemption-related discount. If a user redeemed a reward giving $3 off, the response may include a line with `menu_item_type` as "R" and `item_amount` as -3.'
-          menu_major_group:
-            type: string
-            description: The major group that the discounted item belongs to
-          menu_family:
-            type: string
-            description: The family that the discounted item belongs to
-          serial_number:
-            type: number
-            description: A serialized number that differentiates distinct items on the check. The value in the field identifies which items on the check are base items and which items are modifiers to the base items. For example, a main menu item (such as pizza) may have serial number 1.0, and the associated modifiers (such as "extra cheese", "olives", and "jalapenos") may have serial numbers 1.1, 1.2, and 1.3 respectively.
     menu_items:
       type: array
       title: Menu Items (Array Object)
@@ -3457,6 +3427,42 @@ components:
         - menu_family
         - menu_major_group
         - serial_number
+    discount_distribution_items:
+      type: array
+      title: Discount Distribution Items (Array Object)
+      description: 'An array containing details of how the applied discount is distributed across individual menu items. Each object represents one line item that receives a portion of the discount.
+
+        '
+      items:
+        type: object
+        properties:
+          item_name:
+            type: string
+            description: Name of the discounted menu item as it displays in the POS catalog
+          menu_item_id:
+            type: string
+            description: Unique identifier that your POS system uses for the discounted menu item
+          item_qty:
+            type: number
+            description: Quantity associated with the discounted item.
+          item_amount:
+            type: number
+            description: A negative amount that indicates a reduction in price. The sum of all `item_amount` values across the array equals the total discount applied.
+          menu_item_type:
+            type: string
+            description: 'The classification of the item.
+
+
+              R - Redemption Discount item (negative). The `menu_item_type` attribute will always be set to "R" to indicate that it is a redemption-related discount. If a user redeemed a reward giving $3 off, the response may include a line with `menu_item_type` as "R" and `item_amount` as -3.'
+          menu_major_group:
+            type: string
+            description: The major group that the discounted item belongs to
+          menu_family:
+            type: string
+            description: The family that the discounted item belongs to
+          serial_number:
+            type: number
+            description: A serialized number that differentiates distinct items on the check. The value in the field identifies which items on the check are base items and which items are modifiers to the base items. For example, a main menu item (such as pizza) may have serial number 1.0, and the associated modifiers (such as "extra cheese", "olives", and "jalapenos") may have serial numbers 1.1, 1.2, and 1.3 respectively.
     Menu-items:
       title: Menu Items (Array Object)
       x-stoplight:
@@ -3789,22 +3795,6 @@ components:
             type: string
             description: Cancellation reason as configured by the business.
   parameters:
-    User-Agent:
-      schema:
-        type: string
-        default: Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type
-      name: User-Agent
-      in: header
-      required: true
-      description: For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).
-    Authorization:
-      schema:
-        type: string
-        default: Bearer ACCESS_TOKEN_GOES_HERE
-      name: Authorization
-      in: header
-      required: true
-      description: You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
     Accept:
       schema:
         type: string
@@ -3829,6 +3819,22 @@ components:
       name: x-pch-digest
       description: The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call
       required: true
+    User-Agent:
+      schema:
+        type: string
+        default: Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type
+      name: User-Agent
+      in: header
+      required: true
+      description: For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      required: true
+      description: You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
     accept_language:
       schema:
         type: string
@@ -3836,20 +3842,6 @@ components:
       in: header
       name: Accept-Language
       description: 'Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. '
-    x-pch-digest:
-      schema:
-        type: string
-      name: x-pch-digest
-      in: header
-      required: true
-      description: Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)
-    Content-Type:
-      schema:
-        type: string
-      name: Content-Type
-      in: header
-      required: true
-      description: Set this header to <b>application/json</b>
     Accept_2:
       schema:
         type: string
@@ -3858,6 +3850,13 @@ components:
       in: header
       required: true
       description: Advertises which content types the client can understand
+    x-pch-digest:
+      schema:
+        type: string
+      name: x-pch-digest
+      in: header
+      required: true
+      description: Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)
     Accept-Language:
       schema:
         type: string
@@ -3866,6 +3865,13 @@ components:
       in: header
       required: false
       description: 'Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. '
+    Content-Type:
+      schema:
+        type: string
+      name: Content-Type
+      in: header
+      required: true
+      description: Set this header to <b>application/json</b>
 x-refined-from:
 - punchh-online-ordering-redemptions-legacy-openapi.yml
 - punchh-online-ordering-redemptions-v2-openapi.yml

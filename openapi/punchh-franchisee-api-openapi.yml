@@ -243,15 +243,6 @@ paths:
                 value:
                   id: '3'
 components:
-  parameters:
-    authorization-header:
-      schema:
-        type: string
-        default: Bearer BUSINESS_ADMIN_KEY_GOES_HERE
-      name: Authorization
-      in: header
-      description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
-      required: true
   responses:
     401-unauthorized:
       description: 'A business admin key is missing or invalid. A request header in the following format is needed to make the request:
@@ -269,6 +260,15 @@ components:
             default:
               value:
                 error: You need to sign in or sign up before continuing.
+  parameters:
+    authorization-header:
+      schema:
+        type: string
+        default: Bearer BUSINESS_ADMIN_KEY_GOES_HERE
+      name: Authorization
+      in: header
+      description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
+      required: true
 x-stoplight:
   id: 9820bbd2e8ee1
 x-ext-urls: {}

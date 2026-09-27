@@ -50,6 +50,7 @@ tags:
 - Restaurant
 - Restaurant Technology
 - Webhook
+- Loyalty & Incentives
 tags_raw:
 - Gift Cards
 - Guest Engagement
@@ -63,6 +64,7 @@ tags_raw:
 - Restaurant
 - Restaurant Technology
 - Webhooks
+- Loyalty & Incentives
 url: https://raw.githubusercontent.com/api-evangelist/punchh/refs/heads/main/apis.yml
 created: '2026-06-02'
 modified: '2026-08-13'

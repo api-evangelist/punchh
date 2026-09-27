@@ -199,6 +199,22 @@ components:
                 expiring_at: '2017-02-08T16:54:44Z'
                 redeemable_name: null
                 redeemed_value: 50
+    401-unauthorized:
+      description: 'A business admin key is missing or invalid. A request header in the following format is needed to make the request:
+
+
+        `Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE`'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+          examples:
+            default:
+              value:
+                error: You need to sign in or sign up before continuing.
     redemption-detail:
       description: ''
       content:
@@ -307,22 +323,6 @@ components:
                   last_name: LAST_NAME_GOES_HERE
                   email: test@example.com
                   avatar_remote_url: null
-    401-unauthorized:
-      description: 'A business admin key is missing or invalid. A request header in the following format is needed to make the request:
-
-
-        `Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE`'
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
-          examples:
-            default:
-              value:
-                error: You need to sign in or sign up before continuing.
   parameters:
     authorization-header:
       schema:

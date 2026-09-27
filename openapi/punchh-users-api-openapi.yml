@@ -6234,26 +6234,209 @@ paths:
     servers:
     - url: https://SERVER_NAME_GOES_HERE.punchh.com
 components:
+  parameters:
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
+    punchh-app-device-id:
+      schema:
+        type: string
+        default: APP_DEVICE_ID_GOES_HERE
+      name: punchh-app-device-id
+      in: header
+      required: true
+      description: The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.
+    authorization-header:
+      schema:
+        type: string
+        default: Bearer BUSINESS_ADMIN_KEY_GOES_HERE
+      name: Authorization
+      in: header
+      description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
+      required: true
+    content-type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    accept:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Accept
+      description: Advertises which content types the client is able to understand
+      required: true
   schemas:
-    background-content:
-      type: object
-      description: "This is the content that makes the background of the message.\n\n```json\n{\n    \"type\": \"image\",\n    \"url\": \"IMAGE_URL_GOES_HERE\",\n    \"alt_text\": \"Black Background Image\",\n    \"initial_frame\": \"\"\n}\n```"
-      title: Background Content (Object)
-      properties:
-        type:
-          type: string
-          description: The type of the background content. It can be an image or a color.
-        url:
-          type: string
-          description: The URL of the image that will be used as the background
-        alt_text:
-          type: string
-          description: Alternate text that appears if the app cannot render the background content of the message
-        initial_frame:
-          type: string
-          description: The initial frame or first frame is what appears behind the play button before a user taps it to start playing the video.
+    cta:
+      type: array
+      items:
+        type: object
+        properties:
+          type:
+            type: string
+            description: 'Three possible values can be returned to the mobile client:
+
+              - web_link: The CTA button prompts the user to open the link in a web browser available on the mobile client.
+
+              - deep_link: The CTA button takes the user to a particular deep link specified in the app.
+
+              - drill_down: The CTA button opens the detailed view of the rich message received by the app.'
+          link:
+            type: string
+            description: 'The URL to which the user will be directed, depending on the type of the CTA
+
+              '
+          label:
+            type: string
+            description: 'The text that appears on the CTA button in the app
+
+              '
+          cta_type:
+            type: string
+            description: 'More than one CTA object can be returned to the app. The cta_type can have two possible values: primary and secondary. The primary CTA is higher priority and is the main CTA button. The secondary CTA can be something like a terms and conditions link that can be rendered appropriately in the app.'
+      description: "Short for call to action, a device designed to prompt an immediate response from a user\n\n```json\n[\n    {\n        \"type\": \"external_web_link\",\n        \"link\": \"URL_GOES_HERE\",\n        \"label\": \"More Details\",\n        \"cta_type\": \"primary\"\n    },\n    {\n        \"type\": \"external_web_link\",\n        \"link\": \"URL_GOES_HERE\",\n        \"label\": \"Terms & Conditions\",\n        \"cta_type\": \"secondary\"\n    }\n]\n```\n"
+      title: CTA (Array Object)
       x-stoplight:
-        id: 80de922cbc5ff
+        id: 80d7d22f4d11c
+    UserBalanceMessages:
+      type: object
+      description: 'Returned in response to the [Fetch User Balance](/docs/dev-portal-mobile/fb962621d8f10-fetch-user-balance) API
+
+        '
+      title: User Balance Messages (Array Object)
+      x-stoplight:
+        id: 3ca96c1a6bcbf
+      properties:
+        messages:
+          type: array
+          items:
+            type: object
+            properties:
+              background_content:
+                $ref: '#/components/schemas/background-content'
+              body:
+                type: string
+                description: 'The text content of a rich message
+
+                  '
+              cta:
+                $ref: '#/components/schemas/cta'
+              dismissable:
+                type: boolean
+                description: 'This boolean value decides whether guests can dismiss a message or not. When a guest dismisses a message, it should not be rendered in the app.
+
+                  '
+              hero_content:
+                $ref: '#/components/schemas/hero-content'
+              launch_time:
+                type: string
+                description: "Date/time, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format, when the notification should be rendered by the application client. This is a useful field that can enable a business to create messages that can be sent to the mobile client in advance, and they appear in the app later when the launch time comes.\n\nIf a rich message is triggered from a campaign, from a notification template as a result of user action, as a result of test notification, or if the Launch Time and Take Down Time fields are left blank in a business announcement, the values for launch_time and take_down_time will be null.\n\nThe values of take_down_time and launch_time parameters are determined when configuring campaign announcements. To set up a campaign announcement in the Punchh platform, in the left navigation pane, navigate to <b>Loyalty Program > App Message Composer</b>, and click <b>Add App Message</b>. In the <b>New Announcement</b> page, specify the date and time of the launch in the <b>Launch Time</b> field and the take down time in the <b>Take Down Time</b> field. \n\nOnce configured, these values will be displayed in the `launch_time` and `take_down_time` parameters respectively when the messages are fetched via this Mobile API."
+              message_type:
+                type: string
+                description: 'There are two types of rich Messages returned in response:
+
+                  1. user_specific: Rich messages that have a user context. These include rich messages created based on campaigns or user actions.
+
+                  2. business_wide: Rich messages that are created as business announcements in the system.'
+              rank:
+                type: integer
+                description: Every message should have a rank. This marks the importance of a message. There may be a case when a more important message moves down the display list in the app as new messages are delivered to the mobile client. To keep important messages at the top of the display list, they should be given a higher number just as is the case with z-index. If two messages have the same rank, the app will determine the display order based on the launch_time.
+              style_url:
+                type: string
+                description: 'Link to the style sheet file for the style that will be applied to the message. The mobile client can download the style file, which can then be used to render the rich message in the app.
+
+                  '
+              subtitle:
+                type: string
+                description: 'A subordinate title providing additional information about the content
+
+                  '
+              tags:
+                type: array
+                description: 'Tags provide additional details about a message. A simple example could be the type (such as campaign, system_notification, etc.) that may help the app make decisions about the rendering of the message.
+
+                  '
+                items:
+                  type: string
+              take_down_time:
+                type: string
+                description: "Date/time, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format, when the mobile client should stop rendering the rich message in the app.\n\nIf a rich message is triggered from a campaign, from a notification template as a result of user action, as a result of test notification, or if the Launch Time and Take Down Time fields are left blank in a business announcement, the values for launch_time and take_down_time will be null.\n\nThe values of take_down_time and launch_time parameters are determined when configuring campaign announcements. To set up a campaign announcement in the Punchh platform, in the left navigation pane, navigate to <b>Loyalty Program > App Message Composer</b>, and click <b>Add App Message</b>. In the <b>New Announcement</b> page, specify the date and time of the launch in the <b>Launch Time</b> field and the take down time in the <b>Take Down Time</b> field. \n\nOnce configured, these values will be displayed in the `launch_time` and `take_down_time` parameters respectively when the messages are fetched via this Mobile API."
+              title:
+                type: string
+                description: 'A suitable title for the rich message. A well-crafted title increases the chances that a user will view a message.
+
+                  '
+              message_id:
+                type: integer
+                description: 'Unique ID of the message sent to the user
+
+                  '
+        read_at:
+          type: string
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+          description: Date/time when the message was read, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+        created_at:
+          type: string
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+          description: Date/time when the message was created, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+        deleted_at:
+          type: string
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+          description: Date/time when the message was deleted, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
     response-menu-items:
       title: Menu Items (Array Object)
       x-stoplight:
@@ -6321,6 +6504,25 @@ components:
               id: 92xkqaijbrjds
             description: A serialized number that differentiates distinct menu items on a receipt. The value identifies which items on the receipt are base items and which items are modifiers to the base items. For example, a main menu item (such as pizza) may have serial number "1.0", and the associated modifiers (such as "extra cheese", "olives", and "jalapenos") may have serial numbers "1.1", "1.2", and "1.3" respectively. Serialization is limited to one decimal point, so you can only modify the base item. You cannot modify a modifier with 1.x.x, and so on.
       description: Returns a list of menu items in the API response
+    background-content:
+      type: object
+      description: "This is the content that makes the background of the message.\n\n```json\n{\n    \"type\": \"image\",\n    \"url\": \"IMAGE_URL_GOES_HERE\",\n    \"alt_text\": \"Black Background Image\",\n    \"initial_frame\": \"\"\n}\n```"
+      title: Background Content (Object)
+      properties:
+        type:
+          type: string
+          description: The type of the background content. It can be an image or a color.
+        url:
+          type: string
+          description: The URL of the image that will be used as the background
+        alt_text:
+          type: string
+          description: Alternate text that appears if the app cannot render the background content of the message
+        initial_frame:
+          type: string
+          description: The initial frame or first frame is what appears behind the play button before a user taps it to start playing the video.
+      x-stoplight:
+        id: 80de922cbc5ff
     account-balance-details:
       type: object
       title: Account Balance Details (Object)
@@ -6395,6 +6597,136 @@ components:
           x-stoplight:
             id: gq5ah9naehygk
           description: 'The value of points earned toward progress across membership tiers. This is related to the migration strategy that allows businesses to "Consider Only Initial Points for Tier Migration". Currently, support for this parameter is limited to program type Points Unlock Redeemables, Membership Re-evaluation Strategy: Reset Based on Points Earned and Account Re-evaluation Strategy of Guest Inactivity.'
+    redemption_details:
+      type: object
+      description: 'Returns the details of a redemption done by a user
+
+        '
+      properties:
+        redemption_status:
+          type: string
+          description: 'Status of the redemption. The values returned can be:
+
+
+            - redeemable: The redemption can be redeemed at the POS.
+
+
+            - expired: The redemption has expired and becomes unusable for the user.
+
+
+            - honored: The redemption has already been processed successfully and redeemed by the user at a POS.
+
+
+            - cancelled: The redemption can be voided by a user by approaching the POS if a redemption is done by mistake and the user wants to cancel it.'
+        created_at:
+          type: string
+          description: 'Date/time when the redemption was created in the system
+
+            '
+        redeemable_id:
+          type: integer
+          description: 'Unique ID of the redeemable
+
+            '
+        redeemable_name:
+          type: string
+          description: 'Name of the redeemable
+
+            '
+        redeemed_value:
+          type: string
+          description: 'For a business with banked currency, a currency value will be returned (e.g., 10 would mean $10).
+
+
+            For a business without banked currency, a points value will be returned (e.g., 10 would mean 10 points).'
+        redemption_image_url:
+          type: string
+          description: 'URL of the image displayed in the app to depict the redeemable
+
+            '
+        redemption_message:
+          type: string
+          description: 'A descriptive message that tells a user what the user has redeemed
+
+            '
+        redeemable_description:
+          type: string
+          description: 'Description of the redeemable
+
+            '
+        updated_at:
+          type: string
+          description: 'Date/time at which the redemption was updated in the system
+
+            '
+        redemption_id:
+          type: integer
+          description: 'Unique ID of the redemption that has been created
+
+            '
+        redemption_tracking_code:
+          type: string
+          description: 'Code that a user must submit at the POS to receive the redeemed reward
+
+            '
+        expiring_at:
+          type: string
+          description: Date/time when the redemption_tracking_code expires and the user cannot use it at the POS
+        location_id:
+          type: integer
+          description: ID of the location associated with the with the redemption (where the redemption code is generated). If no location ID is provided, then the ID for the default location is returned.
+      title: Redemption Details (Object)
+      x-stoplight:
+        id: bc87eb1cec331
+    hero-content:
+      type: object
+      description: "This is the first visual content that a user encounters when the user views a rich message. This can be an image or a video.\n\n```json\n{\n    \"type\": \"image\",\n    \"url\": \"IMAGE_URL_GOES_HERE\",\n    \"alt_text\": \"Fries\",\n    \"initial_frame\": \"\"\n}\n```\n"
+      title: Hero Content (Object)
+      properties:
+        type:
+          type: string
+          description: Hero content can be an image or a video.
+        url:
+          type: string
+          description: The URL of the image/video that will be used as the hero content in a rich message
+        alt_text:
+          type: string
+          description: Alternate text that appears if the app cannot render the hero content of the message
+        initial_frame:
+          type: string
+          description: The initial frame or first frame is what appears behind the play button before a user taps it to start playing the video.
+      x-stoplight:
+        id: 4779761c509cd
+    Converted-Category-Balance:
+      type: array
+      title: Converted Category Balances (Array Object)
+      items:
+        type: object
+        properties:
+          category_id:
+            type: integer
+            description: Category ID
+          name:
+            type: string
+            description: Name of the reward
+          source_type:
+            type: string
+            description: Type of source used for conversion
+          source_value:
+            type: integer
+            description: Threshold value at which points get converted
+          converted_type:
+            type: string
+            description: This could be "currency", "fuel_discount", or "charity" depending on the platform configuration.
+          converted_value:
+            type: number
+            description: Multiplier for the converted type
+            format: float
+          balance:
+            type: integer
+            description: Balance available for the user for this type of reward
+      x-stoplight:
+        id: ba04d89cdeea7
     Event-details-object:
       type: object
       properties:
@@ -6462,6 +6794,37 @@ components:
       title: Event Details (Object)
       x-stoplight:
         id: a44caeddc8412
+    user-relation-attribute:
+      title: User Relation Attributes (Object)
+      x-stoplight:
+        id: dtzj3oncqzeji
+      type: object
+      properties:
+        relation:
+          type: string
+          description: Relation to the user. Valid values are "spouse" and "kid".
+        name:
+          type: string
+          description: Name of the relative
+        birthday:
+          type: string
+          enum:
+          - YYYY-MM-DD
+          format: date
+          description: Birthday of the relative
+        created_at:
+          type: string
+          description: Date/time when the user’s relationship details were added to the Punchh system, in ISO 8601 format
+          format: date-time
+          examples:
+          - '2023-08-18T12:32:13Z'
+        updated_at:
+          type: string
+          format: date-time
+          description: Date/time when the user’s relationship details were updated in the Punchh system, in ISO 8601 format
+          examples:
+          - '2023-08-18T12:32:13Z'
+      description: Contains information about the relationship details of a user, for example, spouse and kid information. If the user account does not have relationship details, the API returns an empty object in the response.
     rewards:
       type: array
       description: Contains information about the available rewards of the user
@@ -6577,242 +6940,6 @@ components:
             x-stoplight:
               id: supgkji7b6rag
             description: Whether the offer is enabled for auto-redemption or not
-    cta:
-      type: array
-      items:
-        type: object
-        properties:
-          type:
-            type: string
-            description: 'Three possible values can be returned to the mobile client:
-
-              - web_link: The CTA button prompts the user to open the link in a web browser available on the mobile client.
-
-              - deep_link: The CTA button takes the user to a particular deep link specified in the app.
-
-              - drill_down: The CTA button opens the detailed view of the rich message received by the app.'
-          link:
-            type: string
-            description: 'The URL to which the user will be directed, depending on the type of the CTA
-
-              '
-          label:
-            type: string
-            description: 'The text that appears on the CTA button in the app
-
-              '
-          cta_type:
-            type: string
-            description: 'More than one CTA object can be returned to the app. The cta_type can have two possible values: primary and secondary. The primary CTA is higher priority and is the main CTA button. The secondary CTA can be something like a terms and conditions link that can be rendered appropriately in the app.'
-      description: "Short for call to action, a device designed to prompt an immediate response from a user\n\n```json\n[\n    {\n        \"type\": \"external_web_link\",\n        \"link\": \"URL_GOES_HERE\",\n        \"label\": \"More Details\",\n        \"cta_type\": \"primary\"\n    },\n    {\n        \"type\": \"external_web_link\",\n        \"link\": \"URL_GOES_HERE\",\n        \"label\": \"Terms & Conditions\",\n        \"cta_type\": \"secondary\"\n    }\n]\n```\n"
-      title: CTA (Array Object)
-      x-stoplight:
-        id: 80d7d22f4d11c
-    redemption_details:
-      type: object
-      description: 'Returns the details of a redemption done by a user
-
-        '
-      properties:
-        redemption_status:
-          type: string
-          description: 'Status of the redemption. The values returned can be:
-
-
-            - redeemable: The redemption can be redeemed at the POS.
-
-
-            - expired: The redemption has expired and becomes unusable for the user.
-
-
-            - honored: The redemption has already been processed successfully and redeemed by the user at a POS.
-
-
-            - cancelled: The redemption can be voided by a user by approaching the POS if a redemption is done by mistake and the user wants to cancel it.'
-        created_at:
-          type: string
-          description: 'Date/time when the redemption was created in the system
-
-            '
-        redeemable_id:
-          type: integer
-          description: 'Unique ID of the redeemable
-
-            '
-        redeemable_name:
-          type: string
-          description: 'Name of the redeemable
-
-            '
-        redeemed_value:
-          type: string
-          description: 'For a business with banked currency, a currency value will be returned (e.g., 10 would mean $10).
-
-
-            For a business without banked currency, a points value will be returned (e.g., 10 would mean 10 points).'
-        redemption_image_url:
-          type: string
-          description: 'URL of the image displayed in the app to depict the redeemable
-
-            '
-        redemption_message:
-          type: string
-          description: 'A descriptive message that tells a user what the user has redeemed
-
-            '
-        redeemable_description:
-          type: string
-          description: 'Description of the redeemable
-
-            '
-        updated_at:
-          type: string
-          description: 'Date/time at which the redemption was updated in the system
-
-            '
-        redemption_id:
-          type: integer
-          description: 'Unique ID of the redemption that has been created
-
-            '
-        redemption_tracking_code:
-          type: string
-          description: 'Code that a user must submit at the POS to receive the redeemed reward
-
-            '
-        expiring_at:
-          type: string
-          description: Date/time when the redemption_tracking_code expires and the user cannot use it at the POS
-        location_id:
-          type: integer
-          description: ID of the location associated with the with the redemption (where the redemption code is generated). If no location ID is provided, then the ID for the default location is returned.
-      title: Redemption Details (Object)
-      x-stoplight:
-        id: bc87eb1cec331
-    Notifications:
-      type: array
-      description: Returns the details of the notifications received by a user. A maximum of 10 notifications will be fetched.
-      title: Notifications (Array Object)
-      items:
-        type: object
-        properties:
-          id:
-            type: integer
-            description: ID of the notification
-          kind:
-            type: string
-            description: 'Type of notification. There are three types of notifications that a user can receive: ''system'', ''campaign'', and ''news''.'
-          message:
-            type: string
-            description: Message sent to the user in the notification
-          read_at:
-            type: string
-            enum:
-            - YYYY-MM-DDThh:mm:ssZ
-            format: date-time
-            x-nullable: true
-          created_at:
-            type: string
-            enum:
-            - YYYY-MM-DDThh:mm:ssZ
-            format: date-time
-      x-stoplight:
-        id: c1638b1a83f29
-    Coupons:
-      type: array
-      title: Coupons (Array Object)
-      items:
-        type: object
-        properties:
-          code:
-            type: string
-            description: Alphanumeric coupon code that a user must use to receive an offer
-          image_url:
-            type: string
-            description: URL of the image of the reward that will be displayed in the app
-          name:
-            type: string
-            description: Name of the coupon campaign through which the coupon was given to a user
-          description:
-            type: string
-            description: Description of the offer that will be available to a user after using the coupon code
-            x-nullable: true
-          start_date:
-            type: string
-            description: Coupon start date
-            enum:
-            - YYYY-MM-DD
-            format: date
-            x-nullable: true
-          end_date:
-            type: string
-            description: Coupon expiration date
-            enum:
-            - YYYY-MM-DD
-            format: date
-      x-stoplight:
-        id: 16135004ce2f7
-    Converted-Category-Balance:
-      type: array
-      title: Converted Category Balances (Array Object)
-      items:
-        type: object
-        properties:
-          category_id:
-            type: integer
-            description: Category ID
-          name:
-            type: string
-            description: Name of the reward
-          source_type:
-            type: string
-            description: Type of source used for conversion
-          source_value:
-            type: integer
-            description: Threshold value at which points get converted
-          converted_type:
-            type: string
-            description: This could be "currency", "fuel_discount", or "charity" depending on the platform configuration.
-          converted_value:
-            type: number
-            description: Multiplier for the converted type
-            format: float
-          balance:
-            type: integer
-            description: Balance available for the user for this type of reward
-      x-stoplight:
-        id: ba04d89cdeea7
-    user-relation-attribute:
-      title: User Relation Attributes (Object)
-      x-stoplight:
-        id: dtzj3oncqzeji
-      type: object
-      properties:
-        relation:
-          type: string
-          description: Relation to the user. Valid values are "spouse" and "kid".
-        name:
-          type: string
-          description: Name of the relative
-        birthday:
-          type: string
-          enum:
-          - YYYY-MM-DD
-          format: date
-          description: Birthday of the relative
-        created_at:
-          type: string
-          description: Date/time when the user’s relationship details were added to the Punchh system, in ISO 8601 format
-          format: date-time
-          examples:
-          - '2023-08-18T12:32:13Z'
-        updated_at:
-          type: string
-          format: date-time
-          description: Date/time when the user’s relationship details were updated in the Punchh system, in ISO 8601 format
-          examples:
-          - '2023-08-18T12:32:13Z'
-      description: Contains information about the relationship details of a user, for example, spouse and kid information. If the user account does not have relationship details, the API returns an empty object in the response.
     menu-items:
       type: array
       title: Menu Items (Array Object)
@@ -6889,25 +7016,96 @@ components:
         - menu_family
         - menu_major_group
         - serial_number
-    hero-content:
+    access_token-Object:
       type: object
-      description: "This is the first visual content that a user encounters when the user views a rich message. This can be an image or a video.\n\n```json\n{\n    \"type\": \"image\",\n    \"url\": \"IMAGE_URL_GOES_HERE\",\n    \"alt_text\": \"Fries\",\n    \"initial_frame\": \"\"\n}\n```\n"
-      title: Hero Content (Object)
-      properties:
-        type:
-          type: string
-          description: Hero content can be an image or a video.
-        url:
-          type: string
-          description: The URL of the image/video that will be used as the hero content in a rich message
-        alt_text:
-          type: string
-          description: Alternate text that appears if the app cannot render the hero content of the message
-        initial_frame:
-          type: string
-          description: The initial frame or first frame is what appears behind the play button before a user taps it to start playing the video.
+      description: An access token is needed to identify the user making the API request.
+      title: Access Token (Object)
       x-stoplight:
-        id: 4779761c509cd
+        ID: 750d787ef37a5
+      properties:
+        token:
+          type: string
+          description: App-specific access token of the given user
+        seconds_to_expire:
+          type: integer
+          description: Number of seconds after which the token expires. A NULL value for this parameter means the token does not expire.
+        revoked_at:
+          type: string
+          description: Date and time when the token was created in the system in [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) format. A NULL value for this parameter means the token has not been revoked yet.
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+        refresh_token:
+          type: string
+          description: Refresh token that the client application can use to get a new access token
+        scopes:
+          type: array
+          description: Actions or data the bearer of the token is allowed to perform or access
+          items:
+            type: string
+    Coupons:
+      type: array
+      title: Coupons (Array Object)
+      items:
+        type: object
+        properties:
+          code:
+            type: string
+            description: Alphanumeric coupon code that a user must use to receive an offer
+          image_url:
+            type: string
+            description: URL of the image of the reward that will be displayed in the app
+          name:
+            type: string
+            description: Name of the coupon campaign through which the coupon was given to a user
+          description:
+            type: string
+            description: Description of the offer that will be available to a user after using the coupon code
+            x-nullable: true
+          start_date:
+            type: string
+            description: Coupon start date
+            enum:
+            - YYYY-MM-DD
+            format: date
+            x-nullable: true
+          end_date:
+            type: string
+            description: Coupon expiration date
+            enum:
+            - YYYY-MM-DD
+            format: date
+      x-stoplight:
+        id: 16135004ce2f7
+    Notifications:
+      type: array
+      description: Returns the details of the notifications received by a user. A maximum of 10 notifications will be fetched.
+      title: Notifications (Array Object)
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            description: ID of the notification
+          kind:
+            type: string
+            description: 'Type of notification. There are three types of notifications that a user can receive: ''system'', ''campaign'', and ''news''.'
+          message:
+            type: string
+            description: Message sent to the user in the notification
+          read_at:
+            type: string
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+            format: date-time
+            x-nullable: true
+          created_at:
+            type: string
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+            format: date-time
+      x-stoplight:
+        id: c1638b1a83f29
     profile_field_answers:
       title: Profile Field Answers (Object)
       x-stoplight:
@@ -7146,124 +7344,89 @@ components:
             id: kbj7omjru7mry
           format: date-time
           description: Date and time when the user became a loyalty member
-    UserBalanceMessages:
-      type: object
-      description: 'Returned in response to the [Fetch User Balance](/docs/dev-portal-mobile/fb962621d8f10-fetch-user-balance) API
-
-        '
-      title: User Balance Messages (Array Object)
+    rewards_2:
+      title: Rewards (Array Object)
       x-stoplight:
-        id: 3ca96c1a6bcbf
-      properties:
-        messages:
-          type: array
-          items:
-            type: object
-            properties:
-              background_content:
-                $ref: '#/components/schemas/background-content'
-              body:
-                type: string
-                description: 'The text content of a rich message
-
-                  '
-              cta:
-                $ref: '#/components/schemas/cta'
-              dismissable:
-                type: boolean
-                description: 'This boolean value decides whether guests can dismiss a message or not. When a guest dismisses a message, it should not be rendered in the app.
-
-                  '
-              hero_content:
-                $ref: '#/components/schemas/hero-content'
-              launch_time:
-                type: string
-                description: "Date/time, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format, when the notification should be rendered by the application client. This is a useful field that can enable a business to create messages that can be sent to the mobile client in advance, and they appear in the app later when the launch time comes.\n\nIf a rich message is triggered from a campaign, from a notification template as a result of user action, as a result of test notification, or if the Launch Time and Take Down Time fields are left blank in a business announcement, the values for launch_time and take_down_time will be null.\n\nThe values of take_down_time and launch_time parameters are determined when configuring campaign announcements. To set up a campaign announcement in the Punchh platform, in the left navigation pane, navigate to <b>Loyalty Program > App Message Composer</b>, and click <b>Add App Message</b>. In the <b>New Announcement</b> page, specify the date and time of the launch in the <b>Launch Time</b> field and the take down time in the <b>Take Down Time</b> field. \n\nOnce configured, these values will be displayed in the `launch_time` and `take_down_time` parameters respectively when the messages are fetched via this Mobile API."
-              message_type:
-                type: string
-                description: 'There are two types of rich Messages returned in response:
-
-                  1. user_specific: Rich messages that have a user context. These include rich messages created based on campaigns or user actions.
-
-                  2. business_wide: Rich messages that are created as business announcements in the system.'
-              rank:
-                type: integer
-                description: Every message should have a rank. This marks the importance of a message. There may be a case when a more important message moves down the display list in the app as new messages are delivered to the mobile client. To keep important messages at the top of the display list, they should be given a higher number just as is the case with z-index. If two messages have the same rank, the app will determine the display order based on the launch_time.
-              style_url:
-                type: string
-                description: 'Link to the style sheet file for the style that will be applied to the message. The mobile client can download the style file, which can then be used to render the rich message in the app.
-
-                  '
-              subtitle:
-                type: string
-                description: 'A subordinate title providing additional information about the content
-
-                  '
-              tags:
-                type: array
-                description: 'Tags provide additional details about a message. A simple example could be the type (such as campaign, system_notification, etc.) that may help the app make decisions about the rendering of the message.
-
-                  '
-                items:
-                  type: string
-              take_down_time:
-                type: string
-                description: "Date/time, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format, when the mobile client should stop rendering the rich message in the app.\n\nIf a rich message is triggered from a campaign, from a notification template as a result of user action, as a result of test notification, or if the Launch Time and Take Down Time fields are left blank in a business announcement, the values for launch_time and take_down_time will be null.\n\nThe values of take_down_time and launch_time parameters are determined when configuring campaign announcements. To set up a campaign announcement in the Punchh platform, in the left navigation pane, navigate to <b>Loyalty Program > App Message Composer</b>, and click <b>Add App Message</b>. In the <b>New Announcement</b> page, specify the date and time of the launch in the <b>Launch Time</b> field and the take down time in the <b>Take Down Time</b> field. \n\nOnce configured, these values will be displayed in the `launch_time` and `take_down_time` parameters respectively when the messages are fetched via this Mobile API."
-              title:
-                type: string
-                description: 'A suitable title for the rich message. A well-crafted title increases the chances that a user will view a message.
-
-                  '
-              message_id:
-                type: integer
-                description: 'Unique ID of the message sent to the user
-
-                  '
-        read_at:
-          type: string
-          enum:
-          - YYYY-MM-DDThh:mm:ssZ
-          format: date-time
-          description: Date/time when the message was read, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
-        created_at:
-          type: string
-          enum:
-          - YYYY-MM-DDThh:mm:ssZ
-          format: date-time
-          description: Date/time when the message was created, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
-        deleted_at:
-          type: string
-          enum:
-          - YYYY-MM-DDThh:mm:ssZ
-          format: date-time
-          description: Date/time when the message was deleted, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
-    access_token-Object:
-      type: object
-      description: An access token is needed to identify the user making the API request.
-      title: Access Token (Object)
-      x-stoplight:
-        ID: 750d787ef37a5
-      properties:
-        token:
-          type: string
-          description: App-specific access token of the given user
-        seconds_to_expire:
-          type: integer
-          description: Number of seconds after which the token expires. A NULL value for this parameter means the token does not expire.
-        revoked_at:
-          type: string
-          description: Date and time when the token was created in the system in [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) format. A NULL value for this parameter means the token has not been revoked yet.
-          enum:
-          - YYYY-MM-DDThh:mm:ssZ
-          format: date-time
-        refresh_token:
-          type: string
-          description: Refresh token that the client application can use to get a new access token
-        scopes:
-          type: array
-          description: Actions or data the bearer of the token is allowed to perform or access
-          items:
+        id: kx3zspm53gi0f
+      type: array
+      description: Contains information about the available rewards of the user. If a user account does not have rewards, the API returns an empty object in the response.
+      x-examples:
+        application/json:
+          id: 31300354648
+          created_at: '2023-10-01T18:05:42Z'
+          end_date_tz: '2023-10-05T18:29:59Z'
+          start_date_tz: '2023-10-01T18:05:42Z'
+          updated_at: '2023-10-01T18:05:42Z'
+          image: IMAGE_URL_GOES_HERE
+          status: unredeemed
+          points: 100
+          discount_amount: 10
+          description: Free Sandwich with Purchase of Chips and Drink
+          name: Free Sandwich with Purchase of Chips and Drink
+          redeemable_properties: ''
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int64
+            description: ID of the reward
+          created_at:
             type: string
+            format: date-time
+            enum:
+            - ' YYYY-MM-DDThh:mm:ssZ'
+            description: Date/time when the reward was created, in ISO 8601 format
+            examples:
+            - '2023-10-01T18:05:42Z'
+          start_date_tz:
+            type: string
+            format: date-time
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+            description: Start date/time of the reward, in ISO 8601 format
+            examples:
+            - '2023-10-01T18:05:42Z'
+          end_date_tz:
+            type: string
+            format: date-time
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+            description: Expiration date/time of the reward, in ISO 8601 format
+            examples:
+            - YYYY-MM-DDThh:mm:ssZ
+          updated_at:
+            type: string
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+            format: date-time
+            description: Date/time when the reward was updated, in ISO 8601 format
+            examples:
+            - '2023-10-01T18:05:42Z'
+          image:
+            type: string
+            description: Image URL of the reward
+          status:
+            type: string
+            description: The redemption status of the reward.  Only the value “unredeemed" will be returned, indicating that the reward has not been redeemed by a user.
+          points:
+            type: integer
+            description: Points associated with the current reward
+          discount_amount:
+            type: integer
+            description: Discount amount associated with the current reward
+          description:
+            type: string
+            description: Description that explains the reward as configured in the Punchh platform
+          name:
+            type: string
+            description: Name of the reward
+          redeemable_properties:
+            type: string
+            description: Comma-separated values that provide additional details about a redeemable. For example, a redeemable could be a "Food Item" or "Merchandise", etc. Redeemable properties can be configured for a business in the Punchh platform and attached to a redeemable. If no value is attached to a redeemable, a blank parameter is returned.
+          meta_data:
+            type: string
+            description: Meta data information added to a redeemable. The API returns this parameter only if meta data information is provided for the redeemable in the Punchh platform. The maximum length is 255 characters.
     discount-details:
       title: Discount Details (Object)
       x-stoplight:
@@ -7360,6 +7523,488 @@ components:
               x-stoplight:
                 id: bwc2me1ki4epk
               description: Points associated with the redeemable
+    User:
+      title: User (Object)
+      x-stoplight:
+        id: z6d3vh41qnftr
+      type: object
+      description: Includes details about the users who are registered on a particular business
+      x-examples:
+        application/json:
+          address: ''
+          anniversary: null
+          avatar_remote_url: null
+          birthday: null
+          city: ''
+          communicable_email: test@example.com
+          created_at: '2019-04-24T12:39:06Z'
+          email: test@example.com
+          email_verified: false
+          facebook_signup: null
+          apple_signup: null
+          apple_uid: null
+          favourite_location_ids: ''
+          favourite_store_numbers: ''
+          fb_uid: null
+          first_name: FIRST_NAME_GOES_HERE
+          gender: ''
+          has_generated_fb_email: false
+          last_name: LAST_NAME_GOES_HERE
+          marketing_email_subscription: true
+          marketing_pn_subscription: true
+          migrate_status: false
+          passcode_configured_for_giftcards: false
+          phone: '1111111111'
+          profile_field_answers: {}
+          referral_code: REFERRAL_CODE_GOES_HERE
+          referral_path: URL_GOES_HERE
+          secondary_email: ''
+          state: ''
+          superuser: false
+          terms_and_conditions: true
+          title: ''
+          updated_at: '2020-05-06T14:52:24Z'
+          user_as_qrcode: QR_CODE_GOES_HERE
+          user_code: P11111111
+          user_id: 111111111
+          preferred_locale: ''
+          user_relations: []
+          zip_code: null
+          verification_mode: null
+          sms_subscription: false
+          privacy_policy: false
+      properties:
+        address:
+          type: string
+          description: Address of the user
+        anniversary:
+          type: string
+          description: Anniversary date of the user, in YYYY-MM-DD format
+          format: date
+        avatar_remote_url:
+          type: string
+          description: URL of the user's profile image uploaded to an online file storage system. This will be used for users who signed up using email.
+        birthday:
+          type: string
+          format: date
+          description: Date of birth of the user, in YYYY-MM-DD format
+        city:
+          type: string
+          description: City where the user lives
+        communicable_email:
+          type: string
+          description: Email address used for communication with the user
+        created_at:
+          type: string
+          format: date-time
+          description: Date/time when the user was created in the system, in ISO 8601 format
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+        email:
+          type: string
+          description: Unique email address used to identify the user
+        email_verified:
+          type: boolean
+          description: Whether the email address of the user has been verified or not
+        facebook_signup:
+          type: boolean
+          description: Whether the user has a Facebook sign-up or not
+        apple_signup:
+          type: boolean
+          description: Whether the user has an Apple sign-up or not. This will return true for the first time sign-up.
+        apple_uid:
+          type: string
+          description: Unique ID generated by Apple
+        favourite_location_ids:
+          type: string
+          description: List of the user's favorite locations
+        favourite_store_numbers:
+          type: string
+          description: List of store numbers of the user's favorite locations
+        fb_uid:
+          type: string
+          description: Facebook ID that identifies the user
+        first_name:
+          type: string
+          description: First name of the user
+        gender:
+          type: string
+          description: Gender of the user
+        has_generated_fb_email:
+          type: boolean
+          description: Whether the user has generated a Facebook email or not
+        last_name:
+          type: string
+          description: Last name of the user
+        marketing_email_subscription:
+          type: boolean
+          description: Whether the user has subscribed to receive marketing emails or not
+        marketing_pn_subscription:
+          type: boolean
+          description: Whether the user has subscribed to marketing push notifications or not
+        migrate_status:
+          type: boolean
+          description: Whether the user has a migrate status or not
+        passcode_configured_for_giftcards:
+          type: boolean
+          description: Whether the user has configured a passcode for gift cards or not
+        phone:
+          type: string
+          description: Phone number of the user
+        profile_field_answers:
+          type: object
+          description: Answers given by the user while filling in the user profile. The user submits answers to profile field questions that are configured in the Punchh platform. A total of 25 answers can be submitted. The keys range from 'upf0' to 'upf24'. If questions have multiple answers, the values should be separated by a | character (pipe).
+          properties:
+            upf0:
+              type: string
+              description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+            upf1:
+              type: string
+              description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+            upf2:
+              type: string
+              description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+        referral_code:
+          type: string
+          description: Referral code of the user
+        secondary_email:
+          type: string
+          description: The secondary email address of the user is configured when a user signs up with Facebook/Apple but does not share the email address. The app asks for an alternate email address, which is kept as the `secondary_email`.
+        state:
+          type: string
+          description: State where the user lives
+        superuser:
+          type: boolean
+          description: Whether multiple check-ins are allowed for a user. This is used mostly for testing purposes by developers.
+        terms_and_conditions:
+          type: boolean
+          description: Whether the terms and conditions of a business have been accepted by a user or not
+        title:
+          type: string
+          description: Salutation as selected by the user
+        updated_at:
+          type: string
+          format: date-time
+          description: Date/time when the user was updated in the system, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+        user_as_qrcode:
+          type: string
+          description: QR code that identifies the user
+        user_code:
+          type: string
+          description: A unique ID that identifies the user. This smaller code can be converted to a QR code in the app and scanned at some POS systems that do not support longer codes. Alternatively, a user could give this to the POS operator if the POS does not have a scanner.
+        user_id:
+          type: integer
+          description: ID that identifies the user
+        preferred_locale:
+          type: string
+          description: Preferred locale of the user
+        user_relations:
+          type: array
+          description: Relatives of the user. Valid values are "kid" and "spouse".
+          items: {}
+        zip_code:
+          type: string
+          description: Zip code where the user lives
+        verification_mode:
+          type: string
+          description: Mode of verification (available only for a user in awaiting migration state)
+        sms_subscription:
+          type: boolean
+          description: Whether the user has subscribed to SMS services or not
+        privacy_policy:
+          type: boolean
+          description: Whether the user has agreed to the privacy policy to use the app as per the configuration or not
+        age_verified_status:
+          type: boolean
+          x-stoplight:
+            id: gre7jhjy7jbxl
+          description: 'Whether or not the user has undergone age verification by Koupon Media. Possible Values: true, false. The value is set to true if the user''s age is verified by Koupon Media; otherwise, it is set to false. The response returns this parameter in sign-in, sign-up, and user update APIs if Koupon Media is selected as the age verification adapter for the business in the Punchh platform. Contact your Punchh representative to update this Punchh platform configuration setting. '
+    subscriptions:
+      title: Subscriptions (Array Object)
+      x-stoplight:
+        id: ua2meoyk2vql9
+      type: array
+      description: Contains information about different subscriptions issued to the user. This object is returned when the subscriptions feature is available for the business. If a user does not have active subscriptions, the API returns an empty object in the response.
+      x-examples:
+        application/json:
+        - plan_name: free burger
+          pos_meta: VIP subs
+          subscription_id: 123
+      items:
+        type: object
+        properties:
+          plan_name:
+            type: string
+            description: Name of the subscription plan as provided by an admin at the time of subscription plan creation
+          pos_meta:
+            type: string
+            description: Free-form text field to support various subscription-related business use cases at POS. The text field length is 24 characters.
+          subscription_id:
+            type: string
+            description: System-generated unique ID of the subscription plan that is issued for a user
+    user-input:
+      title: User Input (Object)
+      x-stoplight:
+        id: kjyocrij4i2d0
+      type: object
+      x-examples:
+      - title: string
+        first_name: string
+        last_name: string
+        email: string
+        secondary_email: string
+        gender: string
+        phone: string
+        birthday: YYYY-MM-DD
+        anniversary: string
+        password: string
+        password_confirmation: string
+        zip_code: string
+        external_source: string
+        external_source_id: string
+        address_line1: string
+        marketing_email_subscription: true
+        marketing_pn_subscription: true
+        city: string
+        state: string
+        preferred_locale: string
+        original_points: -3.402823669209385e+38
+        business_migration_users: string
+        id: string
+        business_id: string
+        old_membership_no: string
+        card_number: string
+        terms_and_conditions: true
+        age_verified: true
+        privacy_policy: true
+        test_user: true
+        preferred_location_ids:
+        - 0
+        eclub_locations:
+        - null
+        user_relations_attributes:
+        - ? ''
+          : string
+        profile_field_answers:
+          upf0: string
+      properties:
+        title:
+          type: string
+          x-stoplight:
+            id: 769xbrq5l9sui
+          description: 'Salutation as selected by the user. Possible values: Mr., Miss, Mrs., Ms., Dr., Rev. '
+        first_name:
+          type: string
+          x-stoplight:
+            id: f9g4yjleg7g9k
+          description: First name of the user
+        last_name:
+          type: string
+          x-stoplight:
+            id: 0hz4od3dawdp4
+          description: Last name of the user
+        email:
+          type: string
+          x-stoplight:
+            id: v6uo4yye4lr77
+          description: New email address of the user
+        secondary_email:
+          type: string
+          x-stoplight:
+            id: 04ph8q662wbme
+          description: Secondary email address of the user
+        gender:
+          type: string
+          x-stoplight:
+            id: 24smrrc4re5lc
+          description: Gender of the user
+        phone:
+          type: string
+          x-stoplight:
+            id: egowrrjieounm
+          description: Phone number of the user
+        birthday:
+          type: string
+          x-stoplight:
+            id: kclwucezwvqay
+          enum:
+          - YYYY-MM-DD
+          description: Date of birth of the user, in YYYY-MM-DD format. This field gets updated in the database only if the user did not set it initially during sign-up. Due to fraud protections, guests are permitted to update their birthdays only once. Subsequent attempts to modify the birthday parameter using the API will fail. In such a case, even though the API returns a 200 response, the user's birthday is not updated in Punchh.
+        anniversary:
+          type: string
+          x-stoplight:
+            id: jwesrpwr5823f
+          description: Anniversary of the user, in YYYY-MM-DD format
+        password:
+          type: string
+          x-stoplight:
+            id: ca9bnldhpvd71
+          description: Password of the user's account
+        password_confirmation:
+          type: string
+          x-stoplight:
+            id: pwp9m6t7le0p9
+          description: Password re-typed by the user for confirmation
+        zip_code:
+          type: string
+          x-stoplight:
+            id: cobsuo6e0j86z
+          description: Zip code where the user lives
+        external_source:
+          type: string
+          x-stoplight:
+            id: iy3tdphu3qm1s
+          description: External source name (third-party IDP). Possible values for external_source are salesforce, customer_id, mparticle, azure, aws_cognito, auth0, and ext_idp. If you are using a different one, please reach out to your implementation manager to add a new value. The values are case-sensitive. This is a required parameter if you want to update the access token for an external IDP user.
+        external_source_id:
+          type: string
+          x-stoplight:
+            id: qm01rmw09li2d
+          description: ID of the customer in the mentioned external source name (external_source), a unique identifier generated by the third-party IDP (GUID format). This is a required parameter if you want to update the access token for an external IDP user.
+        address_line1:
+          type: string
+          x-stoplight:
+            id: an964qvzzp4xt
+          description: Address of the user
+        marketing_email_subscription:
+          type: boolean
+          x-stoplight:
+            id: 7ej24u4uetcvy
+          description: 'Whether the user has subscribed to receive marketing emails or not. Possible values: true, false'
+        marketing_pn_subscription:
+          type: boolean
+          x-stoplight:
+            id: x9e66n1ky3zjg
+          description: 'Whether the user has subscribed to marketing push notifications or not. Possible values: true, false'
+        city:
+          type: string
+          x-stoplight:
+            id: twukhe1rmryen
+          description: City where the user lives
+        state:
+          type: string
+          x-stoplight:
+            id: sbo5349rtucim
+          description: State where the user lives
+        preferred_locale:
+          type: string
+          x-stoplight:
+            id: m42bp288k2twi
+          description: Preferred locale of the user
+        original_points:
+          type: number
+          x-stoplight:
+            id: 6hlrir0k06utu
+          format: float
+          description: Value of points from the incumbent loyalty program
+        business_migration_users:
+          type: boolean
+          x-stoplight:
+            id: 0v3cfda6hv6bd
+          description: 'Whether the user is a business migration user. Possible values: true, false'
+        id:
+          type: number
+          x-stoplight:
+            id: 53w98u5pfox9i
+          description: ID that identifies the user
+        business_id:
+          type: string
+          x-stoplight:
+            id: nc0k6xba2xx15
+          description: ID of the business to which the user is added
+        old_membership_no:
+          type: number
+          x-stoplight:
+            id: fhhf5fogl2b1y
+          description: Old membership number from the incumbent loyalty program
+        card_number:
+          type: string
+          x-stoplight:
+            id: udm6k3r86888e
+          description: Gift card number
+        terms_and_conditions:
+          type: boolean
+          x-stoplight:
+            id: fbjn8l1lcxzwl
+          description: 'Whether the terms and conditions of a business have been accepted by the user or not. Possible values: true, false'
+        age_verified:
+          type: boolean
+          x-stoplight:
+            id: v6rmfn4vtunub
+          description: 'Whether age is verified or not. Possible values: true, false'
+        privacy_policy:
+          type: boolean
+          x-stoplight:
+            id: zqilj8eaz8lja
+          description: Whether the user has agreed to the privacy policy to use the app as per the configuration or not
+        test_user:
+          type: boolean
+          x-stoplight:
+            id: cd6ohlnsjxudd
+          description: 'Whether the user is allowed to switch the environment in the mobile application or not. Possible values: true, false'
+        preferred_location_ids:
+          type: array
+          x-stoplight:
+            id: lziry9heltro1
+          description: Favorite location IDs of the user
+          items:
+            x-stoplight:
+              id: 16s1fahuyodnh
+            type: integer
+        eclub_locations:
+          type: array
+          x-stoplight:
+            id: ppdnvgnjqvfo2
+          description: Favorite location of the user if the user is an eClub guest
+          items: {}
+        user_relations_attributes:
+          $ref: '#/components/schemas/user-relation-attributes'
+        profile_field_answers:
+          type: object
+          x-stoplight:
+            id: efggevqx2aq8n
+          description: Custom profile fields to be updated. For details, see [Updating Custom Profile Fields With the Punchh Platform API](/docs/dev-portal-platform-functions/ebc7b58d69e82-updating-custom-profile-fields-with-the-punchh-platform-api).
+          properties:
+            upf0:
+              type: string
+              x-stoplight:
+                id: knzjld0jj4ldc
+              description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+        age_verified_status:
+          type: boolean
+          x-stoplight:
+            id: 61n0bid71g9rl
+          description: 'Whether or not the user has undergone age verification by Koupon Media. Possible Values: true, false. The parameter is accepted in the request if Koupon Media is selected as the age verification adapter for the business in the Punchh platform. Contact your Punchh representative to update this Punchh platform configuration setting. '
+    discounts-applied:
+      title: Discounts Applied (Object)
+      x-stoplight:
+        id: 3pbtryawksdq0
+      type: object
+      description: Contains details of the discounts applied to a transaction
+      properties:
+        redemption_id:
+          type: integer
+          x-stoplight:
+            id: 4qh1k67mcwbam
+          description: 'Unique ID associated with the redemption. Save this in your system for future reference. Note: In case of coupons or promos, the redemption_id returned would be same as the redemption_code.'
+        discount_type:
+          type: string
+          x-stoplight:
+            id: lbwco580f3kfl
+          description: 'The discount type can be any one of these values: reward || redeemable || banked_reward || redemption_code || subscription.'
+        discount_id:
+          type: integer
+          x-stoplight:
+            id: 3stwfl5xyy9ob
+          description: Unique ID that identifies the discount (e.g., reward_id, redeemable_id, redemption_code, coupon_code)
+        discount_value:
+          type: string
+          x-stoplight:
+            id: rhbdqn7zil2no
+          description: The value of the discount in currency applied to the transaction. This value is set for users on the “Points Convert to Currency” loyalty program. The default value is 0 if the user has not selected any amount to redeem or has no currency in the loyalty account. The parameter returns a “null” value for a business that does not support banking of points into currency.
+        discounts_details:
+          $ref: '#/components/schemas/discount-details'
     user-info:
       title: User Info (Object)
       x-stoplight:
@@ -7688,606 +8333,6 @@ components:
           description: 'Whether or not the user has undergone age verification by Koupon Media. Possible Values: true, false. The value is set to true if the user''s age is verified by Koupon Media; otherwise, it is set to false. The response returns this parameter in sign-in, sign-up, and user update APIs if Koupon Media is selected as the age verification adapter for the business in the Punchh platform. Contact your Punchh representative to update this Punchh platform configuration setting. '
         subscriptions:
           $ref: '#/components/schemas/subscriptions'
-    discounts-applied:
-      title: Discounts Applied (Object)
-      x-stoplight:
-        id: 3pbtryawksdq0
-      type: object
-      description: Contains details of the discounts applied to a transaction
-      properties:
-        redemption_id:
-          type: integer
-          x-stoplight:
-            id: 4qh1k67mcwbam
-          description: 'Unique ID associated with the redemption. Save this in your system for future reference. Note: In case of coupons or promos, the redemption_id returned would be same as the redemption_code.'
-        discount_type:
-          type: string
-          x-stoplight:
-            id: lbwco580f3kfl
-          description: 'The discount type can be any one of these values: reward || redeemable || banked_reward || redemption_code || subscription.'
-        discount_id:
-          type: integer
-          x-stoplight:
-            id: 3stwfl5xyy9ob
-          description: Unique ID that identifies the discount (e.g., reward_id, redeemable_id, redemption_code, coupon_code)
-        discount_value:
-          type: string
-          x-stoplight:
-            id: rhbdqn7zil2no
-          description: The value of the discount in currency applied to the transaction. This value is set for users on the “Points Convert to Currency” loyalty program. The default value is 0 if the user has not selected any amount to redeem or has no currency in the loyalty account. The parameter returns a “null” value for a business that does not support banking of points into currency.
-        discounts_details:
-          $ref: '#/components/schemas/discount-details'
-    subscriptions:
-      title: Subscriptions (Array Object)
-      x-stoplight:
-        id: ua2meoyk2vql9
-      type: array
-      description: Contains information about different subscriptions issued to the user. This object is returned when the subscriptions feature is available for the business. If a user does not have active subscriptions, the API returns an empty object in the response.
-      x-examples:
-        application/json:
-        - plan_name: free burger
-          pos_meta: VIP subs
-          subscription_id: 123
-      items:
-        type: object
-        properties:
-          plan_name:
-            type: string
-            description: Name of the subscription plan as provided by an admin at the time of subscription plan creation
-          pos_meta:
-            type: string
-            description: Free-form text field to support various subscription-related business use cases at POS. The text field length is 24 characters.
-          subscription_id:
-            type: string
-            description: System-generated unique ID of the subscription plan that is issued for a user
-    user-relation-attributes:
-      title: User Relation Attributes (Array Object)
-      x-stoplight:
-        id: 0cy8krzi1660q
-      type: array
-      x-examples:
-        application/json:
-          id: 111111111
-          relation: spouse
-          name: FIRST_NAME_GOES_HERE LAST_NAME_GOES_HERE
-          birthday: '1999-01-01'
-          created_at: '2023-08-18T12:32:13Z'
-          updated_at: '2023-08-18T12:32:13Z'
-      description: Contains information about the relationship details of a user, for example, spouse and kid information. If the user account does not have relationship details, the API returns an empty object in the response.
-      items:
-        type: object
-        properties:
-          id:
-            type: number
-            format: date-time
-            x-stoplight:
-              id: siwx79u7bfhpf
-            description: ID that identifies the relationship
-          relation:
-            type: string
-            description: Relation to the user. Valid values are "spouse" and "kid".
-          name:
-            type: string
-            description: Name of the relative
-          birthday:
-            type: string
-            description: Birthday of the relative
-            enum:
-            - YYYY-MM-DD
-            format: date
-    User:
-      title: User (Object)
-      x-stoplight:
-        id: z6d3vh41qnftr
-      type: object
-      description: Includes details about the users who are registered on a particular business
-      x-examples:
-        application/json:
-          address: ''
-          anniversary: null
-          avatar_remote_url: null
-          birthday: null
-          city: ''
-          communicable_email: test@example.com
-          created_at: '2019-04-24T12:39:06Z'
-          email: test@example.com
-          email_verified: false
-          facebook_signup: null
-          apple_signup: null
-          apple_uid: null
-          favourite_location_ids: ''
-          favourite_store_numbers: ''
-          fb_uid: null
-          first_name: FIRST_NAME_GOES_HERE
-          gender: ''
-          has_generated_fb_email: false
-          last_name: LAST_NAME_GOES_HERE
-          marketing_email_subscription: true
-          marketing_pn_subscription: true
-          migrate_status: false
-          passcode_configured_for_giftcards: false
-          phone: '1111111111'
-          profile_field_answers: {}
-          referral_code: REFERRAL_CODE_GOES_HERE
-          referral_path: URL_GOES_HERE
-          secondary_email: ''
-          state: ''
-          superuser: false
-          terms_and_conditions: true
-          title: ''
-          updated_at: '2020-05-06T14:52:24Z'
-          user_as_qrcode: QR_CODE_GOES_HERE
-          user_code: P11111111
-          user_id: 111111111
-          preferred_locale: ''
-          user_relations: []
-          zip_code: null
-          verification_mode: null
-          sms_subscription: false
-          privacy_policy: false
-      properties:
-        address:
-          type: string
-          description: Address of the user
-        anniversary:
-          type: string
-          description: Anniversary date of the user, in YYYY-MM-DD format
-          format: date
-        avatar_remote_url:
-          type: string
-          description: URL of the user's profile image uploaded to an online file storage system. This will be used for users who signed up using email.
-        birthday:
-          type: string
-          format: date
-          description: Date of birth of the user, in YYYY-MM-DD format
-        city:
-          type: string
-          description: City where the user lives
-        communicable_email:
-          type: string
-          description: Email address used for communication with the user
-        created_at:
-          type: string
-          format: date-time
-          description: Date/time when the user was created in the system, in ISO 8601 format
-          enum:
-          - YYYY-MM-DDThh:mm:ssZ
-        email:
-          type: string
-          description: Unique email address used to identify the user
-        email_verified:
-          type: boolean
-          description: Whether the email address of the user has been verified or not
-        facebook_signup:
-          type: boolean
-          description: Whether the user has a Facebook sign-up or not
-        apple_signup:
-          type: boolean
-          description: Whether the user has an Apple sign-up or not. This will return true for the first time sign-up.
-        apple_uid:
-          type: string
-          description: Unique ID generated by Apple
-        favourite_location_ids:
-          type: string
-          description: List of the user's favorite locations
-        favourite_store_numbers:
-          type: string
-          description: List of store numbers of the user's favorite locations
-        fb_uid:
-          type: string
-          description: Facebook ID that identifies the user
-        first_name:
-          type: string
-          description: First name of the user
-        gender:
-          type: string
-          description: Gender of the user
-        has_generated_fb_email:
-          type: boolean
-          description: Whether the user has generated a Facebook email or not
-        last_name:
-          type: string
-          description: Last name of the user
-        marketing_email_subscription:
-          type: boolean
-          description: Whether the user has subscribed to receive marketing emails or not
-        marketing_pn_subscription:
-          type: boolean
-          description: Whether the user has subscribed to marketing push notifications or not
-        migrate_status:
-          type: boolean
-          description: Whether the user has a migrate status or not
-        passcode_configured_for_giftcards:
-          type: boolean
-          description: Whether the user has configured a passcode for gift cards or not
-        phone:
-          type: string
-          description: Phone number of the user
-        profile_field_answers:
-          type: object
-          description: Answers given by the user while filling in the user profile. The user submits answers to profile field questions that are configured in the Punchh platform. A total of 25 answers can be submitted. The keys range from 'upf0' to 'upf24'. If questions have multiple answers, the values should be separated by a | character (pipe).
-          properties:
-            upf0:
-              type: string
-              description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
-            upf1:
-              type: string
-              description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
-            upf2:
-              type: string
-              description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
-        referral_code:
-          type: string
-          description: Referral code of the user
-        secondary_email:
-          type: string
-          description: The secondary email address of the user is configured when a user signs up with Facebook/Apple but does not share the email address. The app asks for an alternate email address, which is kept as the `secondary_email`.
-        state:
-          type: string
-          description: State where the user lives
-        superuser:
-          type: boolean
-          description: Whether multiple check-ins are allowed for a user. This is used mostly for testing purposes by developers.
-        terms_and_conditions:
-          type: boolean
-          description: Whether the terms and conditions of a business have been accepted by a user or not
-        title:
-          type: string
-          description: Salutation as selected by the user
-        updated_at:
-          type: string
-          format: date-time
-          description: Date/time when the user was updated in the system, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
-          enum:
-          - YYYY-MM-DDThh:mm:ssZ
-        user_as_qrcode:
-          type: string
-          description: QR code that identifies the user
-        user_code:
-          type: string
-          description: A unique ID that identifies the user. This smaller code can be converted to a QR code in the app and scanned at some POS systems that do not support longer codes. Alternatively, a user could give this to the POS operator if the POS does not have a scanner.
-        user_id:
-          type: integer
-          description: ID that identifies the user
-        preferred_locale:
-          type: string
-          description: Preferred locale of the user
-        user_relations:
-          type: array
-          description: Relatives of the user. Valid values are "kid" and "spouse".
-          items: {}
-        zip_code:
-          type: string
-          description: Zip code where the user lives
-        verification_mode:
-          type: string
-          description: Mode of verification (available only for a user in awaiting migration state)
-        sms_subscription:
-          type: boolean
-          description: Whether the user has subscribed to SMS services or not
-        privacy_policy:
-          type: boolean
-          description: Whether the user has agreed to the privacy policy to use the app as per the configuration or not
-        age_verified_status:
-          type: boolean
-          x-stoplight:
-            id: gre7jhjy7jbxl
-          description: 'Whether or not the user has undergone age verification by Koupon Media. Possible Values: true, false. The value is set to true if the user''s age is verified by Koupon Media; otherwise, it is set to false. The response returns this parameter in sign-in, sign-up, and user update APIs if Koupon Media is selected as the age verification adapter for the business in the Punchh platform. Contact your Punchh representative to update this Punchh platform configuration setting. '
-    user-input:
-      title: User Input (Object)
-      x-stoplight:
-        id: kjyocrij4i2d0
-      type: object
-      x-examples:
-      - title: string
-        first_name: string
-        last_name: string
-        email: string
-        secondary_email: string
-        gender: string
-        phone: string
-        birthday: YYYY-MM-DD
-        anniversary: string
-        password: string
-        password_confirmation: string
-        zip_code: string
-        external_source: string
-        external_source_id: string
-        address_line1: string
-        marketing_email_subscription: true
-        marketing_pn_subscription: true
-        city: string
-        state: string
-        preferred_locale: string
-        original_points: -3.402823669209385e+38
-        business_migration_users: string
-        id: string
-        business_id: string
-        old_membership_no: string
-        card_number: string
-        terms_and_conditions: true
-        age_verified: true
-        privacy_policy: true
-        test_user: true
-        preferred_location_ids:
-        - 0
-        eclub_locations:
-        - null
-        user_relations_attributes:
-        - ? ''
-          : string
-        profile_field_answers:
-          upf0: string
-      properties:
-        title:
-          type: string
-          x-stoplight:
-            id: 769xbrq5l9sui
-          description: 'Salutation as selected by the user. Possible values: Mr., Miss, Mrs., Ms., Dr., Rev. '
-        first_name:
-          type: string
-          x-stoplight:
-            id: f9g4yjleg7g9k
-          description: First name of the user
-        last_name:
-          type: string
-          x-stoplight:
-            id: 0hz4od3dawdp4
-          description: Last name of the user
-        email:
-          type: string
-          x-stoplight:
-            id: v6uo4yye4lr77
-          description: New email address of the user
-        secondary_email:
-          type: string
-          x-stoplight:
-            id: 04ph8q662wbme
-          description: Secondary email address of the user
-        gender:
-          type: string
-          x-stoplight:
-            id: 24smrrc4re5lc
-          description: Gender of the user
-        phone:
-          type: string
-          x-stoplight:
-            id: egowrrjieounm
-          description: Phone number of the user
-        birthday:
-          type: string
-          x-stoplight:
-            id: kclwucezwvqay
-          enum:
-          - YYYY-MM-DD
-          description: Date of birth of the user, in YYYY-MM-DD format. This field gets updated in the database only if the user did not set it initially during sign-up. Due to fraud protections, guests are permitted to update their birthdays only once. Subsequent attempts to modify the birthday parameter using the API will fail. In such a case, even though the API returns a 200 response, the user's birthday is not updated in Punchh.
-        anniversary:
-          type: string
-          x-stoplight:
-            id: jwesrpwr5823f
-          description: Anniversary of the user, in YYYY-MM-DD format
-        password:
-          type: string
-          x-stoplight:
-            id: ca9bnldhpvd71
-          description: Password of the user's account
-        password_confirmation:
-          type: string
-          x-stoplight:
-            id: pwp9m6t7le0p9
-          description: Password re-typed by the user for confirmation
-        zip_code:
-          type: string
-          x-stoplight:
-            id: cobsuo6e0j86z
-          description: Zip code where the user lives
-        external_source:
-          type: string
-          x-stoplight:
-            id: iy3tdphu3qm1s
-          description: External source name (third-party IDP). Possible values for external_source are salesforce, customer_id, mparticle, azure, aws_cognito, auth0, and ext_idp. If you are using a different one, please reach out to your implementation manager to add a new value. The values are case-sensitive. This is a required parameter if you want to update the access token for an external IDP user.
-        external_source_id:
-          type: string
-          x-stoplight:
-            id: qm01rmw09li2d
-          description: ID of the customer in the mentioned external source name (external_source), a unique identifier generated by the third-party IDP (GUID format). This is a required parameter if you want to update the access token for an external IDP user.
-        address_line1:
-          type: string
-          x-stoplight:
-            id: an964qvzzp4xt
-          description: Address of the user
-        marketing_email_subscription:
-          type: boolean
-          x-stoplight:
-            id: 7ej24u4uetcvy
-          description: 'Whether the user has subscribed to receive marketing emails or not. Possible values: true, false'
-        marketing_pn_subscription:
-          type: boolean
-          x-stoplight:
-            id: x9e66n1ky3zjg
-          description: 'Whether the user has subscribed to marketing push notifications or not. Possible values: true, false'
-        city:
-          type: string
-          x-stoplight:
-            id: twukhe1rmryen
-          description: City where the user lives
-        state:
-          type: string
-          x-stoplight:
-            id: sbo5349rtucim
-          description: State where the user lives
-        preferred_locale:
-          type: string
-          x-stoplight:
-            id: m42bp288k2twi
-          description: Preferred locale of the user
-        original_points:
-          type: number
-          x-stoplight:
-            id: 6hlrir0k06utu
-          format: float
-          description: Value of points from the incumbent loyalty program
-        business_migration_users:
-          type: boolean
-          x-stoplight:
-            id: 0v3cfda6hv6bd
-          description: 'Whether the user is a business migration user. Possible values: true, false'
-        id:
-          type: number
-          x-stoplight:
-            id: 53w98u5pfox9i
-          description: ID that identifies the user
-        business_id:
-          type: string
-          x-stoplight:
-            id: nc0k6xba2xx15
-          description: ID of the business to which the user is added
-        old_membership_no:
-          type: number
-          x-stoplight:
-            id: fhhf5fogl2b1y
-          description: Old membership number from the incumbent loyalty program
-        card_number:
-          type: string
-          x-stoplight:
-            id: udm6k3r86888e
-          description: Gift card number
-        terms_and_conditions:
-          type: boolean
-          x-stoplight:
-            id: fbjn8l1lcxzwl
-          description: 'Whether the terms and conditions of a business have been accepted by the user or not. Possible values: true, false'
-        age_verified:
-          type: boolean
-          x-stoplight:
-            id: v6rmfn4vtunub
-          description: 'Whether age is verified or not. Possible values: true, false'
-        privacy_policy:
-          type: boolean
-          x-stoplight:
-            id: zqilj8eaz8lja
-          description: Whether the user has agreed to the privacy policy to use the app as per the configuration or not
-        test_user:
-          type: boolean
-          x-stoplight:
-            id: cd6ohlnsjxudd
-          description: 'Whether the user is allowed to switch the environment in the mobile application or not. Possible values: true, false'
-        preferred_location_ids:
-          type: array
-          x-stoplight:
-            id: lziry9heltro1
-          description: Favorite location IDs of the user
-          items:
-            x-stoplight:
-              id: 16s1fahuyodnh
-            type: integer
-        eclub_locations:
-          type: array
-          x-stoplight:
-            id: ppdnvgnjqvfo2
-          description: Favorite location of the user if the user is an eClub guest
-          items: {}
-        user_relations_attributes:
-          $ref: '#/components/schemas/user-relation-attributes'
-        profile_field_answers:
-          type: object
-          x-stoplight:
-            id: efggevqx2aq8n
-          description: Custom profile fields to be updated. For details, see [Updating Custom Profile Fields With the Punchh Platform API](/docs/dev-portal-platform-functions/ebc7b58d69e82-updating-custom-profile-fields-with-the-punchh-platform-api).
-          properties:
-            upf0:
-              type: string
-              x-stoplight:
-                id: knzjld0jj4ldc
-              description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
-        age_verified_status:
-          type: boolean
-          x-stoplight:
-            id: 61n0bid71g9rl
-          description: 'Whether or not the user has undergone age verification by Koupon Media. Possible Values: true, false. The parameter is accepted in the request if Koupon Media is selected as the age verification adapter for the business in the Punchh platform. Contact your Punchh representative to update this Punchh platform configuration setting. '
-    rewards_2:
-      title: Rewards (Array Object)
-      x-stoplight:
-        id: kx3zspm53gi0f
-      type: array
-      description: Contains information about the available rewards of the user. If a user account does not have rewards, the API returns an empty object in the response.
-      x-examples:
-        application/json:
-          id: 31300354648
-          created_at: '2023-10-01T18:05:42Z'
-          end_date_tz: '2023-10-05T18:29:59Z'
-          start_date_tz: '2023-10-01T18:05:42Z'
-          updated_at: '2023-10-01T18:05:42Z'
-          image: IMAGE_URL_GOES_HERE
-          status: unredeemed
-          points: 100
-          discount_amount: 10
-          description: Free Sandwich with Purchase of Chips and Drink
-          name: Free Sandwich with Purchase of Chips and Drink
-          redeemable_properties: ''
-      items:
-        type: object
-        properties:
-          id:
-            type: integer
-            format: int64
-            description: ID of the reward
-          created_at:
-            type: string
-            format: date-time
-            enum:
-            - ' YYYY-MM-DDThh:mm:ssZ'
-            description: Date/time when the reward was created, in ISO 8601 format
-            examples:
-            - '2023-10-01T18:05:42Z'
-          start_date_tz:
-            type: string
-            format: date-time
-            enum:
-            - YYYY-MM-DDThh:mm:ssZ
-            description: Start date/time of the reward, in ISO 8601 format
-            examples:
-            - '2023-10-01T18:05:42Z'
-          end_date_tz:
-            type: string
-            format: date-time
-            enum:
-            - YYYY-MM-DDThh:mm:ssZ
-            description: Expiration date/time of the reward, in ISO 8601 format
-            examples:
-            - YYYY-MM-DDThh:mm:ssZ
-          updated_at:
-            type: string
-            enum:
-            - YYYY-MM-DDThh:mm:ssZ
-            format: date-time
-            description: Date/time when the reward was updated, in ISO 8601 format
-            examples:
-            - '2023-10-01T18:05:42Z'
-          image:
-            type: string
-            description: Image URL of the reward
-          status:
-            type: string
-            description: The redemption status of the reward.  Only the value “unredeemed" will be returned, indicating that the reward has not been redeemed by a user.
-          points:
-            type: integer
-            description: Points associated with the current reward
-          discount_amount:
-            type: integer
-            description: Discount amount associated with the current reward
-          description:
-            type: string
-            description: Description that explains the reward as configured in the Punchh platform
-          name:
-            type: string
-            description: Name of the reward
-          redeemable_properties:
-            type: string
-            description: Comma-separated values that provide additional details about a redeemable. For example, a redeemable could be a "Food Item" or "Merchandise", etc. Redeemable properties can be configured for a business in the Punchh platform and attached to a redeemable. If no value is attached to a redeemable, a blank parameter is returned.
-          meta_data:
-            type: string
-            description: Meta data information added to a redeemable. The API returns this parameter only if meta data information is provided for the redeemable in the Punchh platform. The maximum length is 255 characters.
     balance:
       type: object
       title: Balance (Object)
@@ -8368,86 +8413,41 @@ components:
         unredeemed_cards:
           type: integer
           description: Number of unredeemed cards of the user. This value is set only if the program type is visit-based; else it will be 0.
-  parameters:
-    User-Agent:
-      schema:
-        type: string
-        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
-      in: header
-      name: User-Agent
-      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
-      required: true
-    punchh-app-device-id:
-      schema:
-        type: string
-        default: APP_DEVICE_ID_GOES_HERE
-      name: punchh-app-device-id
-      in: header
-      required: true
-      description: The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.
-    Content-Type:
-      schema:
-        type: string
-        default: application/json
-      name: Content-Type
-      in: header
-      description: Set this header to <b>application/json</b>.
-      required: true
-    Authorization:
-      schema:
-        type: string
-        default: Bearer ACCESS_TOKEN_GOES_HERE
-      name: Authorization
-      in: header
-      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
-      required: true
-    Accept-Language:
-      schema:
-        type: string
-        default: en
-      name: Accept-Language
-      in: header
-      description: Preferred language
-    signature:
-      schema:
-        type: string
-        default: '{{$$.env.signature}}'
-      name: x-pch-digest
-      in: header
-      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
-      required: true
-    Accept:
-      schema:
-        type: string
-        default: application/json
-      name: Accept
-      in: header
-      description: Advertises which content types the client is able to understand
-      required: true
-    authorization-header:
-      schema:
-        type: string
-        default: Bearer BUSINESS_ADMIN_KEY_GOES_HERE
-      name: Authorization
-      in: header
-      description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
-      required: true
-    content-type:
-      schema:
-        type: string
-        default: application/json
-      name: Content-Type
-      in: header
-      description: Set this header to <b>application/json</b>.
-      required: true
-    accept:
-      schema:
-        type: string
-        default: application/json
-      in: header
-      name: Accept
-      description: Advertises which content types the client is able to understand
-      required: true
+    user-relation-attributes:
+      title: User Relation Attributes (Array Object)
+      x-stoplight:
+        id: 0cy8krzi1660q
+      type: array
+      x-examples:
+        application/json:
+          id: 111111111
+          relation: spouse
+          name: FIRST_NAME_GOES_HERE LAST_NAME_GOES_HERE
+          birthday: '1999-01-01'
+          created_at: '2023-08-18T12:32:13Z'
+          updated_at: '2023-08-18T12:32:13Z'
+      description: Contains information about the relationship details of a user, for example, spouse and kid information. If the user account does not have relationship details, the API returns an empty object in the response.
+      items:
+        type: object
+        properties:
+          id:
+            type: number
+            format: date-time
+            x-stoplight:
+              id: siwx79u7bfhpf
+            description: ID that identifies the relationship
+          relation:
+            type: string
+            description: Relation to the user. Valid values are "spouse" and "kid".
+          name:
+            type: string
+            description: Name of the relative
+          birthday:
+            type: string
+            description: Birthday of the relative
+            enum:
+            - YYYY-MM-DD
+            format: date
   responses:
     401-unauthorized:
       description: 'A business admin key is missing or invalid. A request header in the following format is needed to make the request:

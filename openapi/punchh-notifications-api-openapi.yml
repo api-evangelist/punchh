@@ -498,26 +498,55 @@ paths:
                 value:
                   client: CLIENT_GOES_HERE
 components:
+  parameters:
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
   schemas:
-    background-content:
-      type: object
-      description: "This is the content that makes the background of the message.\n\n```json\n{\n    \"type\": \"image\",\n    \"url\": \"IMAGE_URL_GOES_HERE\",\n    \"alt_text\": \"Black Background Image\",\n    \"initial_frame\": \"\"\n}\n```"
-      title: Background Content (Object)
-      properties:
-        type:
-          type: string
-          description: The type of the background content. It can be an image or a color.
-        url:
-          type: string
-          description: The URL of the image that will be used as the background
-        alt_text:
-          type: string
-          description: Alternate text that appears if the app cannot render the background content of the message
-        initial_frame:
-          type: string
-          description: The initial frame or first frame is what appears behind the play button before a user taps it to start playing the video.
-      x-stoplight:
-        id: 80de922cbc5ff
     hero-content:
       type: object
       description: "This is the first visual content that a user encounters when the user views a rich message. This can be an image or a video.\n\n```json\n{\n    \"type\": \"image\",\n    \"url\": \"IMAGE_URL_GOES_HERE\",\n    \"alt_text\": \"Fries\",\n    \"initial_frame\": \"\"\n}\n```\n"
@@ -537,6 +566,25 @@ components:
           description: The initial frame or first frame is what appears behind the play button before a user taps it to start playing the video.
       x-stoplight:
         id: 4779761c509cd
+    background-content:
+      type: object
+      description: "This is the content that makes the background of the message.\n\n```json\n{\n    \"type\": \"image\",\n    \"url\": \"IMAGE_URL_GOES_HERE\",\n    \"alt_text\": \"Black Background Image\",\n    \"initial_frame\": \"\"\n}\n```"
+      title: Background Content (Object)
+      properties:
+        type:
+          type: string
+          description: The type of the background content. It can be an image or a color.
+        url:
+          type: string
+          description: The URL of the image that will be used as the background
+        alt_text:
+          type: string
+          description: Alternate text that appears if the app cannot render the background content of the message
+        initial_frame:
+          type: string
+          description: The initial frame or first frame is what appears behind the play button before a user taps it to start playing the video.
+      x-stoplight:
+        id: 80de922cbc5ff
     messages:
       type: object
       description: 'Returned in response to the [Fetch Messages](/docs/dev-portal-mobile/e9485ca96ff55-fetch-messages) API
@@ -666,54 +714,6 @@ components:
       title: CTA (Array Object)
       x-stoplight:
         id: 80d7d22f4d11c
-  parameters:
-    User-Agent:
-      schema:
-        type: string
-        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
-      in: header
-      name: User-Agent
-      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
-      required: true
-    Authorization:
-      schema:
-        type: string
-        default: Bearer ACCESS_TOKEN_GOES_HERE
-      name: Authorization
-      in: header
-      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
-      required: true
-    Content-Type:
-      schema:
-        type: string
-        default: application/json
-      name: Content-Type
-      in: header
-      description: Set this header to <b>application/json</b>.
-      required: true
-    Accept-Language:
-      schema:
-        type: string
-        default: en
-      name: Accept-Language
-      in: header
-      description: Preferred language
-    signature:
-      schema:
-        type: string
-        default: '{{$$.env.signature}}'
-      name: x-pch-digest
-      in: header
-      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
-      required: true
-    Accept:
-      schema:
-        type: string
-        default: application/json
-      name: Accept
-      in: header
-      description: Advertises which content types the client is able to understand
-      required: true
 x-stoplight:
   id: bf6eddb435209
 x-ext-urls: {}

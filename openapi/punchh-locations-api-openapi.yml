@@ -1323,7 +1323,7 @@ paths:
                       location_group_id: 45
                       name: East Cost
       summary: Allow Admin To Access a Location or Location Group
-      operationId: dashboard_allow_admin_to access_particular_location
+      operationId: dashboard_allow_admin_toAccess_particular_location
       tags:
       - Locations
       parameters:
@@ -1369,6 +1369,8 @@ paths:
                     - w12
                     accessible_location_group_ids:
                     - 45
+      x-operation-id-source: normalized
+      x-operation-id-original: dashboard_allow_admin_to access_particular_location
     delete:
       responses:
         '200':
@@ -1441,7 +1443,7 @@ paths:
       x-private: true
       tags:
       - Locations
-      operationId: dashboard_revoke_admin_to access_particular_location
+      operationId: dashboard_revoke_admin_toAccess_particular_location
       parameters:
       - $ref: '#/components/parameters/accept'
       - $ref: '#/components/parameters/authorization-header'
@@ -1480,6 +1482,8 @@ paths:
                     accessible_store_number: s10
                     accessible_location_group_ids:
                     - 45
+      x-operation-id-source: normalized
+      x-operation-id-original: dashboard_revoke_admin_to access_particular_location
     servers:
     - url: https://SERVER_NAME_GOES_HERE.punchh.com
   /api2/dashboard/locations/destroy_async:
@@ -1536,22 +1540,6 @@ components:
       name: User-Agent
       description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
       required: true
-    Authorization:
-      schema:
-        type: string
-        default: Bearer ACCESS_TOKEN_GOES_HERE
-      name: Authorization
-      in: header
-      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
-      required: true
-    Content-Type:
-      schema:
-        type: string
-        default: application/json
-      name: Content-Type
-      in: header
-      description: Set this header to <b>application/json</b>.
-      required: true
     Accept:
       schema:
         type: string
@@ -1568,6 +1556,22 @@ components:
       in: header
       description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
       required: true
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
     authorization-header:
       schema:
         type: string
@@ -1575,14 +1579,6 @@ components:
       name: Authorization
       in: header
       description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
-      required: true
-    content-type:
-      schema:
-        type: string
-        default: application/json
-      name: Content-Type
-      in: header
-      description: Set this header to <b>application/json</b>.
       required: true
     accept:
       schema:
@@ -1592,23 +1588,15 @@ components:
       name: Accept
       description: Advertises which content types the client is able to understand
       required: true
+    content-type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
   responses:
-    401-unauthorized:
-      description: 'A business admin key is missing or invalid. A request header in the following format is needed to make the request:
-
-
-        `Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE`'
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
-          examples:
-            default:
-              value:
-                error: You need to sign in or sign up before continuing.
     locations-object:
       description: ''
       content:
@@ -1812,6 +1800,22 @@ components:
                 additional_url:
                 - label: reservation
                   url: URL_GOES_HERE
+    401-unauthorized:
+      description: 'A business admin key is missing or invalid. A request header in the following format is needed to make the request:
+
+
+        `Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE`'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+          examples:
+            default:
+              value:
+                error: You need to sign in or sign up before continuing.
 x-refined-from:
 - punchh-mobile-api-openapi.yml
 - punchh-platform-functions-api-openapi.yml

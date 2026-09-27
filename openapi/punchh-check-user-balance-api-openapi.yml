@@ -631,179 +631,6 @@ components:
       title: Messages (Object)
       x-stoplight:
         id: dae9f70f9e7f1
-    background-content:
-      type: object
-      properties:
-        type:
-          type: string
-          description: 'The type of the background content. It can be an image or a color.
-
-            '
-        url:
-          type: string
-          description: 'The URL of the image that will be used as the background
-
-            '
-        alt_text:
-          type: string
-          description: 'Alternate text that appears if the app cannot render the background content of the message
-
-            '
-        initial_frame:
-          type: string
-          description: The initial frame or first frame is what appears behind the play button before a user taps it to start playing the video.
-      description: "This is the content that makes the background of the message.\n\n```\n{\n    \"type\": \"image\",\n    \"url\": \"IMAGE_URL\",\n    \"alt_text\": \"Black Background Image\",\n    \"initial_frame\": \"\"\n}\n```"
-      title: Background Content (Object)
-      x-stoplight:
-        id: 687af9f3ae9c4
-    Converted-Category-Balance:
-      type: array
-      items:
-        type: object
-        properties:
-          category_id:
-            type: integer
-            description: Category ID
-          name:
-            type: string
-            description: Name of the reward
-          source_type:
-            type: string
-            description: Type of source used for conversion
-          source_value:
-            type: integer
-            description: Threshold value at which points get converted
-          converted_type:
-            type: string
-            description: This could be "currency", "fuel_discount", or "charity" depending on the Punchh platform configuration.
-          converted_value:
-            type: number
-            description: Multiplier for the converted type
-            format: float
-          balance:
-            type: integer
-            description: Balance available for the user for this type of reward
-      title: Converted Category Balances (Object)
-      x-stoplight:
-        id: 721549331be0c
-    Account-Balance:
-      type: object
-      title: Account Balance Attributes (Object)
-      x-stoplight:
-        id: eaa5f08504941
-      properties:
-        banked_rewards:
-          type: number
-          format: double
-          description: Banked rewards value of the current account
-        membership_level:
-          type: string
-          description: Membership level of the current account
-        membership_level_id:
-          type: integer
-          description: ID of membership level
-        net_balance:
-          type: number
-          description: Net balance of the current account
-          format: double
-        net_debits:
-          type: number
-          description: Net debits of the current account
-          format: double
-        pending_points:
-          type: integer
-          description: Pending points of the current account
-        points_balance:
-          type: number
-          description: Points balance of the current account
-          format: double
-        signup_anniversary_day:
-          type: string
-          description: Sign-up anniversary day of the current account
-        total_credits:
-          type: number
-          description: Total credits of the current account
-          format: double
-        total_debits:
-          type: number
-          description: Total debits of the current account
-          format: double
-        total_point_credits:
-          type: number
-          description: Total point credits of the current account
-          format: double
-        total_redeemable_visits:
-          type: integer
-          description: Total redeemable visits of the current account
-        expired_membership_level:
-          type: string
-          description: Expired membership level (if any) of the current account
-          x-nullable: true
-        total_visits:
-          type: integer
-          description: Total number of loyalty visits
-        initial_visits:
-          type: integer
-          description: Visits registered before migration
-        unredeemed_cards:
-          type: integer
-          description: Number of unredeemed cards of the user
-        membership_qualification_points:
-          type: integer
-          x-stoplight:
-            id: o3fwt1pmd6lil
-          description: 'The value of points earned toward progress across membership tiers. This is related to the migration strategy that allows businesses to "Consider Only Initial Points for Tier Migration". Currently, support for this parameter is limited to program type Points Unlock Redeemables, Membership Re-evaluation Strategy: Reset Based on Points Earned and Account Re-evaluation Strategy of Guest Inactivity.'
-    hero-content:
-      type: object
-      description: "This is the first visual content that a user encounters when the user views a rich message. This can be an image or a video.\n\n```\n{\n    \"type\": \"image\",\n    \"url\": \"IMAGE_URL_GOES_HERE\",\n    \"alt_text\": \"Fries\",\n    \"initial_frame\": \"\"\n}\n```\n"
-      properties:
-        type:
-          type: string
-          description: 'Hero content can be an image or a video.
-
-            '
-        url:
-          type: string
-          description: 'The URL of the image/video that will be used as the hero content in a rich message
-
-            '
-        alt_text:
-          type: string
-          description: 'Alternate text that appears if the app cannot render the hero content of the message
-
-            '
-        initial_frame:
-          type: string
-          description: The initial frame or first frame is what appears behind the play button before a user taps it to start playing the video.
-      title: Hero Content (Object)
-      x-stoplight:
-        id: 9c1b89b88238d
-    cta:
-      type: array
-      items:
-        type: object
-        properties:
-          type:
-            type: string
-            description: 'Three possible values can be returned to the mobile client:
-
-              - web_link: The cta button prompts the user to open the link in a web browser available on the mobile client.
-
-              - deep_link: The cta button takes the user to a particular deep link specified in the app.
-
-              - drill_down: The cta button opens the detailed view of the rich message received by the app.'
-          link:
-            type: string
-            description: The URL to which the user will be directed, depending on the type of the cta
-          label:
-            type: string
-            description: The text that appears on the cta button in the app
-          cta_type:
-            type: string
-            description: 'More than one cta object can be returned to the app. The cta_type can have two possible values: primary and secondary. The primary cta is higher priority and is the main cta button. The secondary cta can be something like a terms and conditions link that can be rendered appropriately in the app.'
-      title: CTA (Object)
-      x-stoplight:
-        id: 792f98f6893c2
     Redeemables-Attributes:
       type: array
       items:
@@ -859,6 +686,194 @@ components:
       title: Redeemables Attributes (Object)
       x-stoplight:
         id: 173597e963ebd
+    hero-content:
+      type: object
+      description: "This is the first visual content that a user encounters when the user views a rich message. This can be an image or a video.\n\n```\n{\n    \"type\": \"image\",\n    \"url\": \"IMAGE_URL_GOES_HERE\",\n    \"alt_text\": \"Fries\",\n    \"initial_frame\": \"\"\n}\n```\n"
+      properties:
+        type:
+          type: string
+          description: 'Hero content can be an image or a video.
+
+            '
+        url:
+          type: string
+          description: 'The URL of the image/video that will be used as the hero content in a rich message
+
+            '
+        alt_text:
+          type: string
+          description: 'Alternate text that appears if the app cannot render the hero content of the message
+
+            '
+        initial_frame:
+          type: string
+          description: The initial frame or first frame is what appears behind the play button before a user taps it to start playing the video.
+      title: Hero Content (Object)
+      x-stoplight:
+        id: 9c1b89b88238d
+    Account-balance-details:
+      type: object
+      title: Account Balance Details (Object)
+      x-stoplight:
+        id: 581d141f4c275
+      properties:
+        banked_currency:
+          type: number
+          format: float
+          description: Value of the currency that a user has available. A "null" value indicates that the business does not support banking of points into currency. Use it only if the business opted for the Points Convert to Banked Currency program.
+        checkins_on_current_card:
+          type: integer
+          description: "A card gets completed after a user does a configured number of check-ins. \nFor example, if a business configuration requires 7 check-ins to complete a card, and a user does only 3 check-ins, the value of this parameter will be 3. This is useful for the Visit-based program."
+        current_membership_level_id:
+          description: Unique ID of the current membership level of a user
+          type: integer
+        current_membership_level_expiring_on:
+          type: string
+          description: If a business has a rolling expiry of membership levels, a particular membership level will expire after a period that is configured in the Punchh platform. A "null" value indicates that the business does not have a rolling expiry of membership levels.
+          enum:
+          - YYYY-MM-DD
+          format: date
+        expiring_banked_currency:
+          type: number
+          format: float
+          description: If a business has expiring banked currency configured in the Punchh platform, the banked currency will expire in a FIFO (first-in, first-out) pattern. This returns the value of the banked currency that will expire. A "null" value indicates that the business is not configured to support expiring banked currency.
+        banked_currency_expiring_on:
+          type: string
+          description: If a business is configured to support expiring banked currency, this returns the date on which it will expire. A "null" value indicates that the business is not configured to support expiring banked currency.
+          enum:
+          - YYYY-MM-DD
+          format: date
+        pending_points:
+          type: number
+          format: float
+          description: Points of a user that are in the pending state after a check-in. They are not added to the user's account before finalization. See [Pending Points Feature Overview](/docs/dev-portal-pos/ZG9jOjUwMjgzOTAz-pending-points-feature-overview) for details.
+        redeemed_cards:
+          type: integer
+          description: The number of cards that a user has redeemed in the user's lifetime
+        total_loyalty_visits:
+          type: integer
+          description: Total of the visits that a user has earned by doing loyalty check-ins and those visits that were migrated from an older loyalty program (if a business had an older loyalty program and wants to migrate its users to Punchh's loyalty program)
+          x-nullable: true
+        unredeemed_cards:
+          type: integer
+          description: Total unredeemed cards available to a user. If working with a Visit-based program, this value lets you know if the user has unredeemed cards or not.
+          x-nullable: true
+        current_membership_level_name:
+          type: string
+          description: Current membership level of the user
+          x-nullable: true
+        lifetime_points:
+          type: number
+          format: float
+          description: Sum of all loyalty points earned by a user from the time the user signed up
+        redeemable_points:
+          type: number
+          format: float
+          description: 'The total of all loyalty points earned by a user that satisfy all of the following conditions:
+
+            * approved
+
+            * non-pending
+
+            * unexpired. This is useful if working with the Points Unlock Redeemables program. This provides the available points for the guest to redeem.'
+        unbanked_points:
+          type: number
+          format: float
+          description: For a business that allows banking of points, this value represents the number of points the user has and has not banked yet. For example, if a business configuration requires 100 points to be banked to $10, and a user has accumulated 55 points, this value will be 55. When the user earns another 45 points, the user will be banked to $10 and this value will then become 0.
+        membership_qualification_points:
+          type: integer
+          x-stoplight:
+            id: ymt1v0qs8l7oj
+          description: 'The value of points earned toward progress across membership tiers. This is related to the migration strategy that allows businesses to "Consider Only Initial Points for Tier Migration". Currently, support for this parameter is limited to program type Points Unlock Redeemables, Membership Re-evaluation Strategy: Reset Based on Points Earned and Account Re-evaluation Strategy of Guest Inactivity.'
+    Converted-Category-Balance:
+      type: array
+      items:
+        type: object
+        properties:
+          category_id:
+            type: integer
+            description: Category ID
+          name:
+            type: string
+            description: Name of the reward
+          source_type:
+            type: string
+            description: Type of source used for conversion
+          source_value:
+            type: integer
+            description: Threshold value at which points get converted
+          converted_type:
+            type: string
+            description: This could be "currency", "fuel_discount", or "charity" depending on the Punchh platform configuration.
+          converted_value:
+            type: number
+            description: Multiplier for the converted type
+            format: float
+          balance:
+            type: integer
+            description: Balance available for the user for this type of reward
+      title: Converted Category Balances (Object)
+      x-stoplight:
+        id: 721549331be0c
+    background-content:
+      type: object
+      properties:
+        type:
+          type: string
+          description: 'The type of the background content. It can be an image or a color.
+
+            '
+        url:
+          type: string
+          description: 'The URL of the image that will be used as the background
+
+            '
+        alt_text:
+          type: string
+          description: 'Alternate text that appears if the app cannot render the background content of the message
+
+            '
+        initial_frame:
+          type: string
+          description: The initial frame or first frame is what appears behind the play button before a user taps it to start playing the video.
+      description: "This is the content that makes the background of the message.\n\n```\n{\n    \"type\": \"image\",\n    \"url\": \"IMAGE_URL\",\n    \"alt_text\": \"Black Background Image\",\n    \"initial_frame\": \"\"\n}\n```"
+      title: Background Content (Object)
+      x-stoplight:
+        id: 687af9f3ae9c4
+    Coupons:
+      type: array
+      items:
+        type: object
+        properties:
+          code:
+            type: string
+            description: Alphanumeric coupon code that a user must use to receive an offer
+          image_url:
+            type: string
+            description: URL of the image of the reward that will be displayed in the app
+          name:
+            type: string
+            description: Name of the coupon campaign through which the coupon was given to a user
+          description:
+            type: string
+            description: Description of the offer that will be available to a user after using the coupon code
+            x-nullable: true
+          start_date:
+            type: string
+            description: Coupon start date
+            enum:
+            - YYYY-MM-DD
+            format: date
+            x-nullable: true
+          end_date:
+            type: string
+            description: Coupon expiration date
+            enum:
+            - YYYY-MM-DD
+            format: date
+      title: Coupons (Object)
+      x-stoplight:
+        id: 784153ff94ed5
     Rewards-Attribute:
       type: array
       items:
@@ -975,131 +990,100 @@ components:
       title: Notifications (Object)
       x-stoplight:
         id: ba4734ac30a93
-    Coupons:
+    cta:
       type: array
       items:
         type: object
         properties:
-          code:
+          type:
             type: string
-            description: Alphanumeric coupon code that a user must use to receive an offer
-          image_url:
+            description: 'Three possible values can be returned to the mobile client:
+
+              - web_link: The cta button prompts the user to open the link in a web browser available on the mobile client.
+
+              - deep_link: The cta button takes the user to a particular deep link specified in the app.
+
+              - drill_down: The cta button opens the detailed view of the rich message received by the app.'
+          link:
             type: string
-            description: URL of the image of the reward that will be displayed in the app
-          name:
+            description: The URL to which the user will be directed, depending on the type of the cta
+          label:
             type: string
-            description: Name of the coupon campaign through which the coupon was given to a user
-          description:
+            description: The text that appears on the cta button in the app
+          cta_type:
             type: string
-            description: Description of the offer that will be available to a user after using the coupon code
-            x-nullable: true
-          start_date:
-            type: string
-            description: Coupon start date
-            enum:
-            - YYYY-MM-DD
-            format: date
-            x-nullable: true
-          end_date:
-            type: string
-            description: Coupon expiration date
-            enum:
-            - YYYY-MM-DD
-            format: date
-      title: Coupons (Object)
+            description: 'More than one cta object can be returned to the app. The cta_type can have two possible values: primary and secondary. The primary cta is higher priority and is the main cta button. The secondary cta can be something like a terms and conditions link that can be rendered appropriately in the app.'
+      title: CTA (Object)
       x-stoplight:
-        id: 784153ff94ed5
-    Account-balance-details:
+        id: 792f98f6893c2
+    Account-Balance:
       type: object
-      title: Account Balance Details (Object)
+      title: Account Balance Attributes (Object)
       x-stoplight:
-        id: 581d141f4c275
+        id: eaa5f08504941
       properties:
-        banked_currency:
+        banked_rewards:
           type: number
-          format: float
-          description: Value of the currency that a user has available. A "null" value indicates that the business does not support banking of points into currency. Use it only if the business opted for the Points Convert to Banked Currency program.
-        checkins_on_current_card:
-          type: integer
-          description: "A card gets completed after a user does a configured number of check-ins. \nFor example, if a business configuration requires 7 check-ins to complete a card, and a user does only 3 check-ins, the value of this parameter will be 3. This is useful for the Visit-based program."
-        current_membership_level_id:
-          description: Unique ID of the current membership level of a user
-          type: integer
-        current_membership_level_expiring_on:
+          format: double
+          description: Banked rewards value of the current account
+        membership_level:
           type: string
-          description: If a business has a rolling expiry of membership levels, a particular membership level will expire after a period that is configured in the Punchh platform. A "null" value indicates that the business does not have a rolling expiry of membership levels.
-          enum:
-          - YYYY-MM-DD
-          format: date
-        expiring_banked_currency:
+          description: Membership level of the current account
+        membership_level_id:
+          type: integer
+          description: ID of membership level
+        net_balance:
           type: number
-          format: float
-          description: If a business has expiring banked currency configured in the Punchh platform, the banked currency will expire in a FIFO (first-in, first-out) pattern. This returns the value of the banked currency that will expire. A "null" value indicates that the business is not configured to support expiring banked currency.
-        banked_currency_expiring_on:
-          type: string
-          description: If a business is configured to support expiring banked currency, this returns the date on which it will expire. A "null" value indicates that the business is not configured to support expiring banked currency.
-          enum:
-          - YYYY-MM-DD
-          format: date
+          description: Net balance of the current account
+          format: double
+        net_debits:
+          type: number
+          description: Net debits of the current account
+          format: double
         pending_points:
+          type: integer
+          description: Pending points of the current account
+        points_balance:
           type: number
-          format: float
-          description: Points of a user that are in the pending state after a check-in. They are not added to the user's account before finalization. See [Pending Points Feature Overview](/docs/dev-portal-pos/ZG9jOjUwMjgzOTAz-pending-points-feature-overview) for details.
-        redeemed_cards:
+          description: Points balance of the current account
+          format: double
+        signup_anniversary_day:
+          type: string
+          description: Sign-up anniversary day of the current account
+        total_credits:
+          type: number
+          description: Total credits of the current account
+          format: double
+        total_debits:
+          type: number
+          description: Total debits of the current account
+          format: double
+        total_point_credits:
+          type: number
+          description: Total point credits of the current account
+          format: double
+        total_redeemable_visits:
           type: integer
-          description: The number of cards that a user has redeemed in the user's lifetime
-        total_loyalty_visits:
-          type: integer
-          description: Total of the visits that a user has earned by doing loyalty check-ins and those visits that were migrated from an older loyalty program (if a business had an older loyalty program and wants to migrate its users to Punchh's loyalty program)
+          description: Total redeemable visits of the current account
+        expired_membership_level:
+          type: string
+          description: Expired membership level (if any) of the current account
           x-nullable: true
+        total_visits:
+          type: integer
+          description: Total number of loyalty visits
+        initial_visits:
+          type: integer
+          description: Visits registered before migration
         unredeemed_cards:
           type: integer
-          description: Total unredeemed cards available to a user. If working with a Visit-based program, this value lets you know if the user has unredeemed cards or not.
-          x-nullable: true
-        current_membership_level_name:
-          type: string
-          description: Current membership level of the user
-          x-nullable: true
-        lifetime_points:
-          type: number
-          format: float
-          description: Sum of all loyalty points earned by a user from the time the user signed up
-        redeemable_points:
-          type: number
-          format: float
-          description: 'The total of all loyalty points earned by a user that satisfy all of the following conditions:
-
-            * approved
-
-            * non-pending
-
-            * unexpired. This is useful if working with the Points Unlock Redeemables program. This provides the available points for the guest to redeem.'
-        unbanked_points:
-          type: number
-          format: float
-          description: For a business that allows banking of points, this value represents the number of points the user has and has not banked yet. For example, if a business configuration requires 100 points to be banked to $10, and a user has accumulated 55 points, this value will be 55. When the user earns another 45 points, the user will be banked to $10 and this value will then become 0.
+          description: Number of unredeemed cards of the user
         membership_qualification_points:
           type: integer
           x-stoplight:
-            id: ymt1v0qs8l7oj
+            id: o3fwt1pmd6lil
           description: 'The value of points earned toward progress across membership tiers. This is related to the migration strategy that allows businesses to "Consider Only Initial Points for Tier Migration". Currently, support for this parameter is limited to program type Points Unlock Redeemables, Membership Re-evaluation Strategy: Reset Based on Points Earned and Account Re-evaluation Strategy of Guest Inactivity.'
   parameters:
-    User-Agent:
-      schema:
-        type: string
-        default: Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type
-      name: User-Agent
-      in: header
-      required: true
-      description: For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).
-    Authorization:
-      schema:
-        type: string
-        default: Bearer ACCESS_TOKEN_GOES_HERE
-      name: Authorization
-      in: header
-      required: true
-      description: You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
     Accept:
       schema:
         type: string
@@ -1131,6 +1115,22 @@ components:
       in: header
       name: Accept-Language
       description: Set to the language you are using.
+    User-Agent:
+      schema:
+        type: string
+        default: Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type
+      name: User-Agent
+      in: header
+      required: true
+      description: For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      required: true
+      description: You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
 x-stoplight:
   id: 73bbc35439926
 x-ext-urls: {}

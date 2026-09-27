@@ -1233,100 +1233,48 @@ paths:
                   show_headers_in_response: false
         description: ''
 components:
+  parameters:
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
   schemas:
-    profile_field_questions-Object:
-      type: array
-      items:
-        type: object
-        properties:
-          question:
-            type: string
-            description: Question that can be displayed to a user in the app
-          answer_options:
-            type: string
-            description: Answer options that can be displayed to a user for a question in the app
-          data_type:
-            type: string
-            description: 'Data type of answers that can be accepted for a question. The values can be:
-
-
-              - SINGLE_LINE : "text",
-
-              - MULTIPLE_LINE : "text",
-
-              - DATE_TIME => "datetime-local"
-
-              - NUMBER => "number",
-
-              - EMAIL => "email",
-
-              - PHONE => "tel",
-
-              - RATING => "range",
-
-              - MCMA => "multiple-select", <br>This type can accept multiple answers for a multiple-choice question.
-
-              - MCSA => "select", <br>This type can accept only a single answer for a multiple-choice question.'
-          hint:
-            type: string
-            description: Hint that can be displayed for a question to help users answer it
-          mandatory:
-            type: boolean
-            description: A true value indicates that it is mandatory to answer the question.
-          size:
-            type: integer
-            description: Maximum number of options that can be provided in the answer set
-          upf:
-            type: string
-            description: User profile code or question code. Answers are given by the user while filling in the user profile. The user submits answers to profile field questions that are configured in the Punchh platform. A total of 25 answers can be submitted. The keys range from ''upf0'' to ''upf24''. Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
-          updatable:
-            type: boolean
-            description: A true value indicates that the answers can be updated.
-      title: Profile Field Questions (Array Object)
-      x-stoplight:
-        id: f347f00a28a60
-      description: ''
-    payment_credential:
-      title: Payment Credential (Object)
-      x-stoplight:
-        id: yz9yasmzl1jck
-      type: object
-      description: Contains settings related to the payment adapter, recurring payment type, and passcode
-      x-examples:
-        application/json:
-          adapter_code: ADAPTER_CODE_GOES_HERE
-          enable_recurring_payments: true
-          enable_passcode_for_payment: true
-      properties:
-        adapter_code:
-          type: string
-          description: Name of the payment processor/gateway. Valid value is par_payment.
-        enable_recurring_payments:
-          type: boolean
-          description: Whether a business has enabled recurring payments for the selected payment adapter
-        enable_passcode_for_payment:
-          type: boolean
-          description: Whether a business has enabled the passcode for payments
-    banking_rules-Object:
-      type: array
-      title: Banking Rules (Array Object)
-      items:
-        type: object
-        properties:
-          banked_redeemable_id:
-            type: string
-            description: ID of the redeemable that is banked by the user as per the defined banking rules
-          banking_slab:
-            type: integer
-            description: Banking slabs define the different intervals of earning.
-          points_conversion_threshold:
-            type: integer
-            description: Points conversion thresholds are the sub-levels within a particular slab at which banking occurs.
-          currency_earned:
-            type: string
-            description: Value of currency that is banked by the user as per the defined banking rules
-      x-stoplight:
-        id: ce2fab6db84eb
     gift-card-default-amounts:
       title: Gift Card Default Amounts (Object)
       x-stoplight:
@@ -1439,6 +1387,82 @@ components:
           x-stoplight:
             id: j2lzekoj66fzk
           description: Default selected threshold balance amount from the available balance threshold amount options for auto-reloading a gift card. Contact your Punchh representative to update this Punchh platform configuration.
+    redeemable:
+      type: array
+      items:
+        type: object
+        properties:
+          redeemable_image_url:
+            type: string
+            description: URL of the image displayed in the app to depict the redeemable
+          redeemable_properties:
+            type: array
+            description: Properties such as "Merchandise", "Food Item", etc. can be added to a particular redeemable.
+            items:
+              type: string
+          redeemable_id:
+            type: integer
+            description: Unique ID that identifies a redeemable in the system
+          name:
+            type: string
+            description: Name of the redeemable
+          description:
+            type: string
+            description: A description of the redeemable that appears in the app. This can be used to persuade users to redeem.
+          points_required_to_redeem:
+            type: integer
+            description: Number of points required to redeem a particular redeemable
+          meta_data:
+            type: string
+            description: Metadata that can be added to a redeemable. This will be returned only if it is configured in the Punchh platform. The maximum length is 255 characters.
+      title: Redeemable (Array Object)
+      x-stoplight:
+        id: 7658402f497c2
+      description: Lists the redeemables and their details defined in the Punchh system
+    subscriptions_payment_credential:
+      title: Subscriptions Payment Credential (Object)
+      x-stoplight:
+        id: 3xx7c32hkevh7
+      type: object
+      description: 'Subscription-related payment details if a business uses Punchh''s native payment integration with payment processors to support subscription-related payments
+
+
+        Note: If the business chooses not to use Punchh''s native integration with payment processors, the [Program Meta](/docs/dev-portal-mobile/2617bed9b0e8e-program-meta-api) API does not return the `subscriptions_payment_credential` object in the API response.'
+      x-examples:
+        application/json:
+          adapter_code: par_payment
+          enable_recurring_payments: false
+      properties:
+        adapter_code:
+          type: string
+          description: Code of the payment processor that will be used by the business for subscription-related payments. Possible values are no_adapter and par_payment.
+        enable_recurring_payments:
+          type: boolean
+          description: Whether recurring payments capability is enabled for the business or not
+    base_redeemable-Object:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the base redeemable
+        description:
+          type: string
+          description: A description of the redeemable that appears in the app. This can be used to persuade users to redeem.
+        image_url:
+          type: string
+          description: URL of the image displayed in the app to depict the redeemable
+        redeemable_properties:
+          type: array
+          description: Properties such as "Merchandise", "Food Item", etc. can be added to a particular redeemable.
+          items:
+            type: string
+        meta_data:
+          type: string
+          description: Metadata that can be added to a redeemable. This can be used to program mobile apps to have a certain behavior when specific data are received from the server. This can be configured in the Punchh platform. The maximum length is 255 characters.
+      description: 'A base redeemable is used to provide identity to intangible entities, such as a completed card in a visit-based business. For example, in a visit-based business the configuration of a completed card (such as expiry, etc.) is picked from the base redeemable. '
+      title: Base Redeemable (Object)
+      x-stoplight:
+        id: c9d4a439024c8
     multiple-redemptions:
       title: Multiple Redemptions (Object)
       x-stoplight:
@@ -1538,45 +1562,60 @@ components:
           x-stoplight:
             id: ioqqb1t3mfdkv
           description: Time interval (in minutes) after which a guest account will be automatically unlocked for a transaction
-    Membership-Levels:
-      type: array
-      items:
-        type: object
-        properties:
-          background_image_url:
-            type: string
-            description: URL of the image that can be displayed in the app. As the URL may change with the membership level, the image can be changed accordingly.
-          points_multiplier:
-            type: number
-            format: float
-            description: Factor (rate) with which points accumulate for a user. For example, if the points multiplier for a particular membership level is 1, the user will get 1 point for every $1 spent. If the points multiplier is 2, the user will get 2 points for every $1 spent.
-          membership_level_id:
-            type: integer
-            description: Unique ID of the membership level
-          name:
-            type: string
-            description: Membership level name that is displayed in the app
-          description:
-            type: string
-            description: Description of a particular membership level. This can be displayed in the app (e.g., "Earn twice the points for every dollar you spend.")
-          maximum_points:
-            type: integer
-            description: Upper threshold of a membership level in terms of points
-          minimum_points:
-            type: integer
-            description: Lower threshold of a membership level in terms of points
-          currency_earned:
-            type: number
-            description: When accumulated points reach the `points_conversion_threshold`, they are converted to a dollar value defined by `currency_earned`. A value of 10 means that accumulated points will be converted to banked rewards in batches of $10.
-            format: float
-          points_conversion_threshold:
-            type: integer
-            description: Number of points required to get converted to banked rewards
-      x-examples: []
-      title: Membership Levels (Array Object)
+    subscription:
+      type: object
+      description: 'The object contains details related to subscription configurations, including subscription cancellation reasons for the business. The subscription cancellation reasons are configured in the Punchh platform under Wallet and Passes > Subscription Cancellation Reasons.
+
+
+        Note: If the option to enable meta cache update on request <!--Cockpit > Dashboard Miscellaneous Config--> is not enabled in the Punchh platform, the API will not return any subscription cancellation reasons in the Program Meta API response. Contact your Punchh representative to update this Punchh platform configuration.'
+      title: Subscriptions (Object)
+      x-examples:
+        application/json:
+          subscriptions:
+            subscription_cancellation_reasons:
+            - component_code: Price
+              cancellation_reason_id: 1
+              cancellation_reason: It is expensive
+            - component_code: 'Cancel '
+              cancellation_reason_id: 3
+              cancellation_reason: Reason
+            - component_code: code
+              cancellation_reason_id: 6
+              cancellation_reason: reason
+            enable_cancellation_feedback: true
+            cancellation_feedback_placeholder: Enter Additional Feedback If Any
+            payment_disclaimer_text: This is payment disclaimer text.
+            terms_and_conditions: These are terms and conditions.
+      properties:
+        subscription_cancellation_reasons:
+          type: array
+          description: Different cancellation reasons that the business has configured and guests can select from within the mobile app when cancelling a subscription
+          items:
+            type: object
+            properties:
+              component_code:
+                type: string
+                description: This is the business-defined component code, which reflects the category of a cancellation reason. This may or may not be shown on the mobile app per the discretion of the business.
+              cancellation_reason_id:
+                type: integer
+                description: System-generated unique ID of the business-defined cancellation reason
+              cancellation_reason:
+                type: string
+                description: Cancellation reason as configured by the business
+        enable_cancellation_feedback:
+          type: boolean
+          description: 'Whether feedback will be collected when guests cancel a subscription or not '
+        cancellation_feedback_placeholder:
+          type: string
+          description: This is the cancellation feedback placeholder, which can be used by app developers as the title/label/placeholder text while capturing subjective feedback from guests when they cancel a subscription.
+        payment_disclaimer_text:
+          type: string
+          description: Payment disclaimer text as configured in the Punchh platform
+        terms_and_conditions:
+          type: string
+          description: Terms and conditions text as configured in the Punchh platform
       x-stoplight:
-        id: f51be9319f856
-      description: The object contains details about each membership tier in a loyalty program
+        id: 111a77a646d9e
     Locations:
       type: array
       x-examples:
@@ -1785,177 +1824,138 @@ components:
           guest_identification_type:
             type: string
             description: "Indicates whether loyalty users can be identified using a short code at locations that do not support the single scan flow. Possible values: \n- When set to restrict_pay_allow_lookup, the location supports user lookup using a short code, and SSF-based payments are disabled. \n- When set to restrict_lookup, user lookup using a short code is not allowed.\nContact your Punchh representative to update this Punchh platform configuration.\n"
-    redeemable:
+    Membership-Levels:
       type: array
       items:
         type: object
         properties:
-          redeemable_image_url:
+          background_image_url:
             type: string
-            description: URL of the image displayed in the app to depict the redeemable
-          redeemable_properties:
-            type: array
-            description: Properties such as "Merchandise", "Food Item", etc. can be added to a particular redeemable.
-            items:
-              type: string
-          redeemable_id:
+            description: URL of the image that can be displayed in the app. As the URL may change with the membership level, the image can be changed accordingly.
+          points_multiplier:
+            type: number
+            format: float
+            description: Factor (rate) with which points accumulate for a user. For example, if the points multiplier for a particular membership level is 1, the user will get 1 point for every $1 spent. If the points multiplier is 2, the user will get 2 points for every $1 spent.
+          membership_level_id:
             type: integer
-            description: Unique ID that identifies a redeemable in the system
+            description: Unique ID of the membership level
           name:
             type: string
-            description: Name of the redeemable
+            description: Membership level name that is displayed in the app
           description:
             type: string
-            description: A description of the redeemable that appears in the app. This can be used to persuade users to redeem.
-          points_required_to_redeem:
+            description: Description of a particular membership level. This can be displayed in the app (e.g., "Earn twice the points for every dollar you spend.")
+          maximum_points:
             type: integer
-            description: Number of points required to redeem a particular redeemable
-          meta_data:
+            description: Upper threshold of a membership level in terms of points
+          minimum_points:
+            type: integer
+            description: Lower threshold of a membership level in terms of points
+          currency_earned:
+            type: number
+            description: When accumulated points reach the `points_conversion_threshold`, they are converted to a dollar value defined by `currency_earned`. A value of 10 means that accumulated points will be converted to banked rewards in batches of $10.
+            format: float
+          points_conversion_threshold:
+            type: integer
+            description: Number of points required to get converted to banked rewards
+      x-examples: []
+      title: Membership Levels (Array Object)
+      x-stoplight:
+        id: f51be9319f856
+      description: The object contains details about each membership tier in a loyalty program
+    profile_field_questions-Object:
+      type: array
+      items:
+        type: object
+        properties:
+          question:
             type: string
-            description: Metadata that can be added to a redeemable. This will be returned only if it is configured in the Punchh platform. The maximum length is 255 characters.
-      title: Redeemable (Array Object)
+            description: Question that can be displayed to a user in the app
+          answer_options:
+            type: string
+            description: Answer options that can be displayed to a user for a question in the app
+          data_type:
+            type: string
+            description: 'Data type of answers that can be accepted for a question. The values can be:
+
+
+              - SINGLE_LINE : "text",
+
+              - MULTIPLE_LINE : "text",
+
+              - DATE_TIME => "datetime-local"
+
+              - NUMBER => "number",
+
+              - EMAIL => "email",
+
+              - PHONE => "tel",
+
+              - RATING => "range",
+
+              - MCMA => "multiple-select", <br>This type can accept multiple answers for a multiple-choice question.
+
+              - MCSA => "select", <br>This type can accept only a single answer for a multiple-choice question.'
+          hint:
+            type: string
+            description: Hint that can be displayed for a question to help users answer it
+          mandatory:
+            type: boolean
+            description: A true value indicates that it is mandatory to answer the question.
+          size:
+            type: integer
+            description: Maximum number of options that can be provided in the answer set
+          upf:
+            type: string
+            description: User profile code or question code. Answers are given by the user while filling in the user profile. The user submits answers to profile field questions that are configured in the Punchh platform. A total of 25 answers can be submitted. The keys range from ''upf0'' to ''upf24''. Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+          updatable:
+            type: boolean
+            description: A true value indicates that the answers can be updated.
+      title: Profile Field Questions (Array Object)
       x-stoplight:
-        id: 7658402f497c2
-      description: Lists the redeemables and their details defined in the Punchh system
-    subscriptions_payment_credential:
-      title: Subscriptions Payment Credential (Object)
+        id: f347f00a28a60
+      description: ''
+    payment_credential:
+      title: Payment Credential (Object)
       x-stoplight:
-        id: 3xx7c32hkevh7
+        id: yz9yasmzl1jck
       type: object
-      description: 'Subscription-related payment details if a business uses Punchh''s native payment integration with payment processors to support subscription-related payments
-
-
-        Note: If the business chooses not to use Punchh''s native integration with payment processors, the [Program Meta](/docs/dev-portal-mobile/2617bed9b0e8e-program-meta-api) API does not return the `subscriptions_payment_credential` object in the API response.'
+      description: Contains settings related to the payment adapter, recurring payment type, and passcode
       x-examples:
         application/json:
-          adapter_code: par_payment
-          enable_recurring_payments: false
+          adapter_code: ADAPTER_CODE_GOES_HERE
+          enable_recurring_payments: true
+          enable_passcode_for_payment: true
       properties:
         adapter_code:
           type: string
-          description: Code of the payment processor that will be used by the business for subscription-related payments. Possible values are no_adapter and par_payment.
+          description: Name of the payment processor/gateway. Valid value is par_payment.
         enable_recurring_payments:
           type: boolean
-          description: Whether recurring payments capability is enabled for the business or not
-    base_redeemable-Object:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the base redeemable
-        description:
-          type: string
-          description: A description of the redeemable that appears in the app. This can be used to persuade users to redeem.
-        image_url:
-          type: string
-          description: URL of the image displayed in the app to depict the redeemable
-        redeemable_properties:
-          type: array
-          description: Properties such as "Merchandise", "Food Item", etc. can be added to a particular redeemable.
-          items:
-            type: string
-        meta_data:
-          type: string
-          description: Metadata that can be added to a redeemable. This can be used to program mobile apps to have a certain behavior when specific data are received from the server. This can be configured in the Punchh platform. The maximum length is 255 characters.
-      description: 'A base redeemable is used to provide identity to intangible entities, such as a completed card in a visit-based business. For example, in a visit-based business the configuration of a completed card (such as expiry, etc.) is picked from the base redeemable. '
-      title: Base Redeemable (Object)
-      x-stoplight:
-        id: c9d4a439024c8
-    subscription:
-      type: object
-      description: 'The object contains details related to subscription configurations, including subscription cancellation reasons for the business. The subscription cancellation reasons are configured in the Punchh platform under Wallet and Passes > Subscription Cancellation Reasons.
-
-
-        Note: If the option to enable meta cache update on request <!--Cockpit > Dashboard Miscellaneous Config--> is not enabled in the Punchh platform, the API will not return any subscription cancellation reasons in the Program Meta API response. Contact your Punchh representative to update this Punchh platform configuration.'
-      title: Subscriptions (Object)
-      x-examples:
-        application/json:
-          subscriptions:
-            subscription_cancellation_reasons:
-            - component_code: Price
-              cancellation_reason_id: 1
-              cancellation_reason: It is expensive
-            - component_code: 'Cancel '
-              cancellation_reason_id: 3
-              cancellation_reason: Reason
-            - component_code: code
-              cancellation_reason_id: 6
-              cancellation_reason: reason
-            enable_cancellation_feedback: true
-            cancellation_feedback_placeholder: Enter Additional Feedback If Any
-            payment_disclaimer_text: This is payment disclaimer text.
-            terms_and_conditions: These are terms and conditions.
-      properties:
-        subscription_cancellation_reasons:
-          type: array
-          description: Different cancellation reasons that the business has configured and guests can select from within the mobile app when cancelling a subscription
-          items:
-            type: object
-            properties:
-              component_code:
-                type: string
-                description: This is the business-defined component code, which reflects the category of a cancellation reason. This may or may not be shown on the mobile app per the discretion of the business.
-              cancellation_reason_id:
-                type: integer
-                description: System-generated unique ID of the business-defined cancellation reason
-              cancellation_reason:
-                type: string
-                description: Cancellation reason as configured by the business
-        enable_cancellation_feedback:
+          description: Whether a business has enabled recurring payments for the selected payment adapter
+        enable_passcode_for_payment:
           type: boolean
-          description: 'Whether feedback will be collected when guests cancel a subscription or not '
-        cancellation_feedback_placeholder:
-          type: string
-          description: This is the cancellation feedback placeholder, which can be used by app developers as the title/label/placeholder text while capturing subjective feedback from guests when they cancel a subscription.
-        payment_disclaimer_text:
-          type: string
-          description: Payment disclaimer text as configured in the Punchh platform
-        terms_and_conditions:
-          type: string
-          description: Terms and conditions text as configured in the Punchh platform
+          description: Whether a business has enabled the passcode for payments
+    banking_rules-Object:
+      type: array
+      title: Banking Rules (Array Object)
+      items:
+        type: object
+        properties:
+          banked_redeemable_id:
+            type: string
+            description: ID of the redeemable that is banked by the user as per the defined banking rules
+          banking_slab:
+            type: integer
+            description: Banking slabs define the different intervals of earning.
+          points_conversion_threshold:
+            type: integer
+            description: Points conversion thresholds are the sub-levels within a particular slab at which banking occurs.
+          currency_earned:
+            type: string
+            description: Value of currency that is banked by the user as per the defined banking rules
       x-stoplight:
-        id: 111a77a646d9e
-  parameters:
-    User-Agent:
-      schema:
-        type: string
-        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
-      in: header
-      name: User-Agent
-      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
-      required: true
-    Authorization:
-      schema:
-        type: string
-        default: Bearer ACCESS_TOKEN_GOES_HERE
-      name: Authorization
-      in: header
-      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
-      required: true
-    Content-Type:
-      schema:
-        type: string
-        default: application/json
-      name: Content-Type
-      in: header
-      description: Set this header to <b>application/json</b>.
-      required: true
-    Accept:
-      schema:
-        type: string
-        default: application/json
-      name: Accept
-      in: header
-      description: Advertises which content types the client is able to understand
-      required: true
-    signature:
-      schema:
-        type: string
-        default: '{{$$.env.signature}}'
-      name: x-pch-digest
-      in: header
-      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
-      required: true
+        id: ce2fab6db84eb
 x-stoplight:
   id: bf6eddb435209
 x-ext-urls: {}
