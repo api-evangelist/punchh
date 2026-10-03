@@ -423,140 +423,7 @@ paths:
                   client: CLIENT_GOES_HERE
                   claim_token: CLAIM_TOKEN_GOES_HERE
 components:
-  parameters:
-    Content-Type:
-      schema:
-        type: string
-        default: application/json
-      name: Content-Type
-      in: header
-      description: Set this header to <b>application/json</b>.
-      required: true
-    Accept:
-      schema:
-        type: string
-        default: application/json
-      name: Accept
-      in: header
-      description: Advertises which content types the client is able to understand
-      required: true
-    signature:
-      schema:
-        type: string
-        default: '{{$$.env.signature}}'
-      name: x-pch-digest
-      in: header
-      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
-      required: true
-    User-Agent:
-      schema:
-        type: string
-        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
-      in: header
-      name: User-Agent
-      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
-      required: true
-    Authorization:
-      schema:
-        type: string
-        default: Bearer ACCESS_TOKEN_GOES_HERE
-      name: Authorization
-      in: header
-      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
-      required: true
   schemas:
-    Gift-Card-Object:
-      type: object
-      title: Gift Card (Object)
-      x-stoplight:
-        id: 2eff352e87b8c
-      properties:
-        card_background_image:
-          type: string
-          description: URL of the image that is displayed as the gift card background in the app of a business
-        card_number:
-          type: string
-          description: Unique gift card number as issued by the gift card processor (e.g., Aloha, Vantiv, Valutec, etc.) used by the business
-        epin:
-          type: string
-          description: Security PIN associated with a gift card. A "null" value indicates that no epin is associated with the gift card.
-        usb_scannable_card_number:
-          type: string
-          description: Easily scannable form of a gift card's number by adding ~ and ^ as prefix and suffix, respectively, to the gift card number. This is done to avoid issues at certain POS systems while scanning the QR code.
-        created_at:
-          type: string
-          description: Date/time when the gift card was created in the system, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
-          enum:
-          - YYYY-MM-DDThh:mm:ssZ
-          format: date-time
-        design_id:
-          type: integer
-          description: Identification of a particular gift card design selected by the user while purchasing a gift card
-        preferred:
-          type: boolean
-          description: A "true" value for a gift card indicates that a user has selected it to be the preferred gift card for payment.
-        name:
-          description: Name of the card that has been assigned by the user. In case of purchase of a gift card from an app, users cannot add a name to the card. A "null" value indicates that a name has not been added to the card. A name can be added later using the [Update Gift Cards](/docs/dev-portal-mobile/5a6da59e09732-update-gift-cards) API.
-          x-nullable: true
-        last_fetched_amount:
-          type: number
-          description: The balance amount of a gift card last fetched from the gift card processor
-          format: float
-        last_fetched_at:
-          type: string
-          enum:
-          - YYYY-MM-DDThh:mm:ssZ
-          format: date-time
-          description: The last time the balance amount of a gift card was fetched from the gift card processor. This indicates when it was cached.
-        status:
-          type: string
-          description: The status of a gift card. The only value exposed to a gift card in the app is "active". Other statuses are maintained for internal tracking.
-        updated_at:
-          type: string
-          enum:
-          - YYYY-MM-DDThh:mm:ssZ
-          format: date-time
-          description: Date/time when the gift card was updated in the system, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
-        users:
-          $ref: '#/components/schemas/User-object'
-        uuid:
-          type: string
-          description: Unique ID of the gift card issued by and maintained in the Punchh system
-        gift_card_id:
-          type: integer
-          description: Unique ID assigned to each gift card by the Punchh system. This ID will be passed in the push notification payload to app clients in the key `gc`. By mapping this, the app client can fetch the updated balance of a particular gift card.
-        auto_reload_enabled:
-          type: boolean
-          description: Whether auto-reload is enabled for a gift card or not
-        gc_user_auto_reload_threshold_amount:
-          type: number
-          format: float
-          description: Threshold amount below which a gift card becomes eligible for auto-reload
-        gc_user_auto_reload_default_amount:
-          type: number
-          format: float
-          description: Default amount with which a gift card would be auto-reloaded
-        gc_user_auto_reload_preferred_payment:
-          type: string
-          x-stoplight:
-            id: vi0chaw55927t
-          description: UUID of the preferred payment card, which is used for making payments when auto-reloading the gift card
-    profile_field_answers:
-      title: Profile Field Answers (Object)
-      x-stoplight:
-        id: lme68mm8va3zz
-      type: object
-      properties:
-        upf0:
-          type: string
-          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
-        upf1:
-          type: string
-          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
-        upf2:
-          type: string
-          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
-      description: Answers given by the user while filling in the user profile. The user submits answers to profile field questions that are configured in the Punchh platform. A total of 25 answers can be submitted. The keys range from 'upf0' to 'upf24'. If questions have multiple answers, the values should be separated by a | character (pipe).
     User-object:
       type: object
       description: Includes details about the users who are registered on a particular business
@@ -779,6 +646,139 @@ components:
             id: kbj7omjru7mry
           format: date-time
           description: Date and time when the user became a loyalty member
+    Gift-Card-Object:
+      type: object
+      title: Gift Card (Object)
+      x-stoplight:
+        id: 2eff352e87b8c
+      properties:
+        card_background_image:
+          type: string
+          description: URL of the image that is displayed as the gift card background in the app of a business
+        card_number:
+          type: string
+          description: Unique gift card number as issued by the gift card processor (e.g., Aloha, Vantiv, Valutec, etc.) used by the business
+        epin:
+          type: string
+          description: Security PIN associated with a gift card. A "null" value indicates that no epin is associated with the gift card.
+        usb_scannable_card_number:
+          type: string
+          description: Easily scannable form of a gift card's number by adding ~ and ^ as prefix and suffix, respectively, to the gift card number. This is done to avoid issues at certain POS systems while scanning the QR code.
+        created_at:
+          type: string
+          description: Date/time when the gift card was created in the system, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+        design_id:
+          type: integer
+          description: Identification of a particular gift card design selected by the user while purchasing a gift card
+        preferred:
+          type: boolean
+          description: A "true" value for a gift card indicates that a user has selected it to be the preferred gift card for payment.
+        name:
+          description: Name of the card that has been assigned by the user. In case of purchase of a gift card from an app, users cannot add a name to the card. A "null" value indicates that a name has not been added to the card. A name can be added later using the [Update Gift Cards](/docs/dev-portal-mobile/5a6da59e09732-update-gift-cards) API.
+          x-nullable: true
+        last_fetched_amount:
+          type: number
+          description: The balance amount of a gift card last fetched from the gift card processor
+          format: float
+        last_fetched_at:
+          type: string
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+          description: The last time the balance amount of a gift card was fetched from the gift card processor. This indicates when it was cached.
+        status:
+          type: string
+          description: The status of a gift card. The only value exposed to a gift card in the app is "active". Other statuses are maintained for internal tracking.
+        updated_at:
+          type: string
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+          description: Date/time when the gift card was updated in the system, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+        users:
+          $ref: '#/components/schemas/User-object'
+        uuid:
+          type: string
+          description: Unique ID of the gift card issued by and maintained in the Punchh system
+        gift_card_id:
+          type: integer
+          description: Unique ID assigned to each gift card by the Punchh system. This ID will be passed in the push notification payload to app clients in the key `gc`. By mapping this, the app client can fetch the updated balance of a particular gift card.
+        auto_reload_enabled:
+          type: boolean
+          description: Whether auto-reload is enabled for a gift card or not
+        gc_user_auto_reload_threshold_amount:
+          type: number
+          format: float
+          description: Threshold amount below which a gift card becomes eligible for auto-reload
+        gc_user_auto_reload_default_amount:
+          type: number
+          format: float
+          description: Default amount with which a gift card would be auto-reloaded
+        gc_user_auto_reload_preferred_payment:
+          type: string
+          x-stoplight:
+            id: vi0chaw55927t
+          description: UUID of the preferred payment card, which is used for making payments when auto-reloading the gift card
+    profile_field_answers:
+      title: Profile Field Answers (Object)
+      x-stoplight:
+        id: lme68mm8va3zz
+      type: object
+      properties:
+        upf0:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+        upf1:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+        upf2:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+      description: Answers given by the user while filling in the user profile. The user submits answers to profile field questions that are configured in the Punchh platform. A total of 25 answers can be submitted. The keys range from 'upf0' to 'upf24'. If questions have multiple answers, the values should be separated by a | character (pipe).
+  parameters:
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
 x-stoplight:
   id: bf6eddb435209
 x-ext-urls: {}

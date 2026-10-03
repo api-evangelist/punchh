@@ -2454,113 +2454,191 @@ paths:
         description: ''
 components:
   schemas:
-    rewards:
+    converted_category_balances:
       type: array
-      title: Rewards (Array Object)
-      x-examples:
-        '1':
-        - created_at: YYYY-MM-DDThh:mm:ssZ
-          description: string
-          discount_amount: 0
-          start_date_tz: '2019-08-24T14:15:22Z'
-          end_date_tz: YYYY-MM-DDThh:mm:ssZ
-          id: -9007199254740991
-          image: string
-          name: string
-          points: 0
-          redeemable_properties: string
-          status: string
-          updated_at: string
-          type: string
-          meta_data: string
+      title: Converted Category Balances (Array Object)
+      x-internal: false
       x-stoplight:
-        id: 5fcf79a179564
-      description: 'Shows the details of rewards in the user account. '
+        id: 312d2f1c0a2d1
       items:
         x-stoplight:
-          id: z2qxg4h5st1hk
+          id: ybdja8636otq1
         type: object
         properties:
-          created_at:
-            type: string
-            x-stoplight:
-              id: 302vykvbfdcc8
-            format: date-time
-            description: Date/time when the reward was created, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
-            enum:
-            - YYYY-MM-DDThh:mm:ssZ
-          description:
-            type: string
-            x-stoplight:
-              id: 0tokrp4jmur0m
-            description: Description that explains rewards as configured in the Punchh platform
-          discount_amount:
-            type: integer
-            x-stoplight:
-              id: enayd1bhaifgq
-            description: Discount amount associated with the current reward
-          start_date_tz:
-            type: string
-            x-stoplight:
-              id: hlqi63w8exlt1
-            format: date-time
-            description: 'Start date/time of the reward, , in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format '
-          end_date_tz:
-            type: string
-            x-stoplight:
-              id: 3k343j7th91f0
-            format: date-time
-            description: Expiry date/time of the reward, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
-            enum:
-            - YYYY-MM-DDThh:mm:ssZ
-          id:
-            type: integer
-            x-stoplight:
-              id: hqoodlzxdn03w
-            format: int64
-            description: Reward ID
-            minimum: -9007199254740991
-            maximum: 9007199254740991
-          image:
-            type: string
-            x-stoplight:
-              id: 2bn8v55ogflnz
-            description: Image URL of the reward
           name:
             type: string
             x-stoplight:
-              id: g8mfj6gz8mna5
-            description: Name of the reward
-          points:
-            type: integer
-            x-stoplight:
-              id: 99xgpw2upw2wv
-            description: Points associated with the current reward
-          redeemable_properties:
+              id: 98igz82l399a5
+            description: Name of the reward (e.g., Fun Cash, Fuel, Charity, etc.)
+          balance:
             type: string
             x-stoplight:
-              id: gfihfskyudzpl
-            description: Comma-separated values that provide additional details about a redeemable. For example, a redeemable could be a "Food_Item" or "Merchandise", etc. Can be configured for a business in the Punchh platform and attached to a redeemable. If no value is attached to a redeemable, a blank field will be returned.
-          status:
+              id: t1vdvli81llnz
+            description: Balance available for the user for this type of reward
+          discount_type:
             type: string
             x-stoplight:
-              id: zqdgql57wft6g
-            description: The redemption status of a reward. Currently, only the value "Unredeemed" will be returned. This signifies that the reward has not been redeemed by the user.
-          updated_at:
-            type: string
-            x-stoplight:
-              id: 8rc961uxaj7j2
-            description: Date/time when the reward was updated, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
-          type:
-            type: string
-            x-stoplight:
-              id: nq5zkwfpaz0h6
-            description: This value is either redeemable or reward. Possible Redemptions and Create Redemption API requests depend on what is returned in this field. In cases where this field is not returned, assume that the type is a reward.
-          meta_data:
-            type: string
-            x-stoplight:
-              id: sre1fwp6rs7gg
-            description: Meta data that can be added to a redeemable. This will be returned only if it is configured in the Punchh platform. The maximum length is 255 characters.
+              id: 9jn5edlti8czo
+            description: 'Type of discount. Possible values are: “currency", "fuel_discount", or "charity” depending on the platform configuration.'
+    balance:
+      type: object
+      title: Balance (Object)
+      description: Account balance of the user
+      x-stoplight:
+        id: 2860cdb5c385a
+      properties:
+        banked_rewards:
+          type: string
+          x-stoplight:
+            id: s9azb7sq7v7a7
+          description: Banked rewards of the user account. This value is set only if the program type is banked rewards based; else it will be 0.
+        expired_membership_level:
+          type: string
+          x-stoplight:
+            id: 7ll6shmnyoq1k
+          description: Expired membership level
+          x-nullable: true
+        initial_visits:
+          type: integer
+          x-stoplight:
+            id: o56ro09d36949
+          description: Captures all of the visits that the guest made up to the time of migration
+        membership_level:
+          type: string
+          x-stoplight:
+            id: rbizsxqgeuvmv
+          description: Membership level of the user
+          x-nullable: true
+        membership_level_id:
+          type: string
+          x-stoplight:
+            id: 6imlg0oigvm61
+          description: Membership level ID of the user
+          x-nullable: true
+        net_balance:
+          type: number
+          x-stoplight:
+            id: xjqs7fj807lp3
+          description: Net available balance of the current account. This value always shows the available balance of the user, whether visits, banked rewards, or points.
+        net_debits:
+          type: number
+          x-stoplight:
+            id: 1esd934uke4fv
+          description: Net debits of the user
+        pending_points:
+          type: integer
+          x-stoplight:
+            id: uvygafo95ytjg
+          description: Pending points of the user
+        points_balance:
+          type: integer
+          x-stoplight:
+            id: 5xaa0f7l7b341
+          description: 'Returns the points balance of the user account. This value gets reset based on the point conversion value once reached, as configured in the Punchh platform.
+
+
+            Note: It will increase only as per points earned, and it resets once the threshold value is reached to convert points into currency or reward.'
+        signup_anniversary_day:
+          type: string
+          x-stoplight:
+            id: 5i2amz3lrt52e
+          description: Sign-up anniversary day of the current account
+        total_credits:
+          type: number
+          format: double
+          x-stoplight:
+            id: oi85i9hfuacvy
+          description: Total credits of the current account
+        total_debits:
+          type: string
+          x-stoplight:
+            id: rhkeop02nmk3x
+          description: Total debits of the current account
+        total_point_credits:
+          type: integer
+          x-stoplight:
+            id: zfegz75tgm5oy
+          description: Total points credits of the user
+        total_redeemable_visits:
+          type: integer
+          x-stoplight:
+            id: 6kdl323x4lq6c
+          description: Total redeemable visits of the user
+        total_visits:
+          type: integer
+          x-stoplight:
+            id: tionfl6ij3p87
+          description: Total number of loyalty visits
+        unredeemed_cards:
+          type: string
+          x-stoplight:
+            id: izzbyzykv9r7x
+          description: Number of unredeemed cards of a user. This value is set only if the program type is visit-based; else it will be 0.
+    account_balance:
+      title: Account Balance (Object)
+      x-stoplight:
+        id: 3miulxn3op5yf
+      type: object
+      description: The object contains the user's account balance details based on the program type of the business.
+      properties:
+        net_balance:
+          type: number
+          description: Net available balance of the user account
+        points_balance:
+          type: number
+          description: Loyalty points balance of the user account
+        net_debits:
+          type: number
+          description: Net debits of the user
+        pending_points:
+          type: number
+          description: Pending points of the user. This value is set only if the Pending Points setting is enabled for the business.
+        total_credits:
+          type: number
+          format: double
+          description: Total credits of the current account
+        total_debits:
+          type: number
+          description: Total debits of the current account
+        total_point_credits:
+          type: number
+          description: Total points credits of the user
+        total_redeemable_visits:
+          type: number
+          description: Total redeemable visits of the user
+        total_visits:
+          type: number
+          description: Total number of loyalty visits
+        unredeemed_cards:
+          type: number
+          description: Number of unredeemed cards of the user
+        banked_currency:
+          type: number
+          description: Banked currency balance of the user
+        balance:
+          type: number
+          description: Fuel balance of the user
+        banked_rewards:
+          type: number
+          description: 'Banked rewards of the user account. '
+      x-examples:
+        Points unlock redeemables:
+          net_balance: 108
+          points_balance: 8
+          net_debits: 100
+          pending_points: 0
+          total_credits: 208
+          total_debits: '100.0'
+          total_point_credits: 208
+        Points convert to currency:
+          banked_rewards: '3339.69'
+        Visit-based:
+          total_redeemable_visits: 210
+          total_visits: 201
+          unredeemed_cards: 0
+        Points to Manual:
+          banked_currency: 35
+          balance: 20
     menu_items:
       type: array
       title: Menu Items (Array Object)
@@ -2638,6 +2716,71 @@ components:
         - menu_major_group
         - menu_family
         - serial_number
+    user_subscriptions:
+      title: User Subscriptions (Array Object)
+      x-stoplight:
+        id: l6z8yy29bwski
+      type: array
+      x-examples:
+        application/json:
+        - subscription_id: 39
+          benefits:
+          - benefit_id: 1
+            benefit_type: sku_discounting
+            benefit_name: Plan23
+            benefit_description: ''
+            discounts:
+            - discount_id: 42
+              threshold: 2
+              discounted_value: $0.00
+              discounted_quantity: 0
+              threshold_discount: 2
+              discount_type: '%_or_$_off'
+      description: The array object contains different subscriptions issued to the user.
+      items:
+        type: object
+        properties:
+          subscription_id:
+            type: string
+            description: System-generated unique ID of the subscription that is issued to the guest
+          benefits:
+            type: array
+            description: A subscription plan may contain multiple benefits. This object includes the details of benefits available and availed by the guest for this subscription ID.
+            items:
+              type: object
+              properties:
+                benefit_id:
+                  type: number
+                  description: System-generated unique ID of the benefit that is configured on the subscription plan and is issued to the guest for this subscription
+                benefit_type:
+                  type: string
+                  description: Benefit type that is configured on the subscription plan
+                benefit_name:
+                  type: string
+                  description: Benefit name that is configured on the subscription plan
+                benefit_description:
+                  type: string
+                  description: Benefit description that is configured on the subscription plan
+                discounts:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      discount_id:
+                        type: number
+                        description: System-generated unique ID of the discounting rule configured under the benefit
+                      threshold:
+                        type: string
+                        description: Maximum number of units that can be discounted for this particular discounting rule
+                      discounted_quantity:
+                        type: string
+                        description: Number of units discounted as per this discounting rule
+                      threshold_discount:
+                        type: string
+                        description: Maximum number of units that can be discounted for this particular discounting rule
+                      discount_type:
+                        type: string
+                        description: Discount type of discounting rule configured under the benefit
     selected_redeemables:
       type: array
       title: Selected Redeemables (Array Object)
@@ -2748,151 +2891,113 @@ components:
             x-stoplight:
               id: r6m3agn4rough
             description: Comma-separated values that provide additional details about a redeemable. For example, a redeemable could be a "Food_Item" or "Merchandise", etc. Can be configured for a business in the Punchh platform and attached to a redeemable. If no value is attached to a redeemable, a blank field will be returned.
-    selected_subscriptions:
-      title: Selected Subscriptions (Array Object)
-      x-stoplight:
-        id: m3j5deilysjtb
+    rewards:
       type: array
-      description: This object is set only in the single scan flow (SSF). The `selected_subscriptions` array object shows one or more user-selected subscriptions if the user would like to redeem them as part of the single scan flow. The user selects the subscription(s) when generating the single scan code on the mobile application. See [Single Scan Flow](/docs/dev-portal-pos/additional-topics/single-scan-flow)
-      minItems: 1
+      title: Rewards (Array Object)
+      x-examples:
+        '1':
+        - created_at: YYYY-MM-DDThh:mm:ssZ
+          description: string
+          discount_amount: 0
+          start_date_tz: '2019-08-24T14:15:22Z'
+          end_date_tz: YYYY-MM-DDThh:mm:ssZ
+          id: -9007199254740991
+          image: string
+          name: string
+          points: 0
+          redeemable_properties: string
+          status: string
+          updated_at: string
+          type: string
+          meta_data: string
+      x-stoplight:
+        id: 5fcf79a179564
+      description: 'Shows the details of rewards in the user account. '
       items:
         x-stoplight:
-          id: k28uw6it1fn1j
+          id: z2qxg4h5st1hk
         type: object
-        minProperties: 1
         properties:
-          subscription_id:
-            type: number
-            x-stoplight:
-              id: zcz6lj0kj0o2e
-            description: System-generated unique ID of the subscription that is issued to the guest
-          start_time:
+          created_at:
             type: string
             x-stoplight:
-              id: xdtgixd3k1zka
+              id: 302vykvbfdcc8
             format: date-time
-            description: Date and time (in ISO 8601 format) from which this current subscription becomes active for a guest
-            minLength: 1
-          end_time:
-            type: string
-            x-stoplight:
-              id: hx644v50ybcsw
-            format: date-time
-            description: Date and time (in ISO 8601 format) until which this current subscription remains active for a guest
-            minLength: 1
-          external_plan_identifier:
-            type: string
-            x-stoplight:
-              id: cqfzj879fl406
-            description: UPC/SKU of the subscription plan as present on third-party applications of enterprise businesses and is configured on this subscription plan. This will be stored in the database, and the business can use it for analytics purposes. This value can be used to make the purchase of the subscription plan instead of using the “plan_id”.
-          plan_id:
-            type: number
-            x-stoplight:
-              id: d25wjlyacbhq6
-            description: System-generated unique ID of the plan against which this subscription is issued for the guest
-          cancelled_at:
-            type: string
-            x-stoplight:
-              id: 5ew4n5w6bki5d
-            format: date-time
-            description: Date and time (in ISO 8601 format) when the subscription is cancelled
-          name:
-            type: string
-            x-stoplight:
-              id: wiq7ag9q76ynh
-            description: 'Name of the subscription plan as provided by the admin at the time of subscription plan creation
-
-
-              Note: The subscription `name` is returned in the language specified in the Accept-Language request header, provided the name has been translated into the relevant language in the Punchh platform. If the translation is not available, then no value is returned for this parameter in the API response. For example, if the header specifies “fr” (French), the subscription name is returned in French only if a French translation is configured in the Punchh platform.'
+            description: Date/time when the reward was created, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
           description:
             type: string
             x-stoplight:
-              id: 0t16963b89xix
-            description: 'Text description of the subscription plan as configured by the admin on the subscription plan. This is used to explain the offerings of the subscription plan to guests.
-
-
-              Note: The subscription `description` is returned in the language specified in the Accept-Language request header, provided the description has been translated into the relevant language in the Punchh platform. If the translation is not available, then no value is returned for this parameter in the API response. For example, if the header specifies “fr” (French), the subscription description is returned in French only if a French translation for the description is configured in the Punchh platform.'
-          miscellaneous:
+              id: 0tokrp4jmur0m
+            description: Description that explains rewards as configured in the Punchh platform
+          discount_amount:
+            type: integer
+            x-stoplight:
+              id: enayd1bhaifgq
+            description: Discount amount associated with the current reward
+          start_date_tz:
             type: string
             x-stoplight:
-              id: hqnkb0bhudeg4
-            description: 'Free-form text field that can be used by businesses to enter additional information or a JSON code snippet for greater customization in the mobile app
-
-
-              Note: The subscription `miscellaneous` information is returned in the language specified in the Accept-Language request header, provided it has been translated into the relevant language in the Punchh platform. If the translation is not available, then no value is returned for this parameter in the API response. For example, if the header specifies “fr” (French), the subscription miscellaneous information is returned in French only if a French translation for the miscellaneous is configured in the Punchh platform.'
-          status:
+              id: hlqi63w8exlt1
+            format: date-time
+            description: 'Start date/time of the reward, , in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format '
+          end_date_tz:
             type: string
             x-stoplight:
-              id: yfmzukli8w6qg
-            description: 'Subscriptions issued to a guest can have multiple statuses. Currently supported statuses are:
-
-              1. active: The subscription is active and the guest can enjoy the benefits until its `end_time`.
-
-              2. expired: The subscription is not renewed and expired. The end_time of the subscription is in the past, and it was not cancelled before its expiration.
-
-              3. soft_cancelled: The subscription is cancelled either by the guest or by an admin. The benefits remain valid until the `end_time`.
-
-              4. hard_cancelled: The subscription is cancelled by an admin and the benefits become invalid immediately from the time of cancellation.
-
-              5. renewed: The subscription is renewed.'
-    subscriptions:
-      title: Subscriptions (Array Object)
-      x-stoplight:
-        id: t2vrovoz4i5qv
-      type: array
-      description: This object is returned when the subscriptions feature is available for the business. In case a guest does not have active subscriptions, an empty object is returned.
-      x-examples:
-        example-1:
-          subscriptions:
-          - plan_name: free burger
-            pos_meta: VIP subs
-            subscription_id: 123
-      items:
-        x-stoplight:
-          id: 9jb37m7ysdquo
-        type: object
-        properties:
-          plan_name:
+              id: 3k343j7th91f0
+            format: date-time
+            description: Expiry date/time of the reward, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+          id:
+            type: integer
+            x-stoplight:
+              id: hqoodlzxdn03w
+            format: int64
+            description: Reward ID
+            minimum: -9007199254740991
+            maximum: 9007199254740991
+          image:
             type: string
             x-stoplight:
-              id: q2i09ubhdc6x8
-            description: Name of a subscription plan as provided by the Administrator when creating the subscription plan.
-          pos_meta:
-            type: string
-            x-stoplight:
-              id: 2b5gfv264ff03
-            description: Free form text field to support various subscription related business use cases at POS. The text field length is 24 characters.
-          subscription_id:
-            type: string
-            x-stoplight:
-              id: ru921jzzxw2ni
-            description: System-generated unique ID of the subscription that is issued to the guest.
-    converted_category_balances:
-      type: array
-      title: Converted Category Balances (Array Object)
-      x-internal: false
-      x-stoplight:
-        id: 312d2f1c0a2d1
-      items:
-        x-stoplight:
-          id: ybdja8636otq1
-        type: object
-        properties:
+              id: 2bn8v55ogflnz
+            description: Image URL of the reward
           name:
             type: string
             x-stoplight:
-              id: 98igz82l399a5
-            description: Name of the reward (e.g., Fun Cash, Fuel, Charity, etc.)
-          balance:
+              id: g8mfj6gz8mna5
+            description: Name of the reward
+          points:
+            type: integer
+            x-stoplight:
+              id: 99xgpw2upw2wv
+            description: Points associated with the current reward
+          redeemable_properties:
             type: string
             x-stoplight:
-              id: t1vdvli81llnz
-            description: Balance available for the user for this type of reward
-          discount_type:
+              id: gfihfskyudzpl
+            description: Comma-separated values that provide additional details about a redeemable. For example, a redeemable could be a "Food_Item" or "Merchandise", etc. Can be configured for a business in the Punchh platform and attached to a redeemable. If no value is attached to a redeemable, a blank field will be returned.
+          status:
             type: string
             x-stoplight:
-              id: 9jn5edlti8czo
-            description: 'Type of discount. Possible values are: “currency", "fuel_discount", or "charity” depending on the platform configuration.'
+              id: zqdgql57wft6g
+            description: The redemption status of a reward. Currently, only the value "Unredeemed" will be returned. This signifies that the reward has not been redeemed by the user.
+          updated_at:
+            type: string
+            x-stoplight:
+              id: 8rc961uxaj7j2
+            description: Date/time when the reward was updated, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+          type:
+            type: string
+            x-stoplight:
+              id: nq5zkwfpaz0h6
+            description: This value is either redeemable or reward. Possible Redemptions and Create Redemption API requests depend on what is returned in this field. In cases where this field is not returned, assume that the type is a reward.
+          meta_data:
+            type: string
+            x-stoplight:
+              id: sre1fwp6rs7gg
+            description: Meta data that can be added to a redeemable. This will be returned only if it is configured in the Punchh platform. The maximum length is 255 characters.
     multiple-redemptions:
       title: Multiple Redemptions (Object)
       x-stoplight:
@@ -2992,67 +3097,27 @@ components:
           x-stoplight:
             id: i1o55yrysszfi
           description: Time interval (in minutes) after which a guest account will be automatically unlocked for a transaction
-    selected_coupons:
-      type: array
-      title: Selected Coupons (Array Object)
-      description: This object is set only in the single scan flow (SSF). The `selected_coupons` object shows one or more Punchh coupon codes if the user would like to redeem them as part of the single scan flow. The user selects the coupon(s) when generating the single scan code on the mobile application. If this value is set, trigger the redemption flow. See [Single Scan Flow](/docs/dev-portal-pos/additional-topics/single-scan-flow)
+    selected_discount_amount:
+      title: Selected Discount Amount (Object)
+      x-stoplight:
+        id: phfisykhrm5r5
+      type: object
+      description: This object is set for the single scan flow (SSF) for users who are on the Banked Rewards loyalty program. The `selected_discount_amount` object shows the banked currency amount if the user would like to redeem it as part of the single scan flow. The user selects the banked currency when generating the single scan code on the mobile application. If this value is set, trigger the redemption flow. See [Single Scan Flow](/docs/dev-portal-pos/additional-topics/single-scan-flow)
       x-examples:
         Example:
-        - code: COUPON_CODE_GOES_HERE
-          image_url: IMAGE_URL_GOES_HERE
-          discount_type: redemption_code
-          name: Dynamic Coupon - $2.5 OFF
-          description: ''
-          start_date: null
-          end_date: null
-      x-stoplight:
-        id: 41d896bc0bfbf
-      items:
-        x-stoplight:
-          id: 3o6bzolby9w8x
-        type: object
-        properties:
-          code:
-            type: string
-            x-stoplight:
-              id: nfpvh33vju1kz
-            description: Coupon redemption code
-          name:
-            type: string
-            x-stoplight:
-              id: o381dh34zt8fy
-            description: Name of the Punchh coupon
-          description:
-            type: string
-            x-stoplight:
-              id: 3e6ptokraoebm
-            description: Description that explains Punchh coupon as configured in the Punchh platform
-          start_date_tz:
-            type: string
-            x-stoplight:
-              id: 8k50vfq6ms2sk
-            description: 'Start date/time of the Punchh coupon, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format '
-            format: date-time
-            enum:
-            - YYYY-MM-DDThh:mm:ssZ
-          end_date_tz:
-            type: string
-            x-stoplight:
-              id: 9dcxk5cqp72bs
-            format: date-time
-            enum:
-            - YYYY-MM-DDThh:mm:ssZ
-            description: Expiry date/time of the Punchh coupon, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
-          image:
-            type: string
-            x-stoplight:
-              id: hseylarj72v84
-            description: Image URL of the Punchh coupon
-          discount_type:
-            type: string
-            x-stoplight:
-              id: yzmpjwxouf4sw
-            description: Type of discount. The value will be redemption_code.
+          banked_currency: '2.2'
+          discount_type: DISCOUNT_AMOUNT_GOES_HERE
+      properties:
+        banked_currency:
+          type: string
+          x-stoplight:
+            id: 067b7baw2yu97
+          description: Banked currency amount that the user wants to redeem
+        discount_type:
+          type: string
+          x-stoplight:
+            id: rymdjxo0e0yh7
+          description: Type of discount. The value will be discount_amount
     selected_rewards:
       type: array
       title: Selected Rewards (Array Object)
@@ -3159,157 +3224,67 @@ components:
             x-stoplight:
               id: a7hxwtxhwix0o
             description: Comma-separated values that provide additional details about a reward. For example, a redeemable could be a "Food_Item" or "Merchandise", etc. Can be configured for a business in the Punchh platform and attached to a redeemable. If no value is attached to a redeemable, a blank field will be returned.
-    account_balance:
-      title: Account Balance (Object)
-      x-stoplight:
-        id: 3miulxn3op5yf
-      type: object
-      description: The object contains the user's account balance details based on the program type of the business.
-      properties:
-        net_balance:
-          type: number
-          description: Net available balance of the user account
-        points_balance:
-          type: number
-          description: Loyalty points balance of the user account
-        net_debits:
-          type: number
-          description: Net debits of the user
-        pending_points:
-          type: number
-          description: Pending points of the user. This value is set only if the Pending Points setting is enabled for the business.
-        total_credits:
-          type: number
-          format: double
-          description: Total credits of the current account
-        total_debits:
-          type: number
-          description: Total debits of the current account
-        total_point_credits:
-          type: number
-          description: Total points credits of the user
-        total_redeemable_visits:
-          type: number
-          description: Total redeemable visits of the user
-        total_visits:
-          type: number
-          description: Total number of loyalty visits
-        unredeemed_cards:
-          type: number
-          description: Number of unredeemed cards of the user
-        banked_currency:
-          type: number
-          description: Banked currency balance of the user
-        balance:
-          type: number
-          description: Fuel balance of the user
-        banked_rewards:
-          type: number
-          description: 'Banked rewards of the user account. '
-      x-examples:
-        Points unlock redeemables:
-          net_balance: 108
-          points_balance: 8
-          net_debits: 100
-          pending_points: 0
-          total_credits: 208
-          total_debits: '100.0'
-          total_point_credits: 208
-        Points convert to currency:
-          banked_rewards: '3339.69'
-        Visit-based:
-          total_redeemable_visits: 210
-          total_visits: 201
-          unredeemed_cards: 0
-        Points to Manual:
-          banked_currency: 35
-          balance: 20
-    selected_discount_amount:
-      title: Selected Discount Amount (Object)
-      x-stoplight:
-        id: phfisykhrm5r5
-      type: object
-      description: This object is set for the single scan flow (SSF) for users who are on the Banked Rewards loyalty program. The `selected_discount_amount` object shows the banked currency amount if the user would like to redeem it as part of the single scan flow. The user selects the banked currency when generating the single scan code on the mobile application. If this value is set, trigger the redemption flow. See [Single Scan Flow](/docs/dev-portal-pos/additional-topics/single-scan-flow)
+    selected_coupons:
+      type: array
+      title: Selected Coupons (Array Object)
+      description: This object is set only in the single scan flow (SSF). The `selected_coupons` object shows one or more Punchh coupon codes if the user would like to redeem them as part of the single scan flow. The user selects the coupon(s) when generating the single scan code on the mobile application. If this value is set, trigger the redemption flow. See [Single Scan Flow](/docs/dev-portal-pos/additional-topics/single-scan-flow)
       x-examples:
         Example:
-          banked_currency: '2.2'
-          discount_type: DISCOUNT_AMOUNT_GOES_HERE
-      properties:
-        banked_currency:
-          type: string
-          x-stoplight:
-            id: 067b7baw2yu97
-          description: Banked currency amount that the user wants to redeem
-        discount_type:
-          type: string
-          x-stoplight:
-            id: rymdjxo0e0yh7
-          description: Type of discount. The value will be discount_amount
-    user_subscriptions:
-      title: User Subscriptions (Array Object)
+        - code: COUPON_CODE_GOES_HERE
+          image_url: IMAGE_URL_GOES_HERE
+          discount_type: redemption_code
+          name: Dynamic Coupon - $2.5 OFF
+          description: ''
+          start_date: null
+          end_date: null
       x-stoplight:
-        id: l6z8yy29bwski
-      type: array
-      x-examples:
-        application/json:
-        - subscription_id: 39
-          benefits:
-          - benefit_id: 1
-            benefit_type: sku_discounting
-            benefit_name: Plan23
-            benefit_description: ''
-            discounts:
-            - discount_id: 42
-              threshold: 2
-              discounted_value: $0.00
-              discounted_quantity: 0
-              threshold_discount: 2
-              discount_type: '%_or_$_off'
-      description: The array object contains different subscriptions issued to the user.
+        id: 41d896bc0bfbf
       items:
+        x-stoplight:
+          id: 3o6bzolby9w8x
         type: object
         properties:
-          subscription_id:
+          code:
             type: string
-            description: System-generated unique ID of the subscription that is issued to the guest
-          benefits:
-            type: array
-            description: A subscription plan may contain multiple benefits. This object includes the details of benefits available and availed by the guest for this subscription ID.
-            items:
-              type: object
-              properties:
-                benefit_id:
-                  type: number
-                  description: System-generated unique ID of the benefit that is configured on the subscription plan and is issued to the guest for this subscription
-                benefit_type:
-                  type: string
-                  description: Benefit type that is configured on the subscription plan
-                benefit_name:
-                  type: string
-                  description: Benefit name that is configured on the subscription plan
-                benefit_description:
-                  type: string
-                  description: Benefit description that is configured on the subscription plan
-                discounts:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      discount_id:
-                        type: number
-                        description: System-generated unique ID of the discounting rule configured under the benefit
-                      threshold:
-                        type: string
-                        description: Maximum number of units that can be discounted for this particular discounting rule
-                      discounted_quantity:
-                        type: string
-                        description: Number of units discounted as per this discounting rule
-                      threshold_discount:
-                        type: string
-                        description: Maximum number of units that can be discounted for this particular discounting rule
-                      discount_type:
-                        type: string
-                        description: Discount type of discounting rule configured under the benefit
+            x-stoplight:
+              id: nfpvh33vju1kz
+            description: Coupon redemption code
+          name:
+            type: string
+            x-stoplight:
+              id: o381dh34zt8fy
+            description: Name of the Punchh coupon
+          description:
+            type: string
+            x-stoplight:
+              id: 3e6ptokraoebm
+            description: Description that explains Punchh coupon as configured in the Punchh platform
+          start_date_tz:
+            type: string
+            x-stoplight:
+              id: 8k50vfq6ms2sk
+            description: 'Start date/time of the Punchh coupon, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format '
+            format: date-time
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+          end_date_tz:
+            type: string
+            x-stoplight:
+              id: 9dcxk5cqp72bs
+            format: date-time
+            enum:
+            - YYYY-MM-DDThh:mm:ssZ
+            description: Expiry date/time of the Punchh coupon, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+          image:
+            type: string
+            x-stoplight:
+              id: hseylarj72v84
+            description: Image URL of the Punchh coupon
+          discount_type:
+            type: string
+            x-stoplight:
+              id: yzmpjwxouf4sw
+            description: Type of discount. The value will be redemption_code.
     selected_redeemables_card:
       type: array
       title: Selected Redeemable Cards (Array Object)
@@ -3422,100 +3397,125 @@ components:
             x-stoplight:
               id: p3a424r0k3lpy
             description: Comma-separated values that provide additional details about a redeemable. For example, a redeemable could be a "Food_Item" or "Merchandise", etc. Can be configured for a business in the Punchh platform and attached to a redeemable. If no value is attached to a redeemable, a blank field will be returned.
-    balance:
-      type: object
-      title: Balance (Object)
-      description: Account balance of the user
+    subscriptions:
+      title: Subscriptions (Array Object)
       x-stoplight:
-        id: 2860cdb5c385a
-      properties:
-        banked_rewards:
-          type: string
-          x-stoplight:
-            id: s9azb7sq7v7a7
-          description: Banked rewards of the user account. This value is set only if the program type is banked rewards based; else it will be 0.
-        expired_membership_level:
-          type: string
-          x-stoplight:
-            id: 7ll6shmnyoq1k
-          description: Expired membership level
-          x-nullable: true
-        initial_visits:
-          type: integer
-          x-stoplight:
-            id: o56ro09d36949
-          description: Captures all of the visits that the guest made up to the time of migration
-        membership_level:
-          type: string
-          x-stoplight:
-            id: rbizsxqgeuvmv
-          description: Membership level of the user
-          x-nullable: true
-        membership_level_id:
-          type: string
-          x-stoplight:
-            id: 6imlg0oigvm61
-          description: Membership level ID of the user
-          x-nullable: true
-        net_balance:
-          type: number
-          x-stoplight:
-            id: xjqs7fj807lp3
-          description: Net available balance of the current account. This value always shows the available balance of the user, whether visits, banked rewards, or points.
-        net_debits:
-          type: number
-          x-stoplight:
-            id: 1esd934uke4fv
-          description: Net debits of the user
-        pending_points:
-          type: integer
-          x-stoplight:
-            id: uvygafo95ytjg
-          description: Pending points of the user
-        points_balance:
-          type: integer
-          x-stoplight:
-            id: 5xaa0f7l7b341
-          description: 'Returns the points balance of the user account. This value gets reset based on the point conversion value once reached, as configured in the Punchh platform.
+        id: t2vrovoz4i5qv
+      type: array
+      description: This object is returned when the subscriptions feature is available for the business. In case a guest does not have active subscriptions, an empty object is returned.
+      x-examples:
+        example-1:
+          subscriptions:
+          - plan_name: free burger
+            pos_meta: VIP subs
+            subscription_id: 123
+      items:
+        x-stoplight:
+          id: 9jb37m7ysdquo
+        type: object
+        properties:
+          plan_name:
+            type: string
+            x-stoplight:
+              id: q2i09ubhdc6x8
+            description: Name of a subscription plan as provided by the Administrator when creating the subscription plan.
+          pos_meta:
+            type: string
+            x-stoplight:
+              id: 2b5gfv264ff03
+            description: Free form text field to support various subscription related business use cases at POS. The text field length is 24 characters.
+          subscription_id:
+            type: string
+            x-stoplight:
+              id: ru921jzzxw2ni
+            description: System-generated unique ID of the subscription that is issued to the guest.
+    selected_subscriptions:
+      title: Selected Subscriptions (Array Object)
+      x-stoplight:
+        id: m3j5deilysjtb
+      type: array
+      description: This object is set only in the single scan flow (SSF). The `selected_subscriptions` array object shows one or more user-selected subscriptions if the user would like to redeem them as part of the single scan flow. The user selects the subscription(s) when generating the single scan code on the mobile application. See [Single Scan Flow](/docs/dev-portal-pos/additional-topics/single-scan-flow)
+      minItems: 1
+      items:
+        x-stoplight:
+          id: k28uw6it1fn1j
+        type: object
+        minProperties: 1
+        properties:
+          subscription_id:
+            type: number
+            x-stoplight:
+              id: zcz6lj0kj0o2e
+            description: System-generated unique ID of the subscription that is issued to the guest
+          start_time:
+            type: string
+            x-stoplight:
+              id: xdtgixd3k1zka
+            format: date-time
+            description: Date and time (in ISO 8601 format) from which this current subscription becomes active for a guest
+            minLength: 1
+          end_time:
+            type: string
+            x-stoplight:
+              id: hx644v50ybcsw
+            format: date-time
+            description: Date and time (in ISO 8601 format) until which this current subscription remains active for a guest
+            minLength: 1
+          external_plan_identifier:
+            type: string
+            x-stoplight:
+              id: cqfzj879fl406
+            description: UPC/SKU of the subscription plan as present on third-party applications of enterprise businesses and is configured on this subscription plan. This will be stored in the database, and the business can use it for analytics purposes. This value can be used to make the purchase of the subscription plan instead of using the “plan_id”.
+          plan_id:
+            type: number
+            x-stoplight:
+              id: d25wjlyacbhq6
+            description: System-generated unique ID of the plan against which this subscription is issued for the guest
+          cancelled_at:
+            type: string
+            x-stoplight:
+              id: 5ew4n5w6bki5d
+            format: date-time
+            description: Date and time (in ISO 8601 format) when the subscription is cancelled
+          name:
+            type: string
+            x-stoplight:
+              id: wiq7ag9q76ynh
+            description: 'Name of the subscription plan as provided by the admin at the time of subscription plan creation
 
 
-            Note: It will increase only as per points earned, and it resets once the threshold value is reached to convert points into currency or reward.'
-        signup_anniversary_day:
-          type: string
-          x-stoplight:
-            id: 5i2amz3lrt52e
-          description: Sign-up anniversary day of the current account
-        total_credits:
-          type: number
-          format: double
-          x-stoplight:
-            id: oi85i9hfuacvy
-          description: Total credits of the current account
-        total_debits:
-          type: string
-          x-stoplight:
-            id: rhkeop02nmk3x
-          description: Total debits of the current account
-        total_point_credits:
-          type: integer
-          x-stoplight:
-            id: zfegz75tgm5oy
-          description: Total points credits of the user
-        total_redeemable_visits:
-          type: integer
-          x-stoplight:
-            id: 6kdl323x4lq6c
-          description: Total redeemable visits of the user
-        total_visits:
-          type: integer
-          x-stoplight:
-            id: tionfl6ij3p87
-          description: Total number of loyalty visits
-        unredeemed_cards:
-          type: string
-          x-stoplight:
-            id: izzbyzykv9r7x
-          description: Number of unredeemed cards of a user. This value is set only if the program type is visit-based; else it will be 0.
+              Note: The subscription `name` is returned in the language specified in the Accept-Language request header, provided the name has been translated into the relevant language in the Punchh platform. If the translation is not available, then no value is returned for this parameter in the API response. For example, if the header specifies “fr” (French), the subscription name is returned in French only if a French translation is configured in the Punchh platform.'
+          description:
+            type: string
+            x-stoplight:
+              id: 0t16963b89xix
+            description: 'Text description of the subscription plan as configured by the admin on the subscription plan. This is used to explain the offerings of the subscription plan to guests.
+
+
+              Note: The subscription `description` is returned in the language specified in the Accept-Language request header, provided the description has been translated into the relevant language in the Punchh platform. If the translation is not available, then no value is returned for this parameter in the API response. For example, if the header specifies “fr” (French), the subscription description is returned in French only if a French translation for the description is configured in the Punchh platform.'
+          miscellaneous:
+            type: string
+            x-stoplight:
+              id: hqnkb0bhudeg4
+            description: 'Free-form text field that can be used by businesses to enter additional information or a JSON code snippet for greater customization in the mobile app
+
+
+              Note: The subscription `miscellaneous` information is returned in the language specified in the Accept-Language request header, provided it has been translated into the relevant language in the Punchh platform. If the translation is not available, then no value is returned for this parameter in the API response. For example, if the header specifies “fr” (French), the subscription miscellaneous information is returned in French only if a French translation for the miscellaneous is configured in the Punchh platform.'
+          status:
+            type: string
+            x-stoplight:
+              id: yfmzukli8w6qg
+            description: 'Subscriptions issued to a guest can have multiple statuses. Currently supported statuses are:
+
+              1. active: The subscription is active and the guest can enjoy the benefits until its `end_time`.
+
+              2. expired: The subscription is not renewed and expired. The end_time of the subscription is in the past, and it was not cancelled before its expiration.
+
+              3. soft_cancelled: The subscription is cancelled either by the guest or by an admin. The benefits remain valid until the `end_time`.
+
+              4. hard_cancelled: The subscription is cancelled by an admin and the benefits become invalid immediately from the time of cancellation.
+
+              5. renewed: The subscription is renewed.'
   parameters:
     Authorization:
       schema:

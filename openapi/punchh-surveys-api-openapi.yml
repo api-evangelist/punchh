@@ -85,6 +85,14 @@ paths:
                   user_survey_id: 123456
 components:
   parameters:
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
     User-Agent:
       schema:
         type: string
@@ -93,13 +101,13 @@ components:
       name: User-Agent
       description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
       required: true
-    Accept:
+    Authorization:
       schema:
         type: string
-        default: application/json
-      name: Accept
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
       in: header
-      description: Advertises which content types the client is able to understand
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
       required: true
     signature:
       schema:
@@ -123,14 +131,6 @@ components:
       name: Content-Type
       in: header
       description: Set this header to <b>application/json</b>.
-      required: true
-    Authorization:
-      schema:
-        type: string
-        default: Bearer ACCESS_TOKEN_GOES_HERE
-      name: Authorization
-      in: header
-      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
       required: true
 x-stoplight:
   id: bf6eddb435209

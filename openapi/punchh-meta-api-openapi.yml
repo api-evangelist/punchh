@@ -110,7 +110,55 @@ paths:
       tags:
       - Meta
 components:
+  parameters:
+    authorization-header:
+      schema:
+        type: string
+        default: Bearer BUSINESS_ADMIN_KEY_GOES_HERE
+      name: Authorization
+      in: header
+      description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
+      required: true
   schemas:
+    Membership-Levels:
+      type: array
+      items:
+        type: object
+        properties:
+          background_image_url:
+            type: string
+            description: URL of the image that can be displayed in the app. As the URL may change with the membership level, the image can be changed accordingly.
+          points_multiplier:
+            type: number
+            format: float
+            description: Factor (rate) with which points accumulate for a user. For example, if the points multiplier for a particular membership level is 1, the user will get 1 point for every $1 spent. If the points multiplier is 2, the user will get 2 points for every $1 spent.
+          membership_level_id:
+            type: integer
+            description: Unique ID of the membership level
+          name:
+            type: string
+            description: Membership level name that is displayed in the app
+          description:
+            type: string
+            description: Description of a particular membership level. This can be displayed in the app (e.g., "Earn twice the points for every dollar you spend.")
+          maximum_points:
+            type: integer
+            description: Upper threshold of a membership level in terms of points
+          minimum_points:
+            type: integer
+            description: Lower threshold of a membership level in terms of points
+          currency_earned:
+            type: number
+            description: When accumulated points reach the `points_conversion_threshold`, they are converted to a dollar value defined by `currency_earned`. A value of 10 means that accumulated points will be converted to banked rewards in batches of $10.
+            format: float
+          points_conversion_threshold:
+            type: integer
+            description: Number of points required to get converted to banked rewards
+      x-examples: []
+      title: Membership Levels (Array Object)
+      x-stoplight:
+        id: ipc2a8hbnjxod
+      description: The object contains details about each membership tier in a loyalty program.
     redeemables:
       type: array
       description: 'Returned in the response of the Dashboard Meta API call '
@@ -152,45 +200,6 @@ components:
             x-stoplight:
               id: bloo8f7axc0iu
             description: Number of points required to redeem a particular redeemable
-    Membership-Levels:
-      type: array
-      items:
-        type: object
-        properties:
-          background_image_url:
-            type: string
-            description: URL of the image that can be displayed in the app. As the URL may change with the membership level, the image can be changed accordingly.
-          points_multiplier:
-            type: number
-            format: float
-            description: Factor (rate) with which points accumulate for a user. For example, if the points multiplier for a particular membership level is 1, the user will get 1 point for every $1 spent. If the points multiplier is 2, the user will get 2 points for every $1 spent.
-          membership_level_id:
-            type: integer
-            description: Unique ID of the membership level
-          name:
-            type: string
-            description: Membership level name that is displayed in the app
-          description:
-            type: string
-            description: Description of a particular membership level. This can be displayed in the app (e.g., "Earn twice the points for every dollar you spend.")
-          maximum_points:
-            type: integer
-            description: Upper threshold of a membership level in terms of points
-          minimum_points:
-            type: integer
-            description: Lower threshold of a membership level in terms of points
-          currency_earned:
-            type: number
-            description: When accumulated points reach the `points_conversion_threshold`, they are converted to a dollar value defined by `currency_earned`. A value of 10 means that accumulated points will be converted to banked rewards in batches of $10.
-            format: float
-          points_conversion_threshold:
-            type: integer
-            description: Number of points required to get converted to banked rewards
-      x-examples: []
-      title: Membership Levels (Array Object)
-      x-stoplight:
-        id: ipc2a8hbnjxod
-      description: The object contains details about each membership tier in a loyalty program.
   responses:
     401-unauthorized:
       description: 'A business admin key is missing or invalid. A request header in the following format is needed to make the request:
@@ -208,15 +217,6 @@ components:
             default:
               value:
                 error: You need to sign in or sign up before continuing.
-  parameters:
-    authorization-header:
-      schema:
-        type: string
-        default: Bearer BUSINESS_ADMIN_KEY_GOES_HERE
-      name: Authorization
-      in: header
-      description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
-      required: true
 x-stoplight:
   id: 9820bbd2e8ee1
 x-ext-urls: {}

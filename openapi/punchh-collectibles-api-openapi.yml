@@ -594,14 +594,14 @@ paths:
                   client: CLIENT_GOES_HERE
 components:
   parameters:
-    Content-Type:
+    punchh-app-device-id:
       schema:
         type: string
-        default: application/json
-      name: Content-Type
+        default: APP_DEVICE_ID_GOES_HERE
+      name: punchh-app-device-id
       in: header
-      description: Set this header to <b>application/json</b>.
       required: true
+      description: The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.
     Accept:
       schema:
         type: string
@@ -609,6 +609,22 @@ components:
       name: Accept
       in: header
       description: Advertises which content types the client is able to understand
+      required: true
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
       required: true
     signature:
       schema:
@@ -625,29 +641,13 @@ components:
       name: Accept-Language
       in: header
       description: Preferred language
-    punchh-app-device-id:
+    Content-Type:
       schema:
         type: string
-        default: APP_DEVICE_ID_GOES_HERE
-      name: punchh-app-device-id
+        default: application/json
+      name: Content-Type
       in: header
-      required: true
-      description: The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.
-    User-Agent:
-      schema:
-        type: string
-        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
-      in: header
-      name: User-Agent
-      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
-      required: true
-    Authorization:
-      schema:
-        type: string
-        default: Bearer ACCESS_TOKEN_GOES_HERE
-      name: Authorization
-      in: header
-      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      description: Set this header to <b>application/json</b>.
       required: true
 x-stoplight:
   id: bf6eddb435209

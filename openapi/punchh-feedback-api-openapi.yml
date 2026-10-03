@@ -498,6 +498,14 @@ paths:
     - url: https://SERVER_NAME_GOES_HERE.punchh.com
 components:
   parameters:
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
     User-Agent:
       schema:
         type: string
@@ -506,13 +514,13 @@ components:
       name: User-Agent
       description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
       required: true
-    Accept:
+    Authorization:
       schema:
         type: string
-        default: application/json
-      name: Accept
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
       in: header
-      description: Advertises which content types the client is able to understand
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
       required: true
     signature:
       schema:
@@ -537,13 +545,13 @@ components:
       in: header
       description: Set this header to <b>application/json</b>.
       required: true
-    Authorization:
+    content-type:
       schema:
         type: string
-        default: Bearer ACCESS_TOKEN_GOES_HERE
-      name: Authorization
+        default: application/json
+      name: Content-Type
       in: header
-      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      description: Set this header to <b>application/json</b>.
       required: true
     authorization-header:
       schema:
@@ -552,14 +560,6 @@ components:
       name: Authorization
       in: header
       description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
-      required: true
-    content-type:
-      schema:
-        type: string
-        default: application/json
-      name: Content-Type
-      in: header
-      description: Set this header to <b>application/json</b>.
       required: true
   responses:
     401-unauthorized:

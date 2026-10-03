@@ -198,14 +198,6 @@ components:
       name: Accept
       description: Advertises which content types the client is able to understand
       required: true
-    authorization-header:
-      schema:
-        type: string
-        default: Bearer BUSINESS_ADMIN_KEY_GOES_HERE
-      name: Authorization
-      in: header
-      description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
-      required: true
     content-type:
       schema:
         type: string
@@ -213,6 +205,14 @@ components:
       name: Content-Type
       in: header
       description: Set this header to <b>application/json</b>.
+      required: true
+    authorization-header:
+      schema:
+        type: string
+        default: Bearer BUSINESS_ADMIN_KEY_GOES_HERE
+      name: Authorization
+      in: header
+      description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
       required: true
   responses:
     401-unauthorized:
