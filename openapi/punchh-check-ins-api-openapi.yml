@@ -946,63 +946,88 @@ paths:
                   client: CLIENT_GOES_HERE
                   transaction_id: TRANSACTION_ID_GOES_HERE
 components:
-  parameters:
-    punchh-app-device-id:
-      schema:
-        type: string
-        default: APP_DEVICE_ID_GOES_HERE
-      name: punchh-app-device-id
-      in: header
-      required: true
-      description: The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.
-    Accept:
-      schema:
-        type: string
-        default: application/json
-      name: Accept
-      in: header
-      description: Advertises which content types the client is able to understand
-      required: true
-    User-Agent:
-      schema:
-        type: string
-        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
-      in: header
-      name: User-Agent
-      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
-      required: true
-    Authorization:
-      schema:
-        type: string
-        default: Bearer ACCESS_TOKEN_GOES_HERE
-      name: Authorization
-      in: header
-      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
-      required: true
-    signature:
-      schema:
-        type: string
-        default: '{{$$.env.signature}}'
-      name: x-pch-digest
-      in: header
-      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
-      required: true
-    Accept-Language:
-      schema:
-        type: string
-        default: en
-      name: Accept-Language
-      in: header
-      description: Preferred language
-    Content-Type:
-      schema:
-        type: string
-        default: application/json
-      name: Content-Type
-      in: header
-      description: Set this header to <b>application/json</b>.
-      required: true
   schemas:
+    redemption_details:
+      type: object
+      description: 'Returns the details of a redemption done by a user
+
+        '
+      properties:
+        redemption_status:
+          type: string
+          description: 'Status of the redemption. The values returned can be:
+
+
+            - redeemable: The redemption can be redeemed at the POS.
+
+
+            - expired: The redemption has expired and becomes unusable for the user.
+
+
+            - honored: The redemption has already been processed successfully and redeemed by the user at a POS.
+
+
+            - cancelled: The redemption can be voided by a user by approaching the POS if a redemption is done by mistake and the user wants to cancel it.'
+        created_at:
+          type: string
+          description: 'Date/time when the redemption was created in the system
+
+            '
+        redeemable_id:
+          type: integer
+          description: 'Unique ID of the redeemable
+
+            '
+        redeemable_name:
+          type: string
+          description: 'Name of the redeemable
+
+            '
+        redeemed_value:
+          type: string
+          description: 'For a business with banked currency, a currency value will be returned (e.g., 10 would mean $10).
+
+
+            For a business without banked currency, a points value will be returned (e.g., 10 would mean 10 points).'
+        redemption_image_url:
+          type: string
+          description: 'URL of the image displayed in the app to depict the redeemable
+
+            '
+        redemption_message:
+          type: string
+          description: 'A descriptive message that tells a user what the user has redeemed
+
+            '
+        redeemable_description:
+          type: string
+          description: 'Description of the redeemable
+
+            '
+        updated_at:
+          type: string
+          description: 'Date/time at which the redemption was updated in the system
+
+            '
+        redemption_id:
+          type: integer
+          description: 'Unique ID of the redemption that has been created
+
+            '
+        redemption_tracking_code:
+          type: string
+          description: 'Code that a user must submit at the POS to receive the redeemed reward
+
+            '
+        expiring_at:
+          type: string
+          description: Date/time when the redemption_tracking_code expires and the user cannot use it at the POS
+        location_id:
+          type: integer
+          description: ID of the location associated with the with the redemption (where the redemption code is generated). If no location ID is provided, then the ID for the default location is returned.
+      title: Redemption Details (Object)
+      x-stoplight:
+        id: bc87eb1cec331
     rewards:
       type: array
       description: Contains information about the available rewards of the user
@@ -1118,6 +1143,54 @@ components:
             x-stoplight:
               id: supgkji7b6rag
             description: Whether the offer is enabled for auto-redemption or not
+    Checkin:
+      type: object
+      title: Check-in (Object)
+      x-stoplight:
+        id: 4bae7b81b0f8a
+      properties:
+        created_at:
+          type: string
+          description: Date/time when the check-in was created in the system, in [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) format
+        external_uid:
+          type: string
+          description: External unique identifier of the check-in
+        checkin_id:
+          type: integer
+          description: ID of the loyalty check-in made by the user
+        pending_points:
+          type: integer
+          description: Number of pending points
+        pending_refresh:
+          type: boolean
+          description: Whether check-in is pending refresh or not
+        points_earned:
+          type: integer
+          description: Number of points earned in the loyalty check-in
+        bar_code:
+          type: string
+          description: Barcode printed on the receipt
+        current_membership_level:
+          type: string
+          description: Membership level of the user
+          x-nullable: true
+        first_checkin:
+          type:
+          - string
+          - boolean
+          description: Whether it is the first check-in at the business or not
+        location_id:
+          type: integer
+          description: ID of the location associated with the loyalty check-in
+        store_number:
+          type: string
+          description: The store number where the check-in occurred
+        expiring_on:
+          type: string
+          format: date
+          description: Date when points earned in the loyalty check-in will expire
+          examples:
+          - '2024-03-13'
     account-balance-details:
       type: object
       title: Account Balance Details (Object)
@@ -1192,135 +1265,62 @@ components:
           x-stoplight:
             id: gq5ah9naehygk
           description: 'The value of points earned toward progress across membership tiers. This is related to the migration strategy that allows businesses to "Consider Only Initial Points for Tier Migration". Currently, support for this parameter is limited to program type Points Unlock Redeemables, Membership Re-evaluation Strategy: Reset Based on Points Earned and Account Re-evaluation Strategy of Guest Inactivity.'
-    Checkin:
-      type: object
-      title: Check-in (Object)
-      x-stoplight:
-        id: 4bae7b81b0f8a
-      properties:
-        created_at:
-          type: string
-          description: Date/time when the check-in was created in the system, in [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) format
-        external_uid:
-          type: string
-          description: External unique identifier of the check-in
-        checkin_id:
-          type: integer
-          description: ID of the loyalty check-in made by the user
-        pending_points:
-          type: integer
-          description: Number of pending points
-        pending_refresh:
-          type: boolean
-          description: Whether check-in is pending refresh or not
-        points_earned:
-          type: integer
-          description: Number of points earned in the loyalty check-in
-        bar_code:
-          type: string
-          description: Barcode printed on the receipt
-        current_membership_level:
-          type: string
-          description: Membership level of the user
-          x-nullable: true
-        first_checkin:
-          type:
-          - string
-          - boolean
-          description: Whether it is the first check-in at the business or not
-        location_id:
-          type: integer
-          description: ID of the location associated with the loyalty check-in
-        store_number:
-          type: string
-          description: The store number where the check-in occurred
-        expiring_on:
-          type: string
-          format: date
-          description: Date when points earned in the loyalty check-in will expire
-          examples:
-          - '2024-03-13'
-    redemption_details:
-      type: object
-      description: 'Returns the details of a redemption done by a user
-
-        '
-      properties:
-        redemption_status:
-          type: string
-          description: 'Status of the redemption. The values returned can be:
-
-
-            - redeemable: The redemption can be redeemed at the POS.
-
-
-            - expired: The redemption has expired and becomes unusable for the user.
-
-
-            - honored: The redemption has already been processed successfully and redeemed by the user at a POS.
-
-
-            - cancelled: The redemption can be voided by a user by approaching the POS if a redemption is done by mistake and the user wants to cancel it.'
-        created_at:
-          type: string
-          description: 'Date/time when the redemption was created in the system
-
-            '
-        redeemable_id:
-          type: integer
-          description: 'Unique ID of the redeemable
-
-            '
-        redeemable_name:
-          type: string
-          description: 'Name of the redeemable
-
-            '
-        redeemed_value:
-          type: string
-          description: 'For a business with banked currency, a currency value will be returned (e.g., 10 would mean $10).
-
-
-            For a business without banked currency, a points value will be returned (e.g., 10 would mean 10 points).'
-        redemption_image_url:
-          type: string
-          description: 'URL of the image displayed in the app to depict the redeemable
-
-            '
-        redemption_message:
-          type: string
-          description: 'A descriptive message that tells a user what the user has redeemed
-
-            '
-        redeemable_description:
-          type: string
-          description: 'Description of the redeemable
-
-            '
-        updated_at:
-          type: string
-          description: 'Date/time at which the redemption was updated in the system
-
-            '
-        redemption_id:
-          type: integer
-          description: 'Unique ID of the redemption that has been created
-
-            '
-        redemption_tracking_code:
-          type: string
-          description: 'Code that a user must submit at the POS to receive the redeemed reward
-
-            '
-        expiring_at:
-          type: string
-          description: Date/time when the redemption_tracking_code expires and the user cannot use it at the POS
-        location_id:
-          type: integer
-          description: ID of the location associated with the with the redemption (where the redemption code is generated). If no location ID is provided, then the ID for the default location is returned.
-      title: Redemption Details (Object)
-      x-stoplight:
-        id: bc87eb1cec331
+  parameters:
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    punchh-app-device-id:
+      schema:
+        type: string
+        default: APP_DEVICE_ID_GOES_HERE
+      name: punchh-app-device-id
+      in: header
+      required: true
+      description: The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      description: Advertises which content types the client is able to understand
+      required: true
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
+    User-Agent:
+      schema:
+        type: string
+        default: AppName/AppVersion/BuildNumber (OS; Model; MANUFACTURER; MODEL; OS Version)
+      in: header
+      name: User-Agent
+      description: Used to identify the software, device, and application initiating the request, providing information about the client to the server. For details, see [User Agent](/docs/dev-portal-mobile/additional-topics/user-agent).
+      required: true
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      description: Used to authorize the request with access_token. It should be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+      required: true
+    signature:
+      schema:
+        type: string
+        default: '{{$$.env.signature}}'
+      name: x-pch-digest
+      in: header
+      description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
+      required: true
 x-stoplight:
   id: bf6eddb435209
 x-ext-urls: {}

@@ -297,6 +297,21 @@ components:
       in: header
       required: true
       description: The app device ID helps Punchh identify each device so that certain rewards can be awarded individually to each device instead of per user. For example, the sign-up reward is given to each device ID to prevent fraudulent sign-ups so that a user cannot do repeated sign-ups from a single device to get rewards. It should not change even if the user resets a device. See the [sample code](/docs/dev-portal-mobile/56657769b1422-headers-and-caching#generating-the-punchh-app-device-id-header) to generate the punchh-app-device-id header.
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
     User-Agent:
       schema:
         type: string
@@ -320,21 +335,6 @@ components:
       name: x-pch-digest
       in: header
       description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
-      required: true
-    Accept-Language:
-      schema:
-        type: string
-        default: en
-      name: Accept-Language
-      in: header
-      description: Preferred language
-    Content-Type:
-      schema:
-        type: string
-        default: application/json
-      name: Content-Type
-      in: header
-      description: Set this header to <b>application/json</b>.
       required: true
 x-stoplight:
   id: bf6eddb435209

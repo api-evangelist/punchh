@@ -471,6 +471,21 @@ paths:
                   password: PASSWORD_GOES_HERE
 components:
   parameters:
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
     User-Agent:
       schema:
         type: string
@@ -494,21 +509,6 @@ components:
       name: x-pch-digest
       in: header
       description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
-      required: true
-    Accept-Language:
-      schema:
-        type: string
-        default: en
-      name: Accept-Language
-      in: header
-      description: Preferred language
-    Content-Type:
-      schema:
-        type: string
-        default: application/json
-      name: Content-Type
-      in: header
-      description: Set this header to <b>application/json</b>.
       required: true
 x-stoplight:
   id: bf6eddb435209

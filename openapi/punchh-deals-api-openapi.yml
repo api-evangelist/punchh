@@ -217,13 +217,20 @@ paths:
         description: ''
 components:
   parameters:
-    Signature:
+    accept_language:
       schema:
         type: string
-        default: SIGNATURE_GOES_HERE
+        default: en
       in: header
-      name: x-pch-digest
-      description: The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call
+      name: Accept-Language
+      description: Set to the language you are using.
+    content_type:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Content-Type
+      description: Set this header to **application/json**.
       required: true
     Accept:
       schema:
@@ -241,13 +248,6 @@ components:
       in: header
       required: true
       description: For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).
-    accept_language:
-      schema:
-        type: string
-        default: en
-      in: header
-      name: Accept-Language
-      description: Set to the language you are using.
     Authorization:
       schema:
         type: string
@@ -256,13 +256,13 @@ components:
       in: header
       required: true
       description: You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
-    content_type:
+    Signature:
       schema:
         type: string
-        default: application/json
+        default: SIGNATURE_GOES_HERE
       in: header
-      name: Content-Type
-      description: Set this header to **application/json**.
+      name: x-pch-digest
+      description: The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call
       required: true
   schemas:
     deals:

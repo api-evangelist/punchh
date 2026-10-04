@@ -3359,84 +3359,6 @@ paths:
     servers:
     - url: https://SERVER_NAME_GOES_HERE.punchh.com
 components:
-  parameters:
-    Signature:
-      schema:
-        type: string
-        default: SIGNATURE_GOES_HERE
-      in: header
-      name: x-pch-digest
-      description: The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call
-      required: true
-    Accept:
-      schema:
-        type: string
-        default: application/json
-      in: header
-      name: Accept
-      description: Advertises which content types the client is able to understand
-      required: true
-    User-Agent:
-      schema:
-        type: string
-        default: Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type
-      name: User-Agent
-      in: header
-      required: true
-      description: For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).
-    Authorization:
-      schema:
-        type: string
-        default: Bearer ACCESS_TOKEN_GOES_HERE
-      name: Authorization
-      in: header
-      required: true
-      description: You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
-    content_type:
-      schema:
-        type: string
-        default: application/json
-      in: header
-      name: Content-Type
-      description: Set this header to **application/json**.
-      required: true
-    accept_language:
-      schema:
-        type: string
-        default: en
-      in: header
-      name: Accept-Language
-      description: 'Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. '
-    Accept_2:
-      schema:
-        type: string
-        default: application/json
-      name: Accept
-      in: header
-      required: true
-      description: Advertises which content types the client can understand
-    x-pch-digest:
-      schema:
-        type: string
-      name: x-pch-digest
-      in: header
-      required: true
-      description: Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)
-    Accept-Language:
-      schema:
-        type: string
-        default: en
-      name: Accept-Language
-      in: header
-      required: false
-      description: 'Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. '
-    Content-Type:
-      schema:
-        type: string
-      name: Content-Type
-      in: header
-      required: true
-      description: Set this header to <b>application/json</b>
   schemas:
     menu_items:
       type: array
@@ -3662,46 +3584,6 @@ components:
         - item_family
         - item_group
         - serial_number
-    discount_basket_items:
-      title: Discount Basket Items (Array Object)
-      x-stoplight:
-        id: 3a95e69093e06
-      type: array
-      description: List of discounts. In the case of the [Auto Redemption](/docs/dev-portal-online-ordering/d3e1d4293ad65-auto-redemption-redemptions-2-0) and [Get Active Discount Basket](/docs/dev-portal-online-ordering/1d4f01cf7aa32-get-active-discount-basket-redemptions-2-0) APIs, the object lists invalid discounts with a message stating that the discount is invalid.
-      x-examples:
-        Example:
-        - discount_basket_item_id: 4699
-          discount_type: reward
-          discount_id: 131
-          discount_value: null
-          created_at: '2024-01-25T10:03:48Z'
-      items:
-        type: object
-        properties:
-          discount_basket_item_id:
-            type: integer
-            description: Unique identifier of selection
-          discount_type:
-            type: string
-            description: Discount type (e.g., reward, redeemable, etc.)
-          discount_id:
-            type: string
-            description: Discount ID
-          discount_value:
-            type: number
-            format: float
-            description: Value of the currency that a user wants to redeem. This value is set for users on the “Points Convert to Currency” loyalty program. The default value is 0 if the user has not selected any amount to redeem or has no currency in the loyalty account. The parameter returns a “null” value for a business that does not support banking of points into currency.
-          created_at:
-            type: string
-            format: date-time
-            description: Date/time when the discount was selected, in YYYY-MM-DDThh:mm:ss format
-          message:
-            type: string
-            x-stoplight:
-              id: 8ho23rz6fjjfq
-            description: Error message for invalid discount. If a discount is found to be honored, expired, perished, or archived, the API returns an error message in the parameter for the discount indicating that the discount is invalid.
-          discount_details:
-            $ref: '#/components/schemas/discount_details'
     qualified_items:
       title: Qualified Items (Array Object)
       x-stoplight:
@@ -3840,6 +3722,46 @@ components:
           x-stoplight:
             id: 8a7wbw8b7d76w
           description: 'The maximum quantity that can be discounted. Note: This parameter is returned for offers related to Price Rollback, Target Price for Bundle, and Target Price for Bundle (Advanced).'
+    discount_basket_items:
+      title: Discount Basket Items (Array Object)
+      x-stoplight:
+        id: 3a95e69093e06
+      type: array
+      description: List of discounts. In the case of the [Auto Redemption](/docs/dev-portal-online-ordering/d3e1d4293ad65-auto-redemption-redemptions-2-0) and [Get Active Discount Basket](/docs/dev-portal-online-ordering/1d4f01cf7aa32-get-active-discount-basket-redemptions-2-0) APIs, the object lists invalid discounts with a message stating that the discount is invalid.
+      x-examples:
+        Example:
+        - discount_basket_item_id: 4699
+          discount_type: reward
+          discount_id: 131
+          discount_value: null
+          created_at: '2024-01-25T10:03:48Z'
+      items:
+        type: object
+        properties:
+          discount_basket_item_id:
+            type: integer
+            description: Unique identifier of selection
+          discount_type:
+            type: string
+            description: Discount type (e.g., reward, redeemable, etc.)
+          discount_id:
+            type: string
+            description: Discount ID
+          discount_value:
+            type: number
+            format: float
+            description: Value of the currency that a user wants to redeem. This value is set for users on the “Points Convert to Currency” loyalty program. The default value is 0 if the user has not selected any amount to redeem or has no currency in the loyalty account. The parameter returns a “null” value for a business that does not support banking of points into currency.
+          created_at:
+            type: string
+            format: date-time
+            description: Date/time when the discount was selected, in YYYY-MM-DDThh:mm:ss format
+          message:
+            type: string
+            x-stoplight:
+              id: 8ho23rz6fjjfq
+            description: Error message for invalid discount. If a discount is found to be honored, expired, perished, or archived, the API returns an error message in the parameter for the discount indicating that the discount is invalid.
+          discount_details:
+            $ref: '#/components/schemas/discount_details'
     Subscription-Cancellation-Reasons:
       title: Subscription Cancellation Reasons
       x-stoplight:
@@ -3872,6 +3794,84 @@ components:
           cancellation_reason:
             type: string
             description: Cancellation reason as configured by the business.
+  parameters:
+    content_type:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Content-Type
+      description: Set this header to **application/json**.
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Accept
+      description: Advertises which content types the client is able to understand
+      required: true
+    User-Agent:
+      schema:
+        type: string
+        default: Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type
+      name: User-Agent
+      in: header
+      required: true
+      description: For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).
+    Authorization:
+      schema:
+        type: string
+        default: Bearer ACCESS_TOKEN_GOES_HERE
+      name: Authorization
+      in: header
+      required: true
+      description: You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
+    Signature:
+      schema:
+        type: string
+        default: SIGNATURE_GOES_HERE
+      in: header
+      name: x-pch-digest
+      description: The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call
+      required: true
+    accept_language:
+      schema:
+        type: string
+        default: en
+      in: header
+      name: Accept-Language
+      description: 'Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallet and Passes > Subscription Plans</b>. '
+    Content-Type:
+      schema:
+        type: string
+      name: Content-Type
+      in: header
+      required: true
+      description: Set this header to <b>application/json</b>
+    Accept_2:
+      schema:
+        type: string
+        default: application/json
+      name: Accept
+      in: header
+      required: true
+      description: Advertises which content types the client can understand
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      required: false
+      description: 'Preferred language. Punchh supports multiple languages for the subscription plan `name`, `description`, and `miscellaneous` parameters in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc. The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. Administrators have to configure Name, Description, and Miscellaneous fields in the relevant language(s) on the subscription plan in the Punchh platform under <b>Wallet and Passes > Subscription Plans</b>. If these fields are not configured in Punchh in the language specified in the Accept-Language request header, then the API response will include the subscription plan `name`, `description`, and `miscellaneous` parameters with empty values. '
+    x-pch-digest:
+      schema:
+        type: string
+      name: x-pch-digest
+      in: header
+      required: true
+      description: Signature generated using the request path, body, and OAuth secret provided by the business. For details, see [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256)
 x-refined-from:
 - punchh-online-ordering-redemptions-legacy-openapi.yml
 - punchh-online-ordering-redemptions-v2-openapi.yml

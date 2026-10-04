@@ -1744,47 +1744,230 @@ paths:
                   terms_and_conditions: true
                   age_verified_status: true
 components:
-  parameters:
-    Signature:
-      schema:
-        type: string
-        default: SIGNATURE_GOES_HERE
-      in: header
-      name: x-pch-digest
-      description: The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call
-      required: true
-    Accept:
-      schema:
-        type: string
-        default: application/json
-      in: header
-      name: Accept
-      description: Advertises which content types the client is able to understand
-      required: true
-    User-Agent:
-      schema:
-        type: string
-        default: Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type
-      name: User-Agent
-      in: header
-      required: true
-      description: For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).
-    accept_language:
-      schema:
-        type: string
-        default: en
-      in: header
-      name: Accept-Language
-      description: Set to the language you are using.
-    content_type:
-      schema:
-        type: string
-        default: application/json
-      in: header
-      name: Content-Type
-      description: Set this header to **application/json**.
-      required: true
   schemas:
+    Access_token-object:
+      type: object
+      description: An access token`is needed to identify the user making the API request.
+      title: Access Token (Object)
+      x-stoplight:
+        id: 9ead861cdb7e6
+      properties:
+        token:
+          type: string
+          description: App-specific access token of the given user.
+        seconds_to_expire:
+          type: integer
+          description: Number of seconds after which the token expires. A NULL value for this parameter means the token does not expire.
+        revoked_at:
+          type: string
+          description: Date and time when the token was created in the system in [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) format. A NULL value for this parameter means the token has not been revoked yet.
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+        refresh_token:
+          type: string
+          description: Refresh token that the client application can use to get a new access token
+        scopes:
+          type: array
+          description: Actions or data the bearer of the token is allowed to perform or access
+          items:
+            type: string
+    user-relations:
+      title: User Relations (Array Object)
+      x-stoplight:
+        id: ut0ic50qnqmhq
+      type: array
+      items:
+        x-stoplight:
+          id: s8m992rimfngd
+        type: object
+        properties:
+          id:
+            type: integer
+            x-stoplight:
+              id: hwhbkrukhoown
+            description: Unique ID of the relationship
+          name:
+            type: string
+            x-stoplight:
+              id: 2fmpih7siw5sc
+            description: Name of the relative
+          relation:
+            type: string
+            x-stoplight:
+              id: 7hqerbd50q2gx
+            description: Relation to the user. Valid values are "spouse" and "kid".
+          birthday:
+            type: string
+            x-stoplight:
+              id: knsdt60v0v4ef
+            format: date
+            enum:
+            - YYYY-MM-DD
+            description: Birthday of the relative
+      description: The object contains information about the relationship details of a user, for example, spouse and kid information. If the user account does not have relationship details, the API returns an empty user_relations object in the response.
+    User-object-mobile:
+      type: object
+      description: The `user` object includes the details of the users who are registered on a particular business.
+      title: Mobile User (Object)
+      x-stoplight:
+        id: 03594cfe397ef
+      properties:
+        address:
+          type: string
+          description: Address of the user
+        avatar_remote_url:
+          type: string
+          description: URL of the user's profile image uploaded to an online file storage system. This will be used for users who signed up using email.
+          x-nullable: true
+        birthday:
+          type: string
+          description: Date of birth of the user, in YYYY-MM-DD format
+          enum:
+          - YYYY-MM-DD
+          format: date-time
+        communicable_email:
+          type: string
+          description: The email address used for communication with the user
+        city:
+          type: string
+          description: City where the user lives
+        created_at:
+          type: string
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+          description: Date/time when the user was created in the system, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+        email:
+          type: string
+          description: Unique email address used to identify the user
+        email_verified:
+          type: boolean
+          description: Whether the email address of the user has been verified or not
+        facebook_signup:
+          type: boolean
+          description: Indicates whether the user signed up using Facebook. This parameter returns true the first time a user signs up using Facebook. For all subsequent logins, it returns a false value.
+        favourite_locations:
+          type: string
+          description: List of the user's favorite locations
+        favourite_store_numbers:
+          type: string
+          description: List of store numbers of the user's favorite locations
+        fb_uid:
+          type: string
+          description: Facebook ID that identifies the user
+          x-nullable: true
+        first_name:
+          type: string
+          description: First name of the user
+        gender:
+          type: string
+          description: Gender of the user
+        last_name:
+          type: string
+          description: Last name of the user
+        marketing_email_subscription:
+          type: boolean
+          description: Whether the user has subscribed to receive marketing emails or not
+        marketing_pn_subscription:
+          type: boolean
+          description: Whether the user has subscribed to marketing push-notifications or not
+        migrate_status:
+          type: boolean
+          description: Whether the user has a migrate status or not
+        passcode_configured_for_giftcards:
+          type: boolean
+          description: Whether the user has configured a passcode for gift cards or not
+        phone:
+          type: integer
+          description: Phone number of the user
+        profile_field_answers:
+          type: object
+          description: Answers given by the user while filling out the user profile.
+        referral_code:
+          type: string
+          description: Referral code of the user
+        referral_path:
+          type: string
+          description: Referral URL of the user
+        secondary_email:
+          type: string
+          description: The secondary email address of the user is configured when a user signs up with Facebook but does not share the email address. The app asks for an alternate email address, which is kept as the `secondary_email`.
+        state:
+          type: string
+          description: State where the user lives
+        superuser:
+          type: boolean
+          description: Whether multiple check-ins are allowed for a user. This is used mostly for testing purposes by developers.
+        terms_and_conditions:
+          type: boolean
+          description: Whether the terms and conditions of a business have been accepted by a user or not
+        title:
+          type: string
+          description: Salutation as selected by the user
+          x-nullable: true
+        updated_at:
+          type: string
+          description: Date/time when user was updated in the system, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+          enum:
+          - YYYY-MM-DDThh:mm:ssZ
+          format: date-time
+        user_as_barcode:
+          type: string
+          description: Barcode that identifies the user
+        user_as_qrcode:
+          type: string
+          description: QR code that identifies the user
+        user_code:
+          type: string
+          description: A unique ID that identifies the user. This smaller code can be converted to a QR code in the app and scanned at some POS systems that do not support longer codes. Alternatively, a user could give this to the POS operator if the POS does not have a scanner.
+        user_id:
+          type: integer
+          description: ID that identifies the user
+        user_relations:
+          $ref: '#/components/schemas/user-relations'
+        zip_code:
+          type: string
+          description: Zip code where the user lives
+        anniversary:
+          type: string
+          description: Anniversary date of the user, in YYYY-MM-DD format
+        verification_mode:
+          description: Mode of verification (available only for a user in awaiting migration state)
+          x-nullable: true
+        apple_signup:
+          type: boolean
+          description: Whether the user has an Apple sign-up or not. This will return true for the first time sign-up.
+        apple_uid:
+          type: string
+          description: Unique ID generated by Apple
+        has_generated_fb_email:
+          type: boolean
+          description: Whether the user has generated a Facebook email or not
+        sms_subscription:
+          type: boolean
+          description: Whether the user has subscribed to SMS services or not
+        age_verified_status:
+          type: boolean
+          x-stoplight:
+            id: y7uqfq1lsr35c
+          description: 'Whether or not the user has undergone age verification by Koupon Media. Possible values: true, false. The value is set to true if the user''s age is verified by Koupon Media; otherwise, it is set to false. The response returns this parameter in sign-in, sign-up, and user update APIs if Koupon Media is selected as the age verification adapter for the business in the Punchh platform. Contact your Punchh representative to update this configuration. '
+    profile_field_answers:
+      type: object
+      description: Answers given by the user while filling in the user profile. The user submits answers to profile field questions that are configured in the Punchh platform. A total of 25 answers can be submitted. The keys range from 'upf0' to 'upf24'. If questions have multiple answers, the values should be separated by a | character (pipe).
+      title: Profile Field Answers (Object)
+      properties:
+        upf0:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+        upf1:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+        upf2:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+      x-stoplight:
+        id: 232889e28c1c8
     user-object:
       type: object
       title: User (Object)
@@ -1966,229 +2149,46 @@ components:
           description: 'Whether or not the user has undergone age verification by Koupon Media. Possible Values: true, false. The value is set to true if the user''s age is verified by Koupon Media; otherwise, it is set to false. The response returns this parameter in sign-in, sign-up, and user update APIs if Koupon Media is selected as the age verification adapter for the business in the Punchh platform. Contact your Punchh representative to update this configuration. '
       required:
       - email
-    user-relations:
-      title: User Relations (Array Object)
-      x-stoplight:
-        id: ut0ic50qnqmhq
-      type: array
-      items:
-        x-stoplight:
-          id: s8m992rimfngd
-        type: object
-        properties:
-          id:
-            type: integer
-            x-stoplight:
-              id: hwhbkrukhoown
-            description: Unique ID of the relationship
-          name:
-            type: string
-            x-stoplight:
-              id: 2fmpih7siw5sc
-            description: Name of the relative
-          relation:
-            type: string
-            x-stoplight:
-              id: 7hqerbd50q2gx
-            description: Relation to the user. Valid values are "spouse" and "kid".
-          birthday:
-            type: string
-            x-stoplight:
-              id: knsdt60v0v4ef
-            format: date
-            enum:
-            - YYYY-MM-DD
-            description: Birthday of the relative
-      description: The object contains information about the relationship details of a user, for example, spouse and kid information. If the user account does not have relationship details, the API returns an empty user_relations object in the response.
-    Access_token-object:
-      type: object
-      description: An access token`is needed to identify the user making the API request.
-      title: Access Token (Object)
-      x-stoplight:
-        id: 9ead861cdb7e6
-      properties:
-        token:
-          type: string
-          description: App-specific access token of the given user.
-        seconds_to_expire:
-          type: integer
-          description: Number of seconds after which the token expires. A NULL value for this parameter means the token does not expire.
-        revoked_at:
-          type: string
-          description: Date and time when the token was created in the system in [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) format. A NULL value for this parameter means the token has not been revoked yet.
-          enum:
-          - YYYY-MM-DDThh:mm:ssZ
-          format: date-time
-        refresh_token:
-          type: string
-          description: Refresh token that the client application can use to get a new access token
-        scopes:
-          type: array
-          description: Actions or data the bearer of the token is allowed to perform or access
-          items:
-            type: string
-    User-object-mobile:
-      type: object
-      description: The `user` object includes the details of the users who are registered on a particular business.
-      title: Mobile User (Object)
-      x-stoplight:
-        id: 03594cfe397ef
-      properties:
-        address:
-          type: string
-          description: Address of the user
-        avatar_remote_url:
-          type: string
-          description: URL of the user's profile image uploaded to an online file storage system. This will be used for users who signed up using email.
-          x-nullable: true
-        birthday:
-          type: string
-          description: Date of birth of the user, in YYYY-MM-DD format
-          enum:
-          - YYYY-MM-DD
-          format: date-time
-        communicable_email:
-          type: string
-          description: The email address used for communication with the user
-        city:
-          type: string
-          description: City where the user lives
-        created_at:
-          type: string
-          enum:
-          - YYYY-MM-DDThh:mm:ssZ
-          format: date-time
-          description: Date/time when the user was created in the system, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
-        email:
-          type: string
-          description: Unique email address used to identify the user
-        email_verified:
-          type: boolean
-          description: Whether the email address of the user has been verified or not
-        facebook_signup:
-          type: boolean
-          description: Indicates whether the user signed up using Facebook. This parameter returns true the first time a user signs up using Facebook. For all subsequent logins, it returns a false value.
-        favourite_locations:
-          type: string
-          description: List of the user's favorite locations
-        favourite_store_numbers:
-          type: string
-          description: List of store numbers of the user's favorite locations
-        fb_uid:
-          type: string
-          description: Facebook ID that identifies the user
-          x-nullable: true
-        first_name:
-          type: string
-          description: First name of the user
-        gender:
-          type: string
-          description: Gender of the user
-        last_name:
-          type: string
-          description: Last name of the user
-        marketing_email_subscription:
-          type: boolean
-          description: Whether the user has subscribed to receive marketing emails or not
-        marketing_pn_subscription:
-          type: boolean
-          description: Whether the user has subscribed to marketing push-notifications or not
-        migrate_status:
-          type: boolean
-          description: Whether the user has a migrate status or not
-        passcode_configured_for_giftcards:
-          type: boolean
-          description: Whether the user has configured a passcode for gift cards or not
-        phone:
-          type: integer
-          description: Phone number of the user
-        profile_field_answers:
-          type: object
-          description: Answers given by the user while filling out the user profile.
-        referral_code:
-          type: string
-          description: Referral code of the user
-        referral_path:
-          type: string
-          description: Referral URL of the user
-        secondary_email:
-          type: string
-          description: The secondary email address of the user is configured when a user signs up with Facebook but does not share the email address. The app asks for an alternate email address, which is kept as the `secondary_email`.
-        state:
-          type: string
-          description: State where the user lives
-        superuser:
-          type: boolean
-          description: Whether multiple check-ins are allowed for a user. This is used mostly for testing purposes by developers.
-        terms_and_conditions:
-          type: boolean
-          description: Whether the terms and conditions of a business have been accepted by a user or not
-        title:
-          type: string
-          description: Salutation as selected by the user
-          x-nullable: true
-        updated_at:
-          type: string
-          description: Date/time when user was updated in the system, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
-          enum:
-          - YYYY-MM-DDThh:mm:ssZ
-          format: date-time
-        user_as_barcode:
-          type: string
-          description: Barcode that identifies the user
-        user_as_qrcode:
-          type: string
-          description: QR code that identifies the user
-        user_code:
-          type: string
-          description: A unique ID that identifies the user. This smaller code can be converted to a QR code in the app and scanned at some POS systems that do not support longer codes. Alternatively, a user could give this to the POS operator if the POS does not have a scanner.
-        user_id:
-          type: integer
-          description: ID that identifies the user
-        user_relations:
-          $ref: '#/components/schemas/user-relations'
-        zip_code:
-          type: string
-          description: Zip code where the user lives
-        anniversary:
-          type: string
-          description: Anniversary date of the user, in YYYY-MM-DD format
-        verification_mode:
-          description: Mode of verification (available only for a user in awaiting migration state)
-          x-nullable: true
-        apple_signup:
-          type: boolean
-          description: Whether the user has an Apple sign-up or not. This will return true for the first time sign-up.
-        apple_uid:
-          type: string
-          description: Unique ID generated by Apple
-        has_generated_fb_email:
-          type: boolean
-          description: Whether the user has generated a Facebook email or not
-        sms_subscription:
-          type: boolean
-          description: Whether the user has subscribed to SMS services or not
-        age_verified_status:
-          type: boolean
-          x-stoplight:
-            id: y7uqfq1lsr35c
-          description: 'Whether or not the user has undergone age verification by Koupon Media. Possible values: true, false. The value is set to true if the user''s age is verified by Koupon Media; otherwise, it is set to false. The response returns this parameter in sign-in, sign-up, and user update APIs if Koupon Media is selected as the age verification adapter for the business in the Punchh platform. Contact your Punchh representative to update this configuration. '
-    profile_field_answers:
-      type: object
-      description: Answers given by the user while filling in the user profile. The user submits answers to profile field questions that are configured in the Punchh platform. A total of 25 answers can be submitted. The keys range from 'upf0' to 'upf24'. If questions have multiple answers, the values should be separated by a | character (pipe).
-      title: Profile Field Answers (Object)
-      properties:
-        upf0:
-          type: string
-          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
-        upf1:
-          type: string
-          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
-        upf2:
-          type: string
-          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
-      x-stoplight:
-        id: 232889e28c1c8
+  parameters:
+    accept_language:
+      schema:
+        type: string
+        default: en
+      in: header
+      name: Accept-Language
+      description: Set to the language you are using.
+    content_type:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Content-Type
+      description: Set this header to **application/json**.
+      required: true
+    Accept:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Accept
+      description: Advertises which content types the client is able to understand
+      required: true
+    User-Agent:
+      schema:
+        type: string
+        default: Punchh/OnlineOrder/1.0/Web/BrowserVersion/OS_Type
+      name: User-Agent
+      in: header
+      required: true
+      description: For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).
+    Signature:
+      schema:
+        type: string
+        default: SIGNATURE_GOES_HERE
+      in: header
+      name: x-pch-digest
+      description: The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call
+      required: true
 x-stoplight:
   id: 73bbc35439926
 x-ext-urls: {}

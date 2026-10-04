@@ -930,14 +930,6 @@ paths:
         description: "The requests for this API endpoint are passed using form data, as shown in the following examples.\n\n<b>Sample Request for Bulk Uploading Business Migration Users Using a Local CSV File</b>\n\n```curl\ncurl --request POST \\\n--url https://server_name_goes_here.punchh.com/api2/dashboard/migration_users/bulk_bmu_upload \\\n--header 'Accept: application/json' \\\n--header 'Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE' \\\n--header 'Content-Type: application/json' \\\n--form 'name=\"BMU804\"' \\\n--form 'bulk_guest_activity_file=@\"CSV_FILE_PATH_GOES_HERE\"'\n``` \n<b>Sample Request for Bulk Uploading Business Migration Users Using a CSV File URL</b>\n```curl\ncurl --request POST \\\n--url https://server_name_goes_here.punchh.com/api2/dashboard/migration_users/bulk_bmu_upload \\\n--header 'Accept: application/json' \\\n--header 'Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE' \\\n--header 'Content-Type: application/json' \\\n--form 'name=\"BMU805\"' \\\n--form 'bulk_guest_activity_file=\"CSV_FILE_PATH_GOES_HERE\"'\n```"
 components:
   parameters:
-    accept:
-      schema:
-        type: string
-        default: application/json
-      in: header
-      name: Accept
-      description: Advertises which content types the client is able to understand
-      required: true
     content-type:
       schema:
         type: string
@@ -945,6 +937,14 @@ components:
       name: Content-Type
       in: header
       description: Set this header to <b>application/json</b>.
+      required: true
+    accept:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Accept
+      description: Advertises which content types the client is able to understand
       required: true
     authorization-header:
       schema:
@@ -954,23 +954,6 @@ components:
       in: header
       description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
       required: true
-  responses:
-    401-unauthorized:
-      description: 'A business admin key is missing or invalid. A request header in the following format is needed to make the request:
-
-
-        `Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE`'
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
-          examples:
-            default:
-              value:
-                error: You need to sign in or sign up before continuing.
   schemas:
     loyalty-cards:
       title: Loyalty Cards (Array Object)
@@ -1002,6 +985,23 @@ components:
             default: YYYY-MM-DD
             examples:
             - '2023-02-03'
+  responses:
+    401-unauthorized:
+      description: 'A business admin key is missing or invalid. A request header in the following format is needed to make the request:
+
+
+        `Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE`'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+          examples:
+            default:
+              value:
+                error: You need to sign in or sign up before continuing.
 x-stoplight:
   id: 9820bbd2e8ee1
 x-ext-urls: {}

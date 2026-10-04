@@ -786,13 +786,20 @@ paths:
                   item_type: social_cause_campaign
 components:
   parameters:
-    Signature:
+    accept_language:
       schema:
         type: string
-        default: SIGNATURE_GOES_HERE
+        default: en
       in: header
-      name: x-pch-digest
-      description: The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call
+      name: Accept-Language
+      description: Set to the language you are using.
+    content_type:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Content-Type
+      description: Set this header to **application/json**.
       required: true
     Accept:
       schema:
@@ -810,13 +817,6 @@ components:
       in: header
       required: true
       description: For details, see [User Agent](/docs/dev-portal-online-ordering/additional-topics/user-agent).
-    accept_language:
-      schema:
-        type: string
-        default: en
-      in: header
-      name: Accept-Language
-      description: Set to the language you are using.
     Authorization:
       schema:
         type: string
@@ -825,15 +825,65 @@ components:
       in: header
       required: true
       description: You may pass the access_token instead of the authentication_token in Online Ordering endpoints to authorize the request. It must be supplied as `Bearer ACCESS_TOKEN_GOES_HERE`.
-    content_type:
+    Signature:
       schema:
         type: string
-        default: application/json
+        default: SIGNATURE_GOES_HERE
       in: header
-      name: Content-Type
-      description: Set this header to **application/json**.
+      name: x-pch-digest
+      description: The [signature](/docs/dev-portal-online-ordering/additional-topics/x-pch-digest-sha-1) for the API call
       required: true
   schemas:
+    user-relations:
+      title: User Relations (Array Object)
+      x-stoplight:
+        id: ut0ic50qnqmhq
+      type: array
+      items:
+        x-stoplight:
+          id: s8m992rimfngd
+        type: object
+        properties:
+          id:
+            type: integer
+            x-stoplight:
+              id: hwhbkrukhoown
+            description: Unique ID of the relationship
+          name:
+            type: string
+            x-stoplight:
+              id: 2fmpih7siw5sc
+            description: Name of the relative
+          relation:
+            type: string
+            x-stoplight:
+              id: 7hqerbd50q2gx
+            description: Relation to the user. Valid values are "spouse" and "kid".
+          birthday:
+            type: string
+            x-stoplight:
+              id: knsdt60v0v4ef
+            format: date
+            enum:
+            - YYYY-MM-DD
+            description: Birthday of the relative
+      description: The object contains information about the relationship details of a user, for example, spouse and kid information. If the user account does not have relationship details, the API returns an empty user_relations object in the response.
+    profile_field_answers:
+      type: object
+      description: Answers given by the user while filling in the user profile. The user submits answers to profile field questions that are configured in the Punchh platform. A total of 25 answers can be submitted. The keys range from 'upf0' to 'upf24'. If questions have multiple answers, the values should be separated by a | character (pipe).
+      title: Profile Field Answers (Object)
+      properties:
+        upf0:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+        upf1:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+        upf2:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+      x-stoplight:
+        id: 232889e28c1c8
     user-object:
       type: object
       title: User (Object)
@@ -1015,40 +1065,6 @@ components:
           description: 'Whether or not the user has undergone age verification by Koupon Media. Possible Values: true, false. The value is set to true if the user''s age is verified by Koupon Media; otherwise, it is set to false. The response returns this parameter in sign-in, sign-up, and user update APIs if Koupon Media is selected as the age verification adapter for the business in the Punchh platform. Contact your Punchh representative to update this configuration. '
       required:
       - email
-    user-relations:
-      title: User Relations (Array Object)
-      x-stoplight:
-        id: ut0ic50qnqmhq
-      type: array
-      items:
-        x-stoplight:
-          id: s8m992rimfngd
-        type: object
-        properties:
-          id:
-            type: integer
-            x-stoplight:
-              id: hwhbkrukhoown
-            description: Unique ID of the relationship
-          name:
-            type: string
-            x-stoplight:
-              id: 2fmpih7siw5sc
-            description: Name of the relative
-          relation:
-            type: string
-            x-stoplight:
-              id: 7hqerbd50q2gx
-            description: Relation to the user. Valid values are "spouse" and "kid".
-          birthday:
-            type: string
-            x-stoplight:
-              id: knsdt60v0v4ef
-            format: date
-            enum:
-            - YYYY-MM-DD
-            description: Birthday of the relative
-      description: The object contains information about the relationship details of a user, for example, spouse and kid information. If the user account does not have relationship details, the API returns an empty user_relations object in the response.
     user-input-object:
       type: object
       title: User Input (Object)
@@ -1193,22 +1209,6 @@ components:
           x-stoplight:
             id: fnmox22klesc2
           description: 'Whether or not the user has undergone age verification by Koupon Media. Possible values: true, false. The parameter is accepted in the request if Koupon Media is selected as the age verification adapter for the business in the Punchh platform. Contact your Punchh representative to update this configuration. '
-    profile_field_answers:
-      type: object
-      description: Answers given by the user while filling in the user profile. The user submits answers to profile field questions that are configured in the Punchh platform. A total of 25 answers can be submitted. The keys range from 'upf0' to 'upf24'. If questions have multiple answers, the values should be separated by a | character (pipe).
-      title: Profile Field Answers (Object)
-      properties:
-        upf0:
-          type: string
-          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
-        upf1:
-          type: string
-          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
-        upf2:
-          type: string
-          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
-      x-stoplight:
-        id: 232889e28c1c8
 x-stoplight:
   id: 73bbc35439926
 x-ext-urls: {}

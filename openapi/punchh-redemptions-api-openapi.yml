@@ -124,6 +124,15 @@ paths:
                     requested_punches: 50
                     force_message: This is a test
 components:
+  parameters:
+    authorization-header:
+      schema:
+        type: string
+        default: Bearer BUSINESS_ADMIN_KEY_GOES_HERE
+      name: Authorization
+      in: header
+      description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
+      required: true
   responses:
     redemption-object:
       description: ''
@@ -199,22 +208,6 @@ components:
                 expiring_at: '2017-02-08T16:54:44Z'
                 redeemable_name: null
                 redeemed_value: 50
-    401-unauthorized:
-      description: 'A business admin key is missing or invalid. A request header in the following format is needed to make the request:
-
-
-        `Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE`'
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
-          examples:
-            default:
-              value:
-                error: You need to sign in or sign up before continuing.
     redemption-detail:
       description: ''
       content:
@@ -323,15 +316,22 @@ components:
                   last_name: LAST_NAME_GOES_HERE
                   email: test@example.com
                   avatar_remote_url: null
-  parameters:
-    authorization-header:
-      schema:
-        type: string
-        default: Bearer BUSINESS_ADMIN_KEY_GOES_HERE
-      name: Authorization
-      in: header
-      description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
-      required: true
+    401-unauthorized:
+      description: 'A business admin key is missing or invalid. A request header in the following format is needed to make the request:
+
+
+        `Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE`'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+          examples:
+            default:
+              value:
+                error: You need to sign in or sign up before continuing.
 x-stoplight:
   id: 9820bbd2e8ee1
 x-ext-urls: {}

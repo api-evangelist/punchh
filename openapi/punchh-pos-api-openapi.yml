@@ -2842,6 +2842,42 @@ paths:
     - url: https://SERVER_NAME_GOES_HERE.punchh.com
 components:
   schemas:
+    discount_distribution_items:
+      type: array
+      title: Discount Distribution Items (Array Object)
+      description: 'An array containing details of how the applied discount is distributed across individual menu items. Each object represents one line item that receives a portion of the discount.
+
+        '
+      items:
+        type: object
+        properties:
+          item_name:
+            type: string
+            description: Name of the discounted menu item as it displays in the POS catalog
+          menu_item_id:
+            type: string
+            description: Unique identifier that your POS system uses for the discounted menu item
+          item_qty:
+            type: number
+            description: Quantity associated with the discounted item.
+          item_amount:
+            type: number
+            description: A negative amount that indicates a reduction in price. The sum of all `item_amount` values across the array equals the total discount applied.
+          menu_item_type:
+            type: string
+            description: 'The classification of the item.
+
+
+              R - Redemption Discount item (negative). The `menu_item_type` attribute will always be set to "R" to indicate that it is a redemption-related discount. If a user redeemed a reward giving $3 off, the response may include a line with `menu_item_type` as "R" and `item_amount` as -3.'
+          menu_major_group:
+            type: string
+            description: The major group that the discounted item belongs to
+          menu_family:
+            type: string
+            description: The family that the discounted item belongs to
+          serial_number:
+            type: number
+            description: A serialized number that differentiates distinct items on the check. The value in the field identifies which items on the check are base items and which items are modifiers to the base items. For example, a main menu item (such as pizza) may have serial number 1.0, and the associated modifiers (such as "extra cheese", "olives", and "jalapenos") may have serial numbers 1.1, 1.2, and 1.3 respectively.
     qualified_menu_items:
       type: array
       title: Qualified Menu Items (Array Object)
@@ -2912,42 +2948,6 @@ components:
             x-stoplight:
               id: a0swb24g3yl16
             description: A serialized number that differentiates distinct items on the check. The value in the field identifies which items on the check are base items and which items are modifiers to the base items. For example, a main menu item (such as pizza) may have serial number "1.0", and the associated modifiers (such as "extra cheese", "olives", and "jalapenos") may have serial numbers "1.1", "1.2", and "1.3" respectively.
-    discount_distribution_items:
-      type: array
-      title: Discount Distribution Items (Array Object)
-      description: 'An array containing details of how the applied discount is distributed across individual menu items. Each object represents one line item that receives a portion of the discount.
-
-        '
-      items:
-        type: object
-        properties:
-          item_name:
-            type: string
-            description: Name of the discounted menu item as it displays in the POS catalog
-          menu_item_id:
-            type: string
-            description: Unique identifier that your POS system uses for the discounted menu item
-          item_qty:
-            type: number
-            description: Quantity associated with the discounted item.
-          item_amount:
-            type: number
-            description: A negative amount that indicates a reduction in price. The sum of all `item_amount` values across the array equals the total discount applied.
-          menu_item_type:
-            type: string
-            description: 'The classification of the item.
-
-
-              R - Redemption Discount item (negative). The `menu_item_type` attribute will always be set to "R" to indicate that it is a redemption-related discount. If a user redeemed a reward giving $3 off, the response may include a line with `menu_item_type` as "R" and `item_amount` as -3.'
-          menu_major_group:
-            type: string
-            description: The major group that the discounted item belongs to
-          menu_family:
-            type: string
-            description: The family that the discounted item belongs to
-          serial_number:
-            type: number
-            description: A serialized number that differentiates distinct items on the check. The value in the field identifies which items on the check are base items and which items are modifiers to the base items. For example, a main menu item (such as pizza) may have serial number 1.0, and the associated modifiers (such as "extra cheese", "olives", and "jalapenos") may have serial numbers 1.1, 1.2, and 1.3 respectively.
     menu_items:
       type: array
       title: Menu Items (Array Object)
@@ -3088,50 +3088,6 @@ components:
         - item_id
         - item_family
         - item_group
-    discount_basket_items:
-      title: Discount Basket Items (Array Object)
-      x-stoplight:
-        id: 3a95e69093e06
-      type: array
-      description: List of discounts. In the case of invalid discounts, the object lists them with a message stating that the discount is invalid.
-      x-examples:
-        Example:
-        - discount_basket_item_id: 4699
-          discount_type: reward
-          discount_id: 131
-          discount_value: null
-          created_at: '2022-08-25T10:03:48Z'
-      items:
-        type: object
-        properties:
-          discount_basket_item_id:
-            type: integer
-            description: Unique identifier of selection
-          discount_type:
-            type: string
-            description: The discount type can be any one of these values`:` card_completion || reward || redeemable || discount_amount || redemption_code || subscription || fuel_reward. For details, see [Make Your First POS API Call](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#redemption-types).
-          discount_id:
-            type: string
-            description: Unique ID that identifies the discount (e.g., reward_id, redeemable_id, redemption_code, coupon_code)
-          discount_value:
-            type: number
-            format: float
-            description: Value of the currency that a user wants to redeem. This value is set for users on the “Points Convert to Currency” loyalty program. The default value is 0 if the user has not selected any amount to redeem or has no currency in the loyalty account. The parameter returns a “null” value for a business that does not support banking of points into currency.
-          created_at:
-            type: string
-            format: date-time
-            description: Date/time when the discount was selected, in YYYY-MM-DDThh:mm:ss format
-          message:
-            type: array
-            x-stoplight:
-              id: i6xbc0o82xpj0
-            description: 'Error message for invalid discount. If a discount is found to be honored, expired, perished, or archived, the API returns an error message in the parameter for the discount indicating that the discount is invalid. '
-            items:
-              x-stoplight:
-                id: z22blzv58pjzd
-              type: string
-          discount_details:
-            $ref: '#/components/schemas/discount_details'
     qualified_items:
       title: Qualified Items (Array Object)
       x-stoplight:
@@ -3261,7 +3217,66 @@ components:
             x-stoplight:
               id: 3auw6y3slop6b
             description: Name of the campaign through which the guest received the offer
+    discount_basket_items:
+      title: Discount Basket Items (Array Object)
+      x-stoplight:
+        id: 3a95e69093e06
+      type: array
+      description: List of discounts. In the case of invalid discounts, the object lists them with a message stating that the discount is invalid.
+      x-examples:
+        Example:
+        - discount_basket_item_id: 4699
+          discount_type: reward
+          discount_id: 131
+          discount_value: null
+          created_at: '2022-08-25T10:03:48Z'
+      items:
+        type: object
+        properties:
+          discount_basket_item_id:
+            type: integer
+            description: Unique identifier of selection
+          discount_type:
+            type: string
+            description: The discount type can be any one of these values`:` card_completion || reward || redeemable || discount_amount || redemption_code || subscription || fuel_reward. For details, see [Make Your First POS API Call](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#redemption-types).
+          discount_id:
+            type: string
+            description: Unique ID that identifies the discount (e.g., reward_id, redeemable_id, redemption_code, coupon_code)
+          discount_value:
+            type: number
+            format: float
+            description: Value of the currency that a user wants to redeem. This value is set for users on the “Points Convert to Currency” loyalty program. The default value is 0 if the user has not selected any amount to redeem or has no currency in the loyalty account. The parameter returns a “null” value for a business that does not support banking of points into currency.
+          created_at:
+            type: string
+            format: date-time
+            description: Date/time when the discount was selected, in YYYY-MM-DDThh:mm:ss format
+          message:
+            type: array
+            x-stoplight:
+              id: i6xbc0o82xpj0
+            description: 'Error message for invalid discount. If a discount is found to be honored, expired, perished, or archived, the API returns an error message in the parameter for the discount indicating that the discount is invalid. '
+            items:
+              x-stoplight:
+                id: z22blzv58pjzd
+              type: string
+          discount_details:
+            $ref: '#/components/schemas/discount_details'
   parameters:
+    accept_language:
+      schema:
+        type: string
+        default: en
+      in: header
+      name: Accept-Language
+      description: 'Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.'
+    content_type:
+      schema:
+        type: string
+        default: application/json
+      in: header
+      name: Content-Type
+      description: Set this header to **application/json**.
+      required: true
     Accept:
       schema:
         type: string
@@ -3278,13 +3293,6 @@ components:
       in: header
       required: true
       description: For details, see [User Agent](/docs/dev-portal-pos/1fbfdfdd05a86-make-your-first-pos-api-call#user-agent).
-    accept_language:
-      schema:
-        type: string
-        default: en
-      in: header
-      name: Accept-Language
-      description: 'Preferred language. Punchh supports multiple languages for the redeemable name, redeemable description, meta data for coupon, subscription plan name, and subscription description in the API response as per the locale specified in the Accept-Language request header. Possible values: es for Spanish, fr for French, fr-ca for French-Canada, en-CY for English-Cyprus, ro for Romania, es-US for Spanish United States, etc.<br> The locales for a business are configured in the Punchh platform under <b>Administration > Business Profile > Address > Alternate Languages</b>. In the Punchh platform, the admin of a business has to configure in the relevant language(s) 1) the redeemable name and redeemable description when creating/editing a redeemable under <b>Offers > All Redeemables</b>, 2) meta data for coupons when creating/editing a coupon campaign under <b>Marketing Automation > Campaign Management</b>, and 3) subscription plan name and subscription description when creating/editing a subscription plan under <b>Wallets and Passes > Subscription Plans</b>.'
     Authorization:
       schema:
         type: string
@@ -3293,14 +3301,6 @@ components:
       in: header
       required: true
       description: This is a combination of unique API location key as well as business key (UUID) as the Authorization header.
-    content_type:
-      schema:
-        type: string
-        default: application/json
-      in: header
-      name: Content-Type
-      description: Set this header to **application/json**.
-      required: true
 x-refined-from:
 - punchh-pos-redemptions-legacy-openapi.yml
 - punchh-pos-redemptions-v2-openapi.yml

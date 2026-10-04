@@ -1532,6 +1532,14 @@ paths:
     - url: https://SERVER_NAME_GOES_HERE.punchh.com
 components:
   parameters:
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
     Accept:
       schema:
         type: string
@@ -1564,7 +1572,7 @@ components:
       in: header
       description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
       required: true
-    Content-Type:
+    content-type:
       schema:
         type: string
         default: application/json
@@ -1580,14 +1588,6 @@ components:
       name: Accept
       description: Advertises which content types the client is able to understand
       required: true
-    content-type:
-      schema:
-        type: string
-        default: application/json
-      name: Content-Type
-      in: header
-      description: Set this header to <b>application/json</b>.
-      required: true
     authorization-header:
       schema:
         type: string
@@ -1597,22 +1597,6 @@ components:
       description: 'Bearer token for admin authorization, who is making a call on behalf of the customer. Send the API key in the following format: "Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE".'
       required: true
   responses:
-    401-unauthorized:
-      description: 'A business admin key is missing or invalid. A request header in the following format is needed to make the request:
-
-
-        `Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE`'
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
-          examples:
-            default:
-              value:
-                error: You need to sign in or sign up before continuing.
     locations-object:
       description: ''
       content:
@@ -1816,6 +1800,22 @@ components:
                 additional_url:
                 - label: reservation
                   url: URL_GOES_HERE
+    401-unauthorized:
+      description: 'A business admin key is missing or invalid. A request header in the following format is needed to make the request:
+
+
+        `Authorization: Bearer BUSINESS_ADMIN_KEY_GOES_HERE`'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+          examples:
+            default:
+              value:
+                error: You need to sign in or sign up before continuing.
 x-refined-from:
 - punchh-mobile-api-openapi.yml
 - punchh-platform-functions-api-openapi.yml

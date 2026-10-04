@@ -1646,6 +1646,22 @@ components:
             id: kbj7omjru7mry
           format: date-time
           description: Date and time when the user became a loyalty member
+    profile_field_answers:
+      title: Profile Field Answers (Object)
+      x-stoplight:
+        id: lme68mm8va3zz
+      type: object
+      properties:
+        upf0:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+        upf1:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+        upf2:
+          type: string
+          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
+      description: Answers given by the user while filling in the user profile. The user submits answers to profile field questions that are configured in the Punchh platform. A total of 25 answers can be submitted. The keys range from 'upf0' to 'upf24'. If questions have multiple answers, the values should be separated by a | character (pipe).
     Gift-Card-Object:
       type: object
       title: Gift Card (Object)
@@ -1722,23 +1738,15 @@ components:
           x-stoplight:
             id: vi0chaw55927t
           description: UUID of the preferred payment card, which is used for making payments when auto-reloading the gift card
-    profile_field_answers:
-      title: Profile Field Answers (Object)
-      x-stoplight:
-        id: lme68mm8va3zz
-      type: object
-      properties:
-        upf0:
-          type: string
-          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
-        upf1:
-          type: string
-          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
-        upf2:
-          type: string
-          description: Each profile field (upf0 - upf24) corresponds to a line from the configuration in the Punchh platform.
-      description: Answers given by the user while filling in the user profile. The user submits answers to profile field questions that are configured in the Punchh platform. A total of 25 answers can be submitted. The keys range from 'upf0' to 'upf24'. If questions have multiple answers, the values should be separated by a | character (pipe).
   parameters:
+    Content-Type:
+      schema:
+        type: string
+        default: application/json
+      name: Content-Type
+      in: header
+      description: Set this header to <b>application/json</b>.
+      required: true
     Accept:
       schema:
         type: string
@@ -1747,6 +1755,13 @@ components:
       in: header
       description: Advertises which content types the client is able to understand
       required: true
+    Accept-Language:
+      schema:
+        type: string
+        default: en
+      name: Accept-Language
+      in: header
+      description: Preferred language
     User-Agent:
       schema:
         type: string
@@ -1770,21 +1785,6 @@ components:
       name: x-pch-digest
       in: header
       description: The [signature](/docs/dev-portal-mobile/additional-topics/signature-sha256) for the API call
-      required: true
-    Accept-Language:
-      schema:
-        type: string
-        default: en
-      name: Accept-Language
-      in: header
-      description: Preferred language
-    Content-Type:
-      schema:
-        type: string
-        default: application/json
-      name: Content-Type
-      in: header
-      description: Set this header to <b>application/json</b>.
       required: true
 x-stoplight:
   id: bf6eddb435209
