@@ -15,3 +15,29 @@
   relationship: connector-coverage
   status: not-a-workflow
   arazzo: null
+- slug: punchh-olo-own
+  label: Olo (own)
+  partner: olo
+  partner_name: Olo (own)
+  category: Loyalty
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.olo.com/partners/punchh
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: punchh-toast-own
+  label: Toast (own)
+  partner: toast
+  partner_name: Toast (own)
+  category: Marketing & CRM
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/punchh
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null

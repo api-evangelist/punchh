@@ -23,7 +23,43 @@ edges:
       - remove
   detected_by: sweep-cdp.py
   first_seen: '2026-10-14'
+- partner_name: Olo (own)
+  partner: olo
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.olo.com/partners/punchh
+  mirror_of: olo/integrations/olo-integration-edges.yml
+  apps:
+  - Punchh
+  listing_count: 1
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
+  category: Loyalty
+- partner_name: Toast (own)
+  partner: toast
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://pos.toasttab.com/partners/directory/punchh
+  mirror_of: toast/integrations/toast-integration-edges.yml
+  apps:
+  - Punchh
+  listing_count: 1
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
+  category: Marketing & CRM
 method: searched
 checked:
 - https://hightouch.com/docs/destinations/punchh
+- olo/integrations/olo-integration-edges.yml
+- toast/integrations/toast-integration-edges.yml
 source: https://hightouch.com/docs/destinations/punchh
