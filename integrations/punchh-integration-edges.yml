@@ -1,28 +1,22 @@
-generated: '2026-10-14'
+generated: '2026-10-20'
+method: searched
+source:
+- https://hightouch.com/docs/destinations/punchh
+- https://zapier.com/apps/punchh/integrations
+- https://n8n.io/integrations/punchh/
+- https://composio.dev/toolkits/punchh
+- https://monid.ai/tools/punchh
+checked:
+- https://hightouch.com/docs/destinations/punchh
+- olo/integrations/olo-integration-edges.yml
+- toast/integrations/toast-integration-edges.yml
+- https://composio.dev/toolkits/punchh
+- https://monid.ai/tools/punchh
+- https://n8n.io/integrations/punchh/
+- https://zapier.com/apps/punchh/integrations
+summary: null
+marketplace_apps: []
 edges:
-- partner_name: Hightouch
-  partner: hightouch
-  partner_match: aggregator
-  marketplace: coverage
-  channel: partner-built
-  direction: partner-built
-  type: coverage
-  relationship: connector-coverage
-  evidence: https://hightouch.com/docs/destinations/punchh
-  coverage_role:
-  - destination
-  cdp_signals:
-    destination:
-      catalog_entries:
-      - punchh
-      status: released
-      sync_types:
-      - Segments
-      sync_modes:
-      - add
-      - remove
-  detected_by: sweep-cdp.py
-  first_seen: '2026-10-14'
 - partner_name: Olo (own)
   partner: olo
   partner_match: mirror
@@ -57,9 +51,27 @@ edges:
   detected: '2026-10-14'
   detected_by: mirror-platform-listings.py
   category: Marketing & CRM
-method: searched
-checked:
-- https://hightouch.com/docs/destinations/punchh
-- olo/integrations/olo-integration-edges.yml
-- toast/integrations/toast-integration-edges.yml
-source: https://hightouch.com/docs/destinations/punchh
+- partner_name: Hightouch
+  partner: hightouch
+  partner_match: aggregator
+  marketplace: coverage
+  channel: partner-built
+  direction: partner-built
+  type: coverage
+  relationship: connector-coverage
+  evidence: https://hightouch.com/docs/destinations/punchh
+  coverage_role:
+  - destination
+  cdp_signals:
+    destination:
+      catalog_entries:
+      - punchh
+      status: released
+      sync_types:
+      - Segments
+      sync_modes:
+      - add
+      - remove
+  detected_by: sweep-cdp.py
+  first_seen: '2026-10-14'
+templates: []
