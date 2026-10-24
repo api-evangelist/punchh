@@ -187,11 +187,17 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   finops/punchh-finops.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: generated
+    evidence: declared in the artifact
   front-door-ai/2026-09-17.yml:
     method: unknown
     evidence: no authorship recorded
+  integrations/_index.yml:
+    method: generated
+    evidence: carries an API Evangelist house phrase
+  integrations/punchh-integration-edges.yml:
+    method: searched
+    evidence: declared in the artifact
   json-ld/punchh-mobile-context.jsonld:
     method: unknown
     evidence: no authorship recorded
@@ -294,127 +300,7 @@ artifacts:
   json-structure/pos-pos-user-structure.json:
     method: unknown
     evidence: no authorship recorded
-  kin/checks-2026-09-24T161608.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T125852.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T133943.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T143147.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T154045.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-26T215308.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T094438.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T103455.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T123021.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T132314.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T140727.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-28T221322.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T213958.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T230545.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T203505.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T220315.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-31T223420.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T063623.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T210448.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T222808.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T224043.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T161828.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T174231.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T062714.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T212454.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T224856.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T055819.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T072335.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T144739.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T195450.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T211839.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T011047.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T224210.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T200636.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T213054.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T214843.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T232836.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T204815.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T222408.yml:
+  kin/checks-2026-10-11T110117.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-12T062655.yml:
@@ -496,6 +382,21 @@ artifacts:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-24T161608.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T210408.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T232841.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T000835.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T024842.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-11T110117.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   lifecycle/punchh-lifecycle.yml:
@@ -708,49 +609,187 @@ artifacts:
   openapi/punchh-wifi-acquisition-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  overlays/punchh-api2-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-auth-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-badges-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-beacons-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-business-admin-users-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-business-migration-users-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-challenges-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-check-in-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-check-ins-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-check-user-balance-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-collectibles-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-coupons-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-custom-segments-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-deals-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-drive-thru-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-eclub-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-feedback-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-file-upload-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-franchisee-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-game-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-gift-cards-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-invitations-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-locations-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-loyalty-transfers-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-meta-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-meta-version-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-migration-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/punchh-mobile-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/punchh-mobile-redemptions-legacy-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/punchh-mobile-redemptions-v2-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/punchh-mobile-subscription-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/punchh-notifications-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
-  overlays/punchh-mobile-subscription-overlay.yaml:
+  overlays/punchh-offers-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/punchh-online-ordering-redemptions-legacy-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/punchh-online-ordering-redemptions-v2-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/punchh-online-ordering-sso-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/punchh-online-ordering-subscription-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/punchh-passcodes-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
-  overlays/punchh-online-ordering-subscription-overlay.yaml:
+  overlays/punchh-payment-cards-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-payments-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/punchh-platform-functions-api-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/punchh-platform-functions-headless-offers-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/punchh-platform-functions-offers-ingestion-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/punchh-platform-functions-subscription-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/punchh-point-of-sale-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/punchh-pos-api-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/punchh-pos-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/punchh-pos-redemptions-legacy-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/punchh-pos-redemptions-v2-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/punchh-redemptions-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
-  overlays/punchh-pos-redemptions-v2-overlay.yaml:
+  overlays/punchh-referrals-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-rewards-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-single-scan-code-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-social-cause-campaign-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-social-cause-campaigns-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-surveys-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-swag-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-user-management-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-user-sign-up-and-sso-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-users-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/punchh-wifi-acquisition-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   packages/punchh-packages.yml:
